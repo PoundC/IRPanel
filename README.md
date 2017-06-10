@@ -46,4 +46,4 @@ configuration relevant for your application.
 
 ## Layout
 
-The layout is AdminLTE - Admin Control Panel Theme Based On Bootstrap 3.x - [demo](https://almsaeedstudio.com) and is maintained on github [here](https://github.com/almasaeed2010/AdminLTE)
+The layout is AdminLTE - Admin Control Panel Theme Based On Bootstrap 3.x - [demo](https://almsaeedstudio.com) and is maintained [here](https://github.com/almasaeed2010/AdminLTE)
