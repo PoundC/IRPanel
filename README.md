@@ -15,23 +15,23 @@ The framework source code can be found here: [cakephp/cakephp](https://github.co
 If Composer is installed globally, run
 
 ```bash
-composer create-project --prefer-dist cakephp/app
+composer create-project --prefer-dist cakephpkitchen/cakeadminlte
 ```
 
-In case you want to use a custom app dir name (e.g. `/myapp/`):
+In case you want to use a custom app dir name (e.g. `/dash/`):
 
 ```bash
-composer create-project --prefer-dist cakephp/app myapp
+composer create-project --prefer-dist cakephpkitchen/cakeadminlte dash
 ```
 
 You can now either use your machine's webserver to view the default home page, or start
 up the built-in webserver with:
 
 ```bash
-bin/cake server -p 8765
+bin/cake server -p 10304
 ```
 
-Then visit `http://localhost:8765` to see the welcome page.
+Then visit `http://localhost:10304` to see the welcome page.
 
 ## Update
 
