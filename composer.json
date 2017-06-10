@@ -1,7 +1,7 @@
 {
-    "name": "cakephp/app",
-    "description": "CakePHP skeleton app",
-    "homepage": "http://cakephp.org",
+    "name": "cakephpkitchen/cakeadminlte",
+    "description": "CakePHP skeleton application and dashboard",
+    "homepage": "http://cakeadmin.me",
     "type": "project",
     "license": "MIT",
     "require": {
