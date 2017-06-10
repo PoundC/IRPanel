@@ -1,11 +1,20 @@
 # CakePHP Dashboard Skeleton
 
 [![Build Status](https://img.shields.io/travis/cakephp/app/master.svg?style=flat-square)](https://travis-ci.org/cakephp/app)
+[![CDNJS](https://img.shields.io/cdnjs/v/admin-lte.svg)](https://cdnjs.com/libraries/admin-lte)
+[![Packagist](https://img.shields.io/packagist/v/almasaeed2010/adminlte.svg)](https://packagist.org/packages/cakephpkitchen/cakeadminlte)
 [![License](https://img.shields.io/packagist/l/cakephp/app.svg?style=flat-square)](https://packagist.org/packages/cakephp/app)
 
 A skeleton for creating full featured applications with a dashbaord backend built on top of [CakePHP](http://cakephp.org) 3.x.
 
 The framework source code can be found here: [cakephp/cakephp](https://github.com/cakephp/cakephp).
+
+## AdminLTE - Admin Control Panel Theme (Bootstrap 3)
+
+!["AdminLTE Presentation"](https://adminlte.io/AdminLTE2.png "AdminLTE Presentation")
+
+Visit the [online documentation](https://adminlte.io/docs) for the most updated guide. [ [demo](https://adminlte.io/themes/AdminLTE/index2.html) ] [ [github](https://github.com/almasaeed2010/AdminLTE) ]
+
 
 ## Installation
 
@@ -43,11 +52,3 @@ automated upgrades, so you have to do any updates manually.
 
 Read and edit `config/app.php` and setup the `'Datasources'` and any other
 configuration relevant for your application.
-
-## Layout
-
-The layout is AdminLTE - Admin Control Panel Theme Based On Bootstrap 3.x
-
-[demo can be found here](https://adminlte.io/themes/AdminLTE/index2.html) 
-
-[github repo here](https://github.com/almasaeed2010/AdminLTE)
