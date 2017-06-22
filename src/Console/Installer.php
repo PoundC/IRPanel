@@ -40,6 +40,7 @@ class Installer
 
         static::createAppConfig($rootDir, $io);
         static::createWritableDirectories($rootDir, $io);
+        static::createAdminLTESymLinks();
 
         // ask if the permissions should be changed
         if ($io->isInteractive()) {
@@ -191,5 +192,31 @@ class Installer
             return;
         }
         $io->write('Unable to update Security.salt value.');
+    }
+
+    public static function createAdminLTESymLinks(Event $event)
+    {
+        $io = $event->getIO();
+
+        $rootDir = dirname(dirname(__DIR__));
+
+        $io->write('Installing AdminLTE vendor SymLinks to Webroot');
+
+        symlink($rootDir . '/vendor/almasaeed2010/adminlte/bootstrap', $rootDir . '/webroot/bootstrap');
+        $io->write('Created Symlink: ' . $rootDir . '/webroot/bootstrap');
+
+        symlink($rootDir . '/vendor/almasaeed2010/adminlte/dist', $rootDir . '/webroot/dist');
+        $io->write('Created Symlink: ' . $rootDir . '/webroot/dist');
+
+        symlink($rootDir . '/vendor/almasaeed2010/adminlte/documentation', $rootDir . '/webroot/documentation');
+        $io->write('Created Symlink: ' . $rootDir . '/webroot/documentation');
+
+        symlink($rootDir . '/vendor/almasaeed2010/adminlte/pages', $rootDir . '/webroot/pages');
+        $io->write('Created Symlink: ' . $rootDir . '/webroot/pages');
+
+        symlink($rootDir . '/vendor/almasaeed2010/adminlte/plugins', $rootDir . '/webroot/plugins');
+        $io->write('Created Symlink: ' . $rootDir . '/webroot/plugins');
+
+        return 0;
     }
 }

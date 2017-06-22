@@ -4,3 +4,8 @@
 /logs/*
 .idea/*
 composer.lock
+webroot/bootstrap
+webroot/dist
+webroot/documentation
+webroot/pages
+webroot/plugins
