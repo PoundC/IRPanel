@@ -16,6 +16,10 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\Core\Configure;
+use Cake\Controller\Component\AuthComponent;
+use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
 
 /**
  * Application Controller
@@ -43,6 +47,8 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
+        $this->loadComponent('CakePHPKitchen/CakeAdminUsers.UsersAuth');
+
 
         /*
          * Enable the following components for recommended CakePHP security settings.
@@ -65,5 +71,23 @@ class AppController extends Controller
         ) {
             $this->set('_serialize', true);
         }
+
+        $appContain = (array)Configure::read('Auth.authenticate.' . AuthComponent::ALL . '.contain');
+        $socialContain = Configure::read('Users.Social.login') ? ['SocialAccounts']: [];
+
+        if($this->Auth->user('id')) {
+
+            //@todo Find out if user is admin
+            $isAdmin = false;
+
+            $currentUser = TableRegistry::get(Configure::read('Users.table'))->get($this->Auth->user('id'), [
+                'contain' => array_merge((array)$appContain, (array)$socialContain)
+            ]);
+
+            $this->set(compact('currentUser', 'isCurrentUser', 'isAdmin'));
+            $this->set('_serialize', ['currentUser']);
+        }
+
+        $this->set('avatarPlaceholder', Configure::read('Users.Avatar.placeholder'));
     }
 }

@@ -9,3 +9,4 @@ webroot/dist
 webroot/documentation
 webroot/pages
 webroot/plugins
+.DS_Store

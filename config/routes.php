@@ -80,3 +80,11 @@ Router::scope('/', function (RouteBuilder $routes) {
  * how to customize the loading of plugin routes.
  */
 Plugin::routes();
+
+/*
+ * CakeDC/Users Routes
+ *
+ */
+
+Router::connect('/register', ['plugin' => 'CakePHPKitchen/CakeAdminUsers', 'controller' => 'Users', 'action' => 'register']);
+Router::connect('/reset', ['plugin' => 'CakePHPKitchen/CakeAdminUsers', 'controller' => 'Users', 'action' => 'requestResetPassword']);

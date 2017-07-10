@@ -10,7 +10,8 @@
         "mobiledetect/mobiledetectlib": "2.*",
         "cakephp/migrations": "~1.0",
         "cakephp/plugin-installer": "~1.0",
-        "almasaeed2010/adminlte": "^2.3"
+        "almasaeed2010/adminlte": "2.4.0-alpha",
+        "cakephpkitchen/cakeadminusers": "dev-AdminLTE"
     },
     "require-dev": {
         "psy/psysh": "@stable",

@@ -24,6 +24,7 @@ use Cake\View\View;
  */
 class AppView extends View
 {
+    public $helpers = ['Breadcrumbs'];
 
     /**
      * Initialization hook method.
@@ -36,5 +37,7 @@ class AppView extends View
      */
     public function initialize()
     {
+        $this->Breadcrumbs->add('Home', ['controller' => 'products', 'action' => 'index']);
+        $this->Breadcrumbs->add('Home2', ['controller' => 'products', 'action' => 'index']);
     }
 }

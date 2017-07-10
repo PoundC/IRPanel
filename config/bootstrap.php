@@ -63,6 +63,7 @@ use Cake\Log\Log;
 use Cake\Mailer\Email;
 use Cake\Utility\Inflector;
 use Cake\Utility\Security;
+use Cake\Utility\Menu;
 
 /*
  * Read configuration file and inject configuration into various
@@ -218,5 +219,9 @@ Type::build('timestamp')
  * Debug Kit should not be installed on a production system
  */
 if (Configure::read('debug')) {
-    Plugin::load('DebugKit', ['bootstrap' => true]);
+    // Plugin::load('DebugKit', ['bootstrap' => true]);
 }
+
+Plugin::load('CakePHPKitchen/CakeAdminUsers', ['routes' => true, 'bootstrap' => true]);
+
+Menu::add('Cake Admin', array('Users Panel' => '/users/'));

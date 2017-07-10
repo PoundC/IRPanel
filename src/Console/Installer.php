@@ -38,18 +38,20 @@ class Installer
 
         $rootDir = dirname(dirname(__DIR__));
 
+        $validator = function ($arg) {
+            if (in_array($arg, ['Y', 'y', 'N', 'n'])) {
+                return $arg;
+            }
+            throw new Exception('This is not a valid answer. Please choose Y or n.');
+        };
+
         static::createAppConfig($rootDir, $io);
         static::createWritableDirectories($rootDir, $io);
         static::createAdminLTESymLinks();
 
         // ask if the permissions should be changed
         if ($io->isInteractive()) {
-            $validator = function ($arg) {
-                if (in_array($arg, ['Y', 'y', 'N', 'n'])) {
-                    return $arg;
-                }
-                throw new Exception('This is not a valid answer. Please choose Y or n.');
-            };
+
             $setFolderPermissions = $io->askAndValidate(
                 '<info>Set Folder Permissions ? (Default to Y)</info> [<comment>Y,n</comment>]? ',
                 $validator,
@@ -65,6 +67,30 @@ class Installer
         }
 
         static::setSecuritySalt($rootDir, $io);
+
+        $bakeDatabaseConfig = $io->askAndValidate(
+            '<info>Bake Database Config ? (Default to Y)</info> [<comment>Y,n</comment>]? ',
+            $validator,
+            10,
+            'Y'
+        );
+
+        if (in_array($bakeDatabaseConfig, ['Y', 'y'])) {
+
+            // cake bake database
+
+            $installSchemas = $io->askAndValidate(
+                '<info>Bake Database Config ? (Default to Y)</info> [<comment>Y,n</comment>]? ',
+                $validator,
+                10,
+                'Y'
+            );
+
+            if (in_array($installSchemas, ['Y', 'y'])) {
+
+                // cake migrations migrate -p CakeDC/Users
+            }
+        }
 
         if (class_exists('\Cake\Codeception\Console\Installer')) {
             \Cake\Codeception\Console\Installer::customizeCodeceptionBinary($event);
