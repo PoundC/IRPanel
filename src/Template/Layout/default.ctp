@@ -33,7 +33,23 @@ $cakeDescription = '';
 
     <?= $this->Html->css('/dist/css/AdminLTE') ?>
 
-    <?= $this->Html->css('/dist/css/skins/skin-blue.min') ?>
+    <?= $this->Html->css('/dist/css/skins/_all-skins.css'); ?>
+
+    <?php
+
+     if($isAdmin == true && $isSuperUser == false) {
+
+        $skin = 'purple';
+    }
+    else if($isAdmin == true && $isSuperUser == true) {
+
+        $skin = 'red';
+    }
+    else {
+
+        $skin = 'blue';
+    }
+    ?>
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -49,7 +65,7 @@ $cakeDescription = '';
 
     <?= $this->fetch('meta') ?>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-<?= $skin ?> sidebar-mini">
 <div class="wrapper">
 
     <!-- Main Header -->
@@ -96,10 +112,17 @@ $cakeDescription = '';
             <?php
                     }
             ?>
+
+            <?php
+                    if($notLoggedIn == false) {
+            ?>
             <!-- Navbar Right Menu -->
             <div class="navbar-custom-menu">
 
                 <ul class="nav navbar-nav">
+                    <?php
+                            if ($isAdmin == true) {
+                    ?>
                     <li>
                         <form class="navbar-form navbar-left" role="search">
                             <div class="form-group">
@@ -107,7 +130,9 @@ $cakeDescription = '';
                             </div>
                         </form>
                     </li>
-
+                    <?php
+                             }
+                    ?>
                     <!-- Messages: style can be found in dropdown.less-->
                     <li class="dropdown messages-menu">
                         <!-- Menu toggle button -->
@@ -220,8 +245,15 @@ $cakeDescription = '';
                                             ['class' => 'user-image']
                                             );
                             ?>
+
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs">&nbsp;</span>
+                            <?php
+                                echo $this->Html->tag(
+                                'span',
+                                __d('CakeDC/Users', '{0} {1}', $currentUser->first_name, $currentUser->last_name),
+                                ['class' => 'hidden-xs']
+                                );
+                            ?>
                         </a>
 
                         <ul class="dropdown-menu">
@@ -283,13 +315,22 @@ $cakeDescription = '';
                     </li>
 
                     <!-- Control Sidebar Toggle Button -->
+                    <?php
+                            if($isSuperUser == true) {
+                    ?>
                     <li>
                         <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                     </li>
-
+                    <?php
+                            }
+                    ?>
                 </ul>
 
             </div>
+
+            <?php
+                       }
+            ?>
 
         </nav>
 
@@ -299,31 +340,6 @@ $cakeDescription = '';
 
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
-
-            <!-- Sidebar user panel (optional) -->
-            <div class="user-panel">
-                <div class="pull-left image">
-                    <?php
-                            echo $this->Html->image(
-                            empty($currentUser->avatar) ? $avatarPlaceholder : $currentUser->avatar,
-                            ['class' => 'img-circle']
-                            );
-                    ?>
-                </div>
-                <div class="pull-left info">
-                    <p>
-                        <?php
-                        echo $this->Html->tag(
-                        'span',
-                        __d('CakeDC/Users', '{0} {1}', $currentUser->first_name, $currentUser->last_name),
-                        ['class' => 'full_name']
-                        );
-                        ?>
-                    </p>
-                    <!-- Status -->
-                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                </div>
-            </div>
 
             <!-- search form (Optional) -->
             <form action="#" method="get" class="sidebar-form">

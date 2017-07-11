@@ -75,19 +75,53 @@ class AppController extends Controller
         $appContain = (array)Configure::read('Auth.authenticate.' . AuthComponent::ALL . '.contain');
         $socialContain = Configure::read('Users.Social.login') ? ['SocialAccounts']: [];
 
+        $isSuperUser = false;
+        $isAdmin = false;
+        $isCurrentUser = false;
+        $notLoggedIn = false;
+
         if($this->Auth->user('id')) {
 
-            //@todo Find out if user is admin
-            $isAdmin = false;
+            $currentId = $this->Auth->user('id');
+
+            if(isset($this->request->params['pass'][0])) {
+
+                $currentId = $this->request->params['pass'][0];
+            }
 
             $currentUser = TableRegistry::get(Configure::read('Users.table'))->get($this->Auth->user('id'), [
                 'contain' => array_merge((array)$appContain, (array)$socialContain)
             ]);
 
-            $this->set(compact('currentUser', 'isCurrentUser', 'isAdmin'));
-            $this->set('_serialize', ['currentUser']);
+            if($currentUser->is_superuser == 1) {
+
+                $isSuperUser = true;
+                $isAdmin = true;
+            }
+
+            if($currentUser->role == 'admin') {
+
+                $isAdmin = true;
+            }
+
+            if($currentId == $this->Auth->user('id')) {
+
+                $isCurrentUser = true;
+            }
+
+            $this->set(compact('currentUser', 'isCurrentUser', 'isAdmin', 'isSuperUser', 'notLoggedIn'));
+
+        }
+        else {
+
+            $notLoggedIn = true;
+
+            $currentUser = $this->getUsersTable()->newEntity();
+
+            $this->set(compact('currentUser', 'isCurrentUser', 'isAdmin', 'isSuperUser', 'notLoggedIn'));
         }
 
+        $this->set('_serialize', ['currentUser']);
         $this->set('avatarPlaceholder', Configure::read('Users.Avatar.placeholder'));
     }
 }
