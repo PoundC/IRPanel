@@ -133,6 +133,10 @@ $cakeDescription = '';
                     <?php
                              }
                     ?>
+
+                    <?php
+                            if (false == true) {
+                    ?>
                     <!-- Messages: style can be found in dropdown.less-->
                     <li class="dropdown messages-menu">
                         <!-- Menu toggle button -->
@@ -232,6 +236,10 @@ $cakeDescription = '';
                             </li>
                         </ul>
                     </li>
+
+                    <?php
+                             }
+                    ?>
 
                     <!-- User Account Menu -->
                     <li class="dropdown user user-menu">
