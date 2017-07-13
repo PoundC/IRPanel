@@ -98,7 +98,7 @@ class Installer
             if (in_array($installSchemas, ['Y', 'y'])) {
 
                 $shellDispatcher->dispatch([
-                    'command' => 'migrations migrate -p CakePHPKitchen/CakeAdminUsers',
+                    'command' => 'migrations migrate --plugin CakePHPKitchen/CakeAdminUsers',
                     'extra' => []
                 ]);
 
