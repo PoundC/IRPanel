@@ -15,7 +15,6 @@
 namespace App\Console;
 
 require_once(__DIR__ . '/../../vendor/autoload.php');
-require_once(__DIR__ . '/../../config/bootstrap.php');
 
 use Cake\Utility\Security;
 use Composer\Script\Event;
@@ -41,7 +40,7 @@ class Installer
         $io = $event->getIO();
 
         $rootDir = dirname(dirname(__DIR__));
-        $adsf = namespaceSplit('','');
+
         $validator = function ($arg) {
             if (in_array($arg, ['Y', 'y', 'N', 'n'])) {
                 return $arg;
@@ -72,14 +71,14 @@ class Installer
 
         static::setSecuritySalt($rootDir, $io);
 
-        copy($rootDir . '/config/app.default.php', $rootDir . '/config/app.php');
-
         $bakeDatabaseConfig = $io->askAndValidate(
             '<info>Enter Database Config? (Default to Y)</info> [<comment>Y,n</comment>]? ',
             $validator,
             10,
             'Y'
         );
+
+        require_once(__DIR__ . '/../../config/bootstrap.php');
 
         $shell = new ShellDispatcher();
 
