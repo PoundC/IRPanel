@@ -248,6 +248,7 @@ class Installer
 
     public static function setDatabaseDetails($dir, $io)
     {
+        static::setDatabaseHost($dir, $io);
         static::setDatabaseName($dir, $io);
         static::setDatabasePort($dir, $io);
         static::setDatabaseUsername($dir, $io);
@@ -350,7 +351,34 @@ class Installer
             '<info>Enter the database user password</info><comment>:</comment> '
         );
 
-        $content = str_replace("'password' => 'secret',", "'password' => '" . $databasePass . "',,", $content, $count);
+        $content = str_replace("'password' => 'secret',", "'password' => '" . $databasePass . "',", $content, $count);
+
+        if ($count == 0) {
+            $io->write('No database password placeholder to replace.');
+
+            return;
+        }
+
+        $result = file_put_contents($config, $content);
+        if ($result) {
+            $io->write('Updated database password value in config/app.php');
+
+            return;
+        }
+        $io->write('Unable to update password database value.');
+    }
+
+
+    public static function setDatabaseHost($dir, $io)
+    {
+        $config = $dir . '/config/app.php';
+        $content = file_get_contents($config);
+
+        $databaseHost = $io->askConfirmation(
+            '<info>Enter the database user password</info><comment>:</comment> '
+        );
+
+        $content = str_replace("'host' => '127.0.0.1',", "'host' => '" . $databaseHost . "',", $content, $count);
 
         if ($count == 0) {
             $io->write('No database password placeholder to replace.');
