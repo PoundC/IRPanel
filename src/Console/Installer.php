@@ -367,7 +367,7 @@ class Installer
         $config = $dir . '/config/app.php';
         $content = file_get_contents($config);
 
-        $databaseHost = $shell->in('Enter the database host: ');
+        $databaseHost = $shell->in('Enter the database host: ', null, '127.0.0.1');
 
         $content = str_replace("'host' => 'localhost',", "'host' => '" . $databaseHost . "',", $content, $count);
 
