@@ -270,9 +270,7 @@ class Installer
         $config = $dir . '/config/app.php';
         $content = file_get_contents($config);
 
-        $databaseName = $io->ask(
-            '<info>Enter the database name</info><comment>:</comment> '
-        );
+        $databaseName = $shell->in('Enter the database name: ');
 
         $content = str_replace("'database' => 'my_app',", "'database' => '" . $databaseName . "',", $content, $count);
 
@@ -296,10 +294,7 @@ class Installer
         $config = $dir . '/config/app.php';
         $content = file_get_contents($config);
 
-        $databasePort = $io->askConfirmation(
-            '<info>Enter the database port (Default: 3306)</info><comment>:</comment> ',
-            3306
-        );
+        $databasePort = $shell->in('Enter the database port: ', 3306);
 
         $content = str_replace("//'port' => 'non_standard_port_number',", "'port' => '" . $databasePort . "',", $content, $count);
 
@@ -323,9 +318,7 @@ class Installer
         $config = $dir . '/config/app.php';
         $content = file_get_contents($config);
 
-        $databaseUsername = $io->askConfirmation(
-            '<info>Enter the database username</info><comment>:</comment> '
-        );
+        $databaseUsername = $shell->in('Enter the database username: ');
 
         $content = str_replace("'username' => 'my_app',", "'username' => '" . $databaseUsername . "',", $content, $count);
 
@@ -349,9 +342,7 @@ class Installer
         $config = $dir . '/config/app.php';
         $content = file_get_contents($config);
 
-        $databasePass = $io->askConfirmation(
-            '<info>Enter the database user password</info><comment>:</comment> '
-        );
+        $databasePass = $shell->in('Enter the database user password: ');
 
         $content = str_replace("'password' => 'secret',", "'password' => '" . $databasePass . "',", $content, $count);
 
