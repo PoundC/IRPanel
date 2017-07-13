@@ -378,7 +378,7 @@ class Installer
 
         $databaseHost = $shell->in('Enter the database host: ');
 
-        $content = str_replace("'host' => '127.0.0.1',", "'host' => '" . $databaseHost . "',", $content, $count);
+        $content = str_replace("'host' => 'localhost',", "'host' => '" . $databaseHost . "',", $content, $count);
 
         var_dump($content);
 
