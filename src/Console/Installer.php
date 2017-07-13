@@ -380,21 +380,19 @@ class Installer
 
         $content = str_replace("'host' => 'localhost',", "'host' => '" . $databaseHost . "',", $content, $count);
 
-        var_dump($content);
-
         if ($count == 0) {
-            $io->write('No database password placeholder to replace.');
+            $io->write('No database host placeholder to replace.');
 
             return;
         }
 
         $result = file_put_contents($config, $content);
         if ($result) {
-            $io->write('Updated database password value in config/app.php');
+            $io->write('Updated database host value in config/app.php');
 
             return;
         }
-        $io->write('Unable to update password database value.');
+        $io->write('Unable to update host database value.');
     }
 
     public static function createAdminLTESymLinks(Event $event)
