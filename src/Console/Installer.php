@@ -79,13 +79,13 @@ class Installer
             'Y'
         );
 
-        require_once(__DIR__ . '/../../config/bootstrap.php');
-
-        $shell = new Shell();
-
         if (in_array($bakeDatabaseConfig, ['Y', 'y'])) {
 
-            static::setDatabaseDetails($rootDir, $io, $shell);
+            static::setDatabaseDetails($rootDir, $io);
+
+            require_once(__DIR__ . '/../../config/bootstrap.php');
+
+            $shell = new Shell();
 
             $installSchemas = $io->askAndValidate(
                 '<info>Install Default Schemas? (Default to Y)</info> [<comment>Y,n</comment>]? ',
@@ -247,7 +247,7 @@ class Installer
     }
 
 
-    public static function setDatabaseDetails($dir, $io, $shell)
+    public static function setDatabaseDetails($dir, $io)
     {
         static::setDatabaseHost($dir, $io, $shell);
         static::setDatabasePort($dir, $io, $shell);
@@ -264,12 +264,12 @@ class Installer
      * @param \Composer\IO\IOInterface $io IO interface to write to console.
      * @return void
      */
-    public static function setDatabaseName($dir, $io, $shell)
+    public static function setDatabaseName($dir, $io)
     {
         $config = $dir . '/config/app.php';
         $content = file_get_contents($config);
 
-        $databaseName = $shell->in('Enter the database name: ');
+        $databaseName = readline('Enter the database name: ');
 
         $content = str_replace("'database' => 'my_app',", "'database' => '" . $databaseName . "',", $content, $count);
 
@@ -288,12 +288,17 @@ class Installer
         $io->write('Unable to update database value.');
     }
 
-    public static function setDatabasePort($dir, $io, $shell)
+    public static function setDatabasePort($dir, $io)
     {
         $config = $dir . '/config/app.php';
         $content = file_get_contents($config);
 
-        $databasePort = $shell->in('Enter the database port: ', null, 3306);
+        $databasePort = readline('Enter the database port: ');
+
+        if($databasePort == '') {
+
+            $databasePort = 3306;
+        }
 
         $content = str_replace("//'port' => 'non_standard_port_number',", "'port' => '" . $databasePort . "',", $content, $count);
 
@@ -312,12 +317,12 @@ class Installer
         $io->write('Unable to update database port value.');
     }
 
-    public static function setDatabaseUsername($dir, $io, $shell)
+    public static function setDatabaseUsername($dir, $io)
     {
         $config = $dir . '/config/app.php';
         $content = file_get_contents($config);
 
-        $databaseUsername = $shell->in('Enter the database username: ');
+        $databaseUsername = readline('Enter the database username: ');
 
         $content = str_replace("'username' => 'my_app',", "'username' => '" . $databaseUsername . "',", $content, $count);
 
@@ -336,12 +341,12 @@ class Installer
         $io->write('Unable to update database username value.');
     }
 
-    public static function setDatabasePassword($dir, $io, $shell)
+    public static function setDatabasePassword($dir, $io)
     {
         $config = $dir . '/config/app.php';
         $content = file_get_contents($config);
 
-        $databasePass = $shell->in('Enter the database user password: ');
+        $databasePass = readline('Enter the database user password: ');
 
         $content = str_replace("'password' => 'secret',", "'password' => '" . $databasePass . "',", $content, $count);
 
@@ -361,12 +366,17 @@ class Installer
     }
 
 
-    public static function setDatabaseHost($dir, $io, $shell)
+    public static function setDatabaseHost($dir, $io)
     {
         $config = $dir . '/config/app.php';
         $content = file_get_contents($config);
 
-        $databaseHost = $shell->in('Enter the database host: ', null, '127.0.0.1');
+        $databaseHost = readline('Enter the database host: ');
+
+        if($databaseHost == '') {
+
+            $databaseHost = '127.0.0.1';
+        }
 
         $content = str_replace("'host' => 'localhost',", "'host' => '" . $databaseHost . "',", $content, $count);
 
