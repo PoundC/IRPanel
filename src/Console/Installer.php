@@ -246,9 +246,9 @@ class Installer
     }
 
 
-    public static function setDatabaseDetails($dir, $io)
+    public static function setDatabaseDetails($dir, $io, $shell)
     {
-        static::setDatabaseHost($dir, $io);
+        static::setDatabaseHost($dir, $io, $shell);
         static::setDatabasePort($dir, $io);
         static::setDatabaseName($dir, $io);
         static::setDatabaseUsername($dir, $io);
