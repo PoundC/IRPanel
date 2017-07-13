@@ -294,7 +294,7 @@ class Installer
         $config = $dir . '/config/app.php';
         $content = file_get_contents($config);
 
-        $databasePort = $shell->in('Enter the database port: ', 3306);
+        $databasePort = $shell->in('Enter the database port: ', null, 3306);
 
         $content = str_replace("//'port' => 'non_standard_port_number',", "'port' => '" . $databasePort . "',", $content, $count);
 
