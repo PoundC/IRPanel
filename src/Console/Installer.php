@@ -84,7 +84,7 @@ class Installer
 
         if (in_array($bakeDatabaseConfig, ['Y', 'y'])) {
 
-            static::setDatabaseDetails($rootDir, $io);
+            static::setDatabaseDetails($rootDir, $io, $shell);
 
             $installSchemas = $io->askAndValidate(
                 '<info>Install Default Schemas? (Default to Y)</info> [<comment>Y,n</comment>]? ',
@@ -369,14 +369,12 @@ class Installer
     }
 
 
-    public static function setDatabaseHost($dir, $io)
+    public static function setDatabaseHost($dir, $io, $shell)
     {
         $config = $dir . '/config/app.php';
         $content = file_get_contents($config);
 
-        $databaseHost = $io->askConfirmation(
-            '<info>Enter the database host</info><comment>:</comment> '
-        );
+        $databaseHost = $shell->in('Enter the database host: ');
 
         $content = str_replace("'host' => '127.0.0.1',", "'host' => '" . $databaseHost . "',", $content, $count);
 
