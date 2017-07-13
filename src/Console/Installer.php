@@ -72,6 +72,8 @@ class Installer
 
         static::setSecuritySalt($rootDir, $io);
 
+        copy($rootDir . '/config/app.default.php', $rootDir . '/config/app.php');
+
         $bakeDatabaseConfig = $io->askAndValidate(
             '<info>Enter Database Config? (Default to Y)</info> [<comment>Y,n</comment>]? ',
             $validator,
