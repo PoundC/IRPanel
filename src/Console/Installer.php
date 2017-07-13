@@ -249,11 +249,11 @@ class Installer
 
     public static function setDatabaseDetails($dir, $io)
     {
-        static::setDatabaseHost($dir, $io, $shell);
-        static::setDatabasePort($dir, $io, $shell);
-        static::setDatabaseName($dir, $io, $shell);
-        static::setDatabaseUsername($dir, $io, $shell);
-        static::setDatabasePassword($dir, $io, $shell);
+        static::setDatabaseHost($dir, $io);
+        static::setDatabasePort($dir, $io);
+        static::setDatabaseName($dir, $io);
+        static::setDatabaseUsername($dir, $io);
+        static::setDatabasePassword($dir, $io);
     }
 
     /**
