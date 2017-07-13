@@ -251,10 +251,10 @@ class Installer
     public static function setDatabaseDetails($dir, $io, $shell)
     {
         static::setDatabaseHost($dir, $io, $shell);
-        static::setDatabasePort($dir, $io);
-        static::setDatabaseName($dir, $io);
-        static::setDatabaseUsername($dir, $io);
-        static::setDatabasePassword($dir, $io);
+        static::setDatabasePort($dir, $io, $shell);
+        static::setDatabaseName($dir, $io, $shell);
+        static::setDatabaseUsername($dir, $io, $shell);
+        static::setDatabasePassword($dir, $io, $shell);
     }
 
     /**
@@ -265,7 +265,7 @@ class Installer
      * @param \Composer\IO\IOInterface $io IO interface to write to console.
      * @return void
      */
-    public static function setDatabaseName($dir, $io)
+    public static function setDatabaseName($dir, $io, $shell)
     {
         $config = $dir . '/config/app.php';
         $content = file_get_contents($config);
@@ -291,7 +291,7 @@ class Installer
         $io->write('Unable to update database value.');
     }
 
-    public static function setDatabasePort($dir, $io)
+    public static function setDatabasePort($dir, $io, $shell)
     {
         $config = $dir . '/config/app.php';
         $content = file_get_contents($config);
@@ -318,7 +318,7 @@ class Installer
         $io->write('Unable to update database port value.');
     }
 
-    public static function setDatabaseUsername($dir, $io)
+    public static function setDatabaseUsername($dir, $io, $shell)
     {
         $config = $dir . '/config/app.php';
         $content = file_get_contents($config);
@@ -344,7 +344,7 @@ class Installer
         $io->write('Unable to update database username value.');
     }
 
-    public static function setDatabasePassword($dir, $io)
+    public static function setDatabasePassword($dir, $io, $shell)
     {
         $config = $dir . '/config/app.php';
         $content = file_get_contents($config);
@@ -379,6 +379,8 @@ class Installer
         $databaseHost = $shell->in('Enter the database host: ');
 
         $content = str_replace("'host' => '127.0.0.1',", "'host' => '" . $databaseHost . "',", $content, $count);
+
+        var_dump($content);
 
         if ($count == 0) {
             $io->write('No database password placeholder to replace.');
