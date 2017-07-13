@@ -14,9 +14,13 @@
  */
 namespace App\Console;
 
+require_once(__DIR__ . '/../../vendor/autoload.php');
+require_once(__DIR__ . '/../../config/bootstrap.php');
+
 use Cake\Utility\Security;
 use Composer\Script\Event;
 use Exception;
+use Cake\Console\ShellDispatcher;
 
 /**
  * Provides installation hooks for when this application is installed via
@@ -37,7 +41,7 @@ class Installer
         $io = $event->getIO();
 
         $rootDir = dirname(dirname(__DIR__));
-
+        $adsf = namespaceSplit('','');
         $validator = function ($arg) {
             if (in_array($arg, ['Y', 'y', 'N', 'n'])) {
                 return $arg;
@@ -47,13 +51,13 @@ class Installer
 
         static::createAppConfig($rootDir, $io);
         static::createWritableDirectories($rootDir, $io);
-        static::createAdminLTESymLinks();
+        static::createAdminLTESymLinks($event);
 
         // ask if the permissions should be changed
         if ($io->isInteractive()) {
 
             $setFolderPermissions = $io->askAndValidate(
-                '<info>Set Folder Permissions ? (Default to Y)</info> [<comment>Y,n</comment>]? ',
+                '<info>Set Folder Permissions? (Default to Y)</info> [<comment>Y,n</comment>]? ',
                 $validator,
                 10,
                 'Y'
@@ -69,18 +73,20 @@ class Installer
         static::setSecuritySalt($rootDir, $io);
 
         $bakeDatabaseConfig = $io->askAndValidate(
-            '<info>Bake Database Config ? (Default to Y)</info> [<comment>Y,n</comment>]? ',
+            '<info>Enter Database Config? (Default to Y)</info> [<comment>Y,n</comment>]? ',
             $validator,
             10,
             'Y'
         );
 
+        $shell = new ShellDispatcher();
+
         if (in_array($bakeDatabaseConfig, ['Y', 'y'])) {
 
-            // cake bake database
+            static::setDatabaseDetails($rootDir, $io);
 
             $installSchemas = $io->askAndValidate(
-                '<info>Bake Database Config ? (Default to Y)</info> [<comment>Y,n</comment>]? ',
+                '<info>Install Default Schemas? (Default to Y)</info> [<comment>Y,n</comment>]? ',
                 $validator,
                 10,
                 'Y'
@@ -88,7 +94,25 @@ class Installer
 
             if (in_array($installSchemas, ['Y', 'y'])) {
 
-                // cake migrations migrate -p CakeDC/Users
+                $shell->dispatch([
+                    'command' => 'migrations migrate -p CakePHPKitchen/CakeAdminUsers',
+                    'extra' => []
+                ]);
+
+                $addSuperUser = $io->askAndValidate(
+                    '<info>Add Superuser to database? (Default to Y)</info> [<comment>Y,n</comment>]? ',
+                    $validator,
+                    10,
+                    'Y'
+                );
+
+                if (in_array($addSuperUser, ['Y', 'y'])) {
+
+                    $shell->dispatch([
+                        'command' => 'users addSuperuser',
+                        'extra' => []
+                    ]);
+                }
             }
         }
 
@@ -220,6 +244,128 @@ class Installer
         $io->write('Unable to update Security.salt value.');
     }
 
+
+    public static function setDatabaseDetails($dir, $io)
+    {
+        static::setDatabaseName($dir, $io);
+        static::setDatabasePort($dir, $io);
+        static::setDatabaseUsername($dir, $io);
+        static::setDatabasePassword($dir, $io);
+    }
+
+    /**
+     *
+     * Set the database details in the application's config file.
+     *
+     * @param string $dir The application's root directory.
+     * @param \Composer\IO\IOInterface $io IO interface to write to console.
+     * @return void
+     */
+    public static function setDatabaseName($dir, $io)
+    {
+        $config = $dir . '/config/app.php';
+        $content = file_get_contents($config);
+
+        $databaseName = $io->askConfirmation(
+            '<info>Enter the database name</info><comment>:</comment> '
+        );
+
+        $content = str_replace("'database' => 'my_app',", "'database' => '" . $databaseName . "',", $content, $count);
+
+        if ($count == 0) {
+            $io->write('No database placeholder to replace.');
+
+            return;
+        }
+
+        $result = file_put_contents($config, $content);
+        if ($result) {
+            $io->write('Updated database value in config/app.php');
+
+            return;
+        }
+        $io->write('Unable to update database value.');
+    }
+
+    public static function setDatabasePort($dir, $io)
+    {
+        $config = $dir . '/config/app.php';
+        $content = file_get_contents($config);
+
+        $databasePort = $io->askConfirmation(
+            '<info>Enter the database port (Default: 3306)</info><comment>:</comment> ',
+            3306
+        );
+
+        $content = str_replace("//'port' => 'non_standard_port_number',", "'port' => '" . $databasePort . "',", $content, $count);
+
+        if ($count == 0) {
+            $io->write('No database port placeholder to replace.');
+
+            return;
+        }
+
+        $result = file_put_contents($config, $content);
+        if ($result) {
+            $io->write('Updated database port value in config/app.php');
+
+            return;
+        }
+        $io->write('Unable to update database port value.');
+    }
+
+    public static function setDatabaseUsername($dir, $io)
+    {
+        $config = $dir . '/config/app.php';
+        $content = file_get_contents($config);
+
+        $databaseUsername = $io->askConfirmation(
+            '<info>Enter the database username</info><comment>:</comment> '
+        );
+
+        $content = str_replace("'username' => 'my_app',", "'username' => '" . $databaseUsername . "',", $content, $count);
+
+        if ($count == 0) {
+            $io->write('No database username placeholder to replace.');
+
+            return;
+        }
+
+        $result = file_put_contents($config, $content);
+        if ($result) {
+            $io->write('Updated database username value in config/app.php');
+
+            return;
+        }
+        $io->write('Unable to update database username value.');
+    }
+
+    public static function setDatabasePassword($dir, $io)
+    {
+        $config = $dir . '/config/app.php';
+        $content = file_get_contents($config);
+
+        $databasePass = $io->askConfirmation(
+            '<info>Enter the database user password</info><comment>:</comment> '
+        );
+
+        $content = str_replace("'password' => 'secret',", "'password' => '" . $databasePass . "',,", $content, $count);
+
+        if ($count == 0) {
+            $io->write('No database password placeholder to replace.');
+
+            return;
+        }
+
+        $result = file_put_contents($config, $content);
+        if ($result) {
+            $io->write('Updated database password value in config/app.php');
+
+            return;
+        }
+        $io->write('Unable to update password database value.');
+    }
+
     public static function createAdminLTESymLinks(Event $event)
     {
         $io = $event->getIO();
@@ -228,21 +374,26 @@ class Installer
 
         $io->write('Installing AdminLTE vendor SymLinks to Webroot');
 
-        symlink($rootDir . '/vendor/almasaeed2010/adminlte/bootstrap', $rootDir . '/webroot/bootstrap');
-        $io->write('Created Symlink: ' . $rootDir . '/webroot/bootstrap');
+        try {
+            symlink($rootDir . '/vendor/almasaeed2010/adminlte/bootstrap', $rootDir . '/webroot/bootstrap');
+            $io->write('Created Symlink: ' . $rootDir . '/webroot/bootstrap');
 
-        symlink($rootDir . '/vendor/almasaeed2010/adminlte/dist', $rootDir . '/webroot/dist');
-        $io->write('Created Symlink: ' . $rootDir . '/webroot/dist');
+            symlink($rootDir . '/vendor/almasaeed2010/adminlte/dist', $rootDir . '/webroot/dist');
+            $io->write('Created Symlink: ' . $rootDir . '/webroot/dist');
 
-        symlink($rootDir . '/vendor/almasaeed2010/adminlte/documentation', $rootDir . '/webroot/documentation');
-        $io->write('Created Symlink: ' . $rootDir . '/webroot/documentation');
+            symlink($rootDir . '/vendor/almasaeed2010/adminlte/documentation', $rootDir . '/webroot/documentation');
+            $io->write('Created Symlink: ' . $rootDir . '/webroot/documentation');
 
-        symlink($rootDir . '/vendor/almasaeed2010/adminlte/pages', $rootDir . '/webroot/pages');
-        $io->write('Created Symlink: ' . $rootDir . '/webroot/pages');
+            symlink($rootDir . '/vendor/almasaeed2010/adminlte/pages', $rootDir . '/webroot/pages');
+            $io->write('Created Symlink: ' . $rootDir . '/webroot/pages');
 
-        symlink($rootDir . '/vendor/almasaeed2010/adminlte/plugins', $rootDir . '/webroot/plugins');
-        $io->write('Created Symlink: ' . $rootDir . '/webroot/plugins');
+            symlink($rootDir . '/vendor/almasaeed2010/adminlte/plugins', $rootDir . '/webroot/plugins');
+            $io->write('Created Symlink: ' . $rootDir . '/webroot/plugins');
+        }
+        catch(Exception $ex)
+        {
 
+        }
         return 0;
     }
 }
