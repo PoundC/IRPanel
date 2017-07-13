@@ -81,7 +81,6 @@ class Installer
 
         require_once(__DIR__ . '/../../config/bootstrap.php');
 
-        $shellDispatcher = new ShellDispatcher();
         $shell = new Shell();
 
         if (in_array($bakeDatabaseConfig, ['Y', 'y'])) {
@@ -97,7 +96,7 @@ class Installer
 
             if (in_array($installSchemas, ['Y', 'y'])) {
 
-                $shellDispatcher->dispatch([
+                $shell->dispatchShell([
                     'command' => 'migrations migrate --plugin CakePHPKitchen/CakeAdminUsers',
                     'extra' => []
                 ]);
@@ -111,7 +110,7 @@ class Installer
 
                 if (in_array($addSuperUser, ['Y', 'y'])) {
 
-                    $shellDispatcher->dispatch([
+                    $shell->dispatchShell([
                         'command' => 'users addSuperuser',
                         'extra' => []
                     ]);
