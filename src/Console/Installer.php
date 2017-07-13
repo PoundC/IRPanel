@@ -16,6 +16,7 @@ namespace App\Console;
 
 require_once(__DIR__ . '/../../vendor/autoload.php');
 
+use Cake\Console\Shell;
 use Cake\Utility\Security;
 use Composer\Script\Event;
 use Exception;
@@ -80,7 +81,8 @@ class Installer
 
         require_once(__DIR__ . '/../../config/bootstrap.php');
 
-        $shell = new ShellDispatcher();
+        $shellDispatcher = new ShellDispatcher();
+        $shell = new Shell();
 
         if (in_array($bakeDatabaseConfig, ['Y', 'y'])) {
 
@@ -95,7 +97,7 @@ class Installer
 
             if (in_array($installSchemas, ['Y', 'y'])) {
 
-                $shell->dispatch([
+                $shellDispatcher->dispatch([
                     'command' => 'migrations migrate -p CakePHPKitchen/CakeAdminUsers',
                     'extra' => []
                 ]);
@@ -109,7 +111,7 @@ class Installer
 
                 if (in_array($addSuperUser, ['Y', 'y'])) {
 
-                    $shell->dispatch([
+                    $shellDispatcher->dispatch([
                         'command' => 'users addSuperuser',
                         'extra' => []
                     ]);
