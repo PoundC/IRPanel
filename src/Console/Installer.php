@@ -268,7 +268,7 @@ class Installer
         $config = $dir . '/config/app.php';
         $content = file_get_contents($config);
 
-        $databaseName = $io->askConfirmation(
+        $databaseName = $io->ask(
             '<info>Enter the database name</info><comment>:</comment> '
         );
 
@@ -375,7 +375,7 @@ class Installer
         $content = file_get_contents($config);
 
         $databaseHost = $io->askConfirmation(
-            '<info>Enter the database user password</info><comment>:</comment> '
+            '<info>Enter the database host</info><comment>:</comment> '
         );
 
         $content = str_replace("'host' => '127.0.0.1',", "'host' => '" . $databaseHost . "',", $content, $count);
