@@ -40,7 +40,7 @@ $menus = [
                         'icon' => 'fa-pencil-square',
                     ],
                     'Reset Password' => [
-                        'path' => '/reset_password',
+                        'path' => '/reset',
                         'icon' => 'fa-compass',
                     ]
 
