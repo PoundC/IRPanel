@@ -40,8 +40,10 @@
                         </a>
                     </li>
                 </ul>
-
-                <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+                <?php
+                // @todo add follow
+                // <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+                ?>
             </div>
             <!-- /.box-body -->
         </div>

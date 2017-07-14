@@ -7,7 +7,17 @@
             <!-- /.box-header -->
             <!-- form start -->
             <?= $this->Flash->render('auth') ?>
-            <?= $this->Form->create($user) ?>
+            <?php
+
+                if(isset($userPasswordEntity)) {
+
+                    echo $this->Form->create($userPasswordEntity, array('url' => '/users/users/change_password'));
+                }
+                else {
+
+                    echo $this->Form->create($user, array('url' => '/users/users/change_password'));
+                }
+            ?>
             <div class="box-body">
                 <?php if ($validatePassword) : ?>
                 <div class="form-group has-feedback">
@@ -17,11 +27,11 @@
                 <?php endif; ?>
                 <h4>Set New Password</h4>
                 <div class="form-group has-feedback">
-                    <?php echo $this->Form->control('password', ['label' => false, 'type' => 'text', 'placeholder' => 'Password', 'class' => 'form-control', 'value' => '']); ?>
+                    <?php echo $this->Form->control('password', ['label' => false, 'type' => 'password', 'placeholder' => 'New Password', 'class' => 'form-control', 'value' => '']); ?>
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <?php echo $this->Form->control('password_confirm', ['label' => false, 'type' => 'password', 'placeholder' => 'Confirm Password', 'class' => 'form-control']); ?>
+                    <?php echo $this->Form->control('password_confirm', ['label' => false, 'type' => 'password', 'placeholder' => 'Confirm New Password', 'class' => 'form-control']); ?>
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
             </div>

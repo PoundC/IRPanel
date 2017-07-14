@@ -12,7 +12,7 @@ $Users = ${$tableAlias};
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <?= $this->Form->create($Users); ?>
+            <?= $this->Form->create($Users, array('url' => '/users/users/edit/' . $currentUser->id)); ?>
             <div class="box-body">
                 <div class="form-group has-feedback">
                     <?php echo $this->Form->control('username', ['label' => false, 'type' => 'text', 'placeholder' => 'Username', 'class' => 'form-control']); ?>

@@ -20,6 +20,7 @@ use Cake\Core\Configure;
 use Cake\Controller\Component\AuthComponent;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
+use App\Utility\Menu;
 
 /**
  * Application Controller
@@ -31,7 +32,6 @@ use Cake\ORM\TableRegistry;
  */
 class AppController extends Controller
 {
-
     /**
      * Initialization hook method.
      *
@@ -48,7 +48,6 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
         $this->loadComponent('CakePHPKitchen/CakeAdminUsers.UsersAuth');
-
 
         /*
          * Enable the following components for recommended CakePHP security settings.
@@ -80,48 +79,51 @@ class AppController extends Controller
         $isCurrentUser = false;
         $notLoggedIn = false;
 
-        if($this->Auth->user('id')) {
+        if(method_exists($this->Auth, 'user')) {
+            if ($this->Auth->user('id')) {
 
-            $currentId = $this->Auth->user('id');
+                $currentId = $this->Auth->user('id');
 
-            if(isset($this->request->params['pass'][0])) {
+                if (isset($this->request->params['pass'][0])) {
 
-                $currentId = $this->request->params['pass'][0];
+                    $currentId = $this->request->params['pass'][0];
+                }
+
+                $currentUser = TableRegistry::get(Configure::read('Users.table'))->get($this->Auth->user('id'), [
+                    'contain' => array_merge((array)$appContain, (array)$socialContain)
+                ]);
+
+                if ($currentUser->is_superuser == 1) {
+
+                    $isSuperUser = true;
+                    $isAdmin = true;
+                }
+
+                if ($currentUser->role == 'admin') {
+
+                    $isAdmin = true;
+                }
+
+                if ($currentId == $this->Auth->user('id')) {
+
+                    $isCurrentUser = true;
+                }
+
+                $this->set(compact('currentUser', 'isCurrentUser', 'isAdmin', 'isSuperUser', 'notLoggedIn'));
+
+            } else {
+
+                $notLoggedIn = true;
+
+                $currentUser = $this->getUsersTable()->newEntity();
+
+                $this->set(compact('currentUser', 'isCurrentUser', 'isAdmin', 'isSuperUser', 'notLoggedIn'));
             }
-
-            $currentUser = TableRegistry::get(Configure::read('Users.table'))->get($this->Auth->user('id'), [
-                'contain' => array_merge((array)$appContain, (array)$socialContain)
-            ]);
-
-            if($currentUser->is_superuser == 1) {
-
-                $isSuperUser = true;
-                $isAdmin = true;
-            }
-
-            if($currentUser->role == 'admin') {
-
-                $isAdmin = true;
-            }
-
-            if($currentId == $this->Auth->user('id')) {
-
-                $isCurrentUser = true;
-            }
-
-            $this->set(compact('currentUser', 'isCurrentUser', 'isAdmin', 'isSuperUser', 'notLoggedIn'));
-
-        }
-        else {
-
-            $notLoggedIn = true;
-
-            $currentUser = $this->getUsersTable()->newEntity();
-
-            $this->set(compact('currentUser', 'isCurrentUser', 'isAdmin', 'isSuperUser', 'notLoggedIn'));
         }
 
         $this->set('_serialize', ['currentUser']);
         $this->set('avatarPlaceholder', Configure::read('Users.Avatar.placeholder'));
+
+        $this->set('menus', Menu::getVisitorMenu($this->request->here));
     }
 }

@@ -48,6 +48,7 @@ require __DIR__ . '/paths.php';
  * - Setting the default application paths.
  */
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
+require __DIR__ . '/menus.php';
 
 use Cake\Cache\Cache;
 use Cake\Console\ConsoleErrorHandler;
@@ -63,7 +64,7 @@ use Cake\Log\Log;
 use Cake\Mailer\Email;
 use Cake\Utility\Inflector;
 use Cake\Utility\Security;
-use Cake\Utility\Menu;
+use App\Utility\Menu;
 
 /*
  * Read configuration file and inject configuration into various
@@ -224,4 +225,3 @@ if (Configure::read('debug')) {
 
 Plugin::load('CakePHPKitchen/CakeAdminUsers', ['routes' => true, 'bootstrap' => true]);
 
-Menu::add('Cake Admin', array('Users Panel' => '/users/'));
