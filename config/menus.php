@@ -11,8 +11,38 @@ $menus = [
                 'path'  => '/register'
             ],
             [
+                'group' => 'Visitor Menu',
+                'icon'  => 'fa-map-signs',
+                'menu'  => [
+                    'Home'          => [
+                        'path' => '/',
+                        'icon' => 'fa-home',
+                    ],
+                    'Pricing' => [
+                        'path' => '/pricing',
+                        'icon' => 'fa-dollar',
+                    ],
+                    'FAQ'   => [
+                        'path' => '/faq',
+                        'icon' => 'fa-question-circle'
+                    ],
+                    'About' => [
+                        'path' => '/about',
+                        'icon' => 'fa-flag'
+                    ],
+                    'Company' => [
+                        'path' => '/company',
+                        'icon' => 'fa-building'
+                    ],
+                    'Investors' => [
+                        'path' => '/investors',
+                        'icon' => 'fa-money'
+                    ],
+                ]
+            ],
+            [
                 'group' => 'User Menu',
-                'icon'  => 'fa-pencil',
+                'icon'  => 'fa-child',
                 'menu'  => [
                     'Login'          => [
                         'path' => '/login',
@@ -33,7 +63,7 @@ $menus = [
                 'icon'  => 'fa-pencil',
                 'menu' => [
                     'Home'  => [
-                        'path'  => '/',
+                        'path'  => '/home',
                         'icon'  => 'fa-home'
                     ],
                     'Dashboard' => [
@@ -68,7 +98,7 @@ $menus = [
                     ],
                     'Contact Us'=> [
                         'path' => '/contact',
-                        'icon' => 'fa-comment-o'
+                        'icon' => 'fa-comment'
                     ]
 
                     // Placeholder for Example Tiered Menus

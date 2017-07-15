@@ -53,6 +53,18 @@ return [
     'Users.SimpleRbac.permissions' => [
         [
             'role' => '*',
+            'controller' => ['Pages'],
+            'action' => ['home', 'display'],
+            'allowed' => true,
+        ],
+        [
+            'role' => '*',
+            'controller' => ['Visitors'],
+            'action' => ['about'],
+            'allowed' => true,
+        ],
+        [
+            'role' => '*',
             'plugin' => 'CakePHPKitchen/CakeAdminUsers',
             'controller' => '*',
             'action' => '*',
@@ -86,8 +98,8 @@ return [
         ],
         [
             'role' => ['user'],
-            'controller' => ['Pages'],
-            'action' => ['other', 'display'],
+            'controller' => ['User'],
+            'action' => ['search'],
             'allowed' => true,
-        ],
+        ]
     ]];

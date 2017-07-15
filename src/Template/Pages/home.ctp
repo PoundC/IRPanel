@@ -3,5 +3,3 @@
 $cakeDescription = 'asdfsa';
 
 ?>
-
-content...

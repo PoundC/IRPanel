@@ -21,6 +21,7 @@ use Cake\Controller\Component\AuthComponent;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use App\Utility\Menu;
+use CakePHPKitchen\CakeAdminUsers\Controller\Traits\CustomUsersTableTrait;
 
 /**
  * Application Controller
@@ -32,6 +33,8 @@ use App\Utility\Menu;
  */
 class AppController extends Controller
 {
+    use CustomUsersTableTrait;
+
     /**
      * Initialization hook method.
      *

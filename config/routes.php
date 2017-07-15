@@ -82,6 +82,15 @@ Router::scope('/', function (RouteBuilder $routes) {
 Plugin::routes();
 
 /*
+ *
+ *  Visitor Menu Routes
+ *
+ */
+
+Router::connect('/about', ['controller' => 'Visitors', 'action' => 'about']);
+
+
+/*
  * CakeDC/Users Routes
  *
  */
