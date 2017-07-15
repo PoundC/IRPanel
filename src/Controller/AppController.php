@@ -109,6 +109,7 @@ class AppController extends Controller
                     $isCurrentUser = true;
                 }
 
+                $this->set('menus', Menu::getUserMenu($this->request->here));
                 $this->set(compact('currentUser', 'isCurrentUser', 'isAdmin', 'isSuperUser', 'notLoggedIn'));
 
             } else {
@@ -117,6 +118,7 @@ class AppController extends Controller
 
                 $currentUser = $this->getUsersTable()->newEntity();
 
+                $this->set('menus', Menu::getVisitorMenu($this->request->here));
                 $this->set(compact('currentUser', 'isCurrentUser', 'isAdmin', 'isSuperUser', 'notLoggedIn'));
             }
         }
@@ -124,6 +126,6 @@ class AppController extends Controller
         $this->set('_serialize', ['currentUser']);
         $this->set('avatarPlaceholder', Configure::read('Users.Avatar.placeholder'));
 
-        $this->set('menus', Menu::getVisitorMenu($this->request->here));
+
     }
 }

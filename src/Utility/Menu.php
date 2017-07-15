@@ -74,7 +74,9 @@ class Menu {
 
     public static function getUserMenu($currentPath) {
 
-        return self::buildMenu($currentPath, self::$_UserMenu);
+        $mergedArray = array_merge(self::$_UserMenu, self::$_SiteMenu);
+
+        return self::buildMenu($currentPath, $mergedArray);
     }
 
     public static function getAdminMenu($currentPath) {
@@ -130,7 +132,7 @@ class Menu {
 
     public static function buildMenu($currentPath, $menu) {
 
-        $html = '<ul class="sidebar-menu" data-widget="tree">';
+        $html = '<ul class="sidebar-menu" data-api="tree" data-accordion=1 data-widget="tree">';
 
         foreach($menu as $headerGroup => $group) {
 
@@ -138,49 +140,61 @@ class Menu {
 
             foreach ($group as $menuGroup) {
 
-                $menuItems = $menuGroup['menu'];
-                $menuName = $menuGroup['group'];
-                $menuIcon = $menuGroup['icon'];
+                if (isset($menuGroup['group'])) {
+                    $menuItems = $menuGroup['menu'];
+                    $menuName = $menuGroup['group'];
+                    $menuIcon = $menuGroup['icon'];
 
-                $first_class = 'treeview';
+                    $first_class = 'treeview';
 
-                if(self::isMenuActive($currentPath, $menuItems) == true) {
+                    if (self::isMenuActive($currentPath, $menuItems) == true) {
 
-                    $first_class .= ' active';
-                }
-
-                $html .= '<li class="' . $first_class . '"><a href="#"><i class="fa ' . $menuIcon . '"></i><span>' . $menuName . '</span>';
-                $html .= '<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>';
-                $html .= '<ul class="treeview-menu">';
-
-                foreach ($menuItems as $item => $items) {
-
-                    if(isset($items['path'])) {
-
-                        $isActive = '';
-
-                        if($currentPath == $items['path']) {
-
-                            $isActive = 'active';
-                        }
-
-                        $html .= '<li class="' . $isActive . '"><a href="' . $items['path'] . '"><i class="fa ' . $items['icon'] . '"></i><span>' . $item . '</span></a>';
+                        $first_class .= ' active';
                     }
-                    else {
+
+                    $html .= '<li class="' . $first_class . '"><a href="#"><i class="fa ' . $menuIcon . '"></i><span>' . $menuName . '</span>';
+                    $html .= '<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>';
+                    $html .= '<ul class="treeview-menu">';
+
+                    foreach ($menuItems as $item => $items) {
+
+                        if (isset($items['path'])) {
+
+                            $isActive = '';
+
+                            if ($currentPath == $items['path']) {
+
+                                $isActive = 'active';
+                            }
+
+                            $html .= '<li class="' . $isActive . '"><a href="' . $items['path'] . '"><i class="fa ' . $items['icon'] . '"></i><span>' . $item . '</span></a>';
+                        } else {
 
 
-                        if(self::isMenuActive($currentPath, $items['menu']) == true) {
+                            if (self::isMenuActive($currentPath, $items['menu']) == true) {
 
-                            $first_class2 = ' active';
+                                $first_class2 = ' active';
+                            }
+
+                            $html .= '<li class="treeview ' . $first_class2 . '"><a href="#"><i class="fa ' . $items['icon'] . '"></i><span>' . $items['group'] . '</span>';
+                            $html .= '<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>';
+                            $html .= self::buildMenuItems($currentPath, $items['menu']);
                         }
-
-                        $html .= '<li class="treeview ' . $first_class2 . '"><a href="#"><i class="fa ' . $items['icon'] . '"></i><span>' . $items['group'] . '</span>';
-                        $html .= '<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>';
-                        $html .= self::buildMenuItems($currentPath, $items['menu']);
                     }
-                }
 
-                $html .= '</ul>';
+                    $html .= '</ul>';
+                }
+                else if(isset($menuGroup['link'])) {
+
+                    $isActive = '';
+
+                    if ($currentPath == $menuGroup['path']) {
+
+                        $isActive = 'class="active"';
+                    }
+
+                    $html .= '<li ' . $isActive . '><a href="' . $menuGroup['path'] . '"><i class="fa ' . $menuGroup['icon'] . '"></i><span>' . $menuGroup['link'] . '</span>';
+                }
             }
         }
 

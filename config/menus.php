@@ -3,6 +3,55 @@
 use App\Utility\Menu;
 
 $menus = [
+    'visitor' => [
+        'Site Links' => [
+            [
+                'link'  => 'Click To Register Account',
+                'icon'  => 'fa-pencil-square',
+                'path'  => '/register'
+            ],
+            [
+                'group' => 'User Menu',
+                'icon'  => 'fa-pencil',
+                'menu'  => [
+                    'Login'          => [
+                        'path' => '/login',
+                        'icon' => 'fa-sign-in',
+                    ],
+                    'Reset Password' => [
+                        'path' => '/reset',
+                        'icon' => 'fa-compass',
+                    ]
+                ]
+            ]
+        ]
+    ],
+    'user' => [
+        'User Links' => [
+            [
+                'group' => 'User Menu',
+                'icon'  => 'fa-pencil',
+                'menu' => [
+                    'Home'  => [
+                        'path'  => '/',
+                        'icon'  => 'fa-home'
+                    ],
+                    'Dashboard' => [
+                        'path' => '/dashboard',
+                        'icon' => 'fa-dashboard'
+                    ],
+                    'Profile' => [
+                        'path' => '/profile',
+                        'icon' => 'fa-briefcase',
+                    ],
+                    'Logout' =>[
+                        'path' => '/logout',
+                        'icon' => 'fa-sign-out',
+                    ]
+                ]
+            ]
+        ]
+    ],
     'site' => [
         'Company Links' => [
             [
@@ -20,28 +69,6 @@ $menus = [
                     'Contact Us'=> [
                         'path' => '/contact',
                         'icon' => 'fa-comment-o'
-                    ]
-                ]
-            ]
-        ]
-    ],
-    'visitor' => [
-        'Site Links' => [
-            [
-                'group' => 'Visitor Menu',
-                'icon'  => 'fa-pencil',
-                'menu' => [
-                    'Login' =>[
-                        'path' => '/login',
-                        'icon' => 'fa-sign-in',
-                    ],
-                    'Register' => [
-                        'path' => '/register',
-                        'icon' => 'fa-pencil-square',
-                    ],
-                    'Reset Password' => [
-                        'path' => '/reset',
-                        'icon' => 'fa-compass',
                     ]
 
                     // Placeholder for Example Tiered Menus
@@ -67,37 +94,6 @@ $menus = [
                         ]
                     ]
                     */
-                ]
-            ]
-            // Placeholder for Example Second Menu Group
-            /*
-            [
-                'group' => 'Second Menu',
-                'icon'  => 'fa-fighter-jet',
-                'menu'  => [
-                    'Silos' => [
-                        'path' => '/drop_bombs',
-                        'icon' => 'fa-bomb'
-                    ]
-                ]
-            ]
-            */
-        ]
-    ],
-    'user' => [
-        'User Links' => [
-            'Home' => [
-                'Dashboard' => [
-                    'path' => '/dashboard',
-                    'icon' => 'fa-dashboard'
-                ],
-                'Profile' => [
-                    'path' => '/profile',
-                    'icon' => 'fa-briefcase',
-                ],
-                'Logout' =>[
-                    'path' => '/login',
-                    'icon' => 'fa-sign-out',
                 ]
             ]
         ]
