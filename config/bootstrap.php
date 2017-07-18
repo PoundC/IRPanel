@@ -224,5 +224,5 @@ if (Configure::read('debug')) {
     // Plugin::load('DebugKit', ['bootstrap' => true]);
 }
 
-Plugin::load('CakePHPKitchen/CakeAdminUsers', ['routes' => true, 'bootstrap' => true]);
-
+Configure::write('Users.config', ['users']);
+Plugin::load('CakeDC/Users', ['routes' => true, 'bootstrap' => true]);

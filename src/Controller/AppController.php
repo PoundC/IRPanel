@@ -21,7 +21,7 @@ use Cake\Controller\Component\AuthComponent;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use App\Utility\Menu;
-use CakePHPKitchen\CakeAdminUsers\Controller\Traits\CustomUsersTableTrait;
+use CakeDC\Users\Controller\Traits\CustomUsersTableTrait;
 
 /**
  * Application Controller
@@ -50,14 +50,14 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
-        $this->loadComponent('CakePHPKitchen/CakeAdminUsers.UsersAuth');
+        $this->loadComponent('CakeDC/Users.UsersAuth');
 
         /*
          * Enable the following components for recommended CakePHP security settings.
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
          */
-        //$this->loadComponent('Security');
-        //$this->loadComponent('Csrf');
+        $this->loadComponent('Security');
+        $this->loadComponent('Csrf');
     }
 
     /**

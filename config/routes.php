@@ -108,6 +108,6 @@ Router::connect('/dashboard', ['controller' => 'Members', 'action' => 'dashboard
  * CakeDC/Users Routes
  *
  */
-
-Router::connect('/register', ['plugin' => 'CakePHPKitchen/CakeAdminUsers', 'controller' => 'Users', 'action' => 'register']);
-Router::connect('/reset', ['plugin' => 'CakePHPKitchen/CakeAdminUsers', 'controller' => 'Users', 'action' => 'requestResetPassword']);
+Router::connect('/profile/*', ['controller' => 'MyUsers', 'action' => 'profile']);
+Router::connect('/register', ['plugin' => 'CakeDC/Users', 'controller' => 'Users', 'action' => 'register']);
+Router::connect('/reset', ['plugin' => 'CakeDC/Users', 'controller' => 'Users', 'action' => 'requestResetPassword']);

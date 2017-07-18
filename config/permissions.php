@@ -64,20 +64,26 @@ return [
             'allowed' => true,
         ],
         [
+            'role' => 'user',
+            'controller' => 'MyUsers',
+            'action' => ['profile'],
+            'allowed' => true,
+        ],
+        [
             'role' => '*',
-            'plugin' => 'CakePHPKitchen/CakeAdminUsers',
+            'plugin' => 'CakeDC/Users',
             'controller' => '*',
             'action' => '*',
         ],
         [
             'role' => 'user',
-            'plugin' => 'CakePHPKitchen/CakeAdminUsers',
+            'plugin' => 'CakeDC/Users',
             'controller' => 'Users',
             'action' => ['register', 'edit', 'view'],
         ],
         [
             'role' => '*',
-            'plugin' => 'CakePHPKitchen/CakeAdminUsers',
+            'plugin' => 'CakeDC/Users',
             'controller' => 'Users',
             'action' => 'resetGoogleAuthenticator',
             'allowed' => function (array $user, $role, \Cake\Http\ServerRequest $request) {
@@ -91,7 +97,7 @@ return [
         ],
         [
             'role' => 'user',
-            'plugin' => 'CakePHPKitchen/CakeAdminUsers',
+            'plugin' => 'CakeDC/Users',
             'controller' => 'Users',
             'action' => '*',
             'allowed' => false,

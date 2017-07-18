@@ -36,9 +36,9 @@ else {
 
     <div class="content-wrapper">
 
-        <?= $this->element('content_header'); ?>
-
         <?= $this->Flash->render(); ?>
+
+        <?= $this->element('content_header'); ?>
 
         <div class="content">
 
