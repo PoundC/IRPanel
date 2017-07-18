@@ -4,7 +4,7 @@ use App\Utility\Menu;
 
 $menus = [
     'visitor' => [
-        'Site Links' => [
+        'Welcome to CakeAdminLTE' => [
             [
                 'link'  => 'Click To Register',
                 'icon'  => 'fa-pencil-square',
@@ -91,23 +91,23 @@ $menus = [
         ]
     ],
     'site' => [
-        'Company Links' => [
+        'Sitewide Links' => [
             [
                 'group' => 'Support Menu',
                 'icon'  => 'fa-support',
                 'css'   => 'active non-active',
                 'menu' => [
-                    'Live Chat' => [
+                    'Documentation' => [
+                        'path' => '/documentation',
+                        'icon' => 'fa-book'
+                    ],
+                    'Live Group Chat' => [
                         'path' => '/chat',
                         'icon' => 'fa-wechat'
                     ],
-                    'Forum'     => [
+                    'Open Support Ticket'     => [
                         'path' => '/forum',
-                        'icon' => 'fa-comments'
-                    ],
-                    'Contact Us'=> [
-                        'path' => '/contact',
-                        'icon' => 'fa-comment'
+                        'icon' => 'fa-ticket'
                     ]
 
                     // Placeholder for Example Tiered Menus

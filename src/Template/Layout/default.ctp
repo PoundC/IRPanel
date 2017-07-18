@@ -40,8 +40,12 @@ else {
 
         <?= $this->Flash->render(); ?>
 
-        <?= $this->fetch('content') ?>
+        <div class="content">
 
+            <?= $this->fetch('content') ?>
+
+        </div>
+        
     </div> <!-- /.content-wrapper -->
 
     <?= $this->element('main_footer'); ?>
