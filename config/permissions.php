@@ -54,13 +54,13 @@ return [
         [
             'role' => '*',
             'controller' => ['Pages'],
-            'action' => ['home', 'display'],
+            'action' => ['display', 'other', 'index'],
             'allowed' => true,
         ],
         [
             'role' => '*',
             'controller' => ['Visitors'],
-            'action' => ['about'],
+            'action' => ['frontpage', 'products', 'pricing', 'faq', 'about', 'company', 'investors'],
             'allowed' => true,
         ],
         [

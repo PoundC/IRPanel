@@ -49,7 +49,7 @@ Router::scope('/', function (RouteBuilder $routes) {
      * its action called 'display', and we pass a param to select the view file
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
-    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    $routes->connect('/', ['controller' => 'Visitors', 'action' => 'frontpage', 'frontpage']);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
@@ -87,8 +87,22 @@ Plugin::routes();
  *
  */
 
+Router::connect('/products', ['controller' => 'Visitors', 'action' => 'products']);
+Router::connect('/pricing', ['controller' => 'Visitors', 'action' => 'pricing']);
+Router::connect('/faq', ['controller' => 'Visitors', 'action' => 'faq']);
 Router::connect('/about', ['controller' => 'Visitors', 'action' => 'about']);
+Router::connect('/company', ['controller' => 'Visitors', 'action' => 'company']);
+Router::connect('/investors', ['controller' => 'Visitors', 'action' => 'investors']);
 
+/*
+ *
+ *  Member Menu Routes
+ *
+ */
+
+Router::connect('/dashboard', ['controller' => 'Members', 'action' => 'dashboard']);
+// Router::connect('/pricing', ['controller' => 'Visitors', 'action' => 'pricing']);
+// Router::connect('/faq', ['controller' => 'Visitors', 'action' => 'faq']);
 
 /*
  * CakeDC/Users Routes

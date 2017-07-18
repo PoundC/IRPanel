@@ -1,0 +1,76 @@
+/*
+#1 = 3c8dbc
+#2 = 3c8dbc
+*/
+a {
+	color: #3c8dbc;
+}
+a:hover {
+	color: #3c8dbc;
+}
+
+/* menu */
+.nav>li>a:hover {
+	color: #54ee23;
+}
+
+.navbar .navbar-nav > .active > a {
+	color: #54ee23;
+}
+.navbar .navbar-brand:hover {
+	color: #54ee23;
+}
+
+/* flexslider */
+.flex-control-paging li a {
+	background: #3c8dbc;
+}
+
+.flex-direction-nav a:hover{
+	background-color:#3c8dbc;
+}
+
+.testimonial span.author a {
+	color: #3c8dbc;
+}
+
+/* --- icon box hover --- */
+.hi-icon-effect-5 .hi-icon {
+	color: #3c8dbc;
+	box-shadow: 0 0 0 4px #3c8dbc;
+}
+.no-touch .hi-icon-effect-5 .hi-icon:hover {
+	background: #3c8dbc;
+	box-shadow: 0 0 0 8px  #3c8dbc;
+}
+
+
+/* portfolio */
+.portfolio-item .portfolio-desc {
+	background: #3c8dbc;
+}
+
+/* btn */
+.btn-theme {
+  background: #3c8dbc;
+}
+.btn-theme:hover,.btn-theme:focus,.btn-theme:active{
+  background: #3c8dbc;
+}
+.btn-cta,.btn-cta.btn-lg {
+  background: #3c8dbc;
+  border-color: #3c8dbc;
+}
+
+.btn-cta:focus,.btn-cta:active{
+   border-color: #3c8dbc;
+}
+
+/* footer */
+.social-circle li a {
+	background:#3c8dbc;
+}
+
+a.scrollup{
+	background:#3c8dbc;
+}

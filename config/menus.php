@@ -6,17 +6,22 @@ $menus = [
     'visitor' => [
         'Site Links' => [
             [
-                'link'  => 'Click To Register Account',
+                'link'  => 'Click To Register',
                 'icon'  => 'fa-pencil-square',
                 'path'  => '/register'
             ],
             [
                 'group' => 'Visitor Menu',
                 'icon'  => 'fa-map-signs',
+                'css'   => 'active non-active',
                 'menu'  => [
-                    'Home'          => [
+                    'Home' => [
                         'path' => '/',
                         'icon' => 'fa-home',
+                    ],
+                    'Products' => [
+                        'path' => '/products',
+                        'icon' => 'fa-binoculars'
                     ],
                     'Pricing' => [
                         'path' => '/pricing',
@@ -32,7 +37,7 @@ $menus = [
                     ],
                     'Company' => [
                         'path' => '/company',
-                        'icon' => 'fa-building'
+                        'icon' => 'fa-cogs'
                     ],
                     'Investors' => [
                         'path' => '/investors',
@@ -43,6 +48,7 @@ $menus = [
             [
                 'group' => 'User Menu',
                 'icon'  => 'fa-child',
+                'css'   => 'active non-active',
                 'menu'  => [
                     'Login'          => [
                         'path' => '/login',
@@ -59,13 +65,15 @@ $menus = [
     'user' => [
         'User Links' => [
             [
+                'link'  => 'Click to Upgrade',
+                'icon'  => 'fa-fighter-jet',
+                'path'  => '/upgrade'
+            ],
+            [
                 'group' => 'User Menu',
                 'icon'  => 'fa-pencil',
+                'css'   => 'active non-active',
                 'menu' => [
-                    'Home'  => [
-                        'path'  => '/home',
-                        'icon'  => 'fa-home'
-                    ],
                     'Dashboard' => [
                         'path' => '/dashboard',
                         'icon' => 'fa-dashboard'
@@ -87,6 +95,7 @@ $menus = [
             [
                 'group' => 'Support Menu',
                 'icon'  => 'fa-support',
+                'css'   => 'active non-active',
                 'menu' => [
                     'Live Chat' => [
                         'path' => '/chat',

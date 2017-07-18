@@ -1,0 +1,25 @@
+
+.fa-left-icon {
+    width: 40px !important;
+    margin-top: -16px !important;
+}
+
+.treeview-menu > li > a {
+    font-size: 17px !important;
+}
+
+.skin-blue .sidebar-menu > li > a {
+    font-size: 19px !important;
+}
+
+.sidebar-menu li > a > .pull-right-container > .pull-right {
+    margin-right: 0px !important;
+}
+
+.sidebar-menu li > a > .pull-right-container {
+    margin-top: -16px !important;
+}
+
+.non-active {
+    color: #b8c7ce !important;
+}

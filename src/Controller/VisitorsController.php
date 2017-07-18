@@ -33,10 +33,41 @@ class VisitorsController extends AppController
 
         parent::initialize();
 
-        $this->Auth->allow('about');
+        $this->Auth->allow(['frontpage', 'products', 'pricing', 'faq', 'about', 'company', 'investors']);
+    }
+
+    public function frontpage() {
+
+        $this->render('frontpage', 'lander');
+    }
+
+    public function products() {
+
+        $this->render('products', 'lander');
+    }
+
+    public function pricing() {
+
+        $this->render('pricing', 'lander');
+    }
+
+    public function faq() {
+
+        $this->render('faq', 'lander');
     }
 
     public function about() {
 
+        $this->render('about', 'lander');
+    }
+
+    public function company() {
+
+        $this->render('company', 'lander');
+    }
+
+    public function investors() {
+
+        $this->render('investors', 'lander');
     }
 }
