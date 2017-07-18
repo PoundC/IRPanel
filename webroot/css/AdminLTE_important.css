@@ -24,7 +24,7 @@
     color: #b8c7ce !important;
 }
 
-.fixed .content-wrapper, .fixed .right-side {
+.alert {
 
-    padding-top: 0px !important;
+    margin-top: -50px !important;
 }

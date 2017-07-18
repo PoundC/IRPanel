@@ -36,11 +36,11 @@ else {
 
     <div class="content-wrapper">
 
-        <?= $this->Flash->render(); ?>
-
         <?= $this->element('content_header'); ?>
 
         <div class="content">
+
+            <?= $this->Flash->render(); ?>
 
             <?= $this->fetch('content') ?>
 
