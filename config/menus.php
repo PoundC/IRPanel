@@ -97,10 +97,6 @@ $menus = [
                 'icon'  => 'fa-support',
                 'css'   => 'active non-active',
                 'menu' => [
-                    'Documentation' => [
-                        'path' => '/documentation',
-                        'icon' => 'fa-book'
-                    ],
                     'Live Group Chat' => [
                         'path' => '/chat',
                         'icon' => 'fa-wechat'

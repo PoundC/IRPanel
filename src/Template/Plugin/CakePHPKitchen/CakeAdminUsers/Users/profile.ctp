@@ -110,7 +110,7 @@
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
 
-                <li class="active"><a href="#timeline" data-toggle="tab" aria-expanded="false">Timeline</a></li>
+                <li class="active"><a href="#timeline" data-toggle="tab" aria-expanded="false">Placeholder</a></li>
 
                 <?php if(true == false) { ?>
                     <li class=""><a href="#activity" data-toggle="tab" aria-expanded="true">Activity</a></li>
@@ -129,6 +129,7 @@
 
                 <div class="tab-pane active" id="timeline">
                     <!-- The timeline -->
+                    <?php /* ?>
                     <ul class="timeline timeline-inverse">
                         <!-- timeline time label -->
                         <li class="time-label">
@@ -220,6 +221,7 @@
                             <i class="fa fa-clock-o bg-gray"></i>
                         </li>
                     </ul>
+                    <?php */ ?>
                 </div>
 
                 <!-- /.tab-pane -->
