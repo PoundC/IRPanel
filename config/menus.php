@@ -63,15 +63,15 @@ $menus = [
         ]
     ],
     'user' => [
-        'User Links' => [
+        'Welcome User' => [
             [
-                'link'  => 'Click to Upgrade',
+                'link'  => 'Upgrade to Member',
                 'icon'  => 'fa-fighter-jet',
                 'path'  => '/upgrade'
             ],
             [
                 'group' => 'User Menu',
-                'icon'  => 'fa-pencil',
+                'icon'  => 'fa-child',
                 'css'   => 'active non-active',
                 'menu' => [
                     'Dashboard' => [
@@ -90,6 +90,61 @@ $menus = [
             ]
         ]
     ],
+    'member' => [
+        'Welcome Member' => [
+            [
+                'link'  => 'Members Only',
+                'icon'  => 'fa-fighter-jet',
+                'path'  => '/members/only'
+            ],
+            [
+                'group' => 'User Menu',
+                'icon'  => 'fa-child',
+                'css'   => 'active non-active',
+                'menu' => [
+                    'Dashboard' => [
+                        'path' => '/dashboard',
+                        'icon' => 'fa-dashboard'
+                    ],
+                    'Profile' => [
+                        'path' => '/profile',
+                        'icon' => 'fa-briefcase',
+                    ],
+                    'Logout' =>[
+                        'path' => '/logout',
+                        'icon' => 'fa-sign-out',
+                    ]
+                ]
+            ]
+        ]
+    ],
+    'admin' => [
+        'Welcome Admin' => [
+            [
+                'group' => 'Admin Menu',
+                'icon'  => 'fa-child',
+                'css'   => 'active non-active',
+                'menu' => [
+                    'Dashboard' => [
+                        'path' => '/dashboard',
+                        'icon' => 'fa-dashboard'
+                    ],
+                    'Profile' => [
+                        'path' => '/profile',
+                        'icon' => 'fa-briefcase',
+                    ],
+                    'Search Users' => [
+                        'path'  => '/search',
+                        'icon'  => 'fa-search'
+                    ],
+                    'Logout' =>[
+                        'path' => '/logout',
+                        'icon' => 'fa-sign-out',
+                    ]
+                ]
+            ]
+        ]
+    ],
     'site' => [
         'Sitewide Links' => [
             [
@@ -97,11 +152,11 @@ $menus = [
                 'icon'  => 'fa-support',
                 'css'   => 'active non-active',
                 'menu' => [
-                    'Live Group Chat' => [
+                    'Live Chat' => [
                         'path' => '/chat',
                         'icon' => 'fa-wechat'
                     ],
-                    'Open Support Ticket'     => [
+                    'Open Ticket'     => [
                         'path' => '/forum',
                         'icon' => 'fa-ticket'
                     ]

@@ -42,10 +42,10 @@ class Menu
     protected static $_SiteMenu = array();
     protected static $_UserMenu = array();
     protected static $_AdminMenu = array();
+    protected static $_MemberMenu = array();
 
     public static function setAll($menus)
     {
-
         if (isset($menus['visitor'])) {
 
             self::$_VisitorMenu = $menus['visitor'];
@@ -61,6 +61,11 @@ class Menu
             self::$_UserMenu = $menus['user'];
         }
 
+        if(isset($menus['member'])) {
+
+            self::$_MemberMenu = $menus['member'];
+        }
+
         if (isset($menus['admin'])) {
 
             self::$_AdminMenu = $menus['admin'];
@@ -69,7 +74,6 @@ class Menu
 
     public static function getVisitorMenu($currentPath)
     {
-
         $mergedArray = array_merge(self::$_VisitorMenu, self::$_SiteMenu);
 
         return self::buildMenu($currentPath, $mergedArray);
@@ -77,16 +81,141 @@ class Menu
 
     public static function getUserMenu($currentPath)
     {
-
         $mergedArray = array_merge(self::$_UserMenu, self::$_SiteMenu);
+
+        return self::buildMenu($currentPath, $mergedArray);
+    }
+
+    public static function getMemberMenu($currentPath)
+    {
+        $mergedArray = array_merge(self::$_MemberMenu, self::$_SiteMenu);
+
+//        $mergedArray = self::mergeMenus(self::$_UserMenu, $mergedArray);
 
         return self::buildMenu($currentPath, $mergedArray);
     }
 
     public static function getAdminMenu($currentPath)
     {
+        $mergedArray = array_merge(self::$_AdminMenu, self::$_SiteMenu);
 
-        return self::buildMenu($currentPath, self::$_VisitorMenu);
+        return self::buildMenu($currentPath, $mergedArray);
+    }
+
+    public static function mergeMenus($menu1, $menu2)
+    {
+        $mergedMenu = array();
+
+        foreach($menu1 as $menuHeader1 => $headerArray1) {
+
+            $mergedMenu[$menuHeader1] = $headerArray1;
+
+            foreach($menu2 as $menuHeader2 => $headerArray2) {
+
+                if($menuHeader1 == $menuHeader2) {
+
+                    $mergedMenu[$menuHeader1] = array_merge($mergedMenu[$menuHeader1], $headerArray2);
+                }
+                else {
+
+                    $mergedMenu[$menuHeader2] = $headerArray2;
+                }
+            }
+        }
+
+        $cleanMenus = array();
+        $menuSets = array();
+
+        foreach($mergedMenu as $menuHeader => $menuArray) {
+
+            $cleanMenus[$menuHeader] = array();
+
+            foreach($menuArray as $menuIndex => $menuSet) {
+
+                if(array_key_exists('group',$menuSet)) {
+
+                    if (array_key_exists($menuSet['group'], $cleanMenus[$menuHeader])) {
+
+                        $mergedMenus = array_merge($menuSet, $cleanMenus[$menuHeader][$menuSet['group']]);
+
+                        $cleanMenus[$menuHeader][$menuSet['group']]['set'] = $mergedMenus;
+
+                        $mergedMenus = array_merge($menuSet['menu'], $cleanMenus[$menuHeader][$menuSet['group']]['menu']);
+
+                        $cleanMenus[$menuHeader][$menuSet['group']]['menu'] = $mergedMenus;
+                    } else {
+
+                        $cleanMenus[$menuHeader][$menuSet['group']]['set'] = $menuSet;
+                        $cleanMenus[$menuHeader][$menuSet['group']]['menu'] = $menuSet['menu'];
+                    }
+                }
+                else {
+
+
+                }
+            }
+        }
+
+        $rebuiltMenus = array();
+        $groupsComplete = array();
+
+        foreach($mergedMenu as $menuHeader => $menuArray) {
+
+            $rebuiltMenus[$menuHeader] = array();
+
+            foreach($menuArray as $menuSet) {
+
+                if(isset($menuSet['group'])) {
+
+                    $cleanSet = $cleanMenus[$menuHeader][$menuSet['group']]['set'];
+                    $cleanMenu = $cleanMenus[$menuHeader][$menuSet['group']]['menu'];
+                    $cleanSet['menu'] = $cleanMenu;
+                    unset($cleanSet['set']);
+
+                    $rebuiltMenus[$menuHeader][] = $cleanSet;
+                }
+                else {
+
+                    $rebuiltMenus[$menuHeader][] = $menuSet;
+                }
+            }
+        }
+
+        $servableMenus = array();
+
+        foreach($rebuiltMenus as $menuHeader => $menuArray) {
+
+            $bFoundMenu = false;
+            foreach($menuArray as $menuSet) {
+
+                foreach ($servableMenus as $menuHeader2 => $menuArray2) {
+
+                    foreach($menuArray2 as $menuSet2) {
+
+                        if(isset($menuSet2['group']) && isset($menuSet['group'])) {
+
+                            if ($menuSet['group'] == $menuSet2['group']) {
+
+                                $bFoundMenu = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if ($bFoundMenu == false) {
+
+                    $servableMenus[$menuHeader][] = $menuSet;
+                }
+            }
+        }
+
+        return $servableMenus;
+    }
+
+    public static function mergeSubMenus($menu1, $menu2)
+    {
+
     }
 
     public static function getIsActive($currentPath, $items)
@@ -143,7 +272,10 @@ class Menu
 
         foreach ($menu as $headerGroup => $group) {
 
-            $html .= '<li class="header">' . strtoupper($headerGroup) . '</li>';
+            if($headerGroup != 'blank') {
+
+                $html .= '<li class="header">' . strtoupper($headerGroup) . '</li>';
+            }
 
             foreach ($group as $menuGroup) {
 

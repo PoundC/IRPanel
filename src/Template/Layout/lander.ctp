@@ -4,31 +4,18 @@ use Cake\Utility\Menu;
 
 $cakeDescription = '';
 
-if($isAdmin == true && $isSuperUser == false) {
-
-    $skin = 'purple';
-}
-else if($isAdmin == true && $isSuperUser == true) {
-
-    $skin = 'red';
-}
-else {
-
-    $skin = 'blue';
-}
-
 ?>
 
 <!DOCTYPE html>
 <html>
     <head>
 
-        <?= $this->element('adminlte_head'); ?>
+        <?= $this->element('adminlte_head', ['skin' => 'blue']); ?>
 
         <?= $this->element('lander_head'); ?>
 
     </head>
-    <body class="fixed hold-transition skin-<?= $skin ?> sidebar-mini">
+    <body class="fixed hold-transition skin-blue sidebar-mini">
 
         <div class="wrapper">
 

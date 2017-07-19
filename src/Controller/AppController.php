@@ -33,8 +33,6 @@ use CakeDC\Users\Controller\Traits\CustomUsersTableTrait;
  */
 class AppController extends Controller
 {
-    use CustomUsersTableTrait;
-
     /**
      * Initialization hook method.
      *
@@ -53,6 +51,7 @@ class AppController extends Controller
         $this->loadComponent('CakeDC/Users.UsersAuth');
 
         $this->Auth->configShallow('loginRedirect', '/dashboard');
+
         /*
          * Enable the following components for recommended CakePHP security settings.
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
@@ -83,10 +82,13 @@ class AppController extends Controller
 
         $isSuperUser = false;
         $isAdmin = false;
+        $isMember = false;
         $isCurrentUser = false;
         $notLoggedIn = false;
+        $menus = array();
 
         if(method_exists($this->Auth, 'user')) {
+
             if ($this->Auth->user('id')) {
 
                 $currentId = $this->Auth->user('id');
@@ -104,11 +106,24 @@ class AppController extends Controller
 
                     $isSuperUser = true;
                     $isAdmin = true;
-                }
 
-                if ($currentUser->role == 'admin') {
+                    $menus = Menu::getAdminMenu($this->request->here);
+                }
+                else if ($currentUser->role == 'admin') {
 
                     $isAdmin = true;
+
+                    $menus = Menu::getAdminMenu($this->request->here);
+                }
+                else if($currentUser->role == 'member') {
+
+                    $isMember = true;
+
+                    $menus = Menu::getMemberMenu($this->request->here);
+                }
+                else if($currentUser->role == 'user') {
+
+                    $menus = Menu::getUserMenu($this->request->here);
                 }
 
                 if ($currentId == $this->Auth->user('id')) {
@@ -116,18 +131,18 @@ class AppController extends Controller
                     $isCurrentUser = true;
                 }
 
-                $this->set('menus', Menu::getUserMenu($this->request->here));
-                $this->set(compact('currentUser', 'isCurrentUser', 'isAdmin', 'isSuperUser', 'notLoggedIn'));
-
             } else {
 
                 $notLoggedIn = true;
 
-                $currentUser = $this->getUsersTable()->newEntity();
+                $usersTable = TableRegistry::get(Configure::read('Users.table'));
+                $currentUser = $usersTable->newEntity();
 
-                $this->set('menus', Menu::getVisitorMenu($this->request->here));
-                $this->set(compact('currentUser', 'isCurrentUser', 'isAdmin', 'isSuperUser', 'notLoggedIn'));
+                $menus = Menu::getVisitorMenu($this->request->here);
             }
+
+            $this->set('menus', $menus);
+            $this->set(compact('isMember', 'currentUser', 'isCurrentUser', 'isAdmin', 'isSuperUser', 'notLoggedIn'));
         }
 
         $this->set('_serialize', ['currentUser']);

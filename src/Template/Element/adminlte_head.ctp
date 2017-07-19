@@ -14,7 +14,8 @@
 
 <?= $this->Html->css('/dist/css/AdminLTE') ?>
 <?= $this->Html->css('/css/AdminLTE_important') ?>
-<?= $this->Html->css('/dist/css/skins/_all-skins.css'); ?>
+<?= $this->Html->css('/dist/css/skins/_all-skins.css') ?>
+<?= $this->Html->css('/css/skins/' . $skin) ?>
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

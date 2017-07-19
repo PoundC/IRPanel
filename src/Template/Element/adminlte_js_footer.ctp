@@ -6,4 +6,4 @@
 <script src="/plugins/fastclick/fastclick.min.js"></script>
 <script src="/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 
-<script src="/dist/js/adminlte.min.js"></script>
+<script src="/dist/js/adminlte.js"></script>

@@ -109,5 +109,6 @@ Router::connect('/dashboard', ['controller' => 'Members', 'action' => 'dashboard
  *
  */
 Router::connect('/profile/*', ['controller' => 'MyUsers', 'action' => 'profile']);
+Router::connect('/login', ['controller' => 'MyUsers', 'action' => 'login']);
 Router::connect('/register', ['plugin' => 'CakeDC/Users', 'controller' => 'Users', 'action' => 'register']);
 Router::connect('/reset', ['plugin' => 'CakeDC/Users', 'controller' => 'Users', 'action' => 'requestResetPassword']);

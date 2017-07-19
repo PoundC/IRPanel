@@ -4,7 +4,11 @@ use Cake\Utility\Menu;
 
 $cakeDescription = '';
 
-if($isAdmin == true && $isSuperUser == false) {
+if($isMember == true && $isAdmin == false && $isSuperUser == false) {
+
+    $skin = 'green';
+}
+else if($isAdmin == true && $isSuperUser == false) {
 
     $skin = 'purple';
 }
@@ -23,7 +27,7 @@ else {
 <html>
 <head>
 
-    <?= $this->element('adminlte_head'); ?>
+    <?= $this->element('adminlte_head', ['skin' => $skin]); ?>
 
 </head>
 <body class="fixed hold-transition skin-<?= $skin ?> sidebar-mini">

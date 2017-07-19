@@ -64,7 +64,7 @@ return [
             'allowed' => true,
         ],
         [
-            'role' => 'user',
+            'role' => ['user', 'member', 'admin'],
             'controller' => 'MyUsers',
             'action' => ['profile'],
             'allowed' => true,
