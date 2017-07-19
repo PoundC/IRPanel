@@ -8,7 +8,7 @@
     font-size: 17px !important;
 }
 
-.skin-blue .sidebar-menu > li > a {
+.sidebar-menu > li > a {
     font-size: 19px !important;
 }
 
@@ -22,9 +22,4 @@
 
 .non-active {
     color: #b8c7ce !important;
-}
-
-.alert {
-
-    margin-top: -50px !important;
 }

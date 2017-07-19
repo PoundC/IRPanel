@@ -1,0 +1,93 @@
+a {
+    color: #DD4B39;
+}
+a:hover,
+a:active,
+a:focus {
+    outline: none;
+    text-decoration: none;
+    color: #E47365;
+}
+.form-control:focus {
+    border-color: #DD4B39;
+    box-shadow: none;
+}
+.progress-bar-primary {
+    background-color: #DD4B39;
+}
+.box.box-primary {
+    border-top-color: #DD4B39;
+}
+.box.box-solid.box-primary {
+    border: 1px solid #DD4B39;
+}
+.box.box-solid.box-primary > .box-header {
+    color: #ffffff;
+    background: #DD4B39;
+    background-color: #DD4B39;
+}
+.todo-list .primary {
+    border-left-color: #DD4B39;
+}
+.btn-primary {
+    background-color: #DD4B39;
+    border-color: #E47365;
+}
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary.hover {
+    background-color: #E47365;
+}
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus {
+    border-top-color: #DD4B39;
+}
+.nav-stacked > li.active > a,
+.nav-stacked > li.active > a:hover {
+    background: transparent;
+    color: #444;
+    border-top: 0;
+    border-left-color: #DD4B39;
+}
+.nav-tabs-custom > .nav-tabs > li.active {
+    border-top-color: #DD4B39;
+}
+.nav-tabs-custom.tab-primary > .nav-tabs > li.active {
+    border-top-color: #DD4B39;
+}
+.direct-chat-primary .right > .direct-chat-text {
+    background: #DD4B39;
+    border-color: #DD4B39;
+    color: #ffffff;
+}
+.direct-chat-primary .right > .direct-chat-text:after,
+.direct-chat-primary .right > .direct-chat-text:before {
+    border-left-color: #DD4B39;
+}
+.select2-container--default.select2-container--open {
+    border-color: #DD4B39;
+}
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #DD4B39;
+    color: white;
+}
+.select2-dropdown .select2-search__field:focus,
+.select2-search--inline .select2-search__field:focus {
+    outline: none;
+    border: 1px solid #DD4B39;
+}
+.select2-container--default .select2-selection--multiple:focus {
+    border-color: #DD4B39;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #DD4B39;
+    border-color: #E47365;
+    padding: 1px 10px;
+    color: #fff;
+}
+.bg-light-blue,
+.label-primary,
+.modal-primary .modal-body {
+    background-color: #DD4B39 !important;
+}
