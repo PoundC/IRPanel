@@ -91,3 +91,31 @@ a:focus {
 .modal-primary .modal-body {
     background-color: #DD4B39 !important;
 }
+
+
+.box.box-info {
+    border-top-color: #DD4B39 !important;
+}
+
+.box {
+    border-top-color: #DD4B39 !important;
+}
+
+.btn-info {
+    background-color: #DD4B39 !important;
+    border-color: #DD4B39 !important;
+}
+.btn-info:hover,
+.btn-info:active,
+.btn-info.hover {
+    background-color: #E47365 !important;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: #DD4B39;
+    border-color: #DD4B39;
+}
+
+.table-bordered {
+    border-color: #DD4B39 !important;
+}

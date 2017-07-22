@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 
 <?= $this->Html->css('/dist/css/AdminLTE') ?>
+<?= $this->Html->css('/css/cakeadminlte') ?>
 <?= $this->Html->css('/css/AdminLTE_important') ?>
 <?= $this->Html->css('/dist/css/skins/_all-skins.css') ?>
 <?= $this->Html->css('/css/skins/' . $skin) ?>

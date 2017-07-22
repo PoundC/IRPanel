@@ -96,6 +96,18 @@ Router::connect('/investors', ['controller' => 'Visitors', 'action' => 'investor
 
 /*
  *
+ *  Support Menu Routes
+ *
+ */
+
+Router::connect('/chat', ['controller' => 'Chat', 'action' => 'online']);
+Router::connect('/tickets', ['controller' => 'Support', 'action' => 'tickets']);
+Router::connect('/tickets/fetch', ['controller' => 'Support', 'action' => 'fetch']);
+Router::connect('/support', ['controller' => 'Support', 'action' => 'support']);
+Router::connect('/contact', ['controller' => 'Support', 'action' => 'contact']);
+
+/*
+ *
  *  Member Menu Routes
  *
  */
@@ -110,5 +122,5 @@ Router::connect('/dashboard', ['controller' => 'Members', 'action' => 'dashboard
  */
 Router::connect('/profile/*', ['controller' => 'MyUsers', 'action' => 'profile']);
 Router::connect('/login', ['controller' => 'MyUsers', 'action' => 'login']);
-Router::connect('/register', ['plugin' => 'CakeDC/Users', 'controller' => 'Users', 'action' => 'register']);
-Router::connect('/reset', ['plugin' => 'CakeDC/Users', 'controller' => 'Users', 'action' => 'requestResetPassword']);
+Router::connect('/register', ['controller' => 'MyUsers', 'action' => 'register']);
+Router::connect('/reset', ['controller' => 'MyUsers', 'action' => 'requestResetPassword']);

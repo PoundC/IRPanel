@@ -1,0 +1,10 @@
+.support-footer {
+    display: inline-block;
+    font-size: 16px;
+    margin: 0;
+    line-height: 1;
+}
+
+.box-support-footer {
+    border: 1px #3c8dbc !important;
+}

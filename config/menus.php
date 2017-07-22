@@ -12,7 +12,7 @@ $menus = [
             ],
             [
                 'group' => 'Visitor Menu',
-                'icon'  => 'fa-map-signs',
+                'icon'  => 'fa-map',
                 'css'   => 'active non-active',
                 'menu'  => [
                     'Home' => [
@@ -47,7 +47,7 @@ $menus = [
             ],
             [
                 'group' => 'User Menu',
-                'icon'  => 'fa-child',
+                'icon'  => 'fa-user',
                 'css'   => 'active non-active',
                 'menu'  => [
                     'Login'          => [
@@ -71,7 +71,7 @@ $menus = [
             ],
             [
                 'group' => 'User Menu',
-                'icon'  => 'fa-child',
+                'icon'  => 'fa-user',
                 'css'   => 'active non-active',
                 'menu' => [
                     'Dashboard' => [
@@ -85,6 +85,25 @@ $menus = [
                     'Logout' =>[
                         'path' => '/logout',
                         'icon' => 'fa-sign-out',
+                    ]
+                ]
+            ],
+            [
+                'group' => 'Support Menu',
+                'icon'  => 'fa-support',
+                'css'   => 'active non-active',
+                'menu' => [
+                    'Live Chat' => [
+                        'path' => '/chat',
+                        'icon' => 'fa-wechat'
+                    ],
+                    'View Tickets'     => [
+                        'path' => '/tickets',
+                        'icon' => 'fa-folder-open'
+                    ],
+                    'Open Ticket'     => [
+                        'path' => '/support',
+                        'icon' => 'fa-magic'
                     ]
                 ]
             ]
@@ -99,7 +118,7 @@ $menus = [
             ],
             [
                 'group' => 'User Menu',
-                'icon'  => 'fa-child',
+                'icon'  => 'fa-user',
                 'css'   => 'active non-active',
                 'menu' => [
                     'Dashboard' => [
@@ -115,38 +134,7 @@ $menus = [
                         'icon' => 'fa-sign-out',
                     ]
                 ]
-            ]
-        ]
-    ],
-    'admin' => [
-        'Welcome Admin' => [
-            [
-                'group' => 'Admin Menu',
-                'icon'  => 'fa-child',
-                'css'   => 'active non-active',
-                'menu' => [
-                    'Dashboard' => [
-                        'path' => '/dashboard',
-                        'icon' => 'fa-dashboard'
-                    ],
-                    'Profile' => [
-                        'path' => '/profile',
-                        'icon' => 'fa-briefcase',
-                    ],
-                    'Search Users' => [
-                        'path'  => '/search',
-                        'icon'  => 'fa-search'
-                    ],
-                    'Logout' =>[
-                        'path' => '/logout',
-                        'icon' => 'fa-sign-out',
-                    ]
-                ]
-            ]
-        ]
-    ],
-    'site' => [
-        'Sitewide Links' => [
+            ],
             [
                 'group' => 'Support Menu',
                 'icon'  => 'fa-support',
@@ -156,35 +144,89 @@ $menus = [
                         'path' => '/chat',
                         'icon' => 'fa-wechat'
                     ],
+                    'View Tickets'     => [
+                        'path' => '/tickets',
+                        'icon' => 'fa-folder-open'
+                    ],
                     'Open Ticket'     => [
-                        'path' => '/forum',
-                        'icon' => 'fa-ticket'
+                        'path' => '/support',
+                        'icon' => 'fa-magic'
                     ]
-
-                    // Placeholder for Example Tiered Menus
-                    /*
-                    [
-                        'group' => 'Page 2',
-                        'icon'  => 'fa-exchange',
-                        'menu' => [
-                            'Link Level 2' => [
-                                'path' => '/link_level_2',
-                                'icon' => 'fa-pencil'
-                            ],
-                            [
-                                'group' => 'Page 3',
-                                'icon'  => 'fa-pencil',
-                                'menu' => [
-                                    'Link Level 3' => [
-                                        'path' => '/login',
-                                        'icon' => 'fa-pencil'
-                                    ]
+                ]
+            ]
+        ]
+    ],
+    'admin' => [
+        'Welcome Admin' => [
+            [
+                'group' => 'Admin Menu',
+                'icon'  => 'fa-user',
+                'css'   => 'active non-active',
+                'menu' => [
+                    'Search Users' => [
+                        'path'  => '/search',
+                        'icon'  => 'fa-search'
+                    ],
+                    'Dashboard' => [
+                        'path' => '/dashboard',
+                        'icon' => 'fa-dashboard'
+                    ],
+                    'Profile' => [
+                        'path' => '/profile',
+                        'icon' => 'fa-briefcase',
+                    ],
+                    'Logout' =>[
+                        'path' => '/logout',
+                        'icon' => 'fa-sign-out',
+                    ]
+                ]
+                // Placeholder for Example Tiered Menus
+                /*
+                [
+                    'group' => 'Page 2',
+                    'icon'  => 'fa-exchange',
+                    'menu' => [
+                        'Link Level 2' => [
+                            'path' => '/link_level_2',
+                            'icon' => 'fa-pencil'
+                        ],
+                        [
+                            'group' => 'Page 3',
+                            'icon'  => 'fa-pencil',
+                            'menu' => [
+                                'Link Level 3' => [
+                                    'path' => '/login',
+                                    'icon' => 'fa-pencil'
                                 ]
                             ]
                         ]
                     ]
-                    */
                 ]
+                */
+            ],
+            [
+                'group' => 'Support Menu',
+                'icon'  => 'fa-support',
+                'css'   => 'active non-active',
+                'menu' => [
+                    'Live Chat' => [
+                        'path' => '/chat',
+                        'icon' => 'fa-wechat'
+                    ],
+                    'View Tickets'     => [
+                        'path' => '/tickets',
+                        'icon' => 'fa-folder-open'
+                    ]
+                ]
+            ]
+        ]
+    ],
+    'site' => [
+        'Sitewide Links' => [
+            [
+                'link'  => 'Contact Us',
+                'icon'  => 'fa-bullhorn',
+                'path'  => '/contact'
             ]
         ]
     ]

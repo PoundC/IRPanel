@@ -7,3 +7,4 @@
 <script src="/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 
 <script src="/dist/js/adminlte.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>

@@ -1,4 +1,9 @@
-
+.fa {
+    font-size: 22px !important;
+}
+.service-col .service-icon i {
+    font-size: 100px !important;
+}
 .fa-left-icon {
     width: 40px !important;
     margin-top: -16px !important;
@@ -22,4 +27,26 @@
 
 .non-active {
     color: #b8c7ce !important;
+}
+
+.box.box-info {
+    border-top-color: #3c8dbc !important;
+}
+
+.box {
+    border-top-color: #3c8dbc !important;
+}
+
+.btn-info {
+    background-color: #3c8dbc !important;
+    border-color: #3c8dbc !important;
+}
+.btn-info:hover,
+.btn-info:active,
+.btn-info.hover {
+    background-color: #367fa9 !important;
+}
+
+.table-bordered {
+    border-color: #3c8dbc !important;
 }

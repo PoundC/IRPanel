@@ -58,6 +58,8 @@ class AppController extends Controller
          */
         $this->loadComponent('Security');
         $this->loadComponent('Csrf');
+
+        $this->Auth->allow(['register', 'requestResetPassword']);
     }
 
     /**

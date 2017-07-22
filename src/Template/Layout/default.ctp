@@ -58,6 +58,5 @@ else {
 </div> <!-- ./wrapper -->
 
 <?= $this->element('adminlte_js_footer'); ?>
-
 </body>
 </html>

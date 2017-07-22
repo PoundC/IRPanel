@@ -59,8 +59,26 @@ return [
         ],
         [
             'role' => '*',
+            'controller' => ['Support'],
+            'action' => ['contact'],
+            'allowed' => true,
+        ],
+        [
+            'role' => '*',
             'controller' => ['Visitors'],
             'action' => ['frontpage', 'products', 'pricing', 'faq', 'about', 'company', 'investors'],
+            'allowed' => true,
+        ],
+        [
+            'role' => ['user', 'member', 'admin'],
+            'controller' => ['Chat'],
+            'action' => ['online', 'send', 'receive'],
+            'allowed' => true,
+        ],
+        [
+            'role' => ['user', 'member', 'admin'],
+            'controller' => ['Support'],
+            'action' => ['open', 'tickets'],
             'allowed' => true,
         ],
         [

@@ -21,4 +21,10 @@ class MyUsersController extends AppController
     use RegisterTrait;
     use SimpleCrudTrait;
     use SocialTrait;
+
+    public function initialize() {
+
+        parent::initialize();
+
+    }
 }

@@ -363,7 +363,7 @@ class Menu
                         $isActive = 'class="active"';
                     }
 
-                    $html .= '<li ' . $isActive . '><a href="' . $menuGroup['path'] . '"><i class="fa-left-icon fa ' . $menuGroup['icon'] . '"></i><span>' . $menuGroup['link'] . '</span>';
+                    $html .= '<li ' . $isActive . '><a href="' . $menuGroup['path'] . '"><i class="fa-left-icon fa ' . $menuGroup['icon'] . '"></i><span>' . $menuGroup['link'] . '</span></a>';
                 }
             }
         }
@@ -401,7 +401,7 @@ class Menu
                     $first_class3 .= ' active';
                 }
 
-                $html .= '<li class="' . $first_class3 . '"><a href="' . $itemSet['path'] . '"><i class="fa-left-icon fa ' . $itemSet['icon'] . '"></i><span>' . $itemText . '</span>';
+                $html .= '<li class="' . $first_class3 . '"><a href="' . $itemSet['path'] . '"><i class="fa-left-icon fa ' . $itemSet['icon'] . '"></i><span>' . $itemText . '</span></a>';
             } else {
 
                 if (self::isMenuActive($currentPath, $itemSet['menu']) == true) {
