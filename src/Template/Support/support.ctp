@@ -7,11 +7,11 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <?= $this->Form->create($supportEntity, array('url' => '/support')) ?>
+                <?= $this->Form->create($supportEntity, ['url' => '/support', 'context' => ['validator' => ['Messages' => 'support']]]) ?>
                     <div class="form-group">
                         <label>Select support topic</label>
                         <?= $this->Form->select('topic', [
-                        'multiple' => false,
+
                         'value' => [2 => 'payment', 3 => 'chat', 4 => 'feature request', 5 => 'feedback', 6 => 'other']
                         ]); ?>
                     </div>

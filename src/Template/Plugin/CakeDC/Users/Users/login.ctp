@@ -47,7 +47,7 @@ if (Configure::read('Users.RememberMe.active')) {
         <?php
         $registrationActive = Configure::read('Users.Registration.active');
         if ($registrationActive) {
-            echo $this->Html->link(__d('CakeDC/Users', 'Register'), ['action' => 'register']);
+            echo '<a href="/register">Register</a>';
         }
         if (Configure::read('Users.Email.required')) {
         if ($registrationActive) {

@@ -167,6 +167,10 @@ $menus = [
                         'path'  => '/search',
                         'icon'  => 'fa-search'
                     ],
+                    'View Users' => [
+                        'path'  => '/users/users',
+                        'icon'  => 'fa-users'
+                    ],
                     'Dashboard' => [
                         'path' => '/dashboard',
                         'icon' => 'fa-dashboard'

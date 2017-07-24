@@ -7,10 +7,10 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <?= $this->Form->create($contactEntity, array('url' => '/contact')) ?>
+                <?= $this->Form->create($contactEntity, ['url' => '/contact', 'context' => ['validator' => ['Messages' => 'contact']]]) ?>
                     <div class="form-group">
                         <label>Email Address</label>
-                        <?= $this->Form->control('email', ['label' => false, 'type' => 'text', 'placeholder' => 'Enter email address here...', 'class' => 'form-control']); ?>
+                        <?= $this->Form->control('email', ['label' => false, 'type' => 'email', 'placeholder' => 'Enter email address here...', 'class' => 'form-control']); ?>
                     </div>
                     <!-- text input -->
                     <div class="form-group">

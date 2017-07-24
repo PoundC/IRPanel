@@ -5,7 +5,7 @@ use Cake\Core\Configure;
 $Users = ${$tableAlias};
 ?>
 <div class="row">
-    <div class="col-lg-8 col-lg-offset-2">
+    <div class="col-lg-10 col-lg-offset-1">
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">Edit User</h3>

@@ -1,6 +1,6 @@
 
-<div class="row">
-    <div class="col-md-3">
+<div class="row jlr-dashbox">
+    <div class="col-md-3 col-md-offset-1">
 
         <!-- Profile Image -->
         <div class="box box-primary">
@@ -106,7 +106,7 @@
 
     </div>
     <!-- /.col -->
-    <div class="col-md-9">
+    <div class="col-md-7">
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
 
