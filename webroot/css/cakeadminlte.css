@@ -8,3 +8,14 @@
 .box-support-footer {
     border: 1px #3c8dbc !important;
 }
+
+.jlr-dashbox {
+    margin-top: 50px;
+}
+
+.jlr-flash {
+    margin-top: 25px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: -25px;
+}

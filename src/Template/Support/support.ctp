@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row jlr-dashbox">
     <div class="col-lg-8 col-lg-offset-2">
         <!-- general form elements disabled -->
         <div class="box box-warning">
@@ -7,27 +7,24 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <form role="form">
+                <?= $this->Form->create($supportEntity, array('url' => '/support')) ?>
                     <div class="form-group">
                         <label>Select support topic</label>
-                        <select class="form-control">
-                            <option>Login</option>
-                            <option>Chat</option>
-                            <option>Payment</option>
-                            <option>Feature Request</option>
-                            <option>Other</option>
-                        </select>
+                        <?= $this->Form->select('topic', [
+                        'multiple' => false,
+                        'value' => [2 => 'payment', 3 => 'chat', 4 => 'feature request', 5 => 'feedback', 6 => 'other']
+                        ]); ?>
                     </div>
                     <!-- text input -->
                     <div class="form-group">
                         <label>Wtih one sentence describe your challenge</label>
-                        <input type="text" class="form-control" placeholder="Enter ...">
+                        <?= $this->Form->control('subject', ['label' => false, 'type' => 'text', 'placeholder' => 'Subject goes here...', 'class' => 'form-control']); ?>
                     </div>
 
                     <!-- textarea -->
                     <div class="form-group">
                         <label>Describe the challenge you are facing</label>
-                        <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                        <?= $this->Form->control('message', ['label' => false, 'type' => 'textarea', 'placeholder' => 'Enter message here...', 'class' => 'form-control']); ?>
                     </div>
 
                     <div class="row">
@@ -36,11 +33,12 @@
                         </div>
                         <!-- /.col -->
                     </div>
-                </form>
+                <?= $this->Form->end() ?>
             </div>
             <!-- /.box-body -->
         </div>
         <!-- /.box -->
     </div>
 </div>
+
 <?= $this->element('email_us') ?>

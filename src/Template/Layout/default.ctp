@@ -25,38 +25,39 @@ else {
 
 <!DOCTYPE html>
 <html>
-<head>
 
-    <?= $this->element('adminlte_head', ['skin' => $skin]); ?>
+    <head>
 
-</head>
-<body class="fixed hold-transition skin-<?= $skin ?> sidebar-mini">
+        <?= $this->element('adminlte_head', ['skin' => $skin]); ?>
 
-<div class="wrapper">
+    </head>
 
-    <?= $this->element('main_header'); ?>
+    <body class="fixed hold-transition skin-<?= $skin ?> sidebar-mini">
 
-    <?= $this->element('main_sidebar'); ?>
+        <div class="wrapper">
 
-    <div class="content-wrapper">
+            <?= $this->element('main_header'); ?>
 
-        <?= $this->element('content_header'); ?>
+            <?= $this->element('main_sidebar'); ?>
 
-        <div class="content">
+            <?= $this->element('content_header'); ?>
 
-            <?= $this->Flash->render(); ?>
+            <div class="content-wrapper">
 
-            <?= $this->fetch('content') ?>
+                <?= $this->Flash->render(); ?>
 
-        </div>
-        
-    </div> <!-- /.content-wrapper -->
+                <?= $this->fetch('content') ?>
 
-    <?= $this->element('main_footer'); ?>
+            </div> <!-- /.content-wrapper -->
 
-    <?= $this->element('control_sidebar'); ?>
-</div> <!-- ./wrapper -->
+            <?= $this->element('main_footer'); ?>
 
-<?= $this->element('adminlte_js_footer'); ?>
-</body>
+            <?= $this->element('control_sidebar'); ?>
+
+        </div> <!-- ./wrapper -->
+
+    <?= $this->element('adminlte_js_footer'); ?>
+
+    </body>
+
 </html>

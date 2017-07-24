@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row jlr-dashbox">
     <div class="col-lg-8 col-lg-offset-2">
         <!-- general form elements disabled -->
         <div class="box box-warning">
@@ -7,21 +7,21 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <form role="form">
+                <?= $this->Form->create($contactEntity, array('url' => '/contact')) ?>
                     <div class="form-group">
                         <label>Email Address</label>
-                        <input type="text" class="form-control" placeholder="Email Address Here...">
+                        <?= $this->Form->control('email', ['label' => false, 'type' => 'text', 'placeholder' => 'Enter email address here...', 'class' => 'form-control']); ?>
                     </div>
                     <!-- text input -->
                     <div class="form-group">
                         <label>Subject line, with one sentence describe this contact</label>
-                        <input type="text" class="form-control" placeholder="Subject goes here...">
+                        <?= $this->Form->control('subject', ['label' => false, 'type' => 'text', 'placeholder' => 'Subject goes here...', 'class' => 'form-control']); ?>
                     </div>
 
                     <!-- textarea -->
                     <div class="form-group">
                         <label>Enter your message here</label>
-                        <textarea class="form-control" rows="3" placeholder="Message goes here..."></textarea>
+                        <?= $this->Form->control('message', ['label' => false, 'type' => 'textarea', 'placeholder' => 'Enter message here...', 'class' => 'form-control']); ?>
                     </div>
 
                     <div class="row">
@@ -30,7 +30,7 @@
                         </div>
                         <!-- /.col -->
                     </div>
-                </form>
+                <?= $this->Form->end() ?>
             </div>
             <!-- /.box-body -->
         </div>
