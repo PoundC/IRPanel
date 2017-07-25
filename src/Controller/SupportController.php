@@ -41,7 +41,11 @@ class SupportController extends AppController
 
     public function tickets()
     {
-
+        $table = TableRegistry::get('Messages');
+        $tableAlias = $table->getAlias();
+        $this->set($tableAlias, $this->paginate($table));
+        $this->set('tableAlias', $tableAlias);
+        $this->set('_serialize', [$tableAlias, 'tableAlias']);
     }
 
     public function fetch()

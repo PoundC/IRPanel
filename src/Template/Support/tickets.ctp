@@ -16,7 +16,8 @@
                                     <option value="25">25</option>
                                     <option value="50">50</option>
                                     <option value="100">100</option>
-                                </select> entries</label></div>
+                                    </select> entries</label>
+                                </div>
                             </div>
                             <div class="col-sm-6">
                                 <div id="example1_filter" class="dataTables_filter" style="float:right;">
@@ -35,63 +36,43 @@
                             <table id="example1" class="table table-bordered table-striped dataTable" role="grid"
                                    aria-describedby="example1_info">
                                 <thead>
-                                <tr role="row">
-                                    <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1"
-                                        colspan="1" aria-sort="ascending"
-                                        aria-label="Category: activate to sort column descending"
-                                        style="width: 166px;">Category
-                                    </th>
-                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="4"
-                                        aria-label="Engine version: activate to sort column ascending"
-                                        style="width: 141px;">Subject
-                                    </th>
-                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                                        aria-label="CSS grade: activate to sort column ascending" style="width: 102px;">
-                                        Last
-                                    </th>
+                                <tr>
+                                    <th colspan="1"><?= $this->Paginator->sort('topic', 'Category') ?></th>
+                                    <th colspan="4"><?= $this->Paginator->sort('subject', 'Subject') ?></th>
+                                    <th colspan="2"><?= $this->Paginator->sort('modified', 'Last') ?></th>
+                                    <th class="actions"><?= 'Actions' ?></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr role="row" class="odd">
-                                    <td colspan="1" class="sorting_1">Gecko</td>
-                                    <td colspan="4">Firefox 1.0</td>
-                                    <td colspan="2">1/1/2017 00:00:00 UTC</td>
+                                <?php foreach (${$tableAlias} as $message) : ?>
+                                <tr>
+                                    <td colspan="1"><?= h($message->topic) ?></td>
+                                    <td colspan="4"><?= h($message->subject) ?></td>
+                                    <td colspan="2"><?= h($message->modified) ?></td>
+                                    <td class="actions">
+                                        <?= $this->Html->link('[ View ]', ['action' => 'view', $message->id]) ?>
+                                        <?= $this->Html->link('[ Change password ]', ['action' => 'changePassword', $message->id]) ?>
+                                        <?= $this->Html->link('[ Edit ]', ['action' => 'edit', $message->id]) ?>
+                                        <?= $this->Form->postLink('[ Delete ]', ['action' => 'delete', $message->id], ['confirm' => 'Are you sure you want to delete # ' . $message]) ?>
+                                    </td>
                                 </tr>
+
+                                <?php endforeach; ?>
+                                </tbody>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-5">
-                            <div class="dataTables_info" id="example1_info" role="status" aria-live="polite" style="float:left;">Showing 1
-                                to 10 of 57 entries
-                            </div>
-                        </div>
-                        <div class="col-sm-7">
-                            <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate"  style="float:right;">
-                                <ul class="pagination" style="margin: 0px 0px;">
-
-                                    <li class="paginate_button previous disabled" id="example1_previous">
-                                        <a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">Previous</a>
-                                    </li>
-
-                                    <li class="paginate_button active"><a href="#" aria-controls="example1"
-                                                                          data-dt-idx="1" tabindex="0">1</a></li>
-                                    <li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="2"
-                                                                    tabindex="0">2</a></li>
-                                    <li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="3"
-                                                                    tabindex="0">3</a></li>
-                                    <li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="4"
-                                                                    tabindex="0">4</a></li>
-                                    <li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="5"
-                                                                    tabindex="0">5</a></li>
-                                    <li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="6"
-                                                                    tabindex="0">6</a></li>
-                                    <li class="paginate_button next" id="example1_next"><a href="#"
-                                                                                           aria-controls="example1"
-                                                                                           data-dt-idx="7" tabindex="0">Next</a>
-                                    </li>
+                        <div class="col-sm-12">
+                            <div class="box-footer">
+                                <ul class="pagination pagination-sm no-margin pull-right">
+                                    <li><a href="#">&laquo;</a></li>
+                                    <?= $this->Paginator->prev('< ' . 'previous') ?>
+                                    <?= $this->Paginator->numbers() ?>
+                                    <?= $this->Paginator->next('next' . ' >') ?>
                                 </ul>
+                                <p><?= $this->Paginator->counter() ?></p>
                             </div>
                         </div>
                     </div>
