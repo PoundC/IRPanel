@@ -50,3 +50,7 @@
 .table-bordered {
     border-color: #3c8dbc !important;
 }
+
+.alert-danger {
+    background-color: #dd4b39 !important;
+}

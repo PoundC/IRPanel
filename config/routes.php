@@ -102,7 +102,7 @@ Router::connect('/investors', ['controller' => 'Visitors', 'action' => 'investor
 
 Router::connect('/chat', ['controller' => 'Chat', 'action' => 'online']);
 Router::connect('/tickets', ['controller' => 'Support', 'action' => 'tickets']);
-Router::connect('/tickets/fetch', ['controller' => 'Support', 'action' => 'fetch']);
+Router::connect('/support/view/*', ['controller' => 'Support', 'action' => 'view']);
 Router::connect('/support', ['controller' => 'Support', 'action' => 'support']);
 Router::connect('/contact', ['controller' => 'Support', 'action' => 'contact']);
 

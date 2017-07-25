@@ -46,14 +46,33 @@
                                 <tbody>
                                 <?php foreach (${$tableAlias} as $message) : ?>
                                 <tr>
-                                    <td colspan="1"><?= h($message->topic) ?></td>
+                                    <td colspan="1">
+                                    <?php switch($message->topic) {
+                                            case 0:
+                                                echo h('Contact');
+                                                break;
+                                            case 2:
+                                                echo h('Payment');
+                                                break;
+                                            case 3:
+                                                echo h('Chat');
+                                                break;
+                                            case 4:
+                                                echo h('Request');
+                                                break;
+                                            case 5:
+                                                echo h('Feedback');
+                                                break;
+                                            case 6:
+                                                echo h('Other');
+                                                break;
+                                            }
+                                    ?>
+                                    </td>
                                     <td colspan="4"><?= h($message->subject) ?></td>
-                                    <td colspan="2"><?= h($message->modified) ?></td>
+                                    <td colspan="2" style="white-space: nowrap;"><?= h($message->modified) ?></td>
                                     <td class="actions">
                                         <?= $this->Html->link('[ View ]', ['action' => 'view', $message->id]) ?>
-                                        <?= $this->Html->link('[ Change password ]', ['action' => 'changePassword', $message->id]) ?>
-                                        <?= $this->Html->link('[ Edit ]', ['action' => 'edit', $message->id]) ?>
-                                        <?= $this->Form->postLink('[ Delete ]', ['action' => 'delete', $message->id], ['confirm' => 'Are you sure you want to delete # ' . $message]) ?>
                                     </td>
                                 </tr>
 

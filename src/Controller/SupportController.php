@@ -39,11 +39,60 @@ class SupportController extends AppController
         $this->Auth->allow(['tickets', 'fetch', 'support', 'contact']);
     }
 
+    public function view($id)
+    {
+        $usersTable = TableRegistry::get(Configure::read('Users.table'));
+        $query = $usersTable->find('all')->where(['users.id' => $this->Auth->user('id')])->limit(1);
+        $user = $query->first();
+
+        $messagesTable = TableRegistry::get('Messages');
+        $messagesQuery = $messagesTable->find('all')->where(['messages.id' => $id])->limit(1);
+        $message = $messagesQuery->first();
+
+        $isAuthorized = false;
+
+        if($user->role == 'admin') {
+
+            $isAuthorized = true;
+        }
+        else {
+
+            if($message->user_id == $user->id) {
+
+                $isAuthorized = true;
+            }
+        }
+
+        if($isAuthorized == false) {
+
+            $this->Flash->error('You are not authorized to view that ticket.');
+            $this->redirect($this->referer());
+        }
+        else {
+
+            $this->set(compact('message'));
+        }
+    }
+
     public function tickets()
     {
+        $usersTable = TableRegistry::get(Configure::read('Users.table'));
+        $query = $usersTable->find('all')->where(['users.id' => $this->Auth->user('id')])->limit(1);
+        $user = $query->first();
+
         $table = TableRegistry::get('Messages');
+
+        if($user->role == 'admin') {
+
+            $messagesQuery = $table->find('all');
+        }
+        else {
+
+            $messagesQuery = $table->find('all')->where(['messages.user_id' => $user->id]);
+        }
+
         $tableAlias = $table->getAlias();
-        $this->set($tableAlias, $this->paginate($table));
+        $this->set($tableAlias, $this->paginate($messagesQuery));
         $this->set('tableAlias', $tableAlias);
         $this->set('_serialize', [$tableAlias, 'tableAlias']);
     }
