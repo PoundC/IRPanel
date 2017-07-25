@@ -6,7 +6,7 @@ use Cake\Core\Configure;
 
 <div class="register-box">
 
-    <?php echo $this->element('login'); ?>
+    <?php echo $this->element('Users/users_login'); ?>
 
   <div class="register-box-body">
     <p class="login-box-msg">Register a new membership</p>

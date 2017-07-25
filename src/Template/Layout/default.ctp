@@ -28,7 +28,7 @@ else {
 
     <head>
 
-        <?= $this->element('adminlte_head', ['skin' => $skin]); ?>
+        <?= $this->element('AdminLTE/adminlte_head', ['skin' => $skin]); ?>
 
     </head>
 
@@ -36,11 +36,11 @@ else {
 
         <div class="wrapper">
 
-            <?= $this->element('main_header'); ?>
+            <?= $this->element('Main/main_header'); ?>
 
-            <?= $this->element('main_sidebar'); ?>
+            <?= $this->element('Main/main_sidebar'); ?>
 
-            <?= $this->element('content_header'); ?>
+            <?= $this->element('Main/main_content_header'); ?>
 
             <div class="content-wrapper">
 
@@ -50,13 +50,13 @@ else {
 
             </div> <!-- /.content-wrapper -->
 
-            <?= $this->element('main_footer'); ?>
+            <?= $this->element('Main/main_footer'); ?>
 
-            <?= $this->element('control_sidebar'); ?>
+            <?= $this->element('Main/main_control_sidebar'); ?>
 
         </div> <!-- ./wrapper -->
 
-    <?= $this->element('adminlte_js_footer'); ?>
+    <?= $this->element('AdminLTE/adminlte_js_footer'); ?>
 
     </body>
 

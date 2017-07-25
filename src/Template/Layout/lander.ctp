@@ -10,22 +10,22 @@ $cakeDescription = '';
 <html>
     <head>
 
-        <?= $this->element('adminlte_head', ['skin' => 'blue']); ?>
+        <?= $this->element('AdminLTE/adminlte_head', ['skin' => 'blue']); ?>
 
-        <?= $this->element('lander_head'); ?>
+        <?= $this->element('Lander/lander_head'); ?>
 
     </head>
     <body class="fixed hold-transition skin-blue sidebar-mini">
 
         <div class="wrapper">
 
-            <?= $this->element('main_header'); ?>
+            <?= $this->element('Main/main_header'); ?>
 
-            <?= $this->element('main_sidebar'); ?>
+            <?= $this->element('Main/main_sidebar'); ?>
 
             <div class="content-wrapper">
 
-                <?= $this->element('content_header'); ?>
+                <?= $this->element('Main/main_content_header'); ?>
 
                 <?= $this->Flash->render(); ?>
 
@@ -33,14 +33,14 @@ $cakeDescription = '';
 
             </div> <!-- /.content-wrapper -->
 
-            <?= $this->element('main_footer'); ?>
+            <?= $this->element('Main/main_footer'); ?>
 
-            <?= $this->element('control_sidebar'); ?>
+            <?= $this->element('Main/main_control_sidebar'); ?>
         </div> <!-- ./wrapper -->
 
-    <?= $this->element('adminlte_js_footer'); ?>
+    <?= $this->element('AdminLTE/adminlte_js_footer'); ?>
 
-    <?= $this->element('lander_js_footer'); ?>
+    <?= $this->element('Lander/lander_js_footer'); ?>
 
     </body>
 </html>

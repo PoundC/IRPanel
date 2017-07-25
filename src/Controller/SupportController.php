@@ -51,13 +51,18 @@ class SupportController extends AppController
 
     public function support()
     {
+        $formSubmitted = false;
+
         if($this->request->getMethod() == 'POST') {
+
+            $formSubmitted = true;
 
             $data = $this->request->getData();
 
             $subject = $data['subject'];
             $message = $data['message'];
             $topicId = $data['topic'];
+            $priority = $data['priority'];
 
             $usersTable = TableRegistry::get(Configure::read('Users.table'));
             // $query = $usersTable->find('all')->where(['users.id' => $this->Auth->user('id')])->limit(1);
@@ -72,6 +77,7 @@ class SupportController extends AppController
                 'subject' => $subject,
                 'message' => $message,
                 'closed'  => $topicId,
+                'priority'  => $priority,
                 'created' => new \DateTime('now'),
                 'modified' => new \DateTime('now')
             ]);
@@ -98,12 +104,16 @@ class SupportController extends AppController
 
         $supportTable = TableRegistry::get('Messages');
         $supportEntity = $supportTable->newEntity();
-        $this->set(compact('supportEntity'));
+        $this->set(compact('supportEntity', 'formSubmitted'));
     }
 
     public function contact()
     {
+        $formSubmitted = false;
+
         if($this->request->getMethod() == 'POST') {
+
+            $formSubmitted = true;
 
             // Array ( [email] => Jeffrey.l.roberts@gmail.com [subject] => asdgfasdg [message] => asdgffasdgdsfg )
             $data = $this->request->getData();
@@ -187,7 +197,7 @@ class SupportController extends AppController
 
         $contactTable = TableRegistry::get('Messages');
         $contactEntity = $contactTable->newEntity();
-        $this->set(compact('contactEntity'));
+        $this->set(compact('contactEntity', 'formSubmitted'));
 
     }
 }

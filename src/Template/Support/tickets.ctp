@@ -103,3 +103,5 @@
     </div>
     <!-- /.col -->
 </div>
+
+<?= $this->element('Support/email_us') ?>

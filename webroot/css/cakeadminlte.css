@@ -10,12 +10,28 @@
 }
 
 .jlr-dashbox {
-    margin-top: 25px;
+    margin-top: 50px;
+}
+
+.jlr-dashbox label {
+    font-weight: normal !important;
 }
 
 .jlr-flash {
     margin-top: 25px;
     margin-left: 50px;
     margin-right: 50px;
-    margin-bottom: -25px;
+    margin-bottom: 25px;
+}
+
+.jlr-flash h4 {
+    font-size: 40px !important;
+}
+
+.jlr-flash h4 i {
+    font-size: 40px !important;
+}
+
+.jlr-flash span {
+    font-size: 20px;
 }
