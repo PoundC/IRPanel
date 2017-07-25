@@ -43,6 +43,10 @@ class CreateMessages extends AbstractMigration
             'default' => 0,
             'null' => false,
         ]);
+        $table->addColumn('topic', 'integer', [
+            'default' => 0,
+            'null' => false,
+        ]);
         $table->addColumn('closed', 'integer', [
             'default' => 0,
             'null' => false,

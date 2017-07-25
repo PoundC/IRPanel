@@ -73,12 +73,13 @@ class SupportController extends AppController
 
             $contactTable = TableRegistry::get('Messages');
             $contactEntity = $contactTable->newEntity([
-                'user_id' => $user_id,
-                'subject' => $subject,
-                'message' => $message,
-                'closed'  => $topicId,
-                'priority'  => $priority,
-                'created' => new \DateTime('now'),
+                'user_id'  => $user_id,
+                'subject'  => $subject,
+                'message'  => $message,
+                'closed'   => 0,
+                'topic'    => $topicId,
+                'priority' => $priority,
+                'created'  => new \DateTime('now'),
                 'modified' => new \DateTime('now')
             ]);
             $result = $contactTable->save($contactEntity);
@@ -92,10 +93,10 @@ class SupportController extends AppController
 
             $recipientsTable = TableRegistry::get('Recipients');
             $recipientsEntity = $recipientsTable->newEntity([
-                'message_id' => $message_id,
-                'user_id' => $admin->get('id'),
-                'created' => new \DateTime('now'),
-                'modified' => new \DateTime('now')
+                'message_id'  => $message_id,
+                'user_id'     => $admin->get('id'),
+                'created'     => new \DateTime('now'),
+                'modified'    => new \DateTime('now')
             ]);
             $recipientsTable->save($recipientsEntity);
 

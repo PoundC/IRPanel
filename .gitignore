@@ -11,3 +11,4 @@ webroot/pages
 webroot/plugins
 webroot/assets
 .DS_Store
+config/Migrations/schema-dump-default.lock
