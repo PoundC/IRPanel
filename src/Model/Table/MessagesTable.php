@@ -51,6 +51,8 @@ class MessagesTable extends Table
     {
         parent::initialize($config);
 
+        $this->belongsTo('Users', array())->setForeignKey('user_id')->setProperty('user');
+
         $this->setTable('messages');
         $this->setDisplayField('subject');
         $this->setPrimaryKey('id');
@@ -101,6 +103,14 @@ class MessagesTable extends Table
         return $validator;
     }
 
+    public function validationReply(Validator $validator)
+    {
+        $validator
+            ->requirePresence('message', 'create')
+            ->notEmpty('message');
+
+        return $validator;
+    }
 }
 
 

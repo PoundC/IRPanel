@@ -37,6 +37,9 @@
     border-top-color: #3c8dbc !important;
 }
 
+.btn {
+    font-size: 19px !important;
+}
 .btn-info {
     background-color: #3c8dbc !important;
     border-color: #3c8dbc !important;

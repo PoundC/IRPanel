@@ -78,7 +78,7 @@ return [
         [
             'role' => ['user', 'member', 'admin'],
             'controller' => ['Support'],
-            'action' => ['open', 'tickets', 'view'],
+            'action' => ['open', 'tickets', 'view', 'reply', 'support'],
             'allowed' => true,
         ],
         [

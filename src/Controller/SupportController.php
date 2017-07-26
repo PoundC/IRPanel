@@ -35,8 +35,6 @@ class SupportController extends AppController
     public function initialize()
     {
         parent::initialize();
-
-        $this->Auth->allow(['tickets', 'fetch', 'support', 'contact']);
     }
 
     public function view($id)
@@ -46,8 +44,14 @@ class SupportController extends AppController
         $user = $query->first();
 
         $messagesTable = TableRegistry::get('Messages');
-        $messagesQuery = $messagesTable->find('all')->where(['messages.id' => $id])->limit(1);
+        $messagesQuery = $messagesTable->find('all', ['contain' => ['Users']])->where(['messages.id' => $id])->limit(1);
         $message = $messagesQuery->first();
+
+        $repliesQuery = $messagesTable->find('all', ['contain' => ['Users']])->where(['messages.message_id' => $id]);
+        $replies = $repliesQuery->all();
+
+        $messageFromQuery = $usersTable->find('all')->where(['users.id' => $message->user_id])->limit(1);
+        $messageFromUser = $messageFromQuery->first();
 
         $isAuthorized = false;
 
@@ -70,8 +74,40 @@ class SupportController extends AppController
         }
         else {
 
-            $this->set(compact('message'));
+            $supportTable = TableRegistry::get('Messages');
+            $supportEntity = $supportTable->newEntity();
+            $this->set(compact('supportEntity', 'message', 'messageFromUser', 'replies'));
         }
+    }
+
+    public function reply($id) {
+
+        if($this->request->getMethod() == 'POST') {
+
+            $data = $this->request->getData();
+
+            $message = $data['message'];
+
+            $messagesTable = TableRegistry::get('Messages');
+            $messagesQuery = $messagesTable->find('all')->where(['messages.id' => $id])->limit(1);
+            $messageResult = $messagesQuery->first();
+
+            $contactTable = TableRegistry::get('Messages');
+            $contactEntity = $contactTable->newEntity([
+                'user_id'  => $this->Auth->user('id'),
+                'subject'  => 'RE: ' . $messageResult->subject,
+                'message'  => $message,
+                'closed'   => 0,
+                'topic'    => $messageResult->topic,
+                'priority' => $messageResult->priority,
+                'message_id' => $messageResult->id,
+                'created'  => new \DateTime('now'),
+                'modified' => new \DateTime('now')
+            ]);
+            $result = $contactTable->save($contactEntity);
+        }
+
+        $this->redirect($this->referer());
     }
 
     public function tickets()
@@ -95,11 +131,6 @@ class SupportController extends AppController
         $this->set($tableAlias, $this->paginate($messagesQuery));
         $this->set('tableAlias', $tableAlias);
         $this->set('_serialize', [$tableAlias, 'tableAlias']);
-    }
-
-    public function fetch()
-    {
-        print_r($this->request->getQueryParams());die();
     }
 
     public function support()
