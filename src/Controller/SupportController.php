@@ -44,10 +44,10 @@ class SupportController extends AppController
         $user = $query->first();
 
         $messagesTable = TableRegistry::get('Messages');
-        $messagesQuery = $messagesTable->find('all', ['contain' => ['Users']])->where(['messages.id' => $id])->limit(1);
+        $messagesQuery = $messagesTable->find('all', ['contain' => ['Users']])->where(['messages.id' => $id])->limit(1)->orderAsc('messages.created');;
         $message = $messagesQuery->first();
 
-        $repliesQuery = $messagesTable->find('all', ['contain' => ['Users']])->where(['messages.message_id' => $id]);
+        $repliesQuery = $messagesTable->find('all', ['contain' => ['Users']])->where(['messages.message_id' => $id])->orderAsc('messages.created');;
         $replies = $repliesQuery->all();
 
         $messageFromQuery = $usersTable->find('all')->where(['users.id' => $message->user_id])->limit(1);
@@ -104,10 +104,79 @@ class SupportController extends AppController
                 'created'  => new \DateTime('now'),
                 'modified' => new \DateTime('now')
             ]);
+
+            if($messageResult->message_id > 0) {
+
+                $contactEntity->set('message_id', $messageResult->message_id);
+                $opMessage = $messagesTable->get($messageResult->message_id);
+            }
+            else {
+
+                $opMessage = $messagesTable->get($messageResult->id);
+            }
             $result = $contactTable->save($contactEntity);
+
+            $opMessage->modified = new \DateTime('now');
+            $messagesTable->save($opMessage);
+
+            if($messageResult->message_id > 0) {
+
+                $this->redirect('/support/view/' . $messageResult->message_id);
+            }
+            else {
+
+                $this->redirect($this->referer() . '#reply-' . $result->id);
+            }
+        }
+        else {
+
+            $this->Flash->error('You are not authrozied.');
+            $this->redirect('/dashboard');
+        }
+    }
+
+    public function close($id)
+    {
+        if($this->request->getMethod() == 'POST') {
+
+            $usersTable = TableRegistry::get(Configure::read('Users.table'));
+            $query = $usersTable->find('all')->where(['users.id' => $this->Auth->user('id')])->limit(1);
+            $user = $query->first();
+
+            $messagesTable = TableRegistry::get('Messages');
+            $opMessage = $messagesTable->get($id);
+
+            $closeOpMessage = 0;
+
+            if ($user->role == 'admin') {
+
+                $closeOpMessage = 1;
+            } else {
+
+                if ($opMessage->user_id == $this->Auth->user('id')) {
+
+                    $closeOpMessage = 1;
+                }
+            }
+
+            if ($closeOpMessage == 1) {
+
+                $opMessage->closed = $closeOpMessage;
+                $messagesTable->save($opMessage);
+
+                $this->Flash->success('Ticket Successfully Closed.');
+            } else {
+
+                $this->Flash->error('Could not close ticket... $closeOpMessage = 0');
+            }
+
+        }
+        else {
+
+            $this->Flash->error('Unknown Error, Invalid getMethod');
         }
 
-        $this->redirect($this->referer());
+        $this->redirect('/tickets');
     }
 
     public function tickets()
@@ -120,11 +189,11 @@ class SupportController extends AppController
 
         if($user->role == 'admin') {
 
-            $messagesQuery = $table->find('all');
+            $messagesQuery = $table->find('all')->where(['messages.message_id' => 0, 'messages.closed' => 0])->orderAsc('messages.created');
         }
         else {
 
-            $messagesQuery = $table->find('all')->where(['messages.user_id' => $user->id]);
+            $messagesQuery = $table->find('all')->where(['messages.message_id' => 0, 'messages.closed' => 0, 'messages.user_id' => $user->id])->orderAsc('messages.created');;
         }
 
         $tableAlias = $table->getAlias();
@@ -185,6 +254,7 @@ class SupportController extends AppController
             $recipientsTable->save($recipientsEntity);
 
             $this->Flash->success('Support Ticket Created Successfully, We will be in touch shortly...');
+            $this->redirect('/tickets');
         }
 
         $supportTable = TableRegistry::get('Messages');
@@ -249,7 +319,7 @@ class SupportController extends AppController
                     'user_id' => $user_id,
                     'subject' => $subject,
                     'message' => $message,
-                    'closed'  => 1,
+                    'closed'  => 0,
                     'created' => new \DateTime('now'),
                     'modified' => new \DateTime('now')
                 ]);

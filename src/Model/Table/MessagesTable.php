@@ -53,6 +53,8 @@ class MessagesTable extends Table
 
         $this->belongsTo('Users', array())->setForeignKey('user_id')->setProperty('user');
 
+        // $this->belongsTo('Messages', array())->setForeignKey('message_id')->setProperty('message');
+
         $this->setTable('messages');
         $this->setDisplayField('subject');
         $this->setPrimaryKey('id');

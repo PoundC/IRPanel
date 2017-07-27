@@ -97,9 +97,7 @@ class Menu
 
     public static function getAdminMenu($currentPath)
     {
-        $mergedArray = array_merge(self::$_AdminMenu, self::$_SiteMenu);
-
-        return self::buildMenu($currentPath, $mergedArray);
+        return self::buildMenu($currentPath, self::$_AdminMenu);
     }
 
     public static function mergeMenus($menu1, $menu2)

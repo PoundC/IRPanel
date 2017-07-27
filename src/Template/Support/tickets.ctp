@@ -3,6 +3,13 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Your Support Tickets</h3>
+                <?php if ($isAdmin == false) { ?>
+                <div class="col-md-4 pull-right">
+                    <button type="button" class="btn btn-default" style="width:100%" onclick="location.href='/support'">
+                        <i class="fa fa-magic"></i> Create New Ticket
+                    </button>
+                </div>
+                <?php } ?>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -104,4 +111,3 @@
     <!-- /.col -->
 </div>
 
-<?= $this->element('Support/email_us') ?>

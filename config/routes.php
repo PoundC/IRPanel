@@ -105,6 +105,7 @@ Router::connect('/tickets', ['controller' => 'Support', 'action' => 'tickets']);
 Router::connect('/support/view/*', ['controller' => 'Support', 'action' => 'view']);
 Router::connect('/support', ['controller' => 'Support', 'action' => 'support']);
 Router::connect('/contact', ['controller' => 'Support', 'action' => 'contact']);
+Router::connect('/close/*', ['controller' => 'Support', 'action' => 'close']);
 
 /*
  *

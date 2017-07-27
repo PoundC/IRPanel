@@ -1,22 +1,5 @@
 <div class="row jlr-dashbox">
-
-    <div class="col-md-3 col-md-offset-1">
-        <!-- Profile Image -->
-        <div class="box box-primary">
-            <div class="box-body box-profile">
-                <img class="profile-user-img img-responsive img-circle" src="<?php echo empty($messageFromUser->avatar) ? '/cake_d_c/users/img/avatar_placeholder.png' : $messageFromUser->avatar ?>" alt="User profile picture">
-
-                <h3 class="profile-username text-center"><?= $messageFromUser->first_name . ' ' . $messageFromUser->last_name ?></h3>
-
-                <p class="text-muted text-center"><?= $messageFromUser->username ?></p>
-
-            </div>
-            <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
-    </div>
-
-    <div class="col-md-7">
+    <div class="col-md-7 col-md-offset-1">
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
@@ -30,7 +13,7 @@
                 <div class="box-body no-padding">
                     <div class="mailbox-read-info">
 
-                        <h5>From: <?= $messageFromUser->email ?>
+                        <h5>From: <?= $messageFromUser->username ?>
                             <span class="mailbox-read-time pull-right"><?= $message->created ?></span></h5>
                     </div>
 
@@ -96,12 +79,12 @@
 
         <?php foreach($replies as $reply) { ?>
 
-        <div class="col-md-12">
+        <div id="reply-<?php echo $reply->id; ?>" class="col-md-12">
             <div class="box box-primary" style="border-top-color: white !important;">
                 <!-- /.box-header -->
                 <div class="box-body no-padding">
                     <div class="mailbox-read-info">
-                        <h5>From: <?= $reply->user->email ?>
+                        <h5>From: <?= $reply->user->username ?>
                             <span class="mailbox-read-time pull-right"><?= $reply->created ?></span></h5>
                     </div>
 
@@ -207,6 +190,7 @@
                     </div>
                 </div>
             </div>
+            <?php if($isAdmin == true) { ?>
             <div class="row">
                 <div class="col-md-12">
                     <!-- About Me Box -->
@@ -235,6 +219,27 @@
                     <!-- /.box -->
                 </div>
             </div>
+            <?php } ?>
         </div>
+    </div>
+    <div class="col-md-3">
+        <!-- Profile Image -->
+        <div class="box box-primary">
+            <div class="box-body box-profile">
+                <img class="profile-user-img img-responsive img-circle" src="<?php echo empty($messageFromUser->avatar) ? '/cake_d_c/users/img/avatar_placeholder.png' : $messageFromUser->avatar ?>" alt="User profile picture">
+
+                <h3 class="profile-username text-center"><?= $messageFromUser->first_name . ' ' . $messageFromUser->last_name ?></h3>
+
+                <p class="text-muted text-center"><?= $messageFromUser->username ?></p>
+
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->postLink('<i class="fa fa-close"></i> Close Ticket', ['action' => 'close', $message->id], ['escape' => false, 'style' => 'width: 100%', 'class' => 'btn btn-default']) ?>
+            </div>
+        </div>
+        <!-- /.box -->
     </div>
 </div>
