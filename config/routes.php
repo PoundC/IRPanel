@@ -100,7 +100,9 @@ Router::connect('/investors', ['controller' => 'Visitors', 'action' => 'investor
  *
  */
 
-Router::connect('/chat', ['controller' => 'Chat', 'action' => 'online']);
+Router::connect('/chat/*', ['controller' => 'Chat', 'action' => 'online']);
+Router::connect('/chatsend/*', ['controller' => 'Chat', 'action' => 'chatsend']);
+Router::connect('/receive/*', ['controller' => 'Chat', 'action' => 'receive']);
 Router::connect('/tickets', ['controller' => 'Support', 'action' => 'tickets']);
 Router::connect('/support/view/*', ['controller' => 'Support', 'action' => 'view']);
 Router::connect('/support', ['controller' => 'Support', 'action' => 'support']);
@@ -125,3 +127,5 @@ Router::connect('/profile/*', ['controller' => 'MyUsers', 'action' => 'profile']
 Router::connect('/login', ['controller' => 'MyUsers', 'action' => 'login']);
 Router::connect('/register', ['controller' => 'MyUsers', 'action' => 'register']);
 Router::connect('/reset', ['controller' => 'MyUsers', 'action' => 'requestResetPassword']);
+
+Router::extensions(['json']);

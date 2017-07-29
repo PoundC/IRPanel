@@ -18,6 +18,7 @@
 <?= $this->Html->css('/dist/css/skins/_all-skins.css') ?>
 <?= $this->Html->css('/css/skins/' . $skin) ?>
 
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>

@@ -72,7 +72,7 @@ return [
         [
             'role' => ['user', 'member', 'admin'],
             'controller' => ['Chat'],
-            'action' => ['online', 'send', 'receive'],
+            'action' => ['online', 'chatsend', 'receive'],
             'allowed' => true,
         ],
         [

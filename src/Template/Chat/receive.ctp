@@ -1,0 +1,1 @@
+<?= $this->element('Chat/receive', ['lastChats' => $lastChats, 'roomId' => $roomId]);
