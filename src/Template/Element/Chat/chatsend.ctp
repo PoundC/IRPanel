@@ -34,6 +34,7 @@
                     $('#direct-chat-messages').animate({
                         scrollTop: $('#direct-chat-messages').get(0).scrollHeight
                     }, 2000);
+                    $('#sendmsg').focus();
                     return false;
                 },
                 error: function (data) {

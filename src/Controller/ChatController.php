@@ -135,7 +135,7 @@ class ChatController extends AppController
             $chatRoomsResult = $chatRoomsQuery->first();
 
             $chatsTable = TableRegistry::get('Chats');
-            $lastChatQuery = $chatsTable->find('all')->where(['chats.room_id' => $chatRoomsResult->id, 'chats.id >' => $data['message_id']])->orderAsc('id');
+            $lastChatQuery = $chatsTable->find('all', ['contain' => ['Users']])->where(['chats.room_id' => $chatRoomsResult->id, 'chats.id >' => $data['message_id']])->orderAsc('chats.id');
             $lastChats = $lastChatQuery->all();
 
             if($lastChats != '') {
