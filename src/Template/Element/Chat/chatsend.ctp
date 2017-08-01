@@ -8,6 +8,7 @@
                       </span>
 </div>
 <?= $this->Form->end() ?>
+<?php if(isset($message_id) == false) { $message_id = '0'; } ?>
 <?= $this->Form->control('message_id', ['id' => 'recmsg2', 'label' => false, 'type' => 'hidden', 'name' => 'message_id', 'value' => $message_id, 'class' => 'form-control']); ?>
 <script>
     $(document).ready(function () {

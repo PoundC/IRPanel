@@ -163,6 +163,10 @@ $menus = [
                 'icon'  => 'fa-user',
                 'css'   => 'active non-active',
                 'menu' => [
+                    'Dashboard' => [
+                        'path' => '/dashboard',
+                        'icon' => 'fa-dashboard'
+                    ],
                     'Search Users' => [
                         'path'  => '/search',
                         'icon'  => 'fa-search'
@@ -170,10 +174,6 @@ $menus = [
                     'View Users' => [
                         'path'  => '/users/users',
                         'icon'  => 'fa-users'
-                    ],
-                    'Dashboard' => [
-                        'path' => '/dashboard',
-                        'icon' => 'fa-dashboard'
                     ],
                     'Profile' => [
                         'path' => '/profile',
@@ -213,8 +213,8 @@ $menus = [
                 'icon'  => 'fa-support',
                 'css'   => 'active non-active',
                 'menu' => [
-                    'Live Chat' => [
-                        'path' => '/chat',
+                    'View Chats' => [
+                        'path' => '/openchats',
                         'icon' => 'fa-wechat'
                     ],
                     'View Tickets'     => [

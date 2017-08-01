@@ -20,16 +20,8 @@ use Cake\Validation\Validator;
 /**
  * Chats Model
  */
-class ChatsTable extends Table
+class OpenchatsTable extends Table
 {
-    public $validate = array(
-        'message' => array(
-            'rule' => 'alphanumeric',
-            'required' => true,
-            'allowEmpty' => false,
-        ),
-    );
-
     public function initialize(array $config)
     {
         parent::initialize($config);
@@ -37,35 +29,8 @@ class ChatsTable extends Table
         $this->belongsTo('Users', array())->setForeignKey('user_id')->setProperty('user');
         $this->belongsTo('Chatrooms', array())->setForeignKey('chatroom_id')->setProperty('room');
 
-        $this->setTable('chats');
-        $this->setDisplayField('message');
+        $this->setTable('openchats');
+        $this->setDisplayField('active');
         $this->setPrimaryKey('id');
-    }
-
-    public function validationSend(Validator $validator)
-    {
-        $validator
-            ->allowEmpty('id', 'create');
-
-        $validator
-            ->requirePresence('user_id', 'create')
-            ->notEmpty('user_id');
-
-        $validator
-            ->requirePresence('room_id', 'create')
-            ->notEmpty('room_id');
-
-        $validator
-            ->requirePresence('message', 'create')
-            ->notEmpty('message');
-
-        return $validator;
-    }
-
-    public function validationReceive(Validator $validator)
-    {
-
-
-        return $validator;
     }
 }

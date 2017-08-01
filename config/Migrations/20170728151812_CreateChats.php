@@ -12,27 +12,6 @@ class CreateChats extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('chats');
-        $table->addColumn('room_id', 'string', [
-            'default' => null,
-            'limit' => 255,
-            'null' => false,
-        ]);
-        $table->addColumn('user_id', 'string', [
-            'default' => null,
-            'limit' => 255,
-            'null' => false,
-        ]);
-        $table->addColumn('message', 'text', [
-            'default' => null,
-            'null' => false,
-        ]);
-        $table->addColumn('created', 'datetime', [
-            'default' => null,
-            'null' => false,
-        ]);
-        $table->create();
-
         $table = $this->table('chatrooms');
         $table->addColumn('name', 'string', [
             'default' => null,
@@ -54,5 +33,52 @@ class CreateChats extends AbstractMigration
         ]);
         $table->create();
 
+        $table = $this->table('chats');
+        $table->addColumn('chatroom_id', 'integer', [
+            'default' => null,
+            'null' => false,
+        ]);
+        $table->addColumn('user_id', 'string', [
+            'default' => null,
+            'limit' => 255,
+            'null' => false,
+        ]);
+        $table->addColumn('message', 'text', [
+            'default' => null,
+            'null' => false,
+        ]);
+        $table->addColumn('created', 'datetime', [
+            'default' => null,
+            'null' => false,
+        ]);
+        $table->create();
+
+        $table = $this->table('openchats');
+        $table->addColumn('chatroom_id', 'integer', [
+            'default' => null,
+            'null' => false,
+        ]);
+        $table->addColumn('open', 'integer', [
+            'default' => 1,
+            'null' => false,
+        ]);
+        $table->addColumn('active', 'datetime', [
+            'default' => null,
+            'null' => false,
+        ]);
+        $table->addColumn('user_id', 'string', [
+            'default' => null,
+            'limit' => 255,
+            'null' => false,
+        ]);
+        $table->addColumn('created', 'datetime', [
+            'default' => null,
+            'null' => false,
+        ]);
+        $table->addColumn('modified', 'datetime', [
+            'default' => null,
+            'null' => false,
+        ]);
+        $table->create();
     }
 }

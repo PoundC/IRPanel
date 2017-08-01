@@ -145,6 +145,8 @@
             </div>
             <div class="box-hidden-footer" id="box-hidden-footer">
 
+                <?php if(isset($message_id) == false) { $message_id = '0'; } ?>
+
                 <?= $this->element('Chat/receive', array('message_id' => $message_id)) ?>
 
             </div>
@@ -164,9 +166,6 @@
                 url: "/receive/<?php echo $roomId; ?>",
                 dataType: 'text',
                 data: $('#receive').serialize(),
-                beforeSend: function(xhr){
-                    xhr.setRequestHeader('X-CSRF-Token', '<?= $token ?>');
-                },
                 async: false,
 
                 success: function (data) {

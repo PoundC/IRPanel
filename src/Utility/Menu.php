@@ -306,7 +306,7 @@ class Menu
                     }
 
                     $html .= '<li class="' . $first_class . '"><a href="#"><i class="fa-left-icon fa ' . $menuIcon . ' ' . $second_class . '"></i><span class="' . $second_class . '">' . $menuName . '</span>';
-                    $html .= '<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>';
+                    $html .= '<span class="pull-right-container"></span></a>';
                     $html .= '<ul class="treeview-menu">';
 
                     foreach ($menuItems as $item => $items) {
@@ -346,7 +346,7 @@ class Menu
                             }
 
                             $html .= '<li class="' . $first_class2 . '"><a href="#"><i class="fa-left-icon fa ' . $items['icon'] . ' ' . $second_class2 . '"></i><span class="' . $second_class2 . '">' . $items['group'] . '</span>';
-                            $html .= '<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>';
+                            $html .= '<span class="pull-right-container"></span></a>';
                             $html .= self::buildMenuItems($currentPath, $items['menu']);
                         }
                     }
@@ -422,7 +422,7 @@ class Menu
                 }
 
                 $html .= '<li class="' . $first_class3 . '"><a href="#"><i class="fa-left-icon fa ' . $itemSet['icon'] . ' ' . $second_class3 . '"></i><span class="' . $second_class3 . '">' . $itemSet['group'] . '</span>';
-                $html .= '<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>';
+                $html .= '<span class="pull-right-container"></span></a>';
                 $html .= self::buildMenuItems($currentPath, $itemSet['menu']);
             }
         }

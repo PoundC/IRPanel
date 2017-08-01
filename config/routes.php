@@ -103,6 +103,7 @@ Router::connect('/investors', ['controller' => 'Visitors', 'action' => 'investor
 Router::connect('/chat/*', ['controller' => 'Chat', 'action' => 'online']);
 Router::connect('/chatsend/*', ['controller' => 'Chat', 'action' => 'chatsend']);
 Router::connect('/receive/*', ['controller' => 'Chat', 'action' => 'receive']);
+Router::connect('/openchats', ['controller' => 'Chat', 'action' => 'openchats']);
 Router::connect('/tickets', ['controller' => 'Support', 'action' => 'tickets']);
 Router::connect('/support/view/*', ['controller' => 'Support', 'action' => 'view']);
 Router::connect('/support', ['controller' => 'Support', 'action' => 'support']);
