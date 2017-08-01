@@ -19,7 +19,7 @@
 
                     <!-- /.mailbox-controls -->
                     <div class="mailbox-read-message">
-                        <p><?= $message->message ?></p>
+                        <p><?= $this->Markdown->transform($message->message) ?></p>
                     </div>
                     <!-- /.mailbox-read-message -->
                 </div>
@@ -90,7 +90,7 @@
 
                     <!-- /.mailbox-controls -->
                     <div class="mailbox-read-message">
-                        <p><?= $reply->message ?></p>
+                        <p><?= $this->Markdown->transform($reply->message) ?></p>
                     </div>
                     <!-- /.mailbox-read-message -->
                 </div>

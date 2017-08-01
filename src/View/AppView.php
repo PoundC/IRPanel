@@ -24,7 +24,7 @@ use Cake\View\View;
  */
 class AppView extends View
 {
-    public $helpers = ['Breadcrumbs'];
+    public $helpers = ['Breadcrumbs', 'Markdown'];
 
     /**
      * Initialization hook method.
