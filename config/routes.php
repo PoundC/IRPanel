@@ -83,7 +83,7 @@ Plugin::routes();
 
 /*
  *
- *  Visitor Menu Routes
+ * Visitor Menu Routes
  *
  */
 
@@ -96,7 +96,7 @@ Router::connect('/investors', ['controller' => 'Visitors', 'action' => 'investor
 
 /*
  *
- *  Support Menu Routes
+ * Support Menu Routes
  *
  */
 
@@ -112,7 +112,15 @@ Router::connect('/close/*', ['controller' => 'Support', 'action' => 'close']);
 
 /*
  *
- *  Member Menu Routes
+ * Search Routes
+ *
+ */
+Router::connect('/search/users', ['controller' => 'Search', 'action' => 'users']);
+
+
+/*
+ *
+ * Member Menu Routes
  *
  */
 

@@ -82,6 +82,12 @@ return [
             'allowed' => true,
         ],
         [
+            'role' => ['admin'],
+            'controller' => ['Search'],
+            'action' => ['users'],
+            'allowed' => true,
+        ],
+        [
             'role' => ['user', 'member', 'admin'],
             'controller' => ['Support'],
             'action' => ['open', 'tickets', 'view', 'reply', 'support', 'close'],
