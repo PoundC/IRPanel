@@ -113,7 +113,7 @@ $menus = [
         'Welcome Member' => [
             [
                 'link'  => 'Members Only',
-                'icon'  => 'fa-fighter-jet',
+                'icon'  => 'fa-rocket',
                 'path'  => '/members/only'
             ],
             [
@@ -213,6 +213,10 @@ $menus = [
                 'icon'  => 'fa-support',
                 'css'   => 'active non-active',
                 'menu' => [
+                    'Help & FAQ' => [
+                        'path' => '/help',
+                        'icon' => 'fa-question-circle'
+                    ],
                     'View Chats' => [
                         'path' => '/openchats',
                         'icon' => 'fa-wechat'
@@ -227,6 +231,11 @@ $menus = [
     ],
     'site' => [
         'Sitewide Links' => [
+            [
+                'link' => 'Help & FAQ',
+                'path' => '/help',
+                'icon' => 'fa-question-circle'
+            ],
             [
                 'link'  => 'Contact Us',
                 'icon'  => 'fa-bullhorn',

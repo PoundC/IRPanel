@@ -76,6 +76,12 @@ return [
             'allowed' => true,
         ],
         [
+            'role' => ['user', 'member', 'admin'],
+            'controller' => ['Help'],
+            'action' => ['help', 'faq'],
+            'allowed' => true,
+        ],
+        [
             'role' => ['admin'],
             'controller' => ['Chat'],
             'action' => ['openchats'],

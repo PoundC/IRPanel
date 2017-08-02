@@ -4,7 +4,7 @@
     <?= $this->Form->control('message', ['id' => 'sendmsg', 'label' => false, 'type' => 'text', 'name' => 'message',
     'placeholder' => 'Enter message here...', 'value' => '', 'class' => 'form-control']); ?>
     <span class="input-group-btn">
-                        <?= $this->Form->button(__d('CakeDC/Users', 'Send'), ['type' => 'submit', 'class' => 'btn btn-primary btn-block btn-flat']) ?>
+                        <?= $this->Form->button(__d('CakeDC/Users', 'Send'), ['type' => 'submit', 'class' => 'btn btn-primary btn-block btn-flat', 'style' => 'margin-top:-4px;']) ?>
                       </span>
 </div>
 <?= $this->Form->end() ?>

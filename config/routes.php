@@ -115,6 +115,14 @@ Router::connect('/close/*', ['controller' => 'Support', 'action' => 'close']);
  * Search Routes
  *
  */
+
+Router::connect('/help/*', ['controller' => 'Help', 'action' => 'help']);
+
+/*
+ *
+ * Search Routes
+ *
+ */
 Router::connect('/search/users', ['controller' => 'Search', 'action' => 'users']);
 
 

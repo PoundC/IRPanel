@@ -44,7 +44,7 @@
 */
 ?>
 <div class="row jlr-dashbox">
-    <div class="col-lg-6 col-lg-offset-3">
+    <div class="col-lg-4 col-lg-offset-1">
         <!-- DIRECT CHAT PRIMARY -->
         <div class="box box-primary direct-chat direct-chat-primary">
             <div class="box-header with-border">
@@ -153,6 +153,22 @@
             <!-- /.box-footer-->
         </div>
         <!--/.direct-chat -->
+    </div>
+    <div class="col-md-6">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs" id="jlr-tabs">
+
+                <li class="active"><a href="#timeline" data-toggle="tab" aria-expanded="false">Help Tutorial</a></li>
+
+            </ul>
+            <div class="tab-content" id="jlr-tabs-content">
+                <div class="tab-pane active" id="timeline">
+
+                    <h3>This is where you will find live up-to-date real time FAQ help, wait for the tab to become active.</h3>
+
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
