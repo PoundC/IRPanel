@@ -9,7 +9,7 @@
                     <table class="table table-bordered">
                         <thead>
                         <tr>
-                            <th><?= $this->Paginator->sort('users.username', 'Username') ?></th>
+                            <th><?= $this->Paginator->sort('users.id', 'User ID') ?></th>
                             <th><?= $this->Paginator->sort('active', 'Last Active') ?></th>
                             <th><?= $this->Paginator->sort('user_id', 'Assigned To') ?></th>
                             <th class="actions"><?= 'Actions' ?></th>
