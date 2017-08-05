@@ -22,23 +22,15 @@ use Cake\Validation\Validator;
  */
 class HelptabsTable extends Table
 {
-    public $validate = array(
-        'tag' => array(
-            'rule' => 'alphanumeric',
-            'required' => true,
-            'allowEmpty' => false,
-        )
-    );
-
     public function initialize(array $config)
     {
         parent::initialize($config);
 
-        $this->belongsTo('Answers', array())->setForeignKey('answer_id')->setProperty('answer');
+        $this->belongsTo('Faq_Answers', array())->setForeignKey('faq_answer_id')->setProperty('answer');
         $this->belongsTo('Chatrooms', array())->setForeignKey('chatroom_id')->setProperty('room');
 
         $this->setTable('helptabs');
-        $this->setDisplayField('Answers.topic');
+        $this->setDisplayField('Faq_Answers.topic');
         $this->setPrimaryKey('id');
     }
 
@@ -48,8 +40,8 @@ class HelptabsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->requirePresence('answer_id', 'create')
-            ->notEmpty('answer_id');
+            ->requirePresence('faq_answer_id', 'create')
+            ->notEmpty('faq_answer_id');
 
         $validator
             ->requirePresence('chatroom_id', 'create')

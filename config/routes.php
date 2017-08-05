@@ -112,11 +112,12 @@ Router::connect('/close/*', ['controller' => 'Support', 'action' => 'close']);
 
 /*
  *
- * Search Routes
+ * Help Routes
  *
  */
 
 Router::connect('/help/*', ['controller' => 'Help', 'action' => 'help']);
+Router::connect('/senduser/*', ['controller' => 'Help', 'action' => 'senduser']);
 
 /*
  *

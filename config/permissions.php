@@ -83,6 +83,12 @@ return [
         ],
         [
             'role' => ['admin'],
+            'controller' => ['Help'],
+            'action' => ['senduser'],
+            'allowed' => true,
+        ],
+        [
+            'role' => ['admin'],
             'controller' => ['Chat'],
             'action' => ['openchats'],
             'allowed' => true,

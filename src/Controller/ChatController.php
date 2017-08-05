@@ -34,10 +34,8 @@ use DateTimeZone;
  */
 class ChatController extends AppController
 {
-
     public function initialize()
     {
-
         parent::initialize();
 
         $this->Auth->allow(['chatsend', 'receive', 'online']);
@@ -145,7 +143,39 @@ class ChatController extends AppController
 
         $token = $this->request->getParam('_csrfToken');
 
-        $this->set(compact('chatsResults', 'chatRoomsResult', 'chatsEntity', 'roomId', 'token', 'message_id', 'lastChats'));
+        $searchResults = 0;
+        $searchQuery = '';
+
+        if($this->request->getMethod() == 'POST' || $this->request->getQuery('search') != '') {
+
+            if($this->request->getMethod() == 'GET') {
+
+                $data['search'] = $this->request->getQuery('search');
+            }
+            else {
+
+                $data = $this->request->getData();
+            }
+
+            $questionsTable = TableRegistry::get('faq_questions');
+            $questionsQuery = $questionsTable->find('all', ['contain' => ['faq_answers', 'faq_answers.faq_topics']])
+                ->where(['faq_topics.topic LIKE' => '%' . $data['search'] . '%'])
+                ->orWhere(['faq_questions.question LIKE' => '%' . $data['search'] . '%'])
+                ->orWhere(['faq_answers.answer LIKE' => '%' . $data['search'] . '%']);
+
+            $searchQuery = $data['search'];
+
+            $searchResults = $questionsQuery->count();
+
+            $tableAlias = $questionsTable->getAlias();
+            $this->set($tableAlias, $this->paginate($questionsQuery));
+            $this->set('tableAlias', $tableAlias);
+            $this->set('_serialize', [$tableAlias, 'tableAlias']);
+        }
+
+        $helptab_id = 0;
+
+        $this->set(compact('helptab_id', 'searchQuery', 'searchResults', 'chatsResults', 'chatRoomsResult', 'chatsEntity', 'roomId', 'token', 'message_id', 'lastChats'));
     }
 
     public function chatsend($id = '')
@@ -192,6 +222,7 @@ class ChatController extends AppController
 
             $data = $this->request->getData();
             $message_id = $data['message_id'];
+            $helptab_id = $data['helptab_id'];
 
             $chatRoomsTable = TableRegistry::get('Chatrooms');
             $chatRoomsQuery = $chatRoomsTable->find('all')->where(['chatrooms.name' => $id]);
@@ -199,13 +230,17 @@ class ChatController extends AppController
 
             $tz = 'America/New_York';
             $timestamp = time();
-            $dt = new DateTime("now", new DateTimeZone($tz)); //first argument "must" be a string
+            $dt = new DateTime("now", new DateTimeZone($tz));
 
             $openChatsTable = TableRegistry::get('Openchats');
-            $openChatsQuery = $openChatsTable->find('all', ['contains' => ['Chatrooms']])->where(['openchats.chatroom_id' => $chatRoomsResult->id, 'openchats.open' => 1]);
+            $openChatsQuery = $openChatsTable->find('all', ['contain' => ['Chatrooms']])->where(['openchats.chatroom_id' => $chatRoomsResult->id, 'openchats.open' => 1]);
             $openChatsEntity = $openChatsQuery->first();
-            $openChatsEntity->set('active', $dt->format('Y-m-d H:i:s'));
-            $openChatsTable->save($openChatsEntity);
+
+            if($this->Auth->user('id') != $openChatsEntity->get('user_id')) {
+
+                $openChatsEntity->set('active', $dt->format('Y-m-d H:i:s'));
+                $openChatsTable->save($openChatsEntity);
+            }
 
             $chatsTable = TableRegistry::get('Chats');
             $lastChatQuery = $chatsTable->find('all', ['contain' => ['Users']])->where(['chats.chatroom_id' => $chatRoomsResult->id, 'chats.id >' => $data['message_id']])->orderAsc('chats.id');
@@ -227,7 +262,16 @@ class ChatController extends AppController
 
             $roomId = $id;
 
-            $this->set(compact('chatsEntity', 'roomId', 'message_id', 'lastChats'));
+            $helpTabsTable = TableRegistry::get('helptabs');
+            $helpTabsQuery = $helpTabsTable->find('all', ['contain' => ['Chatrooms', 'Faq_Answers']])->where(['helptabs.chatroom_id' => $chatRoomsResult->id, 'helptabs.id > ' . $helptab_id]);
+            $helpTabsEntity = $helpTabsQuery->all();
+
+            foreach($helpTabsEntity as $helpTab) {
+
+                $helptab_id = $helpTab->id;
+            }
+
+            $this->set(compact('chatsEntity', 'helpTabsEntity', 'roomId', 'message_id', 'helptab_id', 'lastChats'));
         }
 
         $this->render('receive');

@@ -1,48 +1,3 @@
-<?php
-/*
-<div class="row">
-
-<div class="col-md-8 col-md-offset-2">
-
-    <div class="box box-info">
-
-        <div class="box-header with-border">
-
-            <h3 class="box-title">Enter your chat display name</h3>
-        </div>
-
-        <form class="form-horizontal">
-
-            <div class="box-body">
-
-                <div class="form-group">
-
-                    <div class="col-sm-7">
-
-                        <input type="email" class="form-control" id="inputEmail3" placeholder="Display Name">
-                    </div>
-
-                    <div class="col-sm-3">
-
-                        <div class="checkbox pull-right">
-
-                            <label>
-
-                                <input type="checkbox"> Remember me
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="submit" class="btn btn-info pull-right">Sign in</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-</div>
-*/
-?>
 <div class="row jlr-dashbox">
     <div class="col-lg-4 col-lg-offset-1">
         <!-- DIRECT CHAT PRIMARY -->
@@ -78,16 +33,19 @@
                             <span class="direct-chat-name pull-left"><?= $chatResult['user']->first_name ?></span>
                             <span class="direct-chat-timestamp pull-right"><?= $chatResult->created ?></span>
                         </div>
+
                         <?php echo $this->Html->image(
                         empty($currentUser->avatar) ? $avatarPlaceholder : $currentUser->avatar,
                         ['class' => 'direct-chat-img']
                         ); ?>
+
                         <!--<img class="direct-chat-img" src="../dist/img/user1-128x128.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
                         <div class="direct-chat-text">
                             <?= $chatResult->message ?>
                         </div>
                         <!-- /.direct-chat-text -->
                     </div>
+
                     <?php } else { ?>
 
                     <!-- Message. Default to the left -->
@@ -98,10 +56,12 @@
                                 <span class="direct-chat-timestamp pull-left"><?= $chatResult->created ?></span>
                             </div>
                             <!-- /.direct-chat-info -->
+
                             <?php echo $this->Html->image(
                             empty($currentUser->avatar) ? $avatarPlaceholder : $currentUser->avatar,
                             ['class' => 'direct-chat-img']
                             ); ?>
+
                             <!-- <img class="direct-chat-img" src="../dist/img/user3-128x128.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
                             <div class="direct-chat-text">
                                 <?= $chatResult->message ?>
@@ -112,6 +72,7 @@
 
                     <?php } ?>
                     <?php } // End Foreach ?>
+
                 </div>
                 <!--/.direct-chat-messages-->
 
@@ -154,11 +115,12 @@
         </div>
         <!--/.direct-chat -->
     </div>
+    <?php if($currentUser->role != 'admin') { ?>
     <div class="col-md-6">
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs" id="jlr-tabs">
 
-                <li class="active"><a href="#timeline" data-toggle="tab" aria-expanded="false">Help Tutorial</a></li>
+                <li id="timelinetab" class="active"><a href="#timeline" data-toggle="tab" aria-expanded="false">Help Tutorial</a></li>
 
             </ul>
             <div class="tab-content" id="jlr-tabs-content">
@@ -170,6 +132,109 @@
             </div>
         </div>
     </div>
+    <?php } else { ?>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+
+                        <h4>Search FAQ</h4>
+
+                    </div>
+                    <div class="box-body">
+                        <?= $this->Form->create(null, ['url' => '/chat/' . $roomId]); ?>
+
+                        <div class="row">
+
+                            <div class="col-lg-6 col-lg-offset-1">
+
+                                <div class="form-group">
+                                    <label>Your search query</label>
+                                    <?php if($searchQuery != '') { ?>
+                                    <?= $this->Form->control('search', ['label' => false, 'type' => 'text', 'value' =>
+                                    $searchQuery, 'class' => 'form-control']); ?>
+                                    <?php } else { ?>
+                                    <?= $this->Form->control('search', ['label' => false, 'type' => 'text', 'placeholder' =>
+                                    'How do I mine Ghost Coins?', 'class' => 'form-control']); ?>
+                                    <?php } ?>
+                                </div>
+
+                            </div>
+
+                            <div class="col-lg-4 col-lg-offset-0">
+
+                                <div class="form-group">
+                                    <?= $this->Form->button('Search', ['class' => 'btn
+                                    btn-primary btn-block btn-flat', 'style' => 'margin-top: 20px;']) ?>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <?= $this->Form->end() ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <?php if (isset($searchResults) && $searchResults > 0) { ?>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="box">
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table id="example1" class="table table-bordered table-striped dataTable" role="grid"
+                                       aria-describedby="example1_info">
+                                    <thead>
+                                    <tr>
+                                        <th colspan="3"><?= $this->Paginator->sort('faq_questions.question', 'Question') ?></th>
+                                        <th colspan="4"><?= $this->Paginator->sort('faq_answers.subject', 'Description') ?></th>
+                                        <th class="actions"><?= 'Actions' ?></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php foreach (${$tableAlias} as $message) : ?>
+                                    <tr>
+                                        <td colspan="3">
+                                            <?= $message->question ?>
+                                        </td>
+                                        <td colspan="4"><?= h($message->answer->subject) ?></td>
+                                        <td class="actions">
+                                            <?= $this->Html->link('[ Send to user ]', '/senduser/' . $message->answer->id . '?redirect=' . $roomId . '&search=' . $searchQuery) ?>
+                                        </td>
+                                    </tr>
+
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="box-footer">
+                                    <ul class="pagination pagination-sm no-margin pull-right">
+                                        <li><a href="#">&laquo;</a></li>
+                                        <?= $this->Paginator->prev('< ' . 'previous') ?>
+                                        <?= $this->Paginator->numbers() ?>
+                                        <?= $this->Paginator->next('next' . ' >') ?>
+                                    </ul>
+                                    <p><?= $this->Paginator->counter() ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <?php } ?>
+
+    </div>
+    <?php } ?>
 </div>
 
 <script>

@@ -77,4 +77,22 @@ class HelpController extends AppController
             }
         }
     }
+
+    public function senduser($id = 0)
+    {
+        $chatRoomsTable = TableRegistry::get('Chatrooms');
+        $chatRoomsQuery = $chatRoomsTable->find('all')->where(['chatrooms.name' => $this->request->getQuery('redirect')]);
+        $chatRoomsResult = $chatRoomsQuery->first();
+
+        $helpTabsTable = TableRegistry::get('helptabs');
+        $helpTabsEntity = $helpTabsTable->newEntity([
+                 'chatroom_id' => $chatRoomsResult->id,
+                 'faq_answer_id' => $id,
+                 'created' => new \DateTime('now')
+        ]);
+
+        $helpTabsTable->save($helpTabsEntity);
+
+        $this->redirect('/chat/' . $this->request->getQuery('redirect') . '?search=' . $this->request->getQuery('search'));
+    }
 }
