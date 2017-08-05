@@ -120,11 +120,19 @@
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs" id="jlr-tabs">
 
-                <li id="timelinetab" class="active"><a href="#timeline" data-toggle="tab" aria-expanded="false">Help Tutorial</a></li>
+                <?php $timelineActive = ''; ?>
+
+                <?php if($helpTabsCount == 0) { ?>
+
+                <?php $timelineActive = 'active'; ?>
+
+                <?php } ?>
+
+                <li id="timelinetab" class="<?php echo $timelineActive; ?>"><a href="#timeline" data-toggle="tab" aria-expanded="false">Help Tutorial</a></li>
 
             </ul>
             <div class="tab-content" id="jlr-tabs-content">
-                <div class="tab-pane active" id="timeline">
+                <div class="tab-pane <?php echo $timelineActive; ?>" id="timeline">
 
                     <h3>This is where you will find live up-to-date real time FAQ help, wait for the tab to become active.</h3>
 
@@ -206,6 +214,61 @@
                                         <td class="actions">
                                             <?= $this->Html->link('[ Send to user ]', '/senduser/' . $message->answer->id . '?redirect=' . $roomId . '&search=' . $searchQuery) ?>
                                         </td>
+                                    </tr>
+
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="box-footer">
+                                    <ul class="pagination pagination-sm no-margin pull-right">
+                                        <li><a href="#">&laquo;</a></li>
+                                        <?= $this->Paginator->prev('< ' . 'previous') ?>
+                                        <?= $this->Paginator->numbers() ?>
+                                        <?= $this->Paginator->next('next' . ' >') ?>
+                                    </ul>
+                                    <p><?= $this->Paginator->counter() ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <?php } ?>
+
+        <?php if (isset($helpTabsCount) && $helpTabsCount > 0) { ?>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3>Already Sent to User</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table id="example2" class="table table-bordered table-striped dataTable" role="grid"
+                                       aria-describedby="example1_info">
+                                    <thead>
+                                    <tr>
+                                        <th colspan="3"><?= $this->Paginator->sort('faq_questions.question', 'Question') ?></th>
+                                        <th colspan="4"><?= $this->Paginator->sort('faq_answers.subject', 'Description') ?></th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php foreach (${$helpTableAlias} as $message) : ?>
+                                    <tr>
+                                        <td colspan="3">
+                                            <?= $message->answer->questions[0]->question ?>
+                                        </td>
+                                        <td colspan="4"><?= h($message->answer->subject) ?></td>
+
                                     </tr>
 
                                     <?php endforeach; ?>

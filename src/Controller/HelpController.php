@@ -85,13 +85,18 @@ class HelpController extends AppController
         $chatRoomsResult = $chatRoomsQuery->first();
 
         $helpTabsTable = TableRegistry::get('helptabs');
-        $helpTabsEntity = $helpTabsTable->newEntity([
-                 'chatroom_id' => $chatRoomsResult->id,
-                 'faq_answer_id' => $id,
-                 'created' => new \DateTime('now')
-        ]);
+        $helpTabsQuery = $helpTabsTable->find('all')->where(['faq_answer_id' => $id])->limit(1);
 
-        $helpTabsTable->save($helpTabsEntity);
+        if($helpTabsQuery->count() == 0) {
+
+            $helpTabsEntity = $helpTabsTable->newEntity([
+                'chatroom_id' => $chatRoomsResult->id,
+                'faq_answer_id' => $id,
+                'created' => new \DateTime('now')
+            ]);
+
+            $helpTabsTable->save($helpTabsEntity);
+        }
 
         $this->redirect('/chat/' . $this->request->getQuery('redirect') . '?search=' . $this->request->getQuery('search'));
     }

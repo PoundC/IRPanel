@@ -175,7 +175,22 @@ class ChatController extends AppController
 
         $helptab_id = 0;
 
-        $this->set(compact('helptab_id', 'searchQuery', 'searchResults', 'chatsResults', 'chatRoomsResult', 'chatsEntity', 'roomId', 'token', 'message_id', 'lastChats'));
+        $helpTabsTable = TableRegistry::get('helptabs');
+        $helpTabsQuery = $helpTabsTable->find('all', ['contain' => ['Chatrooms', 'Faq_Answers', 'Faq_Answers.Faq_Questions']])->where(['helptabs.chatroom_id' => $chatRoomsResult->id, 'helptabs.id > ' . $helptab_id]);
+        $helpTabsEntity = $helpTabsQuery->all();
+        $helpTabsCount = $helpTabsQuery->count();
+        $helpTabsAlias = $helpTabsTable->getAlias();
+        $this->set($helpTabsAlias, $this->paginate($helpTabsQuery));
+        $this->set('helpTableAlias', $helpTabsAlias);
+
+
+
+        foreach($helpTabsEntity as $helpTab) {
+
+            $helptab_id = $helpTab->id;
+        }
+
+        $this->set(compact('helpTabsEntity', 'helpTabsCount', 'helptab_id', 'searchQuery', 'searchResults', 'chatsResults', 'chatRoomsResult', 'chatsEntity', 'roomId', 'token', 'message_id', 'lastChats'));
     }
 
     public function chatsend($id = '')
