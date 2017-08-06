@@ -11,13 +11,13 @@
 
         <div class="box jlr-help-box">
             <div class="box-header">
-                <h3><?= $topicResult->topic ?></h3>
+                <h3><?= $this->Html->link($topicResult->topic, '/help/topic/' . $topicResult->id) ?></h3>
             </div>
             <div class="box-body">
 
                 <?php foreach($topicResult->answers as $topicResultAnswer) { ?>
 
-                <a href="/help/<?= $topicResultAnswer->id ?>"><?= $topicResultAnswer->subject ?></a>
+                <a href="/help/<?= $topicResultAnswer->id ?>"><?= $topicResultAnswer->subject ?></a><br/><br/>
 
                 <?php } ?>
 

@@ -117,6 +117,8 @@ Router::connect('/close/*', ['controller' => 'Support', 'action' => 'close']);
  */
 
 Router::connect('/help/*', ['controller' => 'Help', 'action' => 'help']);
+Router::connect('/help/topic/*', ['controller' => 'Help', 'action' => 'topic']);
+Router::connect('/help/tag/*', ['controller' => 'Help', 'action' => 'tag']);
 Router::connect('/senduser/*', ['controller' => 'Help', 'action' => 'senduser']);
 
 /*

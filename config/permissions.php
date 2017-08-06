@@ -76,9 +76,9 @@ return [
             'allowed' => true,
         ],
         [
-            'role' => ['user', 'member', 'admin'],
+            'role' => '*',
             'controller' => ['Help'],
-            'action' => ['help', 'faq'],
+            'action' => ['help', 'faq', 'topic', 'tag'],
             'allowed' => true,
         ],
         [

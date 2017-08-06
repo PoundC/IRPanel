@@ -22,13 +22,6 @@ use Cake\View\Exception\MissingTemplateException;
 use App\Utility\Generator;
 use Cake\Utility\Text;
 
-/**
- * Static content controller
- *
- * This controller will render views from Template/Pages/
- *
- * @link http://book.cakephp.org/3.0/en/controllers/pages-controller.html
- */
 class HelpController extends AppController
 {
     public function initialize()
@@ -46,7 +39,8 @@ class HelpController extends AppController
             $questionsQuery = $questionsTable->find('all', ['contain' => ['faq_answers', 'faq_answers.faq_topics']])
                                              ->where(['faq_topics.topic LIKE' => '%' . $data['search'] . '%'])
                                              ->orWhere(['faq_questions.question LIKE' => '%' . $data['search'] . '%'])
-                                             ->orWhere(['faq_answers.answer LIKE' => '%' . $data['search'] . '%']);
+                                             ->orWhere(['faq_answers.answer LIKE' => '%' . $data['search'] . '%'])
+                                             ->orWhere(['faq_answers.subject LIKE' => '%' . $data['search'] . '%']);
 
             $searchResults = $questionsQuery->count();
 
@@ -76,6 +70,24 @@ class HelpController extends AppController
                 $this->set(compact('answerResult'));
             }
         }
+    }
+
+    public function topic($id = 0)
+    {
+        $topicsTable = TableRegistry::get('faq_topics');
+        $topicsQuery = $topicsTable->find('all', ['contain' => ['faq_answers', 'faq_answers.faq_topics']])->where(['faq_topics.id' => $id]);
+        $topicsResults = $topicsQuery->first();
+
+        $this->set(compact('topicsResults'));
+    }
+
+    public function tag($id = 0)
+    {
+        $tagsTable = TableRegistry::get('faq_tags');
+        $tagsQuery = $tagsTable->find('all', ['contain' => ['faq_answer_tags', 'faq_answer_tags.faq_tags', 'faq_answer_tags.faq_answers', 'faq_answer_tags.faq_answers.faq_topics']])->where(['faq_tags.id' => $id]);
+        $tagsResults = $tagsQuery->first();
+
+        $this->set(compact('tagsResults'));
     }
 
     public function senduser($id = 0)
