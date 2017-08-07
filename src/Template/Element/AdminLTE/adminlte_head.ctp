@@ -5,7 +5,7 @@
 </title>
 <?= $this->Html->meta('icon') ?>
 
-<?= $this->Html->css('/bootstrap/css/bootstrap') ?>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
