@@ -12,10 +12,11 @@
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 
-<?= $this->Html->css('/dist/css/AdminLTE') ?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/AdminLTE.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/skins/_all-skins.min.css">
+
 <?= $this->Html->css('/css/cakeadminlte') ?>
 <?= $this->Html->css('/css/AdminLTE_important') ?>
-<?= $this->Html->css('/dist/css/skins/_all-skins.css') ?>
 <?= $this->Html->css('/css/skins/' . $skin) ?>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
