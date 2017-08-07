@@ -101,6 +101,11 @@ class Installer
                     'extra' => []
                 ]);
 
+                $shell->dispatchShell([
+                    'command' => 'migrations migrate',
+                    'extra' => []
+                ]);
+
                 $addSuperUser = $io->askAndValidate(
                     '<info>Add Superuser to database? (Default to Y)</info> [<comment>Y,n</comment>]? ',
                     $validator,
