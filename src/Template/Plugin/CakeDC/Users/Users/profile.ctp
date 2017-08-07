@@ -352,12 +352,12 @@
                 ?>
                 <div class="tab-pane" id="settings">
                     <br />
-                    <?php echo $this->element('edit'); ?>
+                    <?php echo $this->element('Users/users_edit'); ?>
                 </div>
 
                 <div class="tab-pane" id="change_password">
                     <br />
-                    <?php echo $this->element('change_password'); ?>
+                    <?php echo $this->element('Users/users_change_password'); ?>
                 </div>
                 <?php
                         }
