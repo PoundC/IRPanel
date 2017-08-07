@@ -88,5 +88,7 @@ trait ProfileTrait
         $this->set('tableAlias', $tableAlias);
         $this->set(compact('user', 'isCurrentUser', 'userPasswordEntity'));
         $this->set('_serialize', ['user', 'isCurrentUser', 'userPasswordEntity', $tableAlias, 'tableAlias']);
+
+        $this->render('MyUser/0profile');
     }
 }
