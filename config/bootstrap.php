@@ -225,4 +225,4 @@ if (Configure::read('debug')) {
 }
 
 Configure::write('Users.config', ['users']);
-Plugin::load('CakeDC/Users', ['routes' => true, 'bootstrap' => true]);
+Plugin::load('CakeDC/Users', ['routes' => false, 'bootstrap' => true]);
