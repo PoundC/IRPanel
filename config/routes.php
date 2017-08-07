@@ -139,6 +139,7 @@ Router::connect('/dashboard', ['controller' => 'Members', 'action' => 'dashboard
  * CakeDC/Users Routes
  *
  */
+Router::connect('/profile', ['controller' => 'MyUsers', 'action' => 'profile']);
 Router::connect('/profile/*', ['controller' => 'MyUsers', 'action' => 'profile']);
 Router::connect('/login', ['controller' => 'MyUsers', 'action' => 'login']);
 Router::connect('/register', ['controller' => 'MyUsers', 'action' => 'register']);
