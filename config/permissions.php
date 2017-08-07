@@ -65,6 +65,12 @@ return [
         ],
         [
             'role' => '*',
+            'controller' => ['Help'],
+            'action' => ['help'],
+            'allowed' => true,
+        ],
+        [
+            'role' => '*',
             'controller' => ['Visitors'],
             'action' => ['frontpage', 'products', 'pricing', 'faq', 'about', 'company', 'investors'],
             'allowed' => true,

@@ -21,12 +21,20 @@ use Cake\ORM\TableRegistry;
 use Cake\View\Exception\MissingTemplateException;
 use App\Utility\Generator;
 use Cake\Utility\Text;
+use Cake\Event\Event;
 
 class HelpController extends AppController
 {
     public function initialize()
     {
         parent::initialize();
+    }
+
+    public function beforeFilter(Event $event) {
+
+        parent::beforeFilter($event);
+
+        $this->Auth->allow('help');
     }
 
     public function help($id = 0)
