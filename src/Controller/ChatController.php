@@ -78,10 +78,6 @@ class ChatController extends AppController
         $timestamp = time();
         $dt = new DateTime("now", new DateTimeZone($tz)); //first argument "must" be a string
 
-        $openChatsTable = TableRegistry::get('Openchats');
-        $openChatsQuery = $openChatsTable->find('all', ['contains' => ['Chatrooms']])->where(['openchats.chatroom_id' => $chatRoomsResult->id, 'openchats.open' => 1]);
-        $openChatsEntity = $openChatsQuery->first();
-
         if ($chatRoomsResult == '') {
 
             $chatRoomsEntity = $chatRoomsTable->newEntity([
@@ -93,6 +89,10 @@ class ChatController extends AppController
 
             $chatRoomsResult = $chatRoomsTable->save($chatRoomsEntity);
         }
+
+        $openChatsTable = TableRegistry::get('Openchats');
+        $openChatsQuery = $openChatsTable->find('all', ['contains' => ['Chatrooms']])->where(['openchats.chatroom_id' => $chatRoomsResult->id, 'openchats.open' => 1]);
+        $openChatsEntity = $openChatsQuery->first();
 
         if($openChatsEntity != null) {
 
