@@ -17,7 +17,10 @@
 
 <?= $this->Html->css('/css/cakeadminlte') ?>
 <?= $this->Html->css('/css/AdminLTE_important') ?>
+
+<?php if($skin != 'blue') { ?>
 <?= $this->Html->css('/css/skins/' . $skin) ?>
+<?php } ?>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
