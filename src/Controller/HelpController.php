@@ -90,6 +90,17 @@ class HelpController extends AppController
         $this->set(compact('tagsResults'));
     }
 
+    public function markdown()
+    {
+        if($this->request->getMethod() == 'POST') {
+
+            $markdownthis = $this->request->getData();
+            $markdownthis = $markdownthis['message_preview'];
+
+            $this->set('markdownthis', $markdownthis);
+        }
+    }
+
     public function senduser($id = 0)
     {
         $chatRoomsTable = TableRegistry::get('Chatrooms');

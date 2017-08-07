@@ -78,7 +78,7 @@ return [
         [
             'role' => '*',
             'controller' => ['Help'],
-            'action' => ['help', 'faq', 'topic', 'tag'],
+            'action' => ['help', 'faq', 'topic', 'tag', 'markdown'],
             'allowed' => true,
         ],
         [

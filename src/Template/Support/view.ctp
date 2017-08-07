@@ -154,37 +154,73 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Reply</h3>
-                        </div>
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs" id="jlr-tabs">
 
-                        <div class="box-body no-padding">
+                                <li class="active"><a href="#reply" data-toggle="tab" aria-expanded="false">Reply</a></li>
+                                <li><a href="#preview" data-toggle="tab" aria-expanded="false" id="preview-markdown">Preview Markdown</a></li>
 
-                            <?= $this->Form->create($supportEntity, ['url' => '/support/reply/' . $message->id, 'context' => ['validator' => ['Messages'
-                            => 'reply']]]) ?>
+                            </ul>
+                            <div class="tab-content" id="jlr-tabs-content">
+                                <div class="tab-pane active" id="reply">
 
-                            <div class="row">
-                                &nbsp;
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-10 col-lg-offset-1">
-                                    <div class="form-group">
-                                        <?= $this->Form->control('message', ['label' => false, 'type' => 'textarea', 'placeholder'
-                                        => 'Enter message here...', 'class' => 'form-control']); ?>
+                                    <div class="box-body no-padding">
+
+                                        <?= $this->Form->create($supportEntity, ['url' => '/support/reply/' . $message->id, 'context' => ['validator' => ['Messages'
+                                        => 'reply']]]) ?>
+
+                                        <div class="row">
+                                            &nbsp;
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-10 col-lg-offset-1">
+                                                <div class="form-group">
+                                                    <?= $this->Form->control('message', ['label' => false, 'type' => 'textarea', 'placeholder'
+                                                    => 'Enter message here...', 'class' => 'form-control', 'id' => 'message']); ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-4 col-xs-offset-4">
+                                                <?= $this->Form->button('Reply To Ticket', ['class' => 'btn
+                                                btn-primary btn-block btn-flat']) ?>
+                                            </div>
+                                            <!-- /.col -->
+                                        </div>
+                                        <div class="row">
+                                            &nbsp;
+                                        </div>
+                                        <?= $this->Form->end() ?>
                                     </div>
+
+                                </div>
+                                <div class="tab-pane active" id="preview">
+
+                                </div>
+                                <div style="display:none" id="hiddenpreview">
+                                    <?= $this->element('Help/markdown', ['markdownthis' => '']); ?>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-xs-4 col-xs-offset-4">
-                                    <?= $this->Form->button('Reply To Ticket', ['class' => 'btn
-                                    btn-primary btn-block btn-flat']) ?>
-                                </div>
-                                <!-- /.col -->
-                            </div>
-                            <div class="row">
-                                &nbsp;
-                            </div>
-                            <?= $this->Form->end() ?>
+
+                            <script>
+                                $('#preview-markdown').click(function() {
+
+                                    $('#message-preview').val($('#message').val());
+
+                                    $.ajax
+                                    ({
+                                        url: '/markdown',
+                                        data: $('#prevmdform').serialize(),
+                                        type: 'post',
+                                        success: function(result)
+                                        {
+                                            $('#preview').html(result);
+                                        }
+                                    });
+                                });
+                            </script>
+
+
                         </div>
 
                     </div>

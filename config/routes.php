@@ -104,18 +104,14 @@ Router::connect('/chat/*', ['controller' => 'Chat', 'action' => 'online']);
 Router::connect('/chatsend/*', ['controller' => 'Chat', 'action' => 'chatsend']);
 Router::connect('/receive/*', ['controller' => 'Chat', 'action' => 'receive']);
 Router::connect('/openchats', ['controller' => 'Chat', 'action' => 'openchats']);
+
 Router::connect('/tickets', ['controller' => 'Support', 'action' => 'tickets']);
 Router::connect('/support/view/*', ['controller' => 'Support', 'action' => 'view']);
 Router::connect('/support', ['controller' => 'Support', 'action' => 'support']);
 Router::connect('/contact', ['controller' => 'Support', 'action' => 'contact']);
 Router::connect('/close/*', ['controller' => 'Support', 'action' => 'close']);
 
-/*
- *
- * Help Routes
- *
- */
-
+Router::connect('/markdown', ['controller' => 'Help', 'action' => 'markdown']);
 Router::connect('/help/*', ['controller' => 'Help', 'action' => 'help']);
 Router::connect('/help/topic/*', ['controller' => 'Help', 'action' => 'topic']);
 Router::connect('/help/tag/*', ['controller' => 'Help', 'action' => 'tag']);

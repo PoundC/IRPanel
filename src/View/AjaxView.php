@@ -25,7 +25,7 @@ use Cake\Http\ServerRequest;
  */
 class AjaxView extends AppView
 {
-
+    public $helpers = ['Breadcrumbs', 'Markdown'];
     /**
      * The name of the layout file to render the view inside of. The name
      * specified is the filename of the layout in /src/Template/Layout without
