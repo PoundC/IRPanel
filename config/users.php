@@ -2,7 +2,7 @@
 
 return [
     'Users' => [
-        'table' => 'CakeDC/Users.Users',
+        'table' => 'MyUsers',
         // Controller used to manage users plugin features & actions
         'controller' => 'MyUsers'
         ]

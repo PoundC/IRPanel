@@ -25,11 +25,7 @@ $menus = [
                     ],
                     'Pricing' => [
                         'path' => '/pricing',
-                        'icon' => 'fa-dollar',
-                    ],
-                    'FAQ'   => [
-                        'path' => '/faq',
-                        'icon' => 'fa-question-circle'
+                        'icon' => 'fa-credit-card',
                     ],
                     'About' => [
                         'path' => '/about',

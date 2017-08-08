@@ -134,7 +134,6 @@ Router::connect('/search/users', ['controller' => 'Search', 'action' => 'users']
 
 Router::connect('/dashboard', ['controller' => 'Members', 'action' => 'dashboard']);
 // Router::connect('/pricing', ['controller' => 'Visitors', 'action' => 'pricing']);
-// Router::connect('/faq', ['controller' => 'Visitors', 'action' => 'faq']);
 
 /*
  * CakeDC/Users Routes

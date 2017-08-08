@@ -66,7 +66,7 @@ class SearchController extends AppController
                     break;
             }
 
-            $usersQuery = $usersTable->find('all')->where(['users.' . $usersQueryVar => $data['search']]);
+            $usersQuery = $usersTable->find('all')->where(['myusers.' . $usersQueryVar => $data['search']]);
             $usersResults = $usersQuery->count();
 
             $tableAlias = $usersTable->getAlias();

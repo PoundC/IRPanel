@@ -59,6 +59,12 @@ return [
         ],
         [
             'role' => '*',
+            'controller' => ['MyUsers'],
+            'action' => ['login'],
+            'allowed' => true,
+        ],
+        [
+            'role' => '*',
             'controller' => ['Support'],
             'action' => ['contact'],
             'allowed' => true,

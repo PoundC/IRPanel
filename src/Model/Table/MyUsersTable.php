@@ -9,4 +9,11 @@ use CakeDC\Users\Model\Table\UsersTable;
  */
 class MyUsersTable extends UsersTable
 {
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+
+        $this->removeBehavior('Register');
+        $this->addBehavior('Register');
+    }
 }
