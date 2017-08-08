@@ -55,6 +55,7 @@ class ChatController extends AppController
         $this->set($tableAlias, $this->paginate($tableQuery));
         $this->set('tableAlias', $tableAlias);
         $this->set('_serialize', [$tableAlias, 'tableAlias']);
+        $this->set('title', 'Open Live Chats');
     }
 
     public function online($id = '')
@@ -183,13 +184,12 @@ class ChatController extends AppController
         $this->set($helpTabsAlias, $this->paginate($helpTabsQuery));
         $this->set('helpTableAlias', $helpTabsAlias);
 
-
-
         foreach($helpTabsEntity as $helpTab) {
 
             $helptab_id = $helpTab->id;
         }
 
+        $this->set('title', 'Live Chat Support');
         $this->set(compact('helpTabsEntity', 'helpTabsCount', 'helptab_id', 'searchQuery', 'searchResults', 'chatsResults', 'chatRoomsResult', 'chatsEntity', 'roomId', 'token', 'message_id', 'lastChats'));
     }
 

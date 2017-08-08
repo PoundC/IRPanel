@@ -38,6 +38,6 @@ class MembersController extends AppController
 
     public function dashboard() {
 
-
+        $this->set('title', 'Dashboard');
     }
 }

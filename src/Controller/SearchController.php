@@ -74,6 +74,7 @@ class SearchController extends AppController
             $this->set('tableAlias', $tableAlias);
             $this->set('_serialize', [$tableAlias, 'tableAlias']);
 
+            $this->set('title', 'Search Users');
             $this->set(compact('usersResults'));
         }
     }

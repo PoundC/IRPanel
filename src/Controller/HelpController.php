@@ -78,6 +78,8 @@ class HelpController extends AppController
                 $this->set(compact('answerResult'));
             }
         }
+
+        $this->set('title', 'Help & FAQ');
     }
 
     public function topic($id = 0)
@@ -86,6 +88,7 @@ class HelpController extends AppController
         $topicsQuery = $topicsTable->find('all', ['contain' => ['faq_answers', 'faq_answers.faq_topics']])->where(['faq_topics.id' => $id]);
         $topicsResults = $topicsQuery->first();
 
+        $this->set('title', 'Help Topics');
         $this->set(compact('topicsResults'));
     }
 
@@ -95,6 +98,7 @@ class HelpController extends AppController
         $tagsQuery = $tagsTable->find('all', ['contain' => ['faq_answer_tags', 'faq_answer_tags.faq_tags', 'faq_answer_tags.faq_answers', 'faq_answer_tags.faq_answers.faq_topics']])->where(['faq_tags.id' => $id]);
         $tagsResults = $tagsQuery->first();
 
+        $this->set('title', 'Help Tags');
         $this->set(compact('tagsResults'));
     }
 

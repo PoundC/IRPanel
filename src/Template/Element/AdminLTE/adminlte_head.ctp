@@ -1,7 +1,9 @@
 <?= $this->Html->charset() ?>
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <title>
+    <?php if (isset($title)) { echo $title; } else { ?>
     <?= $this->fetch('title') ?>
+    <?php } ?>
 </title>
 <?= $this->Html->meta('icon') ?>
 

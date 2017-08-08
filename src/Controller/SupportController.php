@@ -86,6 +86,8 @@ class SupportController extends AppController
             $supportEntity = $supportTable->newEntity();
             $this->set(compact('supportEntity', 'message', 'messageFromUser', 'replies'));
         }
+
+        $this->set('title', 'View Ticket');
     }
 
     public function reply($id) {
@@ -208,6 +210,7 @@ class SupportController extends AppController
         $this->set($tableAlias, $this->paginate($messagesQuery));
         $this->set('tableAlias', $tableAlias);
         $this->set('_serialize', [$tableAlias, 'tableAlias']);
+        $this->set('title', 'View Open Tickets');
     }
 
     public function support()
@@ -268,6 +271,7 @@ class SupportController extends AppController
         $supportTable = TableRegistry::get('Messages');
         $supportEntity = $supportTable->newEntity();
         $this->set(compact('supportEntity', 'formSubmitted'));
+        $this->set('title', 'Create Support Ticket');
     }
 
     public function contact()
@@ -361,6 +365,6 @@ class SupportController extends AppController
         $contactTable = TableRegistry::get('Messages');
         $contactEntity = $contactTable->newEntity();
         $this->set(compact('contactEntity', 'formSubmitted'));
-
+        $this->set('title', 'Contact Us');
     }
 }

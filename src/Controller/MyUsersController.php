@@ -15,4 +15,25 @@ class MyUsersController extends UsersController
 
         $this->Auth->allow('login');
     }
+
+    public function register() {
+
+        $this->set('title', 'Register User');
+
+        parent::register();
+    }
+
+    public function login() {
+
+        $this->set('title', 'CakeAdminLTE Login');
+
+        parent::login();
+    }
+
+    public function requestResetPassword() {
+
+        $this->set('title', 'Reset Password');
+
+        parent::requestResetPassword();
+    }
 }
