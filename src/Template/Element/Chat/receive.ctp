@@ -39,12 +39,15 @@
 
             <?php if(isset($helpTabsEntity)) { ?>
 
+                <?php $x = 0; ?>
                 <?php foreach($helpTabsEntity as $helpTab) { ?>
+
+                    <?php if($x == 0) { $tabActive = 'active'; $x = 1; } else { $tabActive = ''; } ?>
 
                     $('#timelinetab').removeClass('active');
                     $('#timeline').removeClass('active');
-                    $('#jlr-tabs').append('<li class="active"><a href="#<?php echo str_replace(' ', '', $helpTab->answer->subject) ?>" data-toggle="tab" aria-expanded="false"><?= $helpTab->answer->subject ?></a></li>');
-                    $('#jlr-tabs-content').append(`<div class="tab-pane active" id="<?= str_replace(' ', '', $helpTab->answer->subject) ?>"><?= $this->Markdown->transform($helpTab->answer->answer) ?></div>`);
+                    $('#jlr-tabs').append('<li class="<?= $tabActive ?>"><a href="#<?php echo str_replace(' ', '', $helpTab->answer->subject) ?>" data-toggle="tab" aria-expanded="false"><?= $helpTab->answer->subject ?></a></li>');
+                    $('#jlr-tabs-content').append(`<div class="tab-pane <?= $tabActive ?>" id="<?= str_replace(' ', '', $helpTab->answer->subject) ?>"><?= $this->Markdown->transform($helpTab->answer->answer) ?></div>`);
 
 
 
