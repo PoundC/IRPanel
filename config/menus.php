@@ -25,7 +25,7 @@ $menus = [
                     ],
                     'Pricing' => [
                         'path' => '/pricing',
-                        'icon' => 'fa-credit-card',
+                        'icon' => 'fa-money',
                     ],
                     'About' => [
                         'path' => '/about',
@@ -37,7 +37,7 @@ $menus = [
                     ],
                     'Investors' => [
                         'path' => '/investors',
-                        'icon' => 'fa-money'
+                        'icon' => 'fa-line-chart'
                     ],
                 ]
             ],
