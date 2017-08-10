@@ -36,11 +36,6 @@ abstract class CronjobShell extends Shell
 
     public function __construct() {
 
-        if(!is_dir($this->rootLogsDirectory)) {
-
-            mkdir($this->rootLogsDirectory);
-        }
-
         $this->outputName = tempnam($this->rootLogsDirectory, 'cronjobs');
 
         $stdout = new ConsoleOutput('file://' . $this->outputName . '.out');

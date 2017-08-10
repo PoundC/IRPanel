@@ -157,6 +157,7 @@ class Installer
         $paths = [
             'logs',
             'tmp',
+            'tmp/logs',
             'tmp/cache',
             'tmp/cache/models',
             'tmp/cache/persistent',
