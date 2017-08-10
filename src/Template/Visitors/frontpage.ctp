@@ -23,14 +23,10 @@
                         <div class="wow fadeInUp" data-wow-offset="0" data-wow-delay="0.9s">
                             <form class="form-inline">
                                 <div class="form-group">
-                                    <button type="livedemo" name="Live Demo" class="btn btn-primary btn-lg"
-                                            required="required">Live Demo
-                                    </button>
+                                    <a class="btn btn-primary btn-lg" href="/register">Live Demo</a>
                                 </div>
                                 <div class="form-group">
-                                    <button type="livedemo" name="Register Now" class="btn btn-primary btn-lg"
-                                            required="required">Register Now
-                                    </button>
+                                    <a class="btn btn-primary btn-lg" href="/register">Register Now</a>
                                 </div>
                             </form>
                         </div>

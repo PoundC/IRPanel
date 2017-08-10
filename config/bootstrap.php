@@ -102,7 +102,7 @@ if (Configure::read('debug')) {
  * choice but using UTC makes time calculations / conversions easier.
  * Check http://php.net/manual/en/timezones.php for list of valid timezone strings.
  */
-date_default_timezone_set('UTC');
+date_default_timezone_set('America/New_York');
 
 /*
  * Configure the mbstring extension to use the correct encoding.
