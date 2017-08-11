@@ -41,7 +41,7 @@
                             <?php } ?>
                             </td>
                             <td class="actions">
-                                <?= $this->Html->link('[ View ]', ['controller' => 'Crontab', 'action' => 'log', $crontab->id]) ?>
+                                <?= $this->Html->link('[ View ]', ['controller' => 'Crontab', 'action' => 'viewlogs', $crontab->id]) ?>
                             </td>
                         </tr>
 

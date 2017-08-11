@@ -19,38 +19,35 @@
         </a>
 
         <?php
-                    if ($isAdmin == true) {
-            ?>
-        <!-- Navbar Left Admin Menu -->
-        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Link</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">One more separated link</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <?php
-                    }
-            ?>
-
-        <?php
                     if($notLoggedIn == false) {
             ?>
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
 
             <ul class="nav navbar-nav">
+                <?php
+                            if($isSuperUser == true) {
+                    ?>
+
+                <li>
+                    <div class="collapse navbar-collapse pull-right" id="navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">System <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="/crontabs">Crontabs</a></li>
+                                    <!--<li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">One more separated link</a></li>-->
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <?php } ?>
                 <?php
                             if ($isAdmin == true) {
                     ?>
