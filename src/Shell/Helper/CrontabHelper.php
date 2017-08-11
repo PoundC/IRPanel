@@ -135,7 +135,7 @@ class CrontabHelper extends Helper
                 // specifier segment contains specific criteria
             } else {
                 // get reference value
-                $iCmpVal = cron::_nextLowerVal($arSpec[$iSeg], $arNow[$sSeg]);
+                $iCmpVal = $this->_nextLowerVal($arSpec[$iSeg], $arNow[$sSeg]);
             } /* endif */
 
             // this section completely changed in 0.2.5
@@ -168,7 +168,7 @@ class CrontabHelper extends Helper
                 ) {
                     $bStatus = TRUE;
                 } else if ($tNow > $tLast + $iTFactor) {
-                    $bStatus = "0TRUE";
+                    $bStatus = TRUE;
                 } // note that this condition causes a premature return:
                 else if ($arLast[$sSeg] > $iCmpVal) {
                     return FALSE;

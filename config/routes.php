@@ -125,6 +125,14 @@ Router::connect('/senduser/*', ['controller' => 'Help', 'action' => 'senduser'])
  */
 Router::connect('/search/users', ['controller' => 'Search', 'action' => 'users']);
 
+/*
+ *
+ * Crontab Routes
+ *
+ */
+Router::connect('/crontabs', ['controller' => 'Crontab', 'action' => 'logs']);
+Router::connect('/crontab/*', ['controller' => 'Crontab', 'action' => 'viewlogs']);
+Router::connect('/crontablogs/*', ['controller' => 'Crontab', 'action' => 'viewlog']);
 
 /*
  *

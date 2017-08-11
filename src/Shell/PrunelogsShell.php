@@ -15,6 +15,7 @@
 namespace App\Shell;
 
 use App\Shell\CronjobShell;
+use Aura\Intl\Exception;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
 
@@ -25,20 +26,26 @@ class PrunelogsShell extends CronjobShell
 {
     public function main()
     {
-        $tables = ConnectionManager::get('default')->schemaCollection()->listTables();
+        try {
+            $tables = ConnectionManager::get('default')->schemaCollection()->listTables();
 
-        foreach($tables as $table) {
+            foreach ($tables as $table) {
 
-            if($this->endswith($table, '_logs')) {
+                if ($this->endswith($table, '_logs')) {
 
-                $date = (new \DateTime())->modify('-30 days');
+                    $date = (new \DateTime())->modify('-30 days');
 
-                $tableObject = TableRegistry::get($table);
-                $tableQuery = $tableObject->deleteAll(['created < ' => $date->format('Y-m-d H:i:s')]);
+                    $tableObject = TableRegistry::get($table);
+                    $tableObject->deleteAll(['created < ' => $date->format('Y-m-d H:i:s')]);
+                }
             }
-        }
 
-        return 0;
+            return 0;
+
+        } catch (Exception $ex)
+        {
+            return -1;
+        }
     }
 
     function endswith($string, $test) {

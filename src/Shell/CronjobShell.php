@@ -104,20 +104,12 @@ abstract class CronjobShell extends Shell
 
     public function resetTimedout()
     {
-        $cronJobTable = TableRegistry::get('cronjobs_crons');
-        $cronJobQuery = $cronJobTable->find('all')->where(['cronjobs_crons.id' => $this->cronJobId]);
-        $cronJobResult = $cronJobQuery->first();
-
-        $cronJobResult->set('locked', 0);
-
-        $cronJobTable->save($cronJobResult);
+        $this->setCronJobProperty('locked', 0);
     }
 
     public function isLocked()
     {
-        $cronJobTable = TableRegistry::get('cronjobs_crons');
-        $cronJobQuery = $cronJobTable->find('all')->where(['cronjobs_crons.id' => $this->cronJobId]);
-        $cronJobResult = $cronJobQuery->first();
+        $cronJobResult = $this->getCronJob($this->cronJobId);
 
         if($cronJobResult->get('locked') == 1) {
 
@@ -131,9 +123,7 @@ abstract class CronjobShell extends Shell
 
     public function isTimedOut()
     {
-        $cronJobTable = TableRegistry::get('cronjobs_crons');
-        $cronJobQuery = $cronJobTable->find('all')->where(['cronjobs_crons.id' => $this->cronJobId]);
-        $cronJobResult = $cronJobQuery->first();
+        $cronJobResult = $this->getCronJob($this->cronJobId);
 
         $active = $cronJobResult->get('active');
         $timeoutIncrement = $cronJobResult->get('timeout');
@@ -157,49 +147,50 @@ abstract class CronjobShell extends Shell
 
     public function lock()
     {
-        $cronJobTable = TableRegistry::get('cronjobs_crons');
-        $cronJobQuery = $cronJobTable->find('all')->where(['cronjobs_crons.id' => $this->cronJobId]);
-        $cronJobResult = $cronJobQuery->first();
-
-        $cronJobResult->set('locked', 1);
-
-        $cronJobTable->save($cronJobResult);
+        $this->setCronJobProperty('locked', 1);
     }
 
     public function unlock()
     {
-        $cronJobTable = TableRegistry::get('cronjobs_crons');
-        $cronJobQuery = $cronJobTable->find('all')->where(['cronjobs_crons.id' => $this->cronJobId]);
-        $cronJobResult = $cronJobQuery->first();
-
-        $cronJobResult->set('locked', 0);
-
-        $cronJobTable->save($cronJobResult);
+        $this->setCronJobProperty('locked', 0);
     }
 
     public function lastrun()
     {
-        $cronJobTable = TableRegistry::get('cronjobs_crons');
-        $cronJobQuery = $cronJobTable->find('all')->where(['cronjobs_crons.id' => $this->cronJobId]);
-        $cronJobResult = $cronJobQuery->first();
-
         $timestamp = new \DateTime('now');
 
-        $cronJobResult->set('lastrun', $timestamp);
-
-        $cronJobTable->save($cronJobResult);
+        $this->setCronJobProperty('lastrun', $timestamp);
     }
 
     public function active()
+    {
+        $timestamp = new \DateTime('now');
+
+        $this->setCronJobProperty('active', $timestamp);
+    }
+
+    public function setCronJobProperty($property, $value)
+    {
+        $cronJobResult = $this->getCronJob($this->cronJobId);
+
+        $cronJobResult->set($property, $value);
+
+        $this->saveCronJob($cronJobResult);
+    }
+
+    public function getCronJob($id)
     {
         $cronJobTable = TableRegistry::get('cronjobs_crons');
         $cronJobQuery = $cronJobTable->find('all')->where(['cronjobs_crons.id' => $this->cronJobId]);
         $cronJobResult = $cronJobQuery->first();
 
-        $timestamp = new \DateTime('now');
+        return $cronJobResult;
+    }
 
-        $cronJobResult->set('active', $timestamp);
+    public function saveCronJob($cronJobEntity)
+    {
+        $cronJobTable = TableRegistry::get('cronjobs_crons');
 
-        $cronJobTable->save($cronJobResult);
+        $cronJobTable->save($cronJobEntity);
     }
 }
