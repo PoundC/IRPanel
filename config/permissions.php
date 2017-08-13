@@ -124,6 +124,12 @@ return [
             'allowed' => true,
         ],
         [
+            'role' => ['admin'],
+            'controller' => 'MyUsers',
+            'action' => ['index', 'view', 'edit', 'changePassword'],
+            'allowed' => true,
+        ],
+        [
             'role' => '*',
             'plugin' => 'CakeDC/Users',
             'controller' => '*',

@@ -174,6 +174,9 @@ if (Configure::read('Users.GoogleAuthenticator.login')) {
     ]);
 }
 
+Router::connect('/admin/change/*', ['controller' => 'MyUsers', 'action' => 'changePassword']);
+Router::connect('/admin/edit/*', ['controller' => 'MyUsers', 'action' => 'edit']);
+Router::connect('/admin/users', ['controller' => 'MyUsers', 'action' => 'index']);
 Router::connect('/profile/*', ['controller' => 'MyUsers', 'action' => 'profile']);
 Router::connect('/profile', ['controller' => 'MyUsers', 'action' => 'profile']);
 Router::connect('/login', ['controller' => 'MyUsers', 'action' => 'login']);

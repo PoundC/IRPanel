@@ -24,9 +24,9 @@
                         <td><?= h($user->first_name) ?></td>
                         <td><?= h($user->last_name) ?></td>
                         <td class="actions">
-                            <?= $this->Html->link(__d('CakeDC/Users', '[ View ]'), ['action' => 'view', $user->id]) ?>
-                            <?= $this->Html->link(__d('CakeDC/Users', '[ Change password ]'), ['action' => 'changePassword', $user->id]) ?>
-                            <?= $this->Html->link(__d('CakeDC/Users', '[ Edit ]'), ['action' => 'edit', $user->id]) ?>
+                            <?= $this->Html->link(__d('CakeDC/Users', '[ View ]'), ['controller' => 'MyUsers', 'action' => 'profile', $user->id]) ?>
+                            <?= $this->Html->link(__d('CakeDC/Users', '[ Change password ]'), ['controller' => 'MyUsers', 'action' => 'changePassword', $user->id]) ?>
+                            <?= $this->Html->link(__d('CakeDC/Users', '[ Edit ]'), ['controller' => 'MyUsers', 'action' => 'edit', $user->id]) ?>
                             <?= $this->Form->postLink(__d('CakeDC/Users', '[ Delete ]'), ['action' => 'delete', $user->id], ['confirm' => __d('CakeDC/Users', 'Are you sure you want to delete # {0}?', $user->id)]) ?>
                         </td>
                     </tr>

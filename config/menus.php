@@ -168,7 +168,7 @@ $menus = [
                         'icon'  => 'fa-search'
                     ],
                     'View Users' => [
-                        'path'  => '/users/users',
+                        'path'  => '/admin/users',
                         'icon'  => 'fa-users'
                     ],
                     'Profile' => [

@@ -12,7 +12,8 @@
         "cakephp/plugin-installer": "~1.0",
         "almasaeed2010/adminlte": "2.4.0-alpha",
         "cebe/markdown": "dev-master",
-        "cakedc/users": "^5.0"
+        "cakedc/users": "^5.0",
+        "authorizenet/authorizenet": "~1.9"
     },
     "require-dev": {
         "psy/psysh": "@stable",
