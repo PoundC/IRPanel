@@ -96,7 +96,7 @@ return [
         [
             'role' => ['admin'],
             'controller' => ['Help'],
-            'action' => ['senduser'],
+            'action' => ['senduser', 'convert', 'markdownfaq'],
             'allowed' => true,
         ],
         [

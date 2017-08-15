@@ -51,6 +51,7 @@ class MessagesTable extends Table
     {
         parent::initialize($config);
 
+        $this->hasMany('Messages', array())->setForeignKey('message_id')->setProperty('messages');
         $this->belongsTo('Users', array())->setForeignKey('user_id')->setProperty('user');
 
         // $this->belongsTo('Messages', array())->setForeignKey('message_id')->setProperty('message');

@@ -113,10 +113,13 @@ Router::connect('/contact', ['controller' => 'Support', 'action' => 'contact']);
 Router::connect('/close/*', ['controller' => 'Support', 'action' => 'close']);
 
 Router::connect('/markdown', ['controller' => 'Help', 'action' => 'markdown']);
+Router::connect('/markdownfaq', ['controller' => 'Help', 'action' => 'markdownfaq']);
 Router::connect('/help/*', ['controller' => 'Help', 'action' => 'help']);
 Router::connect('/help/topic/*', ['controller' => 'Help', 'action' => 'topic']);
 Router::connect('/help/tag/*', ['controller' => 'Help', 'action' => 'tag']);
 Router::connect('/senduser/*', ['controller' => 'Help', 'action' => 'senduser']);
+Router::connect('/convertfaq/*', ['controller' => 'Help', 'action' => 'convert']);
+Router::connect('/autoanswer/*', ['controller' => 'Help', 'action' => 'autoanswer']);
 
 /*
  *

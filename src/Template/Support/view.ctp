@@ -85,7 +85,8 @@
                 <div class="box-body no-padding">
                     <div class="mailbox-read-info">
                         <h5>From: <?= $reply->user->username ?>
-                            <span class="mailbox-read-time pull-right"><?= $reply->created ?></span></h5>
+                            <a style="float:right;margin-top:-15px;margin-left:10px;" href="/convertfaq?reply=<?= $reply->id ?>" class="btn btn-primary"><i class="fa fa-fighter-jet"></i> Convert</a><span class="mailbox-read-time pull-right"><?= $reply->created ?></span></h5>
+
                     </div>
 
                     <!-- /.mailbox-controls -->
@@ -233,21 +234,13 @@
                     <div class="box box-primary" style="border-top-color: white !important;">
                         <div class="box-body">
                             <div class="col-md-4 pull-right">
-                                <button type="button" class="btn btn-default" style="width:100%"><i class="fa fa-close"></i> Close
-                                    Ticket
-                                </button>
+                                <?= $this->Form->postLink('<i class="fa fa-close"></i> Close Ticket', ['action' => 'close', $message->id], ['escape' => false, 'style' => 'width: 100%', 'class' => 'btn btn-default']) ?>
                             </div>
                             <div class="col-md-4 pull-right">
-                                <button type="button" class="btn btn-default" style="width:100%">
+                                <a type="button" class="btn btn-default" style="width:100%" href="/autoanswer/<?= $message->id ?>">
                                     <i class="fa fa-space-shuttle"></i>
                                     <span>Auto-Answer</span>
-                                </button>
-                            </div>
-                            <div class="col-md-4 pull-right">
-                                <button type="button" class="btn btn-default" style="width:100%">
-                                    <i class="fa fa-fighter-jet"></i>
-                                    <span>Convert FAQ</span>
-                                </button>
+                                </a>
                             </div>
                         </div>
                         <!-- /.box-body -->
