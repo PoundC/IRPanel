@@ -85,7 +85,7 @@
                 <div class="box-body no-padding">
                     <div class="mailbox-read-info">
                         <h5>From: <?= $reply->user->username ?>
-                            <a style="float:right;margin-top:-15px;margin-left:10px;" href="/convertfaq?reply=<?= $reply->id ?>" class="btn btn-primary"><i class="fa fa-fighter-jet"></i> Convert</a><span class="mailbox-read-time pull-right"><?= $reply->created ?></span></h5>
+                            <a style="float:right;margin-top:-17px;margin-left:10px;" href="/convertfaq?reply=<?= $reply->id ?>" class="btn btn-default"><i class="fa fa-fighter-jet"></i> Convert</a><span class="mailbox-read-time pull-right"><?= $reply->created ?></span></h5>
 
                     </div>
 

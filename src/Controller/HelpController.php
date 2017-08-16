@@ -109,7 +109,7 @@ class HelpController extends AppController
 
                 foreach ($data['faq_tags']['tag'] as $tagKey => $tagValue) {
 
-                    if (is_int($tagValue) == false) {
+                    if (is_numeric($tagValue) == false) {
 
                         $tagQuery = $tagsTable->find('all')->where(['tag' => $tagValue])->limit(1);
                         $tagResult = $tagQuery->first();
@@ -153,10 +153,10 @@ class HelpController extends AppController
 
                 foreach ($data['questions'] as $question) {
 
-                    $questionQuery = $questionsTable->find('all')->where(['question' => $question])->limit(1);
+                    $questionQuery = $questionsTable->find('all')->where(['question' => $question, 'faq_answer_id' => $answerResult->id])->limit(1);
                     $questionResult = $questionQuery->first();
 
-                    if (isset($questionResult->id) == false) {
+                    if (isset($questionResult) == false) {
 
                         $questionEntity = $questionsTable->newEntity([
                             'faq_answer_id' => $answerResult->id,
@@ -166,6 +166,8 @@ class HelpController extends AppController
                         $questionsTable->save($questionEntity);
                     }
                 }
+
+                $this->redirect('/convertfaq/' . $answerResult->id);
             }
         }
         else if($this->request->getMethod() == 'PUT') {
@@ -274,7 +276,7 @@ class HelpController extends AppController
                 if($replyId > 0) {
 
                     $messagesTable = TableRegistry::get('Messages');
-                    $messagesQuery = $messagesTable->find('all', ['contain' => ['Messages']])->where(['messages.id' => $replyId])->limit(1);
+                    $messagesQuery = $messagesTable->find('all')->where(['messages.id' => $replyId])->limit(1);
                     $messageResult = $messagesQuery->first();
 
                     $answerEntity = $answerTable->newEntity([
