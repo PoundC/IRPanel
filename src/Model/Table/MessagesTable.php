@@ -52,7 +52,7 @@ class MessagesTable extends Table
         parent::initialize($config);
 
         //ini_get('error_log');die();
-        //$this->hasMany('Messages', array())->setForeignKey('message_id')->setProperty('messages');
+        $this->belongsTo('ParentMessages', ['className' => 'Messages'])->setForeignKey('message_id')->setProperty('messages');
         $this->belongsTo('Users', array())->setForeignKey('user_id')->setProperty('user');
 
         $this->setTable('messages');

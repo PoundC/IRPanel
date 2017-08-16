@@ -276,11 +276,11 @@ class HelpController extends AppController
                 if($replyId > 0) {
 
                     $messagesTable = TableRegistry::get('Messages');
-                    $messagesQuery = $messagesTable->find('all')->where(['messages.id' => $replyId])->limit(1);
+                    $messagesQuery = $messagesTable->find('all', ['contain' => ['ParentMessages']])->where(['messages.id' => $replyId])->limit(1);
                     $messageResult = $messagesQuery->first();
 
                     $answerEntity = $answerTable->newEntity([
-                        'subject' => str_replace('RE: ', '', $messageResult->subject),
+                        'subject' => $messageResult->messages->subject,
                         'answer'  => $messageResult->message
                     ]);
                 }
