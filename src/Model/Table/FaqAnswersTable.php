@@ -38,6 +38,11 @@ class FaqAnswersTable extends Table
         $this->hasMany('faq_questions', array())->setForeignKey('faq_answer_id')->setProperty('questions');
         $this->hasMany('faq_answer_tags', array())->setForeignKey('faq_answer_id')->setProperty('answer_tags');
 
+        $this->addBehavior('Muffin/Slug.Slug', [
+            'displayField'  => 'subject',
+            'onUpdate'      => true
+        ]);
+
         $this->setTable('faq_answers');
         $this->setDisplayField('faq_topics.topic');
         $this->setPrimaryKey('id');

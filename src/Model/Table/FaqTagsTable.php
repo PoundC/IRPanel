@@ -36,6 +36,12 @@ class FaqtagsTable extends Table
 
         $this->hasMany('faq_answer_tags', array())->setForeignKey('faq_tag_id')->setProperty('tags');
 
+        $this->addBehavior('Muffin/Slug.Slug', [
+            'displayField'  => 'tag',
+            'onUpdate'      => true,
+            'maxLength'     => 2048,
+        ]);
+
         $this->setTable('faq_tags');
         $this->setDisplayField('tag');
         $this->setPrimaryKey('id');

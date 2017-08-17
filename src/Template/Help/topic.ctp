@@ -18,7 +18,7 @@
                             <?php foreach ($topicsResults->answers as $answer) : ?>
                             <tr>
                                 <td colspan="4">
-                                    <?= $this->Html->link($answer->subject, '/help/' . $answer->id) ?>
+                                    <?= $this->Html->link($answer->subject, '/help/' . $answer->slug) ?>
                                 </td>
                             </tr>
 

@@ -36,6 +36,11 @@ class FaqTopicsTable extends Table
 
         $this->hasMany('faq_answers', array())->setForeignKey('faq_topic_id')->setProperty('answers')->setDependent(true);
 
+        $this->addBehavior('Muffin/Slug.Slug', [
+            'displayField'  => 'topic',
+            'onUpdate'      => true
+        ]);
+
         $this->setTable('faq_topics');
         $this->setDisplayField('topic');
         $this->setPrimaryKey('id');

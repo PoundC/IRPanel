@@ -226,3 +226,5 @@ if (Configure::read('debug')) {
 
 Configure::write('Users.config', ['users']);
 Plugin::load('CakeDC/Users', ['routes' => false, 'bootstrap' => true]);
+
+Plugin::load('Muffin/Slug');

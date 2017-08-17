@@ -19,10 +19,10 @@
                             <?php foreach ($tagsResults->tags as $tag) : ?>
                             <tr>
                                 <td colspan="1">
-                                    <?= $this->Html->link($tag->answer->topic->topic, '/help/topic/' . $tag->answer->topic->id) ?>
+                                    <?= $this->Html->link($tag->answer->topic->topic, '/help/topic/' . $tag->answer->topic->slug) ?>
                                 </td>
                                 <td colspan="4">
-                                    <?= $this->Html->link($tag->answer->subject, '/help/' . $tag->answer->id) ?>
+                                    <?= $this->Html->link($tag->answer->subject, '/help/' . $tag->answer->slug) ?>
                                 </td>
                             </tr>
 

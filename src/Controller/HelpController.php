@@ -57,29 +57,30 @@ class HelpController extends AppController
             $this->set('tableAlias', $tableAlias);
             $this->set('_serialize', [$tableAlias, 'tableAlias']);
 
+            $this->set('title', 'Help & FAQ');
             $this->set(compact('searchResults'));
         }
         else {
 
-            if($id == 0) {
+            if($id == '0') {
 
                 $topicsTable = TableRegistry::get('faq_topics');
                 $topicsQuery = $topicsTable->find('all', ['contain' => ['faq_answers']]);
                 $topicsResults = $topicsQuery->all();
 
+                $this->set('title', 'Help & FAQ');
                 $this->set(compact('topicsResults'));
             }
             else {
 
                 $faqAnswerTable = TableRegistry::get('faq_answers');
-                $faqAnswerQuery = $faqAnswerTable->find('all', ['contain' => ['faq_questions', 'faq_topics', 'faq_answer_tags', 'faq_answer_tags.faq_tags']])->where(['faq_answers.id' => $id])->limit(1);
+                $faqAnswerQuery = $faqAnswerTable->find('slugged', ['slug' => $id, 'contain' => ['faq_questions', 'faq_topics', 'faq_answer_tags', 'faq_answer_tags.faq_tags']])->limit(1);
                 $answerResult = $faqAnswerQuery->first();
 
+                $this->set('title', $answerResult->subject);
                 $this->set(compact('answerResult'));
             }
         }
-
-        $this->set('title', 'Help & FAQ');
     }
 
     public function convert($id = 0)
@@ -329,20 +330,20 @@ class HelpController extends AppController
     public function topic($id = 0)
     {
         $topicsTable = TableRegistry::get('faq_topics');
-        $topicsQuery = $topicsTable->find('all', ['contain' => ['faq_answers', 'faq_answers.faq_topics']])->where(['faq_topics.id' => $id]);
+        $topicsQuery = $topicsTable->find('all', ['slug' => $id, 'contain' => ['faq_answers', 'faq_answers.faq_topics']]);
         $topicsResults = $topicsQuery->first();
 
-        $this->set('title', 'Help Topics');
+        $this->set('title', $topicsResults->topic);
         $this->set(compact('topicsResults'));
     }
 
     public function tag($id = 0)
     {
         $tagsTable = TableRegistry::get('faq_tags');
-        $tagsQuery = $tagsTable->find('all', ['contain' => ['faq_answer_tags', 'faq_answer_tags.faq_tags', 'faq_answer_tags.faq_answers', 'faq_answer_tags.faq_answers.faq_topics']])->where(['faq_tags.id' => $id]);
+        $tagsQuery = $tagsTable->find('all', ['slug' => $id, 'contain' => ['faq_answer_tags', 'faq_answer_tags.faq_tags', 'faq_answer_tags.faq_answers', 'faq_answer_tags.faq_answers.faq_topics']]);
         $tagsResults = $tagsQuery->first();
 
-        $this->set('title', 'Help Tags');
+        $this->set('title', $tagsResults->tag);
         $this->set(compact('tagsResults'));
     }
 

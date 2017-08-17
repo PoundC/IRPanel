@@ -24,7 +24,7 @@
                             </td>
                             <td colspan="4"><?= h($message->answer->subject) ?></td>
                             <td class="actions">
-                                <?= $this->Html->link('[ View Answer ]', '/help/' . $message->answer->id) ?>
+                                <?= $this->Html->link('[ View Answer ]', '/help/' . $message->answer->slug) ?>
                             </td>
                         </tr>
 

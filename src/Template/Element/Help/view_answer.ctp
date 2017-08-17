@@ -19,11 +19,11 @@
         <div class="box">
             <div class="box-body">
 
-                <center><h3><a href="/help/topic/<?= $answerResult->topic->id ?>"><?= $answerResult->topic->topic ?></a></h3></center>
+                <center><h3><a href="/help/topic/<?= $answerResult->topic->slug ?>"><?= $answerResult->topic->topic ?></a></h3></center>
 
                 <?php foreach($answerResult->answer_tags as $tag) { ?>
 
-                <center><h4><a href="/help/tag/<?= $tag->tags->id ?>"><?= $tag->tags->tag ?></a></h4></center>
+                <center><h4><a href="/help/tag/<?= $tag->tags->slug ?>"><?= $tag->tags->tag ?></a></h4></center>
 
                 <?php } ?>
 
