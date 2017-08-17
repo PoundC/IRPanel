@@ -111,6 +111,7 @@ Router::connect('/support/view/*', ['controller' => 'Support', 'action' => 'view
 Router::connect('/support', ['controller' => 'Support', 'action' => 'support']);
 Router::connect('/contact', ['controller' => 'Support', 'action' => 'contact']);
 Router::connect('/close/*', ['controller' => 'Support', 'action' => 'close']);
+Router::connect('/sendticket/*', ['controller' => 'Support', 'action' => 'sendticket']);
 
 Router::connect('/markdown', ['controller' => 'Help', 'action' => 'markdown']);
 Router::connect('/markdownfaq', ['controller' => 'Help', 'action' => 'markdownfaq']);

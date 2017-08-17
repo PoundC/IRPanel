@@ -101,6 +101,12 @@ return [
         ],
         [
             'role' => ['admin'],
+            'controller' => ['Support'],
+            'action' => ['sendticket'],
+            'allowed' => true,
+        ],
+        [
+            'role' => ['admin'],
             'controller' => ['Chat'],
             'action' => ['openchats'],
             'allowed' => true,

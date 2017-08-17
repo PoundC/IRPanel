@@ -82,11 +82,42 @@ class SupportController extends AppController
         }
         else {
 
+            if($this->request->getMethod() == 'POST' || $this->request->getQuery('search') != '') {
+
+                if($this->request->getMethod() == 'GET') {
+
+                    $data['search'] = $this->request->getQuery('search');
+                }
+                else {
+
+                    $data = $this->request->getData();
+                }
+
+                $questionsTable = TableRegistry::get('faq_questions');
+                $questionsQuery = $questionsTable->find('all', ['contain' => ['faq_answers', 'faq_answers.faq_topics']])
+                    ->where(['faq_topics.topic LIKE' => '%' . $data['search'] . '%'])
+                    ->orWhere(['faq_questions.question LIKE' => '%' . $data['search'] . '%'])
+                    ->orWhere(['faq_answers.answer LIKE' => '%' . $data['search'] . '%']);
+
+                $searchQuery = $data['search'];
+
+                $searchResults = $questionsQuery->count();
+
+                $this->set('searchResults', $searchResults);
+                $this->set('searchQuery', $searchQuery);
+
+                $tableAlias = $questionsTable->getAlias();
+                $this->set($tableAlias, $this->paginate($questionsQuery));
+                $this->set('tableAlias', $tableAlias);
+                $this->set('_serialize', [$tableAlias, 'tableAlias']);
+            }
+
             $supportTable = TableRegistry::get('Messages');
             $supportEntity = $supportTable->newEntity();
             $this->set(compact('supportEntity', 'message', 'messageFromUser', 'replies'));
         }
 
+        $this->set('messageId', $id);
         $this->set('title', 'View Ticket');
     }
 
@@ -199,11 +230,11 @@ class SupportController extends AppController
 
         if($user->role == 'admin') {
 
-            $messagesQuery = $table->find('all')->where(['messages.message_id' => 0, 'messages.closed' => 0])->orderAsc('messages.created');
+            $messagesQuery = $table->find('all', ['contain' => ['faq_topics']])->where(['messages.message_id' => 0, 'messages.closed' => 0]);
         }
         else {
 
-            $messagesQuery = $table->find('all')->where(['messages.message_id' => 0, 'messages.closed' => 0, 'messages.user_id' => $user->id])->orderAsc('messages.created');;
+            $messagesQuery = $table->find('all', ['contain' => ['faq_topics']])->where(['messages.message_id' => 0, 'messages.closed' => 0, 'messages.user_id' => $user->id]);
         }
 
         $tableAlias = $table->getAlias();
@@ -268,8 +299,14 @@ class SupportController extends AppController
             $this->redirect('/tickets');
         }
 
+        $topicsTable = TableRegistry::get('faq_topics');
+        $topicsQuery = $topicsTable->find('all');
+        $topics = $topicsQuery->find('list');
+
         $supportTable = TableRegistry::get('Messages');
         $supportEntity = $supportTable->newEntity();
+
+        $this->set('topics', $topics);
         $this->set(compact('supportEntity', 'formSubmitted'));
         $this->set('title', 'Create Support Ticket');
     }
@@ -366,5 +403,45 @@ class SupportController extends AppController
         $contactEntity = $contactTable->newEntity();
         $this->set(compact('contactEntity', 'formSubmitted'));
         $this->set('title', 'Contact Us');
+    }
+
+    public function sendticket($id = 0)
+    {
+        $faqAnswersTable = TableRegistry::get('faq_answers');
+        $faqAnswersQuery = $faqAnswersTable->find('all')->where(['id' => $id])->limit(1);
+        $faqAnswerEntity = $faqAnswersQuery->first();
+
+        $messagesTable = TableRegistry::get('Messages');
+        $messagesQuery = $messagesTable->find('all')->where(['messages.id' => $this->request->getQuery('redirect')])->limit(1);
+        $messageResult = $messagesQuery->first();
+
+        $contactTable = TableRegistry::get('Messages');
+        $contactEntity = $contactTable->newEntity([
+            'user_id'  => $this->Auth->user('id'),
+            'subject'  => 'RE: ' . $messageResult->subject,
+            'message'  => $faqAnswerEntity->answer,
+            'closed'   => 0,
+            'topic'    => $messageResult->topic,
+            'priority' => $messageResult->priority,
+            'message_id' => $messageResult->id,
+            'created'  => new \DateTime('now'),
+            'modified' => new \DateTime('now')
+        ]);
+
+        if($messageResult->message_id > 0) {
+
+            $contactEntity->set('message_id', $messageResult->message_id);
+            $opMessage = $messagesTable->get($messageResult->message_id);
+        }
+        else {
+
+            $opMessage = $messagesTable->get($messageResult->id);
+        }
+        $result = $contactTable->save($contactEntity);
+
+        $opMessage->modified = new \DateTime('now');
+        $messagesTable->save($opMessage);
+
+        $this->redirect('/support/view/' . $this->request->getQuery('redirect') . '?search=' . $this->request->getQuery('search'));
     }
 }

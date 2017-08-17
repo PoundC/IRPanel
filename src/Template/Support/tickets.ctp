@@ -54,27 +54,7 @@
                                 <?php foreach (${$tableAlias} as $message) : ?>
                                 <tr>
                                     <td colspan="1">
-                                    <?php switch($message->topic) {
-                                            case 0:
-                                                echo h('Contact');
-                                                break;
-                                            case 2:
-                                                echo h('Payment');
-                                                break;
-                                            case 3:
-                                                echo h('Chat');
-                                                break;
-                                            case 4:
-                                                echo h('Request');
-                                                break;
-                                            case 5:
-                                                echo h('Feedback');
-                                                break;
-                                            case 6:
-                                                echo h('Other');
-                                                break;
-                                            }
-                                    ?>
+                                    <?= $message->topics->topic ?>
                                     </td>
                                     <td colspan="4"><?= h($message->subject) ?></td>
                                     <td colspan="2" style="white-space: nowrap;"><?= h($message->modified) ?></td>

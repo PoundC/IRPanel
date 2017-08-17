@@ -95,56 +95,6 @@
                     </div>
                     <!-- /.mailbox-read-message -->
                 </div>
-                <!--
-                <div class="box-footer">
-                    <ul class="mailbox-attachments clearfix">
-                        <li>
-                            <span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
-
-                            <div class="mailbox-attachment-info">
-                                <a href="#" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> Sep2014-report.pdf</a>
-                                <span class="mailbox-attachment-size">
-                              1,245 KB
-                              <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
-                            </span>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="mailbox-attachment-icon"><i class="fa fa-file-word-o"></i></span>
-
-                            <div class="mailbox-attachment-info">
-                                <a href="#" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> App Description.docx</a>
-                                <span class="mailbox-attachment-size">
-                              1,245 KB
-                              <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
-                            </span>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="mailbox-attachment-icon has-img"><img src="../../dist/img/photo1.png" alt="Attachment"></span>
-
-                            <div class="mailbox-attachment-info">
-                                <a href="#" class="mailbox-attachment-name"><i class="fa fa-camera"></i> photo1.png</a>
-                                <span class="mailbox-attachment-size">
-                              2.67 MB
-                              <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
-                            </span>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="mailbox-attachment-icon has-img"><img src="../../dist/img/photo2.png" alt="Attachment"></span>
-
-                            <div class="mailbox-attachment-info">
-                                <a href="#" class="mailbox-attachment-name"><i class="fa fa-camera"></i> photo2.png</a>
-                                <span class="mailbox-attachment-size">
-                              1.9 MB
-                              <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
-                            </span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                -->
             </div>
             <!-- /. box -->
         </div>
@@ -228,26 +178,157 @@
                 </div>
             </div>
             <?php if($isAdmin == true) { ?>
+
             <div class="row">
                 <div class="col-md-12">
-                    <!-- About Me Box -->
-                    <div class="box box-primary" style="border-top-color: white !important;">
+                    <div class="box">
+
                         <div class="box-body">
-                            <div class="col-md-4 pull-right">
-                                <?= $this->Form->postLink('<i class="fa fa-close"></i> Close Ticket', ['action' => 'close', $message->id], ['escape' => false, 'style' => 'width: 100%', 'class' => 'btn btn-default']) ?>
+                            <?= $this->Form->create(null, ['url' => '/support/view/' . $messageId]); ?>
+
+                            <div class="row">
+
+                                <div class="col-lg-6 col-lg-offset-1">
+
+                                    <div class="form-group">
+                                        <label>Your search query</label>
+                                        <?php if(isset($searchQuery) && $searchQuery != '') { ?>
+                                        <?= $this->Form->control('search', ['label' => false, 'type' => 'text', 'value' =>
+                                        $searchQuery, 'class' => 'form-control']); ?>
+                                        <?php } else { ?>
+                                        <?= $this->Form->control('search', ['label' => false, 'type' => 'text', 'placeholder' =>
+                                        'How do I mine Ghost Coins?', 'class' => 'form-control']); ?>
+                                        <?php } ?>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-lg-4 col-lg-offset-0">
+
+                                    <div class="form-group">
+                                        <?= $this->Form->button('Search', ['class' => 'btn
+                                        btn-primary btn-block btn-flat', 'style' => 'margin-top: 20px;']) ?>
+                                    </div>
+
+                                </div>
+
                             </div>
-                            <div class="col-md-4 pull-right">
-                                <a type="button" class="btn btn-default" style="width:100%" href="/autoanswer/<?= $message->id ?>">
-                                    <i class="fa fa-space-shuttle"></i>
-                                    <span>Auto-Answer</span>
-                                </a>
-                            </div>
+
+                            <?= $this->Form->end() ?>
                         </div>
-                        <!-- /.box-body -->
                     </div>
-                    <!-- /.box -->
                 </div>
             </div>
+
+            <?php if (isset($searchResults) && $searchResults > 0) { ?>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="box">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="example1" class="table table-bordered table-striped dataTable" role="grid"
+                                           aria-describedby="example1_info">
+                                        <thead>
+                                        <tr>
+                                            <th colspan="3"><?= $this->Paginator->sort('faq_questions.question', 'Question') ?></th>
+                                            <th colspan="4"><?= $this->Paginator->sort('faq_answers.subject', 'Description') ?></th>
+                                            <th class="actions"><?= 'Actions' ?></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php foreach (${$tableAlias} as $message) : ?>
+                                        <tr>
+                                            <td colspan="3">
+                                                <?= $message->question ?>
+                                            </td>
+                                            <td colspan="4"><?= h($message->answer->subject) ?></td>
+                                            <td class="actions">
+                                                <?= $this->Html->link('[ Send to user ]', '/sendticket/' . $message->answer->id . '?redirect=' . $messageId . '&search=' . $searchQuery) ?>
+                                            </td>
+                                        </tr>
+
+                                        <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="box-footer">
+                                        <ul class="pagination pagination-sm no-margin pull-right">
+                                            <li><a href="#">&laquo;</a></li>
+                                            <?= $this->Paginator->prev('< ' . 'previous') ?>
+                                            <?= $this->Paginator->numbers() ?>
+                                            <?= $this->Paginator->next('next' . ' >') ?>
+                                        </ul>
+                                        <p><?= $this->Paginator->counter() ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <?php } ?>
+
+            <?php if (isset($helpTabsCount) && $helpTabsCount > 0) { ?>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3>Already Sent to User</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="example2" class="table table-bordered table-striped dataTable" role="grid"
+                                           aria-describedby="example1_info">
+                                        <thead>
+                                        <tr>
+                                            <th colspan="3"><?= $this->Paginator->sort('faq_questions.question', 'Question') ?></th>
+                                            <th colspan="4"><?= $this->Paginator->sort('faq_answers.subject', 'Description') ?></th>
+
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php foreach (${$helpTableAlias} as $message) : ?>
+                                        <tr>
+                                            <td colspan="3">
+                                                <?= $message->answer->questions[0]->question ?>
+                                            </td>
+                                            <td colspan="4"><?= h($message->answer->subject) ?></td>
+
+                                        </tr>
+
+                                        <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="box-footer">
+                                        <ul class="pagination pagination-sm no-margin pull-right">
+                                            <li><a href="#">&laquo;</a></li>
+                                            <?= $this->Paginator->prev('< ' . 'previous') ?>
+                                            <?= $this->Paginator->numbers() ?>
+                                            <?= $this->Paginator->next('next' . ' >') ?>
+                                        </ul>
+                                        <p><?= $this->Paginator->counter() ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <?php } ?>
+
             <?php } ?>
         </div>
     </div>

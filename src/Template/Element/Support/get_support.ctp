@@ -18,21 +18,13 @@
                     <div class="col-lg-5 col-lg-offset-1">
                         <div class="form-group">
                             <label>Select support topic</label>
-                            <?= $this->Form->select('topic', [
-
-                            'value' => [2 => 'Payment', 3 => 'Chat', 4 => 'Feature Request', 5 => 'Feedback', 6 =>
-                            'Other']
-                            ]); ?>
+                            <center><?= $this->Form->control('topic', ['class' => 'form-control select2', 'options' => $topics, 'label' => false]) ?></center>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-5">
                         <div class="form-group">
                             <label>Select Priority</label>
-                            <?= $this->Form->select('priority', [
-
-                            'value' => [1 => 'Show Stopper', 2 => 'High', 3 => 'Medium', 4 => 'Low', 0 =>
-                            'None']
-                            ]); ?>
+                            <center><?= $this->Form->control('priority', ['class' => 'form-control select2', 'options' => [1 => 'Show Stopper', 2 => 'High', 3 => 'Medium', 4 => 'Low', 0 => 'None'], 'value' => '1', 'label' => false]) ?></center>
                         </div>
                     </div>
                 </div>
