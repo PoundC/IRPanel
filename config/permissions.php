@@ -82,6 +82,18 @@ return [
             'allowed' => true,
         ],
         [
+            'role' => ['user'],
+            'controller' => ['Billing'],
+            'action' => ['subscribe'],
+            'allowed' => true,
+        ],
+        [
+            'role' => ['member', 'admin'],
+            'controller' => ['Billing'],
+            'action' => ['cancelSubscribe'],
+            'allowed' => true,
+        ],
+        [
             'role' => ['user', 'member', 'admin'],
             'controller' => ['Chat'],
             'action' => ['online', 'chatsend', 'receive'],

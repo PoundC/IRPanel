@@ -124,9 +124,19 @@ Router::connect('/autoanswer/*', ['controller' => 'Help', 'action' => 'autoanswe
 
 /*
  *
+ * Billing Routes
+ *
+ */
+
+Router::connect('/billing/subscribe/*', ['controller' => 'Billing', 'action' => 'subscribe']);
+Router::connect('/billing/cancel_subscribe/*', ['controller' => 'Billing', 'action' => 'cancelSubscribe']);
+
+/*
+ *
  * Search Routes
  *
  */
+
 Router::connect('/search/users', ['controller' => 'Search', 'action' => 'users']);
 
 /*

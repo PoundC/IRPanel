@@ -47,8 +47,8 @@ class Billing extends AbstractMigration
         $cronJobTable = \Cake\ORM\TableRegistry::get('cronjobs_crons');
         $cronJobsEntity = $cronJobTable->newEntity([
             'schedule' => '0 4 * * *',
-            'name'     => 'Prune Database Log Tables',
-            'command'  => 'prunelogs',
+            'name'     => 'Billing Subscription Status Retrieval',
+            'command'  => 'billing',
             'locked'   => 0,
             'timeout'  => 30,
             'lastrun'  => new \DateTime('now'),

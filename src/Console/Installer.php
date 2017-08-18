@@ -17,6 +17,7 @@ namespace App\Console;
 require_once(__DIR__ . '/../../vendor/autoload.php');
 
 use Cake\Console\Shell;
+use Cake\ORM\TableRegistry;
 use Cake\Utility\Security;
 use Composer\Script\Event;
 use Exception;
@@ -119,6 +120,12 @@ class Installer
                         'command' => 'users addSuperuser',
                         'extra' => []
                     ]);
+
+                    $usersTable = TableRegistry::get(Configure::read('Users.table'));
+                    $query = $usersTable->find('all')->where(['users.username' => 'superuser'])->limit(1);
+                    $result = $query->first();
+                    $result->set('role', 'admin');
+                    $usersTable->save($result);
                 }
             }
         }

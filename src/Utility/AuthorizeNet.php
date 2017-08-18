@@ -4,6 +4,7 @@ namespace App\Utility;
 
 use net\authorize\api\contract\v1 as AnetAPI;
 use net\authorize\api\controller as AnetController;
+use Cake\Core\Configure;
 
 /**
  * Created by PhpStorm.
@@ -14,14 +15,14 @@ use net\authorize\api\controller as AnetController;
 
 class AuthorizeNet
 {
-    public function CreateSubscription($userObject, $creditCardNumber, $creditCardExpiration)
+    public function createSubscription($userObject, $creditCardNumber, $creditCardExpiration)
     {
         define("AUTHORIZENET_LOG_FILE", "phplog");
 
         // Common Set Up for API Credentials
         $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
-        $merchantAuthentication->setName( "556KThWQ6vf2");
-        $merchantAuthentication->setTransactionKey("9ac2932kQ7kN2Wzq");
+        $merchantAuthentication->setName( Configure::read('MERCHANT_LOGIN_ID'));
+        $merchantAuthentication->setTransactionKey(Configure::read('MERCHANT_TRANSACTION_KEY'));
         $refId = 'ref' . time();
 
         // Subscription Type Info
@@ -64,16 +65,20 @@ class AuthorizeNet
 
         $controller = new AnetController\ARBCreateSubscriptionController($request);
 
-        $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
+        if(Configure::read('MERCHANT_SANDBOX') == true) {
 
-        if (($response != null) && ($response->getMessages()->getResultCode() == "Ok") )
-        {
-            echo "SUCCESS: Subscription ID : " . $response->getSubscriptionId() . "\n";
+            $response = $controller->executeWithApiResponse(\net\authorize\api\constants\ANetEnvironment::SANDBOX);
         }
-        else
-        {
-            echo "ERROR :  Invalid response\n";
-            echo "Response : " . $response->getMessages()->getMessage()[0]->getCode() . "  " .$response->getMessages()->getMessage()[0]->getText() . "\n";
+        else {
+
+            $response = $controller->executeWithApiResponse(\net\authorize\api\constants\ANetEnvironment::PRODUCTION);
         }
+
+        return $response;
+    }
+
+    public function cancelSubscription()
+    {
+
     }
 }

@@ -216,6 +216,12 @@ Type::build('timestamp')
  *
  */
 
+// Merchant Account @ Authorize.net
+
+Configure::write('MERCHANT_LOGIN_ID', '');
+Configure::write('MERCHANT_TRANSACTION_KEY', '');
+Configure::write('MERCHANT_SANDBOX', true);
+
 /*
  * Only try to load DebugKit in development mode
  * Debug Kit should not be installed on a production system

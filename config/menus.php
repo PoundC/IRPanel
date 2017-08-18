@@ -63,7 +63,7 @@ $menus = [
             [
                 'link'  => 'Upgrade to Member',
                 'icon'  => 'fa-fighter-jet',
-                'path'  => '/upgrade'
+                'path'  => '/profile'
             ],
             [
                 'group' => 'User Menu',

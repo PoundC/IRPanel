@@ -109,8 +109,11 @@
     <div class="col-md-7">
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-
+                <?php if($isMember == false) { ?>
+                <li class="active"><a href="#subscribe" data-toggle="tab" aria-expanded="false">Upgrade to Member</a></li>
+                <?php } else { ?>
                 <li class="active"><a href="#timeline" data-toggle="tab" aria-expanded="false">Placeholder</a></li>
+                <?php } ?>
 
                 <?php if(true == false) { ?>
                     <li class=""><a href="#activity" data-toggle="tab" aria-expanded="true">Activity</a></li>
@@ -121,11 +124,21 @@
                 ?>
                 <li class=""><a href="#settings" data-toggle="tab" aria-expanded="false">Settings</a></li>
                 <li class=""><a href="#change_password" data-toggle="tab" aria-expanded="false">Change Password</a></li>
+                <?php if($isMember == true) { ?>
+                <li class=""><a href="#cancel_subscribe" data-toggle="tab" aria-expanded="false">Cancel Subscription</a></li>
+                <?php } ?>
                 <?php
                         }
                 ?>
             </ul>
             <div class="tab-content">
+
+                <?php if($isMember == false) { ?>
+                <div class="tab-pane" id="subscribe">
+                    <br />
+                    <?php echo $this->element('Users/users_subscribe'); ?>
+                </div>
+                <?php } ?>
 
                 <div class="tab-pane active" id="timeline">
                     <!-- The timeline -->
@@ -359,6 +372,13 @@
                     <br />
                     <?php echo $this->element('Users/users_change_password'); ?>
                 </div>
+
+                <?php if($isMember == true) { ?>
+                    <div class="tab-pane" id="cancel_subscribe">
+                        <br />
+                        <?php echo $this->element('Users/users_cancel_subscribe'); ?>
+                    </div>
+                <?php } ?>
                 <?php
                         }
                 ?>
