@@ -330,7 +330,7 @@ class HelpController extends AppController
     public function topic($id = 0)
     {
         $topicsTable = TableRegistry::get('faq_topics');
-        $topicsQuery = $topicsTable->find('all', ['slug' => $id, 'contain' => ['faq_answers', 'faq_answers.faq_topics']]);
+        $topicsQuery = $topicsTable->find('slugged', ['slug' => $id, 'contain' => ['faq_answers', 'faq_answers.faq_topics']]);
         $topicsResults = $topicsQuery->first();
 
         $this->set('title', $topicsResults->topic);
@@ -340,7 +340,7 @@ class HelpController extends AppController
     public function tag($id = 0)
     {
         $tagsTable = TableRegistry::get('faq_tags');
-        $tagsQuery = $tagsTable->find('all', ['slug' => $id, 'contain' => ['faq_answer_tags', 'faq_answer_tags.faq_tags', 'faq_answer_tags.faq_answers', 'faq_answer_tags.faq_answers.faq_topics']]);
+        $tagsQuery = $tagsTable->find('slugged', ['slug' => $id, 'contain' => ['faq_answer_tags', 'faq_answer_tags.faq_tags', 'faq_answer_tags.faq_answers', 'faq_answer_tags.faq_answers.faq_topics']]);
         $tagsResults = $tagsQuery->first();
 
         $this->set('title', $tagsResults->tag);
