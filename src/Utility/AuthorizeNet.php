@@ -15,14 +15,14 @@ use Cake\Core\Configure;
 
 class AuthorizeNet
 {
-    public function createSubscription($userObject, $creditCardNumber, $creditCardExpiration)
+    public function createSubscription($userObject, $creditCardNumber, $creditCardExpiration, $months = true)
     {
         define("AUTHORIZENET_LOG_FILE", "phplog");
 
         // Common Set Up for API Credentials
         $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
-        $merchantAuthentication->setName( Configure::read('MERCHANT_LOGIN_ID'));
-        $merchantAuthentication->setTransactionKey(Configure::read('MERCHANT_TRANSACTION_KEY'));
+        $merchantAuthentication->setName(Configure::read('Merchants.MERCHANT_LOGIN_ID'));
+        $merchantAuthentication->setTransactionKey(Configure::read('Merchants.MERCHANT_TRANSACTION_KEY'));
         $refId = 'ref' . time();
 
         // Subscription Type Info
@@ -31,7 +31,16 @@ class AuthorizeNet
 
         $interval = new AnetAPI\PaymentScheduleType\IntervalAType();
         $interval->setLength("1");
-        $interval->setUnit("months");
+
+        if($months == true) {
+
+            $interval->setUnit("months");
+        }
+        else {
+
+            $interval->setUnit("years");
+        }
+
 
         $paymentSchedule = new AnetAPI\PaymentScheduleType();
         $paymentSchedule->setInterval($interval);
@@ -40,8 +49,16 @@ class AuthorizeNet
         $paymentSchedule->setTrialOccurrences("0");
 
         $subscription->setPaymentSchedule($paymentSchedule);
-        $subscription->setAmount("10.29");
         $subscription->setTrialAmount("0.00");
+
+        if($months == true) {
+
+            $subscription->setAmount("10.29");
+        }
+        else {
+
+            $subscription->setAmount("99.99");
+        }
 
         $creditCard = new AnetAPI\CreditCardType();
         $creditCard->setCardNumber($creditCardNumber);
@@ -53,8 +70,8 @@ class AuthorizeNet
         $subscription->setPayment($payment);
 
         $billTo = new AnetAPI\NameAndAddressType();
-        $billTo->setFirstName($userObject->first_name);
-        $billTo->setLastName($userObject->last_name);
+        $billTo->setFirstName($userObject->get('first_name'));
+        $billTo->setLastName($userObject->get('last_name'));
 
         $subscription->setBillTo($billTo);
 
@@ -77,8 +94,31 @@ class AuthorizeNet
         return $response;
     }
 
-    public function cancelSubscription()
+    public function cancelSubscription($subscriptionId)
     {
+        $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
+        $merchantAuthentication->setName(Configure::read('Merchants.MERCHANT_LOGIN_ID'));
+        $merchantAuthentication->setTransactionKey(Configure::read('Merchants.MERCHANT_TRANSACTION_KEY'));
 
+        // Set the transaction's refId
+        $refId = 'ref' . time();
+
+        $request = new AnetAPI\ARBCancelSubscriptionRequest();
+        $request->setMerchantAuthentication($merchantAuthentication);
+        $request->setRefId($refId);
+        $request->setSubscriptionId($subscriptionId);
+
+        $controller = new AnetController\ARBCancelSubscriptionController($request);
+
+        if(Configure::read('MERCHANT_SANDBOX') == true) {
+
+            $response = $controller->executeWithApiResponse(\net\authorize\api\constants\ANetEnvironment::SANDBOX);
+        }
+        else {
+
+            $response = $controller->executeWithApiResponse(\net\authorize\api\constants\ANetEnvironment::PRODUCTION);
+        }
+
+        return $response;
     }
 }

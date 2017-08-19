@@ -13,6 +13,7 @@ use Cake\ORM\TableRegistry;
 use net\authorize\api\contract\v1 as AnetAPI;
 use net\authorize\api\controller as AnetController;
 use Cake\Core\Configure;
+use App\Utility\Users;
 
 define("AUTHORIZENET_LOG_FILE", "phplog");
 
@@ -36,41 +37,111 @@ class BillingShell extends CronjobShell
             $sorting->setOrderBy("id");
             $sorting->setOrderDescending(false);
 
-            $paging = new AnetAPI\PagingType();
-            $paging->setLimit("1000");
-            $paging->setOffset("1");
+            $usersUtility = new Users();
+            $membersCount = $usersUtility->countAllUsersBy('role', 'member');
 
-            $request = new AnetAPI\ARBGetSubscriptionListRequest();
-            $request->setMerchantAuthentication($merchantAuthentication);
-            $request->setRefId($refId);
-            $request->setSearchType("subscriptionInactive");
-            $request->setSorting($sorting);
-            $request->setPaging($paging);
+            $subscriptionsHistoryTable = TableRegistry::get('users_subscriptions_history');
+            $usersTable = $usersUtility->getUserTable();
 
-            $controller = new AnetController\ARBGetSubscriptionListController($request);
+            $foundSubscription = false;
 
-            if(Configure::read('MERCHANT_SANDBOX') == true) {
+            $searches[] = 'subscriptionActive';
+            $searches[] = 'subscriptionInactive';
 
-                $response = $controller->executeWithApiResponse(\net\authorize\api\constants\ANetEnvironment::SANDBOX);
+            foreach($searches as $search) {
+
+                $y = 1;
+                for ($x = 0; $x < $membersCount; $x = $x + 1000) {
+
+                    $subscriptionDetailsArray = array();
+
+                    $paging = new AnetAPI\PagingType();
+                    $paging->setLimit("1000");
+                    $paging->setOffset($y);
+
+                    $request = new AnetAPI\ARBGetSubscriptionListRequest();
+                    $request->setMerchantAuthentication($merchantAuthentication);
+                    $request->setRefId($refId);
+                    $request->setSearchType($search);
+                    $request->setSorting($sorting);
+                    $request->setPaging($paging);
+
+                    $controller = new AnetController\ARBGetSubscriptionListController($request);
+
+                    if (Configure::read('MERCHANT_SANDBOX') == true) {
+
+                        $response = $controller->executeWithApiResponse(\net\authorize\api\constants\ANetEnvironment::SANDBOX);
+                    } else {
+
+                        $response = $controller->executeWithApiResponse(\net\authorize\api\constants\ANetEnvironment::PRODUCTION);
+                    }
+
+                    if (($response != null) && ($response->getMessages()->getResultCode() == "Ok")) {
+
+                        $this->out("SUCCESS: Subscription Details:" . "\n");
+
+                        foreach ($response->getSubscriptionDetails() as $subscriptionDetails) {
+
+                            $this->out("Subscription ID: " . $subscriptionDetails->getId() . "\n");
+                            $subscriptionDetailsArray[] = $subscriptionDetails;
+                        }
+
+                        $this->out("Total Number In Results:" . $response->getTotalNumInResultSet() . "\n");
+
+                    } else {
+
+                        $this->err("ERROR :  Invalid response\n");
+
+                        $errorMessages = $response->getMessages()->getMessage();
+
+                        $this->err("Response : " . $errorMessages[0]->getCode() . "  " . $errorMessages[0]->getText() . "\n");
+                    }
+
+                    if (count($subscriptionDetailsArray) > 0) {
+
+                        foreach ($subscriptionDetailsArray as $subscriptionDetails) {
+
+                            $subscriptionsHistoryEntity = $subscriptionsHistoryTable->newEntity([
+                                'subscription_id' => $subscriptionDetails->getId(),
+                                'subscription_status' => $subscriptionDetails->getStatus(),
+                                'customer_profile_id' => $subscriptionDetails->getCustomerProfileId(),
+                                'customer_payment_profile_id' => $subscriptionDetails->getCustomerPaymentProfileId(),
+                                'created' => new \DateTime('now')
+                            ]);
+
+                            $subscriptionsHistoryTable->save($subscriptionsHistoryEntity);
+
+                            if ($subscriptionDetails->getStatus() != 'active') {
+
+                                $user = $usersUtility->findUserBySubscriptionId($subscriptionDetails->getId());
+                                $user->set('role', 'user');
+
+                                $usersTable->save($user);
+                            }
+                            else {
+
+                                $user = $usersUtility->findUserBySubscriptionId($subscriptionDetails->getId());
+                                $user->set('role', 'member');
+
+                                $usersTable->save($user);
+                            }
+
+                            $foundSubscription = true;
+                        }
+                    }
+
+                    $y = $y + 1;
+                }
+            }
+
+            if($foundSubscription == false) {
+
+                return -1;
             }
             else {
 
-                $response = $controller->executeWithApiResponse(\net\authorize\api\constants\ANetEnvironment::PRODUCTION);
+                return 0;
             }
-
-            if (($response != null) && ($response->getMessages()->getResultCode() == "Ok")) {
-                echo "SUCCESS: Subscription Details:" . "\n";
-                foreach ($response->getSubscriptionDetails() as $subscriptionDetails) {
-                    echo "Subscription ID: " . $subscriptionDetails->getId() . "\n";
-                }
-                echo "Total Number In Results:" . $response->getTotalNumInResultSet() . "\n";
-            } else {
-                echo "ERROR :  Invalid response\n";
-                $errorMessages = $response->getMessages()->getMessage();
-                echo "Response : " . $errorMessages[0]->getCode() . "  " .$errorMessages[0]->getText() . "\n";
-            }
-
-            return 0;
 
         } catch (Exception $ex)
         {

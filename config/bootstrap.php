@@ -48,6 +48,7 @@ require __DIR__ . '/paths.php';
  * - Setting the default application paths.
  */
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
+
 require __DIR__ . '/menus.php';
 
 use Cake\Cache\Cache;
@@ -217,10 +218,7 @@ Type::build('timestamp')
  */
 
 // Merchant Account @ Authorize.net
-
-Configure::write('MERCHANT_LOGIN_ID', '');
-Configure::write('MERCHANT_TRANSACTION_KEY', '');
-Configure::write('MERCHANT_SANDBOX', true);
+Configure::load('merchants', 'default', false);
 
 /*
  * Only try to load DebugKit in development mode

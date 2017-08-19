@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jlroberts
  * Date: 8/18/17
- * Time: 11:43 AM
+ * Time: 6:34 PM
  */
 
 namespace App\Model\Table;
@@ -15,18 +15,17 @@ use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 
 /**
- * Chats Model
+ * Billing History Model
  */
-class BillingTable extends Table
+class BillingHistoryTable extends Table
 {
     public function initialize(array $config)
     {
         parent::initialize($config);
 
-        $this->belongsTo('Users', array())->setForeignKey('user_id')->setProperty('user');
-        $this->hasMany('users_subscriptions_history', ['className' => 'BillingHistory'])->setForeignKey('subscription_id')->setProperty('subscription');
+        $this->belongsTo('users_subscriptions', ['className' => 'Billing'])->setForeignKey('subscription_id')->setProperty('subscription');
 
-        $this->setTable('users_subscriptions');
+        $this->setTable('users_subscriptions_history');
         $this->setDisplayField('messages');
         $this->setPrimaryKey('id');
     }

@@ -134,13 +134,13 @@
             <div class="tab-content">
 
                 <?php if($isMember == false) { ?>
-                <div class="tab-pane" id="subscribe">
+                <div class="tab-pane active" id="subscribe">
                     <br />
                     <?php echo $this->element('Users/users_subscribe'); ?>
                 </div>
-                <?php } ?>
+                <?php } else { ?>
 
-                <div class="tab-pane active" id="timeline">
+                <div class="tab-pane" id="timeline">
                     <!-- The timeline -->
                     <?php /* ?>
                     <ul class="timeline timeline-inverse">
@@ -237,6 +237,7 @@
                     <?php */ ?>
                 </div>
 
+                <?php } ?>
                 <!-- /.tab-pane -->
 
                 <?php if(true == false) { ?>
