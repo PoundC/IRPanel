@@ -6,6 +6,11 @@ use App\Controller\Traits\ProfileTrait;
 use Cake\ORM\TableRegistry;
 use CakeDC\Users\Controller\UsersController;
 use Cake\Core\Configure;
+use Firebase\JWT\JWT;
+use Cake\Event\Event;
+use Cake\Network\Exception\UnauthorizedException;
+use Cake\Utility\Security;
+use CakeDC\Users\Controller\Component\UsersAuthComponent;
 
 class MyUsersController extends UsersController
 {
@@ -53,6 +58,18 @@ class MyUsersController extends UsersController
     }
 
     public function register() {
+
+        $this->eventManager()->on(UsersAuthComponent::EVENT_AFTER_REGISTER, function ($event) {
+            //the callback function should return the user data array to force register
+             $event->data['user']->set('token', JWT::encode(
+                [
+                    'sub' => $event->subject->entity->id,
+                    'exp' =>  time() + 604800
+                ],
+                Security::salt()));
+            $usersTable = TableRegistry::get(Configure::read('Users.table'));
+            $usersTable->save($event->data['user']);
+        });
 
         $this->set('title', 'Register User');
 

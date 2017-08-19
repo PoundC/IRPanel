@@ -232,3 +232,7 @@ Configure::write('Users.config', ['users']);
 Plugin::load('CakeDC/Users', ['routes' => false, 'bootstrap' => true]);
 
 Plugin::load('Muffin/Slug');
+
+Plugin::load('Crud');
+
+Plugin::load('ADmad/JwtAuth');

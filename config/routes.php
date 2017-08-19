@@ -198,4 +198,10 @@ Router::connect('/logout', ['plugin' => 'CakeDC/Users', 'controller' => 'Users',
 Router::connect('/register', ['controller' => 'MyUsers', 'action' => 'register']);
 Router::connect('/reset', ['controller' => 'MyUsers', 'action' => 'requestResetPassword']);
 
-Router::extensions(['json']);
+Router::prefix('api', function ($routes) {
+    $routes->extensions(['json', 'xml']);
+    $routes->resources('Cocktails');
+    $routes->resources('Users');
+    Router::connect('/api/users/register', ['controller' => 'MyUsers', 'action' => 'register', 'prefix' => 'api']);
+    $routes->fallbacks('InflectedRoute');
+});
