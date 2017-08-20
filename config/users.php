@@ -2,8 +2,8 @@
 
 return [
     'Users' => [
-        'table' => 'MyUsers',
+        'table' => 'Users',
         // Controller used to manage users plugin features & actions
-        'controller' => 'MyUsers'
+        'controller' => 'Users'
         ]
 ];

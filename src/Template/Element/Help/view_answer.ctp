@@ -1,5 +1,5 @@
-<div class="row jlr-dashbox">
-    <div class="col-lg-6 col-lg-offset-1">
+<div class="row jlr-dashbox" style="margin:15px;">
+    <div class="col-lg-9">
         <div class="row">
             <div class="box">
                 <div class="box-header">
@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-3">
         <div class="box">
             <div class="box-body">
 

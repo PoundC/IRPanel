@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Controller\Traits\ProfileTrait;
 use Cake\ORM\TableRegistry;
-use CakeDC\Users\Controller\UsersController;
+use CakeDC\Users\Controller\UsersController as BaseUsersController;
 use Cake\Core\Configure;
 use Firebase\JWT\JWT;
 use Cake\Event\Event;
@@ -12,7 +12,7 @@ use Cake\Network\Exception\UnauthorizedException;
 use Cake\Utility\Security;
 use CakeDC\Users\Controller\Component\UsersAuthComponent;
 
-class MyUsersController extends UsersController
+class UsersController extends BaseUsersController
 {
     use ProfileTrait;
 

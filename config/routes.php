@@ -130,6 +130,9 @@ Router::connect('/autoanswer/*', ['controller' => 'Help', 'action' => 'autoanswe
 
 Router::connect('/billing/subscribe/*', ['controller' => 'Billing', 'action' => 'subscribe']);
 Router::connect('/billing/cancel_subscribe/*', ['controller' => 'Billing', 'action' => 'cancelSubscribe']);
+Router::connect('/billing/dashboard', ['controller' => 'Billing', 'action' => 'dashboard']);
+Router::connect('/billing/subscriptions', ['controller' => 'Billing', 'action' => 'subscriptions']);
+Router::connect('/billing/history', ['controller' => 'Billing', 'action' => 'history']);
 
 /*
  *
@@ -188,20 +191,18 @@ if (Configure::read('Users.GoogleAuthenticator.login')) {
     ]);
 }
 
-Router::connect('/admin/change/*', ['controller' => 'MyUsers', 'action' => 'changePassword']);
-Router::connect('/admin/edit/*', ['controller' => 'MyUsers', 'action' => 'edit']);
-Router::connect('/admin/users', ['controller' => 'MyUsers', 'action' => 'index']);
-Router::connect('/profile/*', ['controller' => 'MyUsers', 'action' => 'profile']);
-Router::connect('/profile', ['controller' => 'MyUsers', 'action' => 'profile']);
-Router::connect('/login', ['controller' => 'MyUsers', 'action' => 'login']);
+Router::connect('/admin/change/*', ['controller' => 'Users', 'action' => 'changePassword']);
+Router::connect('/admin/edit/*', ['controller' => 'Users', 'action' => 'edit']);
+Router::connect('/admin/users', ['controller' => 'Users', 'action' => 'index']);
+Router::connect('/profile/*', ['controller' => 'Users', 'action' => 'profile']);
+Router::connect('/profile', ['controller' => 'Users', 'action' => 'profile']);
+Router::connect('/login', ['controller' => 'Users', 'action' => 'login']);
 Router::connect('/logout', ['plugin' => 'CakeDC/Users', 'controller' => 'Users', 'action' => 'logout']);
-Router::connect('/register', ['controller' => 'MyUsers', 'action' => 'register']);
-Router::connect('/reset', ['controller' => 'MyUsers', 'action' => 'requestResetPassword']);
+Router::connect('/register', ['controller' => 'Users', 'action' => 'register']);
+Router::connect('/reset', ['controller' => 'Users', 'action' => 'requestResetPassword']);
 
 Router::prefix('api', function ($routes) {
     $routes->extensions(['json', 'xml']);
     $routes->resources('Cocktails');
-    $routes->resources('Users');
-    Router::connect('/api/users/register', ['controller' => 'MyUsers', 'action' => 'register', 'prefix' => 'api']);
     $routes->fallbacks('InflectedRoute');
 });

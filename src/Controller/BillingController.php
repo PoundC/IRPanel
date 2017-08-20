@@ -27,6 +27,35 @@ class BillingController extends AppController
         parent::initialize();
     }
 
+    public function dashboard()
+    {
+
+    }
+
+    public function subscriptions()
+    {
+        $usersSubscriptionsTable = TableRegistry::get('users_subscriptions');
+        $usersSubscriptionsQuery = $usersSubscriptionsTable->find('all', ['contain' => ['Users']]);
+        $usersSubscriptions = $this->paginate($usersSubscriptionsQuery);
+
+        $this->set(compact('usersSubscriptions'));
+        $this->set('_serialize', ['usersSubscriptions']);
+
+        $this->set('title', 'View Subscriptions');
+    }
+
+    public function history($subscription_id)
+    {
+        $usersSubscriptionsTable = TableRegistry::get('users_subscriptions_history');
+        $usersSubscriptionsQuery = $usersSubscriptionsTable->find('all', ['contain' => ['users_subscriptions', 'users_subscriptions.Users']]);
+        $usersSubscriptions = $this->paginate($usersSubscriptionsQuery);
+
+        $this->set(compact('usersSubscriptionsHistory'));
+        $this->set('_serialize', ['usersSubscriptionsHistory']);
+
+        $this->set('title', 'View Subscription History');
+    }
+
     public function subscribe($userId = 0)
     {
         if($userId != 0) {

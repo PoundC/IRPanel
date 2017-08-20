@@ -33,6 +33,14 @@
                     <div class="collapse navbar-collapse pull-right" id="navbar-collapse">
                         <ul class="nav navbar-nav">
                             <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Billing <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="/billing/dashboard">Dashboard</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="/billing/subscriptions">Subscriptions</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">System <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="/crontabs">Crontabs</a></li>

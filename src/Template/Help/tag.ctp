@@ -1,5 +1,5 @@
 <div class="row jlr-dashbox">
-    <div class="col-lg-10 col-lg-offset-1">
+    <div class="col-lg-11 col-lg-offset-0">
         <div class="box">
             <div class="box-header">
                 <h3><?php echo $tagsResults->tag; ?></h3>

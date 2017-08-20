@@ -2,16 +2,18 @@
 
 namespace App\Model\Table;
 
-use CakeDC\Users\Model\Table\UsersTable;
+use CakeDC\Users\Model\Table\UsersTable as BaseUsersTable;
 
 /**
  * Users Model
  */
-class MyUsersTable extends UsersTable
+class UsersTable extends BaseUsersTable
 {
     public function initialize(array $config)
     {
         parent::initialize($config);
+
+        $this->hasMany('users_subscriptions', ['className' => 'Billing'])->setForeignKey('user_id')->setProperty('user');
 
         $this->removeBehavior('Register');
         $this->addBehavior('Register');

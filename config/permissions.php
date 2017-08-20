@@ -59,7 +59,7 @@ return [
         ],
         [
             'role' => '*',
-            'controller' => ['MyUsers'],
+            'controller' => ['Users'],
             'action' => ['login'],
             'allowed' => true,
         ],
@@ -137,13 +137,13 @@ return [
         ],
         [
             'role' => ['user', 'member', 'admin'],
-            'controller' => 'MyUsers',
+            'controller' => 'Users',
             'action' => ['profile'],
             'allowed' => true,
         ],
         [
             'role' => ['admin'],
-            'controller' => 'MyUsers',
+            'controller' => 'Users',
             'action' => ['index', 'view', 'edit', 'changePassword'],
             'allowed' => true,
         ],

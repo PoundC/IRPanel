@@ -48,7 +48,7 @@ class SupportController extends AppController
     public function view($id)
     {
         $usersTable = TableRegistry::get(Configure::read('Users.table'));
-        $query = $usersTable->find('all')->where(['myusers.id' => $this->Auth->user('id')])->limit(1);
+        $query = $usersTable->find('all')->where(['users.id' => $this->Auth->user('id')])->limit(1);
         $user = $query->first();
 
         $messagesTable = TableRegistry::get('Messages');
@@ -58,7 +58,7 @@ class SupportController extends AppController
         $repliesQuery = $messagesTable->find('all', ['contain' => ['Users']])->where(['messages.message_id' => $id])->orderAsc('messages.created');;
         $replies = $repliesQuery->all();
 
-        $messageFromQuery = $usersTable->find('all')->where(['myusers.id' => $message->user_id])->limit(1);
+        $messageFromQuery = $usersTable->find('all')->where(['users.id' => $message->user_id])->limit(1);
         $messageFromUser = $messageFromQuery->first();
 
         $isAuthorized = false;
@@ -181,7 +181,7 @@ class SupportController extends AppController
         if($this->request->getMethod() == 'POST') {
 
             $usersTable = TableRegistry::get(Configure::read('Users.table'));
-            $query = $usersTable->find('all')->where(['myusers.id' => $this->Auth->user('id')])->limit(1);
+            $query = $usersTable->find('all')->where(['users.id' => $this->Auth->user('id')])->limit(1);
             $user = $query->first();
 
             $messagesTable = TableRegistry::get('Messages');
@@ -223,7 +223,7 @@ class SupportController extends AppController
     public function tickets()
     {
         $usersTable = TableRegistry::get(Configure::read('Users.table'));
-        $query = $usersTable->find('all')->where(['myusers.id' => $this->Auth->user('id')])->limit(1);
+        $query = $usersTable->find('all')->where(['users.id' => $this->Auth->user('id')])->limit(1);
         $user = $query->first();
 
         $table = TableRegistry::get('Messages');
@@ -283,7 +283,7 @@ class SupportController extends AppController
 
             $support_username = 'admin'; // Configure::read('Users.support_username');
 
-            $query = $usersTable->find('all')->where(['myusers.username' => $support_username])->limit(1);
+            $query = $usersTable->find('all')->where(['users.username' => $support_username])->limit(1);
             $admin = $query->first();
 
             $recipientsTable = TableRegistry::get('Recipients');
@@ -378,7 +378,7 @@ class SupportController extends AppController
 
                 $support_username = 'admin'; // Configure::read('Users.support_username');
 
-                $query = $usersTable->find('all')->where(['myusers.username' => $support_username])->limit(1);
+                $query = $usersTable->find('all')->where(['users.username' => $support_username])->limit(1);
                 $admin = $query->first();
 
                 $recipientsTable = TableRegistry::get('Recipients');

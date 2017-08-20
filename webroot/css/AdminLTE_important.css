@@ -62,3 +62,7 @@
 
     height: 360px !important;
 }
+
+.col-lg-offset-0 {
+    margin-left: 40px !important;
+}

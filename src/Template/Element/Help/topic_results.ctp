@@ -6,7 +6,7 @@
     <div class="row">
     <div class="col-lg-5 col-lg-offset-1">
     <?php } else { ?>
-    <div class="col-lg-5 col-lg-offset-0">
+    <div class="col-lg-5">
     <?php } ?>
 
         <div class="box jlr-help-box">

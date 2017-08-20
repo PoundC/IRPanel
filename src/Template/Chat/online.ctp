@@ -1,5 +1,5 @@
 <div class="row jlr-dashbox">
-    <div class="col-lg-4 col-lg-offset-1">
+    <div class="col-lg-4">
         <!-- DIRECT CHAT PRIMARY -->
         <div class="box box-primary direct-chat direct-chat-primary">
             <div class="box-header with-border">
@@ -116,7 +116,7 @@
         <!--/.direct-chat -->
     </div>
     <?php if($currentUser->role != 'admin') { ?>
-    <div class="col-md-6">
+    <div class="col-lg-8">
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs" id="jlr-tabs">
 
@@ -141,7 +141,7 @@
         </div>
     </div>
     <?php } else { ?>
-    <div class="col-md-6">
+    <div class="col-lg-8">
         <div class="row">
             <div class="col-md-12">
                 <div class="box">

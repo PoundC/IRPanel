@@ -1,5 +1,5 @@
 <div class="row jlr-dashbox">
-    <div class="col-md-7 col-md-offset-1">
+    <div class="col-lg-9">
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
@@ -332,7 +332,7 @@
             <?php } ?>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-lg-3" style="margin-left:-15px;">
         <!-- Profile Image -->
         <div class="box box-primary">
             <div class="box-body box-profile">
