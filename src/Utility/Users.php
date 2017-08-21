@@ -9,6 +9,7 @@
 namespace App\Utility;
 
 use Cake\ORM\TableRegistry;
+use Cake\Core\Configure;
 
 class Users
 {
@@ -17,6 +18,15 @@ class Users
         $usersTable = TableRegistry::get(Configure::read('Users.table'));
 
         return $usersTable;
+    }
+
+    public function getUserById($id)
+    {
+        $usersTable = $this->getUserTable();
+        $usersQuery = $usersTable->find('all')->where(['users.id' => $id])->limit(1);
+        $userEntity = $usersQuery->first();
+
+        return $userEntity;
     }
 
     public function getUserRoleById($id)
@@ -30,27 +40,36 @@ class Users
 
     public function findUserBySubscriptionId($id)
     {
+        $subscriptionsTable = TableRegistry::get('users_subscriptions');
+        $subscriptionQuery = $subscriptionsTable->find('all')->where(['subscription_id' => $id])->limit(1);
+        $subscriptionEntity = $subscriptionQuery->first();
+
         $usersTable = $this->getUserTable();
 
-        $userQuery = $usersTable->find('all', ['contain' => ['users_subscriptions']])
-            ->where(['users_subscriptions.subscription_id' => $id]);
+        if(isset($subscriptionEntity)) {
 
-        $userEntity = $userQuery->first();
+            $userQuery = $usersTable->find('all')
+                ->where(['id' => $subscriptionEntity->get('user_id')]);
 
-        return $userEntity;
+            $userEntity = $userQuery->first();
+
+            return $userEntity;
+        }
+        else {
+
+            return null;
+        }
     }
 
     public function findSubscriptionIdByUserId($id)
     {
         $usersTable = $this->getUserTable();
 
-        $userQuery = $usersTable->find('all', ['contain' => ['users_subscriptions']])
-            ->where(['users_subscriptions.user_id' => $id])
-            ->orderDesc('created');
+        $subscriptionsTable = TableRegistry::get('users_subscriptions');
+        $subscriptionQuery = $subscriptionsTable->find('all')->where(['user_id' => $id])->orderDesc('ref_id')->limit(1);
+        $subscriptionEntity = $subscriptionQuery->first();
 
-        $userEntity = $userQuery->first();
-
-        return $userEntity;
+        return $subscriptionEntity->get('subscription_id');
     }
 
     public function findAllUsersBy($column, $value)

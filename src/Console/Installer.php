@@ -22,6 +22,7 @@ use Cake\Utility\Security;
 use Composer\Script\Event;
 use Exception;
 use Cake\Console\ShellDispatcher;
+use Cake\Core\Configure;
 
 /**
  * Provides installation hooks for when this application is installed via

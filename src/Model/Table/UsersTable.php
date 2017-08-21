@@ -13,7 +13,7 @@ class UsersTable extends BaseUsersTable
     {
         parent::initialize($config);
 
-        $this->hasMany('users_subscriptions', ['className' => 'Billing'])->setForeignKey('user_id')->setProperty('user');
+        $this->hasMany('users_subscriptions', ['className' => 'UsersSubscriptions'])->setForeignKey('user_id')->setProperty('user');
 
         $this->removeBehavior('Register');
         $this->addBehavior('Register');

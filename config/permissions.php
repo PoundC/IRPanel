@@ -88,9 +88,10 @@ return [
             'allowed' => true,
         ],
         [
-            'role' => ['member', 'admin'],
+            // 'role' => ['member'],
+            'role' => '*',
             'controller' => ['Billing'],
-            'action' => ['cancelSubscribe'],
+            'action' => ['cancel'],
             'allowed' => true,
         ],
         [

@@ -23,7 +23,7 @@ class UsersSubscriptionsHistoryTable extends Table
     {
         parent::initialize($config);
 
-        $this->belongsTo('users_subscriptions', ['className' => 'UserSubscriptions'])->setForeignKey('subscription_id')->setProperty('subscription');
+        $this->belongsTo('users_subscriptions', ['className' => 'UsersSubscriptions'])->setForeignKey('subscription_id')->setProperty('subscription');
 
         $this->setTable('users_subscriptions_history');
         $this->setDisplayField('messages');

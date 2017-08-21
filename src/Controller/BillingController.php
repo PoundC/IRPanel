@@ -56,14 +56,14 @@ class BillingController extends AppController
         $this->set('title', 'View Subscription History');
     }
 
-    public function subscribe($userId = 0)
+    public function subscribe($userId = '0')
     {
-        if($userId != 0) {
+        if($userId != '0') {
 
             $data = $this->request->getData();
 
-            $creditCard = $data['creditcard'];
-            $creditExpiration = $data['creditcardexpiration'];
+            $creditCard = $data['creditcardNumber'];
+            $creditExpiration = $data['creditcardExpiration'];
 
             $usersUtility = new Users();
             $userEntity = $usersUtility->getUserObject($userId);
@@ -71,7 +71,7 @@ class BillingController extends AppController
             if(isset($userEntity)) {
 
                 $authNet = new AuthorizeNet();
-                $subscriptionResult = $authNet->createSubscription($userEntity, $creditCard, $creditExpiration);
+                $subscriptionResult = $authNet->createSubscription($data['first_name'], $data['last_name'], $creditCard, $creditExpiration);
 
                 $subscriptionTable = TableRegistry::get('users_subscriptions');
 
@@ -81,9 +81,9 @@ class BillingController extends AppController
                         'ref_id' => $subscriptionResult->getRefId(),
                         'messages' => $subscriptionResult->getMessages(),
                         'subscription_id' => $subscriptionResult->getSubscriptionId(),
-                        'customer_profile_id' => $subscriptionResult->getCustomerProfileId(),
-                        'customer_payment_profile_id' => $subscriptionResult->getCustomerPaymentProfileId(),
-                        'customer_address_id' => $subscriptionResult->getCustomerAddressId(),
+                        'customer_profile_id' => '0',
+                        'customer_payment_profile_id' => '0',
+                        'customer_address_id' => '0',
                         'user_id' => $userId
                     ]);
                     $subscriptionTable->save($subscriptionEntity);
@@ -112,13 +112,15 @@ class BillingController extends AppController
         $this->redirect('/profile');
     }
 
-    public function cancelSubscribe($id = 0)
+    public function cancel($id = '0')
     {
         $usersUtility = new Users();
 
         $userRole = $usersUtility->getUserRoleById($this->Auth->user('id'));
 
         $continue = false;
+
+        $userId = '0';
 
         if($userRole == 'admin') {
 
@@ -132,12 +134,11 @@ class BillingController extends AppController
             $continue = true;
         }
 
-        if($id != 0) {
+        if($userId != '0' && $continue == true) {
 
             $usersUtility = new Users();
-            $userEntity = $usersUtility->findSubscriptionIdByUserId($userId);
-
-            $subscriptionId = $userEntity->subscription->id;
+            $userEntity = $usersUtility->getUserById($userId);
+            $subscriptionId = $usersUtility->findSubscriptionIdByUserId($userId);
 
             $authNet = new AuthorizeNet();
             $response = $authNet->cancelSubscription($subscriptionId);
@@ -150,7 +151,7 @@ class BillingController extends AppController
                 $usersTable = $usersUtility->getUserTable();
                 $usersTable->save($userEntity);
 
-                $this->Flash->success("SUCCESS : " . $successMessages[0]->getCode() . "  " .$successMessages[0]->getText());
+                $this->Flash->success("SUCCESS : Canceled Subscription! - " . $successMessages[0]->getCode() . "  " .$successMessages[0]->getText());
             }
             else
             {

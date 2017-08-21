@@ -15,9 +15,9 @@ use Cake\Core\Configure;
 
 class AuthorizeNet
 {
-    public function createSubscription($userObject, $creditCardNumber, $creditCardExpiration, $months = true)
+    public function createSubscription($first_name, $last_name, $creditCardNumber, $creditCardExpiration, $months = true)
     {
-        define("AUTHORIZENET_LOG_FILE", "phplog");
+        define("AUTHORIZENET_LOG_FILE", "/tmp/phplog");
 
         // Common Set Up for API Credentials
         $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
@@ -41,11 +41,10 @@ class AuthorizeNet
             $interval->setUnit("years");
         }
 
-
         $paymentSchedule = new AnetAPI\PaymentScheduleType();
         $paymentSchedule->setInterval($interval);
         $paymentSchedule->setStartDate(new \DateTime('now'));
-        $paymentSchedule->setTotalOccurrences("9999");
+        $paymentSchedule->setTotalOccurrences("100");
         $paymentSchedule->setTrialOccurrences("0");
 
         $subscription->setPaymentSchedule($paymentSchedule);
@@ -70,8 +69,8 @@ class AuthorizeNet
         $subscription->setPayment($payment);
 
         $billTo = new AnetAPI\NameAndAddressType();
-        $billTo->setFirstName($userObject->get('first_name'));
-        $billTo->setLastName($userObject->get('last_name'));
+        $billTo->setFirstName($first_name);
+        $billTo->setLastName($last_name);
 
         $subscription->setBillTo($billTo);
 
@@ -82,7 +81,7 @@ class AuthorizeNet
 
         $controller = new AnetController\ARBCreateSubscriptionController($request);
 
-        if(Configure::read('MERCHANT_SANDBOX') == true) {
+        if(Configure::read('Merchants.MERCHANT_SANDBOX') == true) {
 
             $response = $controller->executeWithApiResponse(\net\authorize\api\constants\ANetEnvironment::SANDBOX);
         }
@@ -110,7 +109,7 @@ class AuthorizeNet
 
         $controller = new AnetController\ARBCancelSubscriptionController($request);
 
-        if(Configure::read('MERCHANT_SANDBOX') == true) {
+        if(Configure::read('Merchants.MERCHANT_SANDBOX') == true) {
 
             $response = $controller->executeWithApiResponse(\net\authorize\api\constants\ANetEnvironment::SANDBOX);
         }

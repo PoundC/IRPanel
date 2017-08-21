@@ -32,6 +32,6 @@ class UsersSubscriptionsTable extends Table
             'joinType' => 'INNER'
         ]);
 
-        $this->hasMany('users_subscriptions_history', ['className' => 'BillingHistory'])->setForeignKey('subscription_id')->setProperty('subscription');
+        $this->hasMany('users_subscriptions_history', ['className' => 'UsersSubscriptionsHistory'])->setForeignKey('subscription_id')->setProperty('subscription');
     }
 }

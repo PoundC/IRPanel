@@ -28,11 +28,11 @@
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <?php echo $this->Form->control('creditcardNumber', ['label' => false, 'type' => 'text', 'placeholder' => 'Credit Card Number', 'class' => 'form-control']); ?>
+                    <?php echo $this->Form->control('creditcardNumber', ['label' => false, 'value' => '4111111111111111', 'type' => 'text', 'placeholder' => 'Credit Card Number', 'class' => 'form-control']); ?>
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <?php echo $this->Form->control('creditcardExpiration', ['label' => false, 'type' => 'text', 'placeholder' => 'Expiration MM/YYYY', 'class' => 'form-control']); ?>
+                    <?php echo $this->Form->control('creditcardExpiration', ['label' => false, 'value' => '2020-02', 'type' => 'text', 'placeholder' => 'Expiration YYYY-MM', 'class' => 'form-control']); ?>
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 /vendor/*
 /config/app.php
+/config/merchants.php
 /tmp/*
 /logs/*
 .idea/*

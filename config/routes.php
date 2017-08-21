@@ -129,7 +129,7 @@ Router::connect('/autoanswer/*', ['controller' => 'Help', 'action' => 'autoanswe
  */
 
 Router::connect('/billing/subscribe/*', ['controller' => 'Billing', 'action' => 'subscribe']);
-Router::connect('/billing/cancel_subscribe/*', ['controller' => 'Billing', 'action' => 'cancelSubscribe']);
+Router::connect('/billing/cancel_subscribe/*', ['controller' => 'Billing', 'action' => 'cancel']);
 Router::connect('/billing/dashboard', ['controller' => 'Billing', 'action' => 'dashboard']);
 Router::connect('/billing/subscriptions', ['controller' => 'Billing', 'action' => 'subscriptions']);
 Router::connect('/billing/history', ['controller' => 'Billing', 'action' => 'history']);

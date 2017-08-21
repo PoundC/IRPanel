@@ -27,8 +27,8 @@ class BillingShell extends CronjobShell
         try {
 
             $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
-            $merchantAuthentication->setName(Configure::read('MERCHANT_LOGIN_ID'));
-            $merchantAuthentication->setTransactionKey(Configure::read('MERCHANT_TRANSACTION_KEY'));
+            $merchantAuthentication->setName(Configure::read('Merchants.MERCHANT_LOGIN_ID'));
+            $merchantAuthentication->setTransactionKey(Configure::read('Merchants.MERCHANT_TRANSACTION_KEY'));
 
             // Set the transaction's refId
             $refId = 'ref' . time();
@@ -45,8 +45,8 @@ class BillingShell extends CronjobShell
 
             $foundSubscription = false;
 
-            $searches[] = 'subscriptionActive';
             $searches[] = 'subscriptionInactive';
+            $searches[] = 'subscriptionActive';
 
             foreach($searches as $search) {
 
@@ -68,7 +68,7 @@ class BillingShell extends CronjobShell
 
                     $controller = new AnetController\ARBGetSubscriptionListController($request);
 
-                    if (Configure::read('MERCHANT_SANDBOX') == true) {
+                    if (Configure::read('Merchants.MERCHANT_SANDBOX') == true) {
 
                         $response = $controller->executeWithApiResponse(\net\authorize\api\constants\ANetEnvironment::SANDBOX);
                     } else {
@@ -101,8 +101,10 @@ class BillingShell extends CronjobShell
 
                         foreach ($subscriptionDetailsArray as $subscriptionDetails) {
 
+                            $subscriptionId = $subscriptionDetails->getId();
+
                             $subscriptionsHistoryEntity = $subscriptionsHistoryTable->newEntity([
-                                'subscription_id' => $subscriptionDetails->getId(),
+                                'subscription_id' => $subscriptionId,
                                 'subscription_status' => $subscriptionDetails->getStatus(),
                                 'customer_profile_id' => $subscriptionDetails->getCustomerProfileId(),
                                 'customer_payment_profile_id' => $subscriptionDetails->getCustomerPaymentProfileId(),
@@ -113,17 +115,24 @@ class BillingShell extends CronjobShell
 
                             if ($subscriptionDetails->getStatus() != 'active') {
 
-                                $user = $usersUtility->findUserBySubscriptionId($subscriptionDetails->getId());
-                                $user->set('role', 'user');
+                                $user = $usersUtility->findUserBySubscriptionId($subscriptionId);
+                                if($user != null) {
 
-                                $usersTable->save($user);
+                                    $user->set('role', 'user');
+
+                                    $usersTable->save($user);
+                                }
                             }
                             else {
 
-                                $user = $usersUtility->findUserBySubscriptionId($subscriptionDetails->getId());
-                                $user->set('role', 'member');
+                                $user = $usersUtility->findUserBySubscriptionId($subscriptionId);
 
-                                $usersTable->save($user);
+                                if($user != null) {
+
+                                    $user->set('role', 'member');
+
+                                    $usersTable->save($user);
+                                }
                             }
 
                             $foundSubscription = true;
