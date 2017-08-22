@@ -109,25 +109,17 @@ class AppController extends Controller
 
                     $isSuperUser = true;
                     $isAdmin = true;
-
-                    $menus = Sidebar::buildMenu($this->request->here, 'admin');
                 }
                 else if ($currentUser->role == 'admin') {
 
                     $isAdmin = true;
-
-                    $menus = Sidebar::buildMenu($this->request->here, 'admin');
                 }
                 else if($currentUser->role == 'member') {
 
                     $isMember = true;
-
-                    $menus = Sidebar::buildMenu($this->request->here, 'member');
                 }
-                else if($currentUser->role == 'user') {
 
-                    $menus = Sidebar::buildMenu($this->request->here, 'user');
-                }
+                $menus = Sidebar::buildMenu($this->request->here, $currentUser->role);
 
                 if ($currentId == $this->Auth->user('id')) {
 

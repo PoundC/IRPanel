@@ -27,6 +27,11 @@ class Sidebar
 
     }
 
+    public static function addSubMenuToMenuInMenuGroup()
+    {
+
+    }
+
     public static function buildMenu($currentPath, $role = 'visitor')
     {
         $menuHtml = '<ul id="nav-menu" class="sidebar-menu" data-api="tree" data-accordion=1 data-widget="tree">';
@@ -192,7 +197,7 @@ class Sidebar
                 return true;
             }
 
-            if (!isset($menuItem['path'])) {
+            if (isset($menuItem['menu'])) {
 
                 $isActive = self::isMenuActive($currentPath, $menuItem['menu']);
 
