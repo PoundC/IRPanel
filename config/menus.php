@@ -182,6 +182,7 @@ $menus = [
                 'Dashboard' => [
                     'path' => '/dashboard',
                     'icon' => 'fa-dashboard',
+                    /*
                     'menu' => [
                         'Reporting' => [
                             'path' => '/dashboard/reporting',
@@ -194,6 +195,7 @@ $menus = [
                             ]
                         ]
                     ]
+                    */
                 ],
                 'Search Users' => [
                     'path'  => '/search/users',

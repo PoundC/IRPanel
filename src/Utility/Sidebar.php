@@ -140,29 +140,20 @@ class Sidebar
     {
         $isActive = '';
 
-        if($currentPath == $menuItems['path']) {
-
-            $isActive = 'active';
-        }
-
-        if(Sidebar::isMenuActive($currentPath, $menuItems['menu']) == false) {
-
-            $notWhite = 'non-active';
-        }
-        else {
-
-            $notWhite = '';
-        }
-
         $subMenu = '<ul class="treeview-menu">';
 
         foreach($menuItems['menu'] as $itemKey => $itemValue) {
+
+            if($currentPath == $itemValue['path']) {
+
+                $isActive = 'active';
+            }
 
             $menuTitle = $itemKey;
             $menuPath = $itemValue['path'];
             $menuIcon = $itemValue['icon'];
 
-            $subMenu .= '<li class="' . $isActive . '"><a href="' . $menuPath . '"><i class="fa-left-icon fa ' . $menuIcon . ' ' . $notWhite . '"></i><span class="' . $notWhite . '">' . $menuTitle . '</span></a>';
+            $subMenu .= '<li class="' . $isActive . '"><a href="' . $menuPath . '"><i class="fa-left-icon fa ' . $menuIcon . '"></i><span>' . $menuTitle . '</span></a>';
 
             if(isset($itemValue['menu']) && $currentPath == $itemValue['path']) {
 

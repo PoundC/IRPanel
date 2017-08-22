@@ -52,6 +52,7 @@ class Installer
         };
 
         static::createAppConfig($rootDir, $io);
+        static::createMerchantsConfig($rootDir, $io);
         static::createWritableDirectories($rootDir, $io);
         static::createAdminLTESymLinks($event);
 
@@ -153,6 +154,22 @@ class Installer
         }
     }
 
+    /**
+     * Create the config/merchants.php file if it does not exist.
+     *
+     * @param string $dir The application's root directory.
+     * @param \Composer\IO\IOInterface $io IO interface to write to console.
+     * @return void
+     */
+    public static function createMerchantsConfig($dir, $io)
+    {
+        $appConfig = $dir . '/config/merchants.php';
+        $defaultConfig = $dir . '/config/merchants.default.php';
+        if (!file_exists($appConfig)) {
+            copy($defaultConfig, $appConfig);
+            $io->write('Created `config/merchants.php` file');
+        }
+    }
     /**
      * Create the `logs` and `tmp` directories.
      *
