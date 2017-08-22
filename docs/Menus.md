@@ -23,6 +23,8 @@
     Sidebar::addMenuToMenuGroup($newMenu, 'admin', 'Admin Menu');
 
 # Add Sub Menu to Menu in Menu Group
+`With Third Tier Submenu Example`
+
     $newSubMenu = array(
             'Reporting' => [
                 'path' => '/dashboard/reporting',
