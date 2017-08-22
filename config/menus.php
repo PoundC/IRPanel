@@ -257,4 +257,3 @@ $menus = [
 ];
 
 Sidebar::setMenu($menus);
-Sidebar::buildMenu();
