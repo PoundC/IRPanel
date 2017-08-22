@@ -17,19 +17,34 @@ class Sidebar
         Sidebar::$Menu = $menuArray;
     }
 
-    public static function addMenuGroup()
+    public static function addMenuGroup($menu, $role)
     {
-
+        Sidebar::$Menu[$role][] = $menu;
     }
 
-    public static function addMenuToMenuGroup()
+    public static function addMenuToMenuGroup($menu, $role, $menuGroupTitle)
     {
+        for($x = 0; $x < count(Sidebar::$Menu[$role]); $x++) {
 
+            if(Sidebar::$Menu[$role][$x]['type'] == 'group' && Sidebar::$Menu[$role][$x]['group'] == $menuGroupTitle) {
+
+                foreach($menu as $title => $menuSet) {
+
+                    Sidebar::$Menu[$role][$x]['menu'][$title] = $menuSet;
+                }
+            }
+        }
     }
 
-    public static function addSubMenuToMenuInMenuGroup()
+    public static function addSubMenuToMenuInMenuGroup($menu, $role, $menuGroupTitle, $menuTitle)
     {
+        for($x = 0; $x < count(Sidebar::$Menu[$role]); $x++) {
 
+            if(Sidebar::$Menu[$role][$x]['type'] == 'group' && Sidebar::$Menu[$role][$x]['group'] == $menuGroupTitle) {
+
+                Sidebar::$Menu[$role][$x]['menu'][$menuTitle]['menu'] = $menu;
+            }
+        }
     }
 
     public static function buildMenu($currentPath, $role = 'visitor')

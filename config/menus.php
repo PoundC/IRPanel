@@ -204,14 +204,6 @@ $menus = [
                 'View Users' => [
                     'path'  => '/admin/users',
                     'icon'  => 'fa-users'
-                ],
-                'Profile' => [
-                    'path' => '/profile',
-                    'icon' => 'fa-briefcase',
-                ],
-                'Logout' =>[
-                    'path' => '/logout',
-                    'icon' => 'fa-sign-out',
                 ]
             ]
         ],
