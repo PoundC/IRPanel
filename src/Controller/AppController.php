@@ -21,6 +21,7 @@ use Cake\Controller\Component\AuthComponent;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use App\Utility\Menu;
+use App\Utility\Sidebar;
 use CakeDC\Users\Controller\Traits\CustomUsersTableTrait;
 
 /**
@@ -109,23 +110,23 @@ class AppController extends Controller
                     $isSuperUser = true;
                     $isAdmin = true;
 
-                    $menus = Menu::getAdminMenu($this->request->here);
+                    $menus = Sidebar::buildMenu($this->request->here, 'admin');
                 }
                 else if ($currentUser->role == 'admin') {
 
                     $isAdmin = true;
 
-                    $menus = Menu::getAdminMenu($this->request->here);
+                    $menus = Sidebar::buildMenu($this->request->here, 'admin');
                 }
                 else if($currentUser->role == 'member') {
 
                     $isMember = true;
 
-                    $menus = Menu::getMemberMenu($this->request->here);
+                    $menus = Sidebar::buildMenu($this->request->here, 'member');
                 }
                 else if($currentUser->role == 'user') {
 
-                    $menus = Menu::getUserMenu($this->request->here);
+                    $menus = Sidebar::buildMenu($this->request->here, 'user');
                 }
 
                 if ($currentId == $this->Auth->user('id')) {
@@ -140,7 +141,8 @@ class AppController extends Controller
                 $usersTable = TableRegistry::get(Configure::read('Users.table'));
                 $currentUser = $usersTable->newEntity();
 
-                $menus = Menu::getVisitorMenu($this->request->here);
+                $menus = Sidebar::buildMenu($this->request->here, 'visitor');
+
             }
 
             $this->set('menus', $menus);

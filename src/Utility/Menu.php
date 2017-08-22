@@ -37,7 +37,6 @@ namespace App\Utility;
 
 class Menu
 {
-
     protected static $_VisitorMenu = array();
     protected static $_SiteMenu = array();
     protected static $_UserMenu = array();
