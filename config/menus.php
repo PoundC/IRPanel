@@ -72,48 +72,14 @@ $menus = [
         [
             'type'  => 'link',
             'link'  => 'Upgrade to Member',
-            'icon'  => 'fa-fighter-jet',
+            'icon'  => 'fa-rocket',
             'path'  => '/profile'
         ],
         [
-            'type'  => 'group',
-            'group' => 'User Menu',
-            'icon'  => 'fa-user',
-            'css'   => 'active non-active',
-            'menu' => [
-                'Dashboard' => [
-                    'path' => '/dashboard',
-                    'icon' => 'fa-dashboard'
-                ],
-                'Profile' => [
-                    'path' => '/profile',
-                    'icon' => 'fa-briefcase',
-                ],
-                'Logout' =>[
-                    'path' => '/logout',
-                    'icon' => 'fa-sign-out',
-                ]
-            ]
-        ],
-        [
-            'type'  => 'group',
-            'group' => 'Support Menu',
-            'icon'  => 'fa-support',
-            'css'   => 'active non-active',
-            'menu' => [
-                'Live Chat' => [
-                    'path' => '/chat',
-                    'icon' => 'fa-wechat'
-                ],
-                'View Tickets'     => [
-                    'path' => '/tickets',
-                    'icon' => 'fa-folder-open'
-                ],
-                'Open Ticket'     => [
-                    'path' => '/support',
-                    'icon' => 'fa-magic'
-                ]
-            ]
+            'type'  => 'link',
+            'link'  => 'Dashboard',
+            'icon'  => 'fa-dashboard',
+            'path'  => '/dashboard'
         ]
     ],
     'member' => [
@@ -123,49 +89,9 @@ $menus = [
         ],
         [
             'type'  => 'link',
-            'link'  => 'Members Only',
-            'icon'  => 'fa-rocket',
-            'path'  => '/members/only'
-        ],
-        [
-            'type'  => 'group',
-            'group' => 'User Menu',
-            'icon'  => 'fa-user',
-            'css'   => 'active non-active',
-            'menu' => [
-                'Dashboard' => [
-                    'path' => '/dashboard',
-                    'icon' => 'fa-dashboard'
-                ],
-                'Profile' => [
-                    'path' => '/profile',
-                    'icon' => 'fa-briefcase',
-                ],
-                'Logout' =>[
-                    'path' => '/logout',
-                    'icon' => 'fa-sign-out',
-                ]
-            ]
-        ],
-        [
-            'type'  => 'group',
-            'group' => 'Support Menu',
-            'icon'  => 'fa-support',
-            'css'   => 'active non-active',
-            'menu' => [
-                'Live Chat' => [
-                    'path' => '/chat',
-                    'icon' => 'fa-wechat'
-                ],
-                'View Tickets'     => [
-                    'path' => '/tickets',
-                    'icon' => 'fa-folder-open'
-                ],
-                'Open Ticket'     => [
-                    'path' => '/support',
-                    'icon' => 'fa-magic'
-                ]
-            ]
+            'link'  => 'Dashboard',
+            'icon'  => 'fa-dashboard',
+            'path'  => '/dashboard'
         ]
     ],
     'admin' => [

@@ -119,6 +119,32 @@ class AppController extends Controller
                     $isMember = true;
                 }
 
+                if($currentUser->role == 'member' || $currentUser->role == 'user') {
+
+                    $supportMenu = array(
+                        'type'  => 'group',
+                        'group' => 'Support Menu',
+                        'icon'  => 'fa-support',
+                        'css'   => 'active non-active',
+                        'menu' => [
+                            'Live Chat' => [
+                                'path' => '/chat',
+                                'icon' => 'fa-wechat'
+                            ],
+                            'View Tickets'     => [
+                                'path' => '/tickets',
+                                'icon' => 'fa-folder-open'
+                            ],
+                            'Open Ticket'     => [
+                                'path' => '/support',
+                                'icon' => 'fa-magic'
+                            ]
+                        ]
+                    );
+
+                    Sidebar::addMenuGroup($supportMenu, $currentUser->role);
+                }
+
                 $menus = Sidebar::buildMenu($this->request->here, $currentUser->role);
 
                 if ($currentId == $this->Auth->user('id')) {
