@@ -20,7 +20,7 @@ use Cake\Validation\Validator;
 /**
  * Chats Model
  */
-class ChatsTable extends Table
+class ChatChatsTable extends Table
 {
     public $validate = array(
         'message' => array(
@@ -35,9 +35,9 @@ class ChatsTable extends Table
         parent::initialize($config);
 
         $this->belongsTo('Users', array())->setForeignKey('user_id')->setProperty('user');
-        $this->belongsTo('Chatrooms', array())->setForeignKey('chatroom_id')->setProperty('room');
+        $this->belongsTo('ChatChatrooms', array())->setForeignKey('chatroom_id')->setProperty('room');
 
-        $this->setTable('chats');
+        $this->setTable('chat_chats');
         $this->setDisplayField('message');
         $this->setPrimaryKey('id');
     }

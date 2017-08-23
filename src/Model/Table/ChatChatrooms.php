@@ -18,19 +18,29 @@ use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 
 /**
- * Chats Model
+ * Chatrooms Model
  */
-class OpenchatsTable extends Table
+class ChatChatroomsTable extends Table
 {
+    public $validate = array(
+        'name' => array(
+            'rule' => 'alphanumeric',
+            'required' => true,
+            'allowEmpty' => false,
+        ),
+        'topic' => array(
+            'rule' => 'alphanumeric',
+            'required' => true,
+            'allowEmpty' => false,
+        ),
+    );
+
     public function initialize(array $config)
     {
         parent::initialize($config);
 
-        $this->belongsTo('Users', array())->setForeignKey('user_id')->setProperty('user');
-        $this->belongsTo('Chatrooms', array())->setForeignKey('chatroom_id')->setProperty('room');
-
-        $this->setTable('openchats');
-        $this->setDisplayField('active');
+        $this->setTable('chat_chatrooms');
+        $this->setDisplayField('name');
         $this->setPrimaryKey('id');
     }
 }

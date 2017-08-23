@@ -71,6 +71,11 @@ class BillingController extends AppController
             if(isset($userEntity)) {
 
                 $authNet = new AuthorizeNet();
+
+                //@todo: database driven pricing
+                $totalPrice = '10.29';
+
+                //@todo: specify monthly or yearly payments
                 $subscriptionResult = $authNet->createSubscription($data['first_name'], $data['last_name'], $creditCard, $creditExpiration);
 
                 $subscriptionTable = TableRegistry::get('users_subscriptions');
@@ -84,7 +89,9 @@ class BillingController extends AppController
                         'customer_profile_id' => '0',
                         'customer_payment_profile_id' => '0',
                         'customer_address_id' => '0',
-                        'user_id' => $userId
+                        'user_id' => $userId,
+                        'price' => $totalPrice,
+                        'created' => new \DateTime('now')
                     ]);
                     $subscriptionTable->save($subscriptionEntity);
 

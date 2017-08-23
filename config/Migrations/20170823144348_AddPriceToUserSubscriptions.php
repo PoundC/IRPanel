@@ -1,7 +1,7 @@
 <?php
 use Migrations\AbstractMigration;
 
-class AddCreatedToBilling extends AbstractMigration
+class AddPriceToUserSubscriptions extends AbstractMigration
 {
     /**
      * Change Method.
@@ -13,13 +13,9 @@ class AddCreatedToBilling extends AbstractMigration
     public function change()
     {
         $table = $this->table('users_subscriptions');
-        $table->addColumn('created', 'datetime', [
+        $table->addColumn('price', 'float', [
             'default' => null,
-            'null' => true,
-        ]);
-        $table->addColumn('modified', 'datetime', [
-            'default' => null,
-            'null' => true,
+            'null' => false,
         ]);
         $table->update();
     }

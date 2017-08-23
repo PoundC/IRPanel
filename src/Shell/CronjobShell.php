@@ -128,6 +128,11 @@ abstract class CronjobShell extends Shell
         $active = $cronJobResult->get('active');
         $timeoutIncrement = $cronJobResult->get('timeout');
 
+        if ($timeoutIncrement == '0' || $timeoutIncrement == 0)
+        {
+            return false;
+        }
+
         $lastActive = strtotime($active);
         $now = strtotime('now');
 

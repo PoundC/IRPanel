@@ -328,7 +328,7 @@ class SupportController extends AppController
             $user_id = 0;
 
             $usersTable = TableRegistry::get(Configure::read('Users.table'));
-            $query = $usersTable->find('all')->where(['MyUsers.email' => $email])->limit(1);
+            $query = $usersTable->find('all')->where(['Users.email' => $email])->limit(1);
             $user = $query->first();
 
             if(!$user) {

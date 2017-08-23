@@ -12,7 +12,7 @@ class CreateChats extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('chatrooms');
+        $table = $this->table('chat_chatrooms');
         $table->addColumn('name', 'string', [
             'default' => null,
             'limit' => 255,
@@ -33,7 +33,7 @@ class CreateChats extends AbstractMigration
         ]);
         $table->create();
 
-        $table = $this->table('chats');
+        $table = $this->table('chat_chats');
         $table->addColumn('chatroom_id', 'integer', [
             'default' => null,
             'null' => false,
@@ -53,7 +53,7 @@ class CreateChats extends AbstractMigration
         ]);
         $table->create();
 
-        $table = $this->table('openchats');
+        $table = $this->table('chat_openchats');
         $table->addColumn('chatroom_id', 'integer', [
             'default' => null,
             'null' => false,
@@ -76,6 +76,21 @@ class CreateChats extends AbstractMigration
             'null' => false,
         ]);
         $table->addColumn('modified', 'datetime', [
+            'default' => null,
+            'null' => false,
+        ]);
+        $table->create();
+
+        $table = $this->table('chat_helptabs');
+        $table->addColumn('chatroom_id', 'integer', [
+            'default' => null,
+            'null' => false,
+        ]);
+        $table->addColumn('faq_answer_id', 'integer', [
+            'default' => null,
+            'null' => false,
+        ]);
+        $table->addColumn('created', 'datetime', [
             'default' => null,
             'null' => false,
         ]);

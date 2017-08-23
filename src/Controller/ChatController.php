@@ -47,8 +47,8 @@ class ChatController extends AppController
         $timestamp = time();
         $dt = new DateTime("15 minutes ago", new DateTimeZone($tz)); //first argument "must" be a string
 
-        $table = TableRegistry::get('Openchats');
-        $tableQuery = $table->find('all', ['contain' => ['Users', 'Chatrooms']])->where(['openchats.active >' => $dt->format('Y-m-d H:i:s'), 'openchats.open' => '1']);
+        $table = TableRegistry::get('chat_openchats');
+        $tableQuery = $table->find('all', ['contain' => ['Users', 'ChatChatrooms']])->where(['chat_openchats.active >' => $dt->format('Y-m-d H:i:s'), 'chat_openchats.open' => '1']);
 
         $tableAlias = $table->alias();
 
@@ -71,8 +71,8 @@ class ChatController extends AppController
         $userQuery = $userTable->find('all')->where(['id' => $this->Auth->user('id')]);
         $userResult = $userQuery->first();
 
-        $chatRoomsTable = TableRegistry::get('Chatrooms');
-        $chatRoomsQuery = $chatRoomsTable->find('all')->where(['chatrooms.name' => $id]);
+        $chatRoomsTable = TableRegistry::get('chat_chatrooms');
+        $chatRoomsQuery = $chatRoomsTable->find('all')->where(['chat_chatrooms.name' => $id]);
         $chatRoomsResult = $chatRoomsQuery->first();
 
         $tz = 'America/New_York';
@@ -91,8 +91,8 @@ class ChatController extends AppController
             $chatRoomsResult = $chatRoomsTable->save($chatRoomsEntity);
         }
 
-        $openChatsTable = TableRegistry::get('Openchats');
-        $openChatsQuery = $openChatsTable->find('all', ['contains' => ['Chatrooms']])->where(['openchats.chatroom_id' => $chatRoomsResult->id, 'openchats.open' => 1]);
+        $openChatsTable = TableRegistry::get('chat_openchats');
+        $openChatsQuery = $openChatsTable->find('all', ['contains' => ['ChatChatrooms']])->where(['chat_openchats.chatroom_id' => $chatRoomsResult->id, 'chat_openchats.open' => 1]);
         $openChatsEntity = $openChatsQuery->first();
 
         if($openChatsEntity != null) {
@@ -128,8 +128,8 @@ class ChatController extends AppController
             $openChatsTable->save($openChatsEntity);
         }
 
-        $chatsTable = TableRegistry::get('Chats');
-        $chatsQuery = $chatsTable->find('all', ['contain' => ['Users', 'Chatrooms']])->where(['chats.chatroom_id' => $chatRoomsResult->id])->orderAsc('chats.id')->limit('100');
+        $chatsTable = TableRegistry::get('chat_chats');
+        $chatsQuery = $chatsTable->find('all', ['contain' => ['Users', 'ChatChatrooms']])->where(['chat_chats.chatroom_id' => $chatRoomsResult->id])->orderAsc('chat_chats.id')->limit('100');
         $chatsResults = $chatsQuery->all();
 
         $chatsEntity = $chatsTable->newEntity();
@@ -176,8 +176,8 @@ class ChatController extends AppController
 
         $helptab_id = 0;
 
-        $helpTabsTable = TableRegistry::get('helptabs');
-        $helpTabsQuery = $helpTabsTable->find('all', ['contain' => ['Chatrooms', 'Faq_Answers', 'Faq_Answers.Faq_Questions']])->where(['helptabs.chatroom_id' => $chatRoomsResult->id, 'helptabs.id > ' . $helptab_id]);
+        $helpTabsTable = TableRegistry::get('chat_helptabs');
+        $helpTabsQuery = $helpTabsTable->find('all', ['contain' => ['ChatChatrooms', 'Faq_Answers', 'Faq_Answers.Faq_Questions']])->where(['chat_helptabs.chatroom_id' => $chatRoomsResult->id, 'chat_helptabs.id > ' . $helptab_id]);
         $helpTabsEntity = $helpTabsQuery->all();
         $helpTabsCount = $helpTabsQuery->count();
         $helpTabsAlias = $helpTabsTable->getAlias();
@@ -201,11 +201,11 @@ class ChatController extends AppController
 
             $data = $this->request->getData();
 
-            $chatRoomsTable = TableRegistry::get('Chatrooms');
-            $chatRoomsQuery = $chatRoomsTable->find('all')->where(['chatrooms.name' => $id]);
+            $chatRoomsTable = TableRegistry::get('chat_chatrooms');
+            $chatRoomsQuery = $chatRoomsTable->find('all')->where(['chat_chatrooms.name' => $id]);
             $chatRoomsResult = $chatRoomsQuery->first();
 
-            $chatsTable = TableRegistry::get('Chats');
+            $chatsTable = TableRegistry::get('chat_chats');
 
             $chatsEntity = $chatsTable->newEntity([
                 'chatroom_id' => $chatRoomsResult->id,
@@ -239,16 +239,16 @@ class ChatController extends AppController
             $message_id = $data['message_id'];
             $helptab_id = $data['helptab_id'];
 
-            $chatRoomsTable = TableRegistry::get('Chatrooms');
-            $chatRoomsQuery = $chatRoomsTable->find('all')->where(['chatrooms.name' => $id]);
+            $chatRoomsTable = TableRegistry::get('chat_chatrooms');
+            $chatRoomsQuery = $chatRoomsTable->find('all')->where(['chat_chatrooms.name' => $id]);
             $chatRoomsResult = $chatRoomsQuery->first();
 
             $tz = 'America/New_York';
             $timestamp = time();
             $dt = new DateTime("now", new DateTimeZone($tz));
 
-            $openChatsTable = TableRegistry::get('Openchats');
-            $openChatsQuery = $openChatsTable->find('all', ['contain' => ['Chatrooms']])->where(['openchats.chatroom_id' => $chatRoomsResult->id, 'openchats.open' => 1]);
+            $openChatsTable = TableRegistry::get('chat_openchats');
+            $openChatsQuery = $openChatsTable->find('all', ['contain' => ['ChatChatrooms']])->where(['chat_openchats.chatroom_id' => $chatRoomsResult->id, 'chat_openchats.open' => 1]);
             $openChatsEntity = $openChatsQuery->first();
 
             if($this->Auth->user('id') != $openChatsEntity->get('user_id')) {
@@ -257,8 +257,8 @@ class ChatController extends AppController
                 $openChatsTable->save($openChatsEntity);
             }
 
-            $chatsTable = TableRegistry::get('Chats');
-            $lastChatQuery = $chatsTable->find('all', ['contain' => ['Users']])->where(['chats.chatroom_id' => $chatRoomsResult->id, 'chats.id >' => $data['message_id']])->orderAsc('chats.id');
+            $chatsTable = TableRegistry::get('chat_chats');
+            $lastChatQuery = $chatsTable->find('all', ['contain' => ['Users']])->where(['chat_chats.chatroom_id' => $chatRoomsResult->id, 'chat_chats.id >' => $data['message_id']])->orderAsc('chat_chats.id');
             $lastChats = $lastChatQuery->all();
 
             if($lastChats != '') {
@@ -277,8 +277,8 @@ class ChatController extends AppController
 
             $roomId = $id;
 
-            $helpTabsTable = TableRegistry::get('helptabs');
-            $helpTabsQuery = $helpTabsTable->find('all', ['contain' => ['Chatrooms', 'Faq_Answers']])->where(['helptabs.chatroom_id' => $chatRoomsResult->id, 'helptabs.id > ' . $helptab_id]);
+            $helpTabsTable = TableRegistry::get('chat_helptabs');
+            $helpTabsQuery = $helpTabsTable->find('all', ['contain' => ['ChatChatrooms', 'Faq_Answers']])->where(['chat_helptabs.chatroom_id' => $chatRoomsResult->id, 'chat_helptabs.id > ' . $helptab_id]);
             $helpTabsEntity = $helpTabsQuery->all();
 
             foreach($helpTabsEntity as $helpTab) {

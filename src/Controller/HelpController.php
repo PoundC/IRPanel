@@ -360,11 +360,11 @@ class HelpController extends AppController
 
     public function senduser($id = 0)
     {
-        $chatRoomsTable = TableRegistry::get('Chatrooms');
-        $chatRoomsQuery = $chatRoomsTable->find('all')->where(['chatrooms.name' => $this->request->getQuery('redirect')]);
+        $chatRoomsTable = TableRegistry::get('chat_chatrooms');
+        $chatRoomsQuery = $chatRoomsTable->find('all')->where(['chat_chatrooms.name' => $this->request->getQuery('redirect')]);
         $chatRoomsResult = $chatRoomsQuery->first();
 
-        $helpTabsTable = TableRegistry::get('helptabs');
+        $helpTabsTable = TableRegistry::get('chat_helptabs');
         $helpTabsQuery = $helpTabsTable->find('all')->where(['faq_answer_id' => $id])->limit(1);
 
         if($helpTabsQuery->count() == 0) {

@@ -20,16 +20,16 @@ use Cake\Validation\Validator;
 /**
  * Helptabs Model
  */
-class HelptabsTable extends Table
+class ChatHelptabsTable extends Table
 {
     public function initialize(array $config)
     {
         parent::initialize($config);
 
         $this->belongsTo('Faq_Answers', array())->setForeignKey('faq_answer_id')->setProperty('answer');
-        $this->belongsTo('Chatrooms', array())->setForeignKey('chatroom_id')->setProperty('room');
+        $this->belongsTo('ChatChatrooms', array())->setForeignKey('chatroom_id')->setProperty('room');
 
-        $this->setTable('helptabs');
+        $this->setTable('chat_helptabs');
         $this->setDisplayField('Faq_Answers.topic');
         $this->setPrimaryKey('id');
     }

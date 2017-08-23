@@ -69,12 +69,12 @@ $menus = [
             'type'  => 'header',
             'header' => 'Welcome User'
         ],
-        [
+        /*[
             'type'  => 'link',
             'link'  => 'Upgrade to Member',
             'icon'  => 'fa-rocket',
             'path'  => '/profile'
-        ],
+        ],*/
         [
             'type'  => 'link',
             'link'  => 'Dashboard',

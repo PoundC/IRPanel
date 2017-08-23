@@ -127,10 +127,6 @@ class AppController extends Controller
                         'icon'  => 'fa-support',
                         'css'   => 'active non-active',
                         'menu' => [
-                            'Live Chat' => [
-                                'path' => '/chat',
-                                'icon' => 'fa-wechat'
-                            ],
                             'View Tickets'     => [
                                 'path' => '/tickets',
                                 'icon' => 'fa-folder-open'
@@ -141,6 +137,22 @@ class AppController extends Controller
                             ]
                         ]
                     );
+
+                    //@todo: Database driven setting, turn live chat on and off via toggle button
+                    $liveChat = 'on';
+
+                    if($liveChat == 'on') {
+
+                        $supportMenu['menu']['Live Chat'] = [
+                            'path' => '/chat',
+                            'icon' => 'fa-wechat'
+                        ];
+                    }
+
+                    // ProTip: Reversing the array to get the order I want
+                    //         It's a delicate balance of order and chaos.
+                    //         I want live chat on top, if not Open Ticket
+                    $supportMenu['menu'] = array_reverse($supportMenu['menu'], true);
 
                     Sidebar::addMenuGroup($supportMenu, $currentUser->role);
                 }
