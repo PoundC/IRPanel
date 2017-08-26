@@ -119,7 +119,7 @@ class Statistics extends AbstractMigration
 
         // Support Chats Stats
         $statsConfigEntity = $statsConfigTable->newEntity([
-            'stats_table'      => 'chatrooms',
+            'stats_table'      => 'chat_chatrooms',
             'stats_column'     => 'id',
             'stats_type' => 'count_rows',
             'created'  => new \DateTime('now'),
@@ -129,7 +129,7 @@ class Statistics extends AbstractMigration
 
         // Support Room Stats
         $statsConfigEntity = $statsConfigTable->newEntity([
-            'stats_table'      => 'chats',
+            'stats_table'      => 'chat_chats',
             'stats_column'     => 'id',
             'stats_type' => 'count_rows',
             'created'  => new \DateTime('now'),

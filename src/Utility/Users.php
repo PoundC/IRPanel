@@ -20,10 +20,26 @@ class Users
         return $usersTable;
     }
 
+    public function update($user, $column, $value)
+    {
+        $usersTable = $this->getUserTable();
+        $user->set($column, $value);
+        $usersTable->save($user);
+    }
+
     public function getUserById($id)
     {
         $usersTable = $this->getUserTable();
         $usersQuery = $usersTable->find('all')->where(['users.id' => $id])->limit(1);
+        $userEntity = $usersQuery->first();
+
+        return $userEntity;
+    }
+
+    public function getUserByEmail($email)
+    {
+        $usersTable = $this->getUserTable();
+        $usersQuery = $usersTable->find('all')->where(['users.email' => $email])->limit(1);
         $userEntity = $usersQuery->first();
 
         return $userEntity;

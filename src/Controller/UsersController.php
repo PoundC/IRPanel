@@ -11,6 +11,7 @@ use Cake\Event\Event;
 use Cake\Network\Exception\UnauthorizedException;
 use Cake\Utility\Security;
 use CakeDC\Users\Controller\Component\UsersAuthComponent;
+use App\Utility\Users;
 
 class UsersController extends BaseUsersController
 {
@@ -60,15 +61,15 @@ class UsersController extends BaseUsersController
     public function register() {
 
         $this->eventManager()->on(UsersAuthComponent::EVENT_AFTER_REGISTER, function ($event) {
-            //the callback function should return the user data array to force register
-             $event->data['user']->set('token', JWT::encode(
-                [
-                    'sub' => $event->subject->entity->id,
-                    'exp' =>  time() + 604800
-                ],
-                Security::salt()));
-            $usersTable = TableRegistry::get(Configure::read('Users.table'));
-            $usersTable->save($event->data['user']);
+             $email = $event->subject->request->data['email'];
+             $users = new Users();
+             $user = $users->getUserByEmail($email);
+             $users->update($user,'api_token', JWT::encode(
+                 [
+                     'sub' => $user->id,
+                     'exp' =>  time() + 604800
+                 ],
+                 Security::salt()));
         });
 
         $this->set('title', 'Register User');
