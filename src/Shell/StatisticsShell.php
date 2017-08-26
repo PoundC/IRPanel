@@ -90,7 +90,7 @@ class StatisticsShell extends CronjobShell
 
         $totalTotal = $lastTotalResult->total_total + $total;
         $totalCount = $lastTotalResult->total_count + $count;
-        $growthRate = $total - $lastTotalResult->total_total / $lastTotalResult->total_total;
+        $growthRate = ($total - $lastTotalResult->total_total) / $lastTotalResult->total_total;
 
         if(isset($lastTotalResult)) {
 
