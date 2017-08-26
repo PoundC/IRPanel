@@ -88,30 +88,9 @@ class StatisticsShell extends CronjobShell
             $count++;
         }
 
-        // Retrieve order desc limit 1 total from values table
         $totalTotal = $lastTotalResult->total_total + $total;
         $totalCount = $lastTotalResult->total_count + $count;
-        $growthRate = (round($total /  $count, 2) - $lastTotalResult->average) / $lastTotalResult->average;
-
-        $averageQuery = $valuesTable->find('all')->where(['stats_config_id' => $configId]);
-        $averagesList = $averageQuery->all();
-
-        $avg = 0;
-        $avg_total = 0;
-        $avg_count = 0;
-        $avg_growth_rate_total = 0;
-        $avg_growth_rate_count = 0;
-        $avg_growth_rate_avg = 0;
-        foreach($averagesList as $averageRow) {
-
-            $avg_total = $avg_total + $averageRow->interval_total;
-            $avg_count++;
-            $avg = $avg_total / $avg_count;
-            $growth_rate = $averageRow->average - $avg / $avg;
-            $avg_growth_rate_total = $avg_growth_rate_total + $growth_rate;
-            $avg_growth_rate_count++;
-            $avg_growth_rate_avg = $avg_growth_rate_total / $avg_growth_rate_count;
-        }
+        $growthRate = $total - $lastTotalResult->total_total / $lastTotalResult->total_total;
 
         if(isset($lastTotalResult)) {
 
@@ -120,13 +99,10 @@ class StatisticsShell extends CronjobShell
                 'interval_total' => $total,
                 'interval_count' => $count,
                 'interval_average' => round($total / $count, 2),
-                'interval_growth_rate' => $total - $lastTotalResult->interval_total / $lastTotalResult->interval_total,
-                'interval_growth_rate_avg' => $avg_growth_rate_avg,
                 'total_total' => $totalTotal,
                 'total_count' => $totalCount,
                 'total_average' => round($totalTotal / $totalCount, 2),
-                'total_growth_rate' => $totalTotal - $lastTotalResult->total_total / $lastTotalResult->total_total,
-                'total_growth_rate_avg' => $avg_growth_rate_avg,
+                'total_growth_rate' => $growthRate,
                 'created' => $created,
                 'modified' => new \DateTime('now')
             ]);
@@ -138,23 +114,19 @@ class StatisticsShell extends CronjobShell
                 'interval_total' => $total,
                 'interval_count' => $count,
                 'interval_average' => round($total / $count, 2),
-                'interval_growth_rate' => $total - 0 / 1,
-                'interval_growth_rate_avg' => $avg_growth_rate_avg,
                 'total_total' => $totalTotal,
                 'total_count' => $totalCount,
                 'total_average' => round($totalTotal / $totalCount, 2),
-                'total_growth_rate' => $totalTotal - 0 / 1,
-                'total_growth_rate_avg' => $avg_growth_rate_avg,
+                'total_growth_rate' => 0,
                 'created' => $created,
                 'modified' => new \DateTime('now')
             ]);
         }
 
-        print_r($valueEntity);
-
         $valuesTable->save($valueEntity);
     }
 
+    //@todo: Count Row Statistics && DB
     private function countRows($configId, $table, $column)
     {
         $tableObject = TableRegistry::get($table);

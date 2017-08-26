@@ -66,14 +66,6 @@ class Statistics extends AbstractMigration
             'default' => null,
             'null' => false,
         ]);
-        $table->addColumn('interval_growth_rate', 'float', [
-            'default' => null,
-            'null' => false,
-        ]);
-        $table->addColumn('interval_growth_rate_avg', 'float', [
-            'default' => null,
-            'null' => false,
-        ]);
         $table->addColumn('total_total', 'float', [
             'default' => null,
             'null' => false,
@@ -87,10 +79,6 @@ class Statistics extends AbstractMigration
             'null' => false,
         ]);
         $table->addColumn('total_growth_rate', 'float', [
-            'default' => null,
-            'null' => false,
-        ]);
-        $table->addColumn('total_growth_rate_avg', 'float', [
             'default' => null,
             'null' => false,
         ]);

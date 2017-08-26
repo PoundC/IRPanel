@@ -82,7 +82,7 @@ return [
             'allowed' => true,
         ],
         [
-            'role' => ['user'],
+            'role' => '*',
             'controller' => ['Billing'],
             'action' => ['subscribe'],
             'allowed' => true,
