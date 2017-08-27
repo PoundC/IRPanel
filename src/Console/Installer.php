@@ -122,12 +122,6 @@ class Installer
                         'command' => 'users addSuperuser',
                         'extra' => []
                     ]);
-
-                    $usersTable = TableRegistry::get(Configure::read('Users.table'));
-                    $query = $usersTable->find('all')->where(['users.username' => 'superuser'])->limit(1);
-                    $result = $query->first();
-                    $result->set('role', 'admin');
-                    $usersTable->save($result);
                 }
             }
         }
