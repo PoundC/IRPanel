@@ -18,6 +18,7 @@ use Cake\Core\Configure;
 use Cake\Network\Exception\ForbiddenException;
 use Cake\Network\Exception\NotFoundException;
 use Cake\View\Exception\MissingTemplateException;
+use App\Utility\Users;
 
 /**
  * Static content controller
@@ -28,7 +29,6 @@ use Cake\View\Exception\MissingTemplateException;
  */
 class MembersController extends AppController
 {
-
     public function initialize() {
 
         parent::initialize();
@@ -36,8 +36,32 @@ class MembersController extends AppController
         $this->Auth->allow(['dashboard']);
     }
 
-    public function dashboard() {
+    /**
+     *
+     */
+    public function dashboard()
+    {
+        $users = new Users();
+        $user = $users->getUserById($this->Auth->user('id'));
+
+        switch($user->get('role'))
+        {
+            case 'admin':
+                $this->dashboard_admin($user);
+                break;
+        }
 
         $this->set('title', 'Dashboard');
+    }
+
+    /**
+     * @param $user
+     */
+    private function dashboard_admin($user)
+    {
+        // New Users
+        // New Members
+        // New Support Chats
+        // New Support Tickets
     }
 }
