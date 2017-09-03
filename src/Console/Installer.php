@@ -23,7 +23,7 @@ use Composer\Script\Event;
 use Exception;
 use Cake\Console\ShellDispatcher;
 use Cake\Core\Configure;
-
+use Cake\Core\Plugin;
 /**
  * Provides installation hooks for when this application is installed via
  * composer. Customize this class to suit your needs.
@@ -99,10 +99,13 @@ class Installer
 
             if (in_array($installSchemas, ['Y', 'y'])) {
 
-                $shell->dispatchShell([
-                    'command' => 'migrations migrate --plugin CakeDC/Users',
-                    'extra' => []
-                ]);
+                foreach(Plugin::loaded() as $plugin) {
+
+                    $shell->dispatchShell([
+                        'command' => 'migrations migrate --plugin ' . $plugin,
+                        'extra' => []
+                    ]);
+                }
 
                 $shell->dispatchShell([
                     'command' => 'migrations migrate',
