@@ -101,10 +101,13 @@ class Installer
 
                 foreach(Plugin::loaded() as $plugin) {
 
-                    $shell->dispatchShell([
-                        'command' => 'migrations migrate --plugin ' . $plugin,
-                        'extra' => []
-                    ]);
+                    if($plugin != 'DebugKit') {
+
+                        $shell->dispatchShell([
+                            'command' => 'migrations migrate --plugin ' . $plugin,
+                            'extra' => []
+                        ]);
+                    }
                 }
 
                 $shell->dispatchShell([
