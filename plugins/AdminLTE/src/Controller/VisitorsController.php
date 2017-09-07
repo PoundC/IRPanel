@@ -12,13 +12,13 @@
  * @since     0.2.9
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace App\Controller;
+namespace AdminLTE\Controller;
 
 use Cake\Core\Configure;
 use Cake\Network\Exception\ForbiddenException;
 use Cake\Network\Exception\NotFoundException;
 use Cake\View\Exception\MissingTemplateException;
-
+use Cake\Event\Event;
 /**
  * Static content controller
  *
@@ -28,7 +28,6 @@ use Cake\View\Exception\MissingTemplateException;
  */
 class VisitorsController extends AppController
 {
-
     public function initialize() {
 
         parent::initialize();
@@ -36,10 +35,17 @@ class VisitorsController extends AppController
         $this->Auth->allow(['frontpage', 'products', 'pricing', 'faq', 'about', 'company', 'investors']);
     }
 
+    public function beforeRender(Event $event)
+    {
+        parent::beforeRender($event);
+
+        $this->viewBuilder()->setLayout('AdminLTE.lander');
+    }
+
     public function frontpage() {
 
         $this->set('title', 'CakeAdminLTE');
-        $this->render('frontpage', 'lander');
+        $this->render('frontpage', 'AdminLTE.lander');
     }
 
     public function products() {

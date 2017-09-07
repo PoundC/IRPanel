@@ -50,7 +50,7 @@ Router::scope('/', function (RouteBuilder $routes) {
      * its action called 'display', and we pass a param to select the view file
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
-    $routes->connect('/', ['controller' => 'Visitors', 'action' => 'frontpage', 'frontpage']);
+    $routes->connect('/', ['plugin' => 'AdminLTE', 'controller' => 'Visitors', 'action' => 'frontpage', 'frontpage']);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
@@ -81,19 +81,6 @@ Router::scope('/', function (RouteBuilder $routes) {
  * how to customize the loading of plugin routes.
  */
 Plugin::routes();
-
-/*
- *
- * Visitor Menu Routes
- *
- */
-
-Router::connect('/products', ['controller' => 'Visitors', 'action' => 'products']);
-Router::connect('/pricing', ['controller' => 'Visitors', 'action' => 'pricing']);
-Router::connect('/faq', ['controller' => 'Visitors', 'action' => 'faq']);
-Router::connect('/about', ['controller' => 'Visitors', 'action' => 'about']);
-Router::connect('/company', ['controller' => 'Visitors', 'action' => 'company']);
-Router::connect('/investors', ['controller' => 'Visitors', 'action' => 'investors']);
 
 /*
  *

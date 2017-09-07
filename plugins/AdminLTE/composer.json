@@ -1,0 +1,22 @@
+{
+    "name": "your-name-here/AdminLTE",
+    "description": "AdminLTE plugin for CakePHP",
+    "type": "cakephp-plugin",
+    "require": {
+        "cakephp/cakephp": "^3.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7|^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "AdminLTE\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AdminLTE\\Test\\": "tests",
+            "Cake\\Test\\": "./vendor/cakephp/cakephp/tests"
+        }
+    }
+}

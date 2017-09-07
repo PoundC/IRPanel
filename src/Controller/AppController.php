@@ -182,6 +182,6 @@ class AppController extends Controller
         $this->set('_serialize', ['currentUser']);
         $this->set('avatarPlaceholder', Configure::read('Users.Avatar.placeholder'));
 
-
+        $this->viewBuilder()->setLayout('AdminLTE.default');
     }
 }

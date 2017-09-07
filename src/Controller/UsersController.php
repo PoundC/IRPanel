@@ -81,7 +81,7 @@ class UsersController extends BaseUsersController
 
         $this->set('title', 'CakeAdminLTE Login');
 
-        $this->viewBuilder()->layout('stars');
+        $this->viewBuilder()->setLayout('AdminLTE.stars');
 
         parent::login();
     }
