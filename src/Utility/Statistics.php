@@ -13,8 +13,14 @@ use Cake\Core\Configure;
 
 class Statistics
 {
-    public function getLastTotalCount($stats_config_id)
+    public function getLastTotalCount($stats_table)
     {
+        $configTable = $this->getConfigTable();
+        $configQuery = $configTable->find('all')->where(['stats_table' => $stats_table])->orderDesc('id')->limit(1);
+        $configValue = $configQuery->first();
+
+        $stats_config_id = $configValue->id;
+
         $valuesTable = $this->getValuesTable();
         $valuesQuery = $valuesTable->find('all')->where(['stats_config_id' => $stats_config_id])->orderDesc('id')->limit(1);
         $valuesResult = $valuesQuery->first();
