@@ -25,7 +25,7 @@ class Statistics
         $valuesQuery = $valuesTable->find('all')->where(['stats_config_id' => $stats_config_id])->orderDesc('id')->limit(1);
         $valuesResult = $valuesQuery->first();
 
-        return $valuesResult;
+        return $valuesResult->get('total_count');
     }
 
     public function getConfigTable()
