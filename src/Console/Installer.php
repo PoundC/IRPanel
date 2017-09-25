@@ -99,6 +99,11 @@ class Installer
 
             if (in_array($installSchemas, ['Y', 'y'])) {
 
+                $shell->dispatchShell([
+                    'command' => 'migrations migrate',
+                    'extra' => []
+                ]);
+
                 foreach(Plugin::loaded() as $plugin) {
 
                     if($plugin != 'DebugKit') {
@@ -109,11 +114,6 @@ class Installer
                         ]);
                     }
                 }
-
-                $shell->dispatchShell([
-                    'command' => 'migrations migrate',
-                    'extra' => []
-                ]);
 
                 $addSuperUser = $io->askAndValidate(
                     '<info>Add Superuser to database? (Default to Y)</info> [<comment>Y,n</comment>]? ',

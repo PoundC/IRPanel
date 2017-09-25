@@ -87,6 +87,10 @@ abstract class CronjobShell extends Shell
     {
         $crontabLogTable = TableRegistry::get('cronjobs_logs');
 
+        if(!$this->result) {
+            $this->result = 999;
+        }
+
         $crontabLogEntity = $crontabLogTable->newEntity([
             'cronjobs_cron_id' => $this->cronJobId,
             'success' => $this->result,
