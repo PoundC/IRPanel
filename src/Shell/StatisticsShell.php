@@ -45,6 +45,9 @@ class StatisticsShell extends CronjobShell
                     case 'count_rows':
                         $this->countRows($configId, $table, $column);
                         break;
+                    case 'count_rows_where':
+                        $equals = $statConfig->equals;
+                        $this->countRowsWhere($configId, $table, $column, $equals);
                 }
             }
         }
@@ -89,6 +92,94 @@ class StatisticsShell extends CronjobShell
             $total = $total + $value;
             $count++;
         }
+
+        if(isset($lastTotalResult) && $lastTotalResult->total_total > 0) {
+
+            $totalTotal = $lastTotalResult->total_total + $total;
+            $totalCount = $lastTotalResult->total_count + $count;
+
+            $growthRate = ($total - $lastTotalResult->total_total) / $lastTotalResult->total_total;
+        }
+        else {
+
+            $totalTotal = $total;
+            $totalCount = $count;
+
+            $growthRate = 0;
+        }
+
+        if($count > 0) {
+            $interval_avg = round($total / $count, 2);
+        }
+        else {
+            $interval_avg = 0;
+        }
+
+        if($count > 0) {
+            $total_average = round($total / $count, 2);
+        }
+        else {
+            $total_average = 0;
+        }
+
+        if(isset($lastTotalResult)) {
+
+            $valueEntity = $valuesTable->newEntity([
+                'stats_config_id' => $configId,
+                'interval_total' => $total,
+                'interval_count' => $count,
+                'interval_average' => $interval_avg,
+                'total_total' => $totalTotal,
+                'total_count' => $totalCount,
+                'total_average' => $total_average,
+                'total_growth_rate' => $growthRate,
+                'created' => $created,
+                'modified' => new \DateTime('now')
+            ]);
+        }
+        else {
+
+            $valueEntity = $valuesTable->newEntity([
+                'stats_config_id' => $configId,
+                'interval_total' => $total,
+                'interval_count' => $count,
+                'interval_average' => $interval_avg,
+                'total_total' => $totalTotal,
+                'total_count' => $totalCount,
+                'total_average' => $total_average,
+                'total_growth_rate' => 1,
+                'created' => $created,
+                'modified' => new \DateTime('now')
+            ]);
+        }
+
+        $valuesTable->save($valueEntity);
+    }
+
+    private function countRowsWhere($configId, $table, $column, $equals)
+    {
+        $stats = new Statistics();
+        $valuesTable = $stats->getValuesTable();
+        $tableObject = TableRegistry::get($table);
+
+        $created = new \DateTime('now');
+        $created = $created->format('Y-m-d H:i:s');
+
+        $lastTotal = $valuesTable->find('all')->where(['stats_config_id' => $configId])->orderDesc(true)->limit(1);
+        $lastTotalResult = $lastTotal->first();
+
+        if(isset($lastTotalResult)) {
+            $lastCreated = $lastTotalResult->created;
+        }
+        else {
+            $lastCreated = '0000-00-00 00:00:00';
+        }
+
+        $resultsQuery = $tableObject->find('all')->where([$table . '.created <=' => $created, $table . '.created >=' => $lastCreated, $column => $equals]);
+        $results = $resultsQuery->all();
+
+        $count = $resultsQuery->count();
+        $total = $count;
 
         if(isset($lastTotalResult) && $lastTotalResult->total_total > 0) {
 
