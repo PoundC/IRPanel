@@ -36,6 +36,10 @@ class StatisticsShell extends CronjobShell
                 $table = $statConfig->stats_table;
                 $column = $statConfig->stats_column;
                 $type = $statConfig->stats_type;
+                $equals = $statConfig->equals;
+                $order_by = $statConfig->order_by;
+                $order_dir = $statConfig->order_dir;
+                $created_or_modified = $statConfig->created_or_modified;
 
                 switch($type)
                 {
@@ -46,11 +50,10 @@ class StatisticsShell extends CronjobShell
                         $this->countRows($configId, $table, $column);
                         break;
                     case 'count_rows_where':
-                        $equals = $statConfig->equals;
-                        $this->countRowsWhere($configId, $table, $column, $equals);
+                        $this->countRowsWhere($configId, $table, $column, $equals, $created_or_modified);
                         break;
                     case 'collect_last_column':
-                        $this->collectLastColumn($configId, $table, $column);
+                        $this->collectLastColumn($configId, $table, $column, $order_by, $order_dir);
                         break;
                 }
             }
@@ -248,7 +251,7 @@ class StatisticsShell extends CronjobShell
         $valuesTable->save($valueEntity);
     }
 
-    private function countRowsWhere($configId, $table, $column, $equals)
+    private function countRowsWhere($configId, $table, $column, $equals, $created_or_modified)
     {
         $stats = new Statistics();
         $valuesTable = $stats->getValuesTable();
@@ -267,7 +270,7 @@ class StatisticsShell extends CronjobShell
             $lastCreated = '0000-00-00 00:00:00';
         }
 
-        $resultsQuery = $tableObject->find('all')->where([$table . '.modified <=' => $created, $table . '.modified >=' => $lastCreated, $column => $equals]);
+        $resultsQuery = $tableObject->find('all')->where([$table . '.' . $created_or_modified . ' <=' => $created, $table . '.' . $created_or_modified . ' >=' => $lastCreated, $column => $equals]);
         $results = $resultsQuery->all();
 
         $count = $resultsQuery->count();
@@ -336,7 +339,7 @@ class StatisticsShell extends CronjobShell
         $valuesTable->save($valueEntity);
     }
 
-    private function collectLastColumn($configId, $table, $column)
+    private function collectLastColumn($configId, $table, $column, $order_by, $order_dir)
     {
         $stats = new Statistics();
         $valuesTable = $stats->getValuesTable();
@@ -348,7 +351,12 @@ class StatisticsShell extends CronjobShell
         $lastTotal = $valuesTable->find('all')->where(['stats_config_id' => $configId])->orderDesc('id')->limit(1);
         $lastTotalResult = $lastTotal->first();
 
-        $resultsQuery = $tableObject->find('all')->orderDesc($column)->limit(1);
+        if($order_dir == 'desc') {
+            $resultsQuery = $tableObject->find('all')->orderDesc($order_by)->limit(1);
+        }
+        else {
+            $resultsQuery = $tableObject->find('all')->orderAsc($order_by)->limit(1);
+        }
         $results = $resultsQuery->first();
 
         $count = $results->get($column);
