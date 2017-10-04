@@ -169,7 +169,7 @@ class StatisticsShell extends CronjobShell
         $created = new \DateTime('now');
         $created = $created->format('Y-m-d H:i:s');
 
-        $lastTotal = $valuesTable->find('all')->where(['stats_config_id' => $configId])->orderDesc(true)->limit(1);
+        $lastTotal = $valuesTable->find('all')->where(['stats_config_id' => $configId])->orderDesc('id')->limit(1);
         $lastTotalResult = $lastTotal->first();
 
         if(isset($lastTotalResult)) {
@@ -257,7 +257,7 @@ class StatisticsShell extends CronjobShell
         $created = new \DateTime('now');
         $created = $created->format('Y-m-d H:i:s');
 
-        $lastTotal = $valuesTable->find('all')->where(['stats_config_id' => $configId])->orderDesc(true)->limit(1);
+        $lastTotal = $valuesTable->find('all')->where(['stats_config_id' => $configId])->orderDesc('id')->limit(1);
         $lastTotalResult = $lastTotal->first();
 
         if(isset($lastTotalResult)) {
@@ -345,7 +345,7 @@ class StatisticsShell extends CronjobShell
         $created = new \DateTime('now');
         $created = $created->format('Y-m-d H:i:s');
 
-        $lastTotal = $valuesTable->find('all')->where(['stats_config_id' => $configId])->orderDesc(true)->limit(1);
+        $lastTotal = $valuesTable->find('all')->where(['stats_config_id' => $configId])->orderDesc('id')->limit(1);
         $lastTotalResult = $lastTotal->first();
 
         if(isset($lastTotalResult)) {
@@ -434,7 +434,7 @@ class StatisticsShell extends CronjobShell
         $created = new \DateTime('now');
         $created = $created->format('Y-m-d H:i:s');
 
-        $lastTotal = $valuesTable->find('all')->where(['stats_config_id' => $configId])->orderDesc(true)->limit(1);
+        $lastTotal = $valuesTable->find('all')->where(['stats_config_id' => $configId])->orderDesc('id')->limit(1);
         $lastTotalResult = $lastTotal->first();
 
         if(isset($lastTotalResult)) {
