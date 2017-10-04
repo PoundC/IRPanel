@@ -355,7 +355,7 @@ class StatisticsShell extends CronjobShell
             $lastCreated = '0000-00-00 00:00:00';
         }
 
-        $resultsQuery = $tableObject->find('all')->orderDesc('modified')->limit(1);
+        $resultsQuery = $tableObject->find('all')->orderDesc($column)->limit(1);
         $results = $resultsQuery->first();
 
         $count = $results->get($column);
