@@ -348,13 +348,6 @@ class StatisticsShell extends CronjobShell
         $lastTotal = $valuesTable->find('all')->where(['stats_config_id' => $configId])->orderDesc('id')->limit(1);
         $lastTotalResult = $lastTotal->first();
 
-        if(isset($lastTotalResult)) {
-            $lastCreated = $lastTotalResult->created;
-        }
-        else {
-            $lastCreated = '0000-00-00 00:00:00';
-        }
-
         $resultsQuery = $tableObject->find('all')->orderDesc($column)->limit(1);
         $results = $resultsQuery->first();
 
@@ -363,8 +356,8 @@ class StatisticsShell extends CronjobShell
 
         if(isset($lastTotalResult) && $lastTotalResult->total_total > 0) {
 
-            $totalTotal = $lastTotalResult->total_total + $total;
-            $totalCount = $lastTotalResult->total_count + $count;
+            $totalTotal = $total;
+            $totalCount = $count;
 
             $growthRate = ($total - $lastTotalResult->total_total) / $lastTotalResult->total_total;
         }
