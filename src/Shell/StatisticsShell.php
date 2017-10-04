@@ -267,7 +267,7 @@ class StatisticsShell extends CronjobShell
             $lastCreated = '0000-00-00 00:00:00';
         }
 
-        $resultsQuery = $tableObject->find('all')->where([$table . '.created <=' => $created, $table . '.created >=' => $lastCreated, $column => $equals]);
+        $resultsQuery = $tableObject->find('all')->where([$table . '.modified <=' => $created, $table . '.modified >=' => $lastCreated, $column => $equals]);
         $results = $resultsQuery->all();
 
         $count = $resultsQuery->count();
