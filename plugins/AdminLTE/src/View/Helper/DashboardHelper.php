@@ -9,6 +9,6 @@ class DashboardHelper extends Helper
 {
     public function FullWidget($count, $title, $link, $color, $icon)
     {
-        return '<div class="col-lg-3 col-xs-6"><div class="small-box ' . $color . '"><div class="inner"><h3>' . $count . '</h3><p>' . $title . '</p></div><div class="icon"><i class="fa ' . $icon . '"></i></div><a href="' . $link . '" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a></div></div>';
+        return '<div class="col-lg-3 col-xs-6"><div class="small-box ' . $color . '"><div class="inner"><h3>' . number_format($count, 2, '.', ',') . '</h3><p>' . $title . '</p></div><div class="icon"><i class="fa ' . $icon . '"></i></div><a href="' . $link . '" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a></div></div>';
     }
 }
