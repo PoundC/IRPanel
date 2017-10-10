@@ -1,0 +1,26 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: jlroberts
+ * Date: 10/10/17
+ * Time: 3:02 PM
+ */
+
+namespace App\Utility;
+
+class Text {
+
+    public static function startsWith($haystack, $needle)
+    {
+        $length = strlen($needle);
+        return (substr($haystack, 0, $length) === $needle);
+    }
+
+    public static function endsWith($haystack, $needle)
+    {
+        $length = strlen($needle);
+
+        return $length === 0 ||
+            (substr($haystack, -$length) === $needle);
+    }
+}
