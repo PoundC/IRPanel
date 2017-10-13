@@ -23,4 +23,16 @@ class Text {
         return $length === 0 ||
             (substr($haystack, -$length) === $needle);
     }
+
+    public static function trimTo($subject, $count)
+    {
+        if(strlen($subject) >= $count) {
+
+            return substr($subject, 0, $count - 1);
+        }
+        else {
+
+            return $subject;
+        }
+    }
 }
