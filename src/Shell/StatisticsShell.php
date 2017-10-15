@@ -187,8 +187,6 @@ class StatisticsShell extends CronjobShell
         }
 
         $resultsQuery = $tableObject->find('all')->where([$table . '.created <=' => $created, $table . '.created >=' => $lastCreated, $column . ' <>' => $equals]);
-        $results = $resultsQuery->all();
-
         $count = $resultsQuery->count();
         $total = $count;
 
@@ -275,8 +273,6 @@ class StatisticsShell extends CronjobShell
         }
 
         $resultsQuery = $tableObject->find('all')->where([$table . '.' . $created_or_modified . ' <=' => $created, $table . '.' . $created_or_modified . ' >=' => $lastCreated, $column => $equals]);
-        $results = $resultsQuery->all();
-
         $count = $resultsQuery->count();
         $total = $count;
 
@@ -536,8 +532,6 @@ class StatisticsShell extends CronjobShell
         }
 
         $resultsQuery = $tableObject->find('all')->where([$table . '.created <=' => $created, $table . '.created >=' => $lastCreated]);
-        $results = $resultsQuery->all();
-
         $count = $resultsQuery->count();
         $total = $count;
 
