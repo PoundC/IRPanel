@@ -359,7 +359,12 @@ class StatisticsShell extends CronjobShell
         }
         $results = $resultsQuery->first();
 
-        $count = $results->get($column);
+        if(!$results) {
+            $count = 0;
+        }
+        else {
+            $count = $results->get($column);
+        }
         $total = $count;
 
         if(isset($lastTotalResult) && $lastTotalResult->total_total > 0) {
@@ -445,7 +450,12 @@ class StatisticsShell extends CronjobShell
         }
         $results = $resultsQuery->first();
 
-        $count = $results->get($column);
+        if(!$results) {
+            $count = 0;
+        }
+        else {
+            $count = $results->get($column);
+        }
         $total = $count;
 
         if(isset($lastTotalResult) && $lastTotalResult->total_total > 0) {
