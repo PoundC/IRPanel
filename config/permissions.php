@@ -190,8 +190,13 @@ $permissions = [
     ]];
 
 $morePermissions = \Cake\Core\Configure::read('MyPermissions');
-$allPerms = array_merge($permissions, $morePermissions);
+if(is_array($morePermissions)) {
 
-//return ['CakeDC/Auth.permissions' => $allPerms];
+    $allPerms = array_merge($permissions, $morePermissions);
 
-return $allPerms;
+    return $allPerms;
+}
+else {
+
+    return $permissions;
+}
