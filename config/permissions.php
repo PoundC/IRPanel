@@ -139,7 +139,7 @@ $permissions = [
         [
             'role' => ['user', 'member', 'admin'],
             'controller' => 'Users',
-            'action' => ['profile'],
+            'action' => ['profile','oauth2callback'],
             'allowed' => true,
         ],
         [
