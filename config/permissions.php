@@ -139,7 +139,7 @@ $permissions = [
         [
             'role' => ['user', 'member', 'admin'],
             'controller' => 'Users',
-            'action' => ['profile','oauth2callback'],
+            'action' => ['profile', 'oauth2callback'],
             'allowed' => true,
         ],
         [
@@ -190,6 +190,8 @@ $permissions = [
     ]];
 
 $morePermissions = \Cake\Core\Configure::read('MyPermissions');
+print_r($morePermissions);die();
+
 if(is_array($morePermissions)) {
 
     $allPerms = array_merge($permissions, $morePermissions);
