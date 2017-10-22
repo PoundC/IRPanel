@@ -28,7 +28,7 @@ class UsersController extends BaseUsersController
     {
         $client = new \Google_Client();
         $client->setAuthConfig(__DIR__ . '/../../config/client_secrets.json');
-        $client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/oauth2callback.php');
+        $client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/oauth2callback');
         $client->addScope(\Google_Service_Analytics::ANALYTICS_READONLY);
 
         if (!isset($_GET['code'])) {
