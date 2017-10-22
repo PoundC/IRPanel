@@ -17,10 +17,10 @@ Router::plugin(
  *
  */
 
-Router::connect('/products', ['controller' => 'Visitors', 'action' => 'products']);
-Router::connect('/pricing', ['controller' => 'Visitors', 'action' => 'pricing']);
-Router::connect('/faq', ['controller' => 'Visitors', 'action' => 'faq']);
-Router::connect('/about', ['controller' => 'Visitors', 'action' => 'about']);
-Router::connect('/company', ['controller' => 'Visitors', 'action' => 'company']);
-Router::connect('/investors', ['controller' => 'Visitors', 'action' => 'investors']);
+Router::connect('/products', ['plugin' => 'AdminLTE', 'controller' => 'Visitors', 'action' => 'products']);
+Router::connect('/pricing', ['plugin' => 'AdminLTE', 'controller' => 'Visitors', 'action' => 'pricing']);
+Router::connect('/faq', ['plugin' => 'AdminLTE', 'controller' => 'Visitors', 'action' => 'faq']);
+Router::connect('/about', ['plugin' => 'AdminLTE', 'controller' => 'Visitors', 'action' => 'about']);
+Router::connect('/company', ['plugin' => 'AdminLTE', 'controller' => 'Visitors', 'action' => 'company']);
+Router::connect('/investors', ['plugin' => 'AdminLTE', 'controller' => 'Visitors', 'action' => 'investors']);
 

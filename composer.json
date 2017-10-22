@@ -19,7 +19,8 @@
         "neomerx/json-api": "^1.0",
         "admad/cakephp-jwt-auth": "^2.2",
         "nicolab/php-ftp-client": "^1.4",
-        "chuyskywalker/rolling-curl": "^3.1"
+        "chuyskywalker/rolling-curl": "^3.1",
+        "google/apiclient": "^2.0"
     },
     "require-dev": {
         "psy/psysh": "@stable",

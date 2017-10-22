@@ -181,6 +181,7 @@ if (Configure::read('Users.GoogleAuthenticator.login')) {
 Router::connect('/admin/change/*', ['controller' => 'Users', 'action' => 'changePassword']);
 Router::connect('/admin/edit/*', ['controller' => 'Users', 'action' => 'edit']);
 Router::connect('/admin/users', ['controller' => 'Users', 'action' => 'index']);
+Router::connect('/oauth2callback', ['controller' => 'Users', 'action' => 'oauth2callback']);
 Router::connect('/profile/*', ['controller' => 'Users', 'action' => 'profile']);
 Router::connect('/profile', ['controller' => 'Users', 'action' => 'profile']);
 Router::connect('/login', ['controller' => 'Users', 'action' => 'login']);
