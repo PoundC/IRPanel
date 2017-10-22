@@ -21,7 +21,7 @@ class UsersController extends BaseUsersController
 
         parent::initialize();
 
-        $this->Auth->allow('login');
+        $this->Auth->allow('login', 'oauth2callback');
     }
 
     public function oauth2callback()
