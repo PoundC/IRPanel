@@ -33,7 +33,7 @@ class MembersController extends AppController
 
         parent::initialize();
 
-        $this->Auth->allow(['dashboard']);
+        //$this->Auth->allow(['dashboard']);
     }
 
     /**

@@ -50,7 +50,6 @@
  */
 
 $permissions = [
-    'Users.SimpleRbac.permissions' => [
         [
             'role' => '*',
             'controller' => ['Pages'],
@@ -187,18 +186,17 @@ $permissions = [
             'action' => ['search'],
             'allowed' => true,
         ]
-    ]];
+    ];
+
 
 $morePermissions = \Cake\Core\Configure::read('MyPermissions');
-print_r($morePermissions);die();
-
 if(is_array($morePermissions)) {
 
     $allPerms = array_merge($permissions, $morePermissions);
 
-    return $allPerms;
+    return ['Users.SimpleRbac.permissions' => $allPerms];
 }
 else {
 
-    return $permissions;
+    return ['Users.SimpleRbac.permissions' => $permissions];;
 }
