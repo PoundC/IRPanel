@@ -142,6 +142,12 @@ $permissions = [
             'allowed' => true,
         ],
         [
+            'role' => ['user', 'member', 'admin'],
+            'controller' => 'Members',
+            'action' => ['dashboard'],
+            'allowed' => true,
+        ],
+        [
             'role' => ['admin'],
             'controller' => 'Users',
             'action' => ['index', 'view', 'edit', 'changePassword'],
