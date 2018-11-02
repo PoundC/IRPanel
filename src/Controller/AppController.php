@@ -47,16 +47,19 @@ class AppController extends Controller
     {
         parent::initialize();
 
-        $this->loadComponent('RequestHandler');
+        $this->loadComponent('RequestHandler', [
+            'enableBeforeRedirect' => false,
+        ]);
         $this->loadComponent('Flash');
         $this->loadComponent('CakeDC/Users.UsersAuth');
 
         $this->Auth->configShallow('loginRedirect', '/dashboard');
         $this->Auth->configShallow('logoutRedirect', '/login');
         /*
-         * Enable the following components for recommended CakePHP security settings.
+         * Enable the following component for recommended CakePHP security settings.
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
          */
+
         $this->loadComponent('Security');
         $this->loadComponent('Csrf');
 
@@ -183,5 +186,7 @@ class AppController extends Controller
         $this->set('avatarPlaceholder', Configure::read('Users.Avatar.placeholder'));
 
         $this->viewBuilder()->setLayout('AdminLTE.default');
+
+        //$this->loadComponent('Security');
     }
 }
