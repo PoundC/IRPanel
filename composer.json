@@ -6,21 +6,29 @@
     "license": "MIT",
     "require": {
         "php": ">=5.6",
-        "mobiledetect/mobiledetectlib": "2.*",
+        "admad/cakephp-jwt-auth": "^2.3.2",
+        "almasaeed2010/adminlte": "2.4.18",
+        "authorizenet/authorizenet": "~1.9",
+        "bower-asset/jquery": "^2.2",
+        "cakedc/users": "8.4.0",
         "cakephp/cakephp": "3.7.*",
         "cakephp/migrations": "^2.0.0",
         "cakephp/plugin-installer": "~1.0",
-        "almasaeed2010/adminlte": "2.4.18",
         "cebe/markdown": "dev-master",
-        "cakedc/users": "8.4.0",
-        "authorizenet/authorizenet": "~1.9",
-        "muffin/slug": "^1.4.0",
-        "friendsofcake/crud": "^5.4.6",
-        "neomerx/json-api": "^1.0",
-        "admad/cakephp-jwt-auth": "^2.3.2",
-        "nicolab/php-ftp-client": "^1.4",
         "chuyskywalker/rolling-curl": "^3.1",
-        "google/apiclient": "^2.0"
+        "friendsofcake/crud": "^5.4.6",
+        "friendsofcake/crud-view": "^0.13.0",
+        "friendsofcake/search": "^5.3",
+        "google/apiclient": "^2.0",
+        "google/recaptcha": "^1.2",
+        "league/oauth1-client": "1.7.0",
+        "league/oauth2-facebook": "^2.0",
+        "league/oauth2-google": "3.0.1",
+        "mobiledetect/mobiledetectlib": "2.*",
+        "muffin/slug": "^1.4.0",
+        "neomerx/json-api": "^1.0",
+        "nicolab/php-ftp-client": "^1.4",
+        "robthree/twofactorauth": "^1.6"
     },
     "require-dev": {
         "cakephp/bake": "^1.9.0",
@@ -62,5 +70,11 @@
     "prefer-stable": true,
     "config": {
         "sort-packages": true
-    }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
 }
