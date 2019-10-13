@@ -36,7 +36,7 @@ class UsersSubscriptionsHistory extends AbstractMigration
         ]);
         $table->addColumn('created', 'datetime', [
             'default' => null,
-            'limit' => 13,
+            'limit' => 6,
             'null' => false,
         ]);
         $table->create();

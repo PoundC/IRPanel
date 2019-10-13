@@ -34,6 +34,7 @@
         "cakephp/bake": "^1.9.0",
         "cakephp/cakephp-codesniffer": "^3.0",
         "cakephp/debug_kit": "^3.17.0",
+        "dereuromark/cakephp-ide-helper": "^0.13.20",
         "josegonzalez/dotenv": "3.*",
         "phpunit/phpunit": "^5|^6",
         "psy/psysh": "@stable"
@@ -65,7 +66,9 @@
         ],
         "cs-check": "phpcs --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/",
         "cs-fix": "phpcbf --colors --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/",
-        "test": "phpunit --colors=always"
+        "test": "phpunit --colors=always",
+        "generate": "bin/cake code_completion generate && bin/cake phpstorm generate",
+        "annotations": "bin/cake annotations all && bin/cake annotations all -p AdminLTE"
     },
     "prefer-stable": true,
     "config": {

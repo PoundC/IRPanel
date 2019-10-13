@@ -104,7 +104,7 @@ Router::scope('/', function (RouteBuilder $routes) {
  * ```
  */
 
-Plugin::routes();
+// Plugin::routes();
 
 /*
  *

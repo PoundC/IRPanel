@@ -1,28 +1,16 @@
 <?php
-/**
- * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
- * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
- */
 
 namespace App\Model\Behavior;
 
-use CakeDC\Users\Email\EmailSender;
+use Cake\Mailer\MailerAwareTrait;
 use CakeDC\Users\Exception\TokenExpiredException;
 use CakeDC\Users\Exception\UserAlreadyActiveException;
 use CakeDC\Users\Exception\UserNotFoundException;
-use CakeDC\Users\Model\Entity\User;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
-use DateTime;
-use InvalidArgumentException;
 use CakeDC\Users\Model\Behavior\BaseTokenBehavior;
 
 /**
@@ -30,6 +18,8 @@ use CakeDC\Users\Model\Behavior\BaseTokenBehavior;
  */
 class RegisterBehavior extends BaseTokenBehavior
 {
+    use MailerAwareTrait;
+
     /**
      * Constructor hook method.
      *
@@ -41,7 +31,6 @@ class RegisterBehavior extends BaseTokenBehavior
         parent::initialize($config);
         $this->validateEmail = (bool)Configure::read('Users.Email.validate');
         $this->useTos = (bool)Configure::read('Users.Tos.required');
-        $this->Email = new EmailSender();
     }
 
     /**
@@ -51,7 +40,6 @@ class RegisterBehavior extends BaseTokenBehavior
      * @param array $data User information
      * @param array $options ['tokenExpiration]
      * @return bool|EntityInterface
-     * @throws InvalidArgumentException
      */
     public function register($user, $data, $options)
     {
@@ -74,10 +62,8 @@ class RegisterBehavior extends BaseTokenBehavior
 
             $user->set('last_name', $last_name);
         }
-
         $validateEmail = Hash::get($options, 'validate_email');
         $tokenExpiration = Hash::get($options, 'token_expiration');
-        $emailClass = Hash::get($options, 'email_class');
         $user = $this->_table->patchEntity(
             $user,
             $data,
@@ -90,7 +76,7 @@ class RegisterBehavior extends BaseTokenBehavior
         $this->_table->isValidateEmail = $validateEmail;
         $userSaved = $this->_table->save($user);
         if ($userSaved && $validateEmail) {
-            $this->Email->sendValidationEmail($user, $emailClass);
+            $this->_sendValidationEmail($user);
         }
 
         return $userSaved;
@@ -103,7 +89,7 @@ class RegisterBehavior extends BaseTokenBehavior
      * @param null $callback function that will be returned.
      * @throws TokenExpiredException when token has expired.
      * @throws UserNotFoundException when user isn't found.
-     * @return User $user
+     * @return EntityInterface $user
      */
     public function validate($token, $callback = null)
     {
@@ -136,7 +122,7 @@ class RegisterBehavior extends BaseTokenBehavior
         if ($user->active) {
             throw new UserAlreadyActiveException(__d('CakeDC/Users', "User account already validated"));
         }
-        $user->activation_date = new DateTime();
+        $user->activation_date = new \DateTime();
         $user->token_expires = null;
         $user->active = true;
         $result = $this->_table->save($user);
@@ -217,5 +203,19 @@ class RegisterBehavior extends BaseTokenBehavior
         }
 
         return $validator;
+    }
+
+    /**
+     * Wrapper for mailer
+     *
+     * @param EntityInterface $user user
+     * @return void
+     */
+    protected function _sendValidationEmail($user)
+    {
+        $mailer = Configure::read('Users.Email.mailerClass') ?: 'CakeDC/Users.Users';
+        $this
+            ->getMailer($mailer)
+            ->send('validation', [$user]);
     }
 }

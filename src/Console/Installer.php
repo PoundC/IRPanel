@@ -105,57 +105,56 @@ class Installer
         if (in_array($bakeDatabaseConfig, ['Y', 'y'])) {
 
             static::setDatabaseDetails($rootDir, $io);
+        }
 
-            require_once(__DIR__ . '/../../config/bootstrap.php');
+        require_once(__DIR__ . '/../../config/bootstrap.php');
 
-            $shell = new Shell();
+        $shell = new Shell();
 
-            $installSchemas = $io->askAndValidate(
-                '<info>Install Default Schemas? (Default to Y)</info> [<comment>Y,n</comment>]? ',
-                $validator,
-                10,
-                'Y'
-            );
+        $installSchemas = $io->askAndValidate(
+            '<info>Install Default Schemas? (Default to Y)</info> [<comment>Y,n</comment>]? ',
+            $validator,
+            10,
+            'Y'
+        );
 
-            if (in_array($installSchemas, ['Y', 'y'])) {
+        if (in_array($installSchemas, ['Y', 'y'])) {
 
-                $shell->dispatchShell([
-                    'command' => 'migrations migrate',
-                    'extra' => []
-                ]);
+            $shell->dispatchShell([
+                'command' => 'Migrations.migrations migrate',
+                'extra' => []
+            ]);
 
-                foreach(Plugin::loaded() as $plugin) {
+            foreach(Plugin::loaded() as $plugin) {
 
-                    if($plugin != 'DebugKit') {
-
-                        $shell->dispatchShell([
-                            'command' => 'migrations migrate --plugin ' . $plugin,
-                            'extra' => []
-                        ]);
-                    }
-                }
-
-                $addSuperUser = $io->askAndValidate(
-                    '<info>Add Superuser to database? (Default to Y)</info> [<comment>Y,n</comment>]? ',
-                    $validator,
-                    10,
-                    'Y'
-                );
-
-                if (in_array($addSuperUser, ['Y', 'y'])) {
+                if($plugin != 'DebugKit') {
 
                     $shell->dispatchShell([
-                        'command' => 'users addSuperuser',
+                        'command' => 'migrations.migrations migrate --plugin ' . $plugin,
                         'extra' => []
                     ]);
                 }
             }
         }
 
+        $addSuperUser = $io->askAndValidate(
+            '<info>Add Superuser to database? (Default to Y)</info> [<comment>Y,n</comment>]? ',
+            $validator,
+            10,
+            'Y'
+        );
+
+        if (in_array($addSuperUser, ['Y', 'y'])) {
+
+            $shell->dispatchShell([
+                'command' => 'users addSuperuser',
+                'extra' => []
+            ]);
+        }
+
         $class = 'Cake\Codeception\Console\Installer';
         if (class_exists($class)) {
             $class::customizeCodeceptionBinary($event);
-
         }
     }
 

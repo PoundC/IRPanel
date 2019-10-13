@@ -2,6 +2,7 @@
 ##########################
 /config/app.php
 /config/merchants.php
+/config/superuser
 /tmp/*
 /logs/*
 .idea/*
@@ -12,6 +13,7 @@ webroot/documentation
 webroot/pages
 webroot/plugins
 webroot/assets
+webroot/php_errors.log
 .DS_Store
 config/Migrations/schema-dump-default.lock
 
