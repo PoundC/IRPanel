@@ -14,6 +14,7 @@
  */
 namespace App\Controller;
 
+use AdminLTE\Utility\Messaging;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\Core\Configure;
@@ -97,6 +98,9 @@ class AppController extends Controller
         if(method_exists($this->Auth, 'user')) {
 
             if ($this->Auth->user('id')) {
+
+                $this->set('totalMessageCount', Messaging::getTotalCount($this->Auth->user('id')));
+                $this->set('navMessagesArray', Messaging::getNavMessages($this->Auth->user('id')));
 
                 $currentId = $this->Auth->user('id');
 

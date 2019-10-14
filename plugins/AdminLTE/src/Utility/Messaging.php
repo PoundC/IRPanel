@@ -28,7 +28,7 @@ class Messaging
     public static function getNavMessages($user_id)
     {
         $messagesArray = array();
-        $messagesTable = TableRegistry::get('messaging');
+        $messagesTable = TableRegistry::get('AdminLTE.Messaging');
 
         $messages = $messagesTable->find('all', ['contain' => ['Users', 'Recipients']])->where([
             'recipient_read' => 0,
@@ -59,7 +59,7 @@ class Messaging
             return self::$userCount;
         }
 
-        $messagesTable = TableRegistry::get('messaging');
+        $messagesTable = TableRegistry::get('AdminLTE.Messaging');
 
         $userCount = $messagesTable->find('all')->where([
             'messaging.read' => 0,
