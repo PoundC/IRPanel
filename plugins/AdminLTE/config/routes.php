@@ -53,6 +53,13 @@ Router::connect('/senduser/*', ['plugin' => 'AdminLTE', 'controller' => 'Help', 
 Router::connect('/convertfaq/*', ['plugin' => 'AdminLTE', 'controller' => 'Help', 'action' => 'convert']);
 Router::connect('/autoanswer/*', ['plugin' => 'AdminLTE', 'controller' => 'Help', 'action' => 'autoanswer']);
 
+Router::connect('/messages', ['plugin' => 'AdminLTE', 'controller' => 'Messaging', 'action' => 'index']);
+Router::connect('/messages/*', ['plugin' => 'AdminLTE', 'controller' => 'Messaging', 'action' => 'view']);
+Router::connect('/message-reply/*', ['plugin' => 'AdminLTE', 'controller' => 'Messaging', 'action' => 'sendReply']);
+Router::connect('/message-delete/*', ['plugin' => 'AdminLTE', 'controller' => 'Messaging', 'action' => 'messageDelete']);
+Router::connect('/message-new', ['plugin' => 'AdminLTE', 'controller' => 'Messaging', 'action' => 'compose']);
+Router::connect('/autocomplete', ['plugin' => 'AdminLTE', 'controller' => 'Messaging', 'action' => 'toAutocomplete']);
+
 /*
  *
  * Billing Routes

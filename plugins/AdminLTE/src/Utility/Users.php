@@ -13,54 +13,72 @@ use Cake\Core\Configure;
 
 class Users
 {
-    public function getUserTable()
+    public static function getUserTable()
     {
         $usersTable = TableRegistry::get(Configure::read('Users.table'));
 
         return $usersTable;
     }
 
-    public function update($user, $column, $value)
+    public static function update($user, $column, $value)
     {
-        $usersTable = $this->getUserTable();
+        $usersTable = Users::getUserTable();
         $user->set($column, $value);
         $usersTable->save($user);
     }
 
-    public function getUserById($id)
+    public static function getUserById($id)
     {
-        $usersTable = $this->getUserTable();
+        $usersTable = Users::getUserTable();
         $usersQuery = $usersTable->find('all')->where(['Users.id' => $id])->limit(1);
         $userEntity = $usersQuery->first();
 
         return $userEntity;
     }
 
-    public function getUserByEmail($email)
+    public static function getUserByEmail($email)
     {
-        $usersTable = $this->getUserTable();
+        $usersTable = Users::getUserTable();
         $usersQuery = $usersTable->find('all')->where(['users.email' => $email])->limit(1);
         $userEntity = $usersQuery->first();
 
         return $userEntity;
     }
 
-    public function getUserRoleById($id)
+    public static function getUserByUsername($username)
     {
-        $usersTable = $this->getUserTable();
+        $usersTable = Users::getUserTable();
+        $usersQuery = $usersTable->find('all')->where(['users.username' => $username])->limit(1);
+        $userEntity = $usersQuery->first();
+
+        return $userEntity;
+    }
+
+    public static function getOtherUserByID($user_id)
+    {
+        $usersTable = self::getUserTable();
+
+        $user = $usersTable->find('all')->where(['id' => $user_id])->first();
+
+        return $user;
+    }
+
+    public static function getUserRoleById($id)
+    {
+        $usersTable = Users::getUserTable();
         $usersQuery = $usersTable->find('all')->where(['users.id' => $id])->limit(1);
         $userEntity = $usersQuery->first();
 
         return $userEntity->get('role');
     }
 
-    public function findUserBySubscriptionId($id)
+    public static function findUserBySubscriptionId($id)
     {
         $subscriptionsTable = TableRegistry::get('users_subscriptions');
         $subscriptionQuery = $subscriptionsTable->find('all')->where(['subscription_id' => $id])->limit(1);
         $subscriptionEntity = $subscriptionQuery->first();
 
-        $usersTable = $this->getUserTable();
+        $usersTable = Users::getUserTable();
 
         if(isset($subscriptionEntity)) {
 
@@ -77,9 +95,9 @@ class Users
         }
     }
 
-    public function findSubscriptionIdByUserId($id)
+    public static function findSubscriptionIdByUserId($id)
     {
-        $usersTable = $this->getUserTable();
+        $usersTable = Users::getUserTable();
 
         $subscriptionsTable = TableRegistry::get('users_subscriptions');
         $subscriptionQuery = $subscriptionsTable->find('all')->where(['user_id' => $id])->orderDesc('ref_id')->limit(1);
@@ -88,27 +106,27 @@ class Users
         return $subscriptionEntity->get('subscription_id');
     }
 
-    public function findAllUsersBy($column, $value)
+    public static function findAllUsersBy($column, $value)
     {
-        $usersTable = $this->getUserTable();
+        $usersTable = Users::getUserTable();
         $usersQuery = $usersTable->find('all')->where(['users.' . $column => $value]);
         $usersEntities = $usersQuery->all();
 
         return $usersEntities;
     }
 
-    public function countAllUsersBy($column, $value)
+    public static function countAllUsersBy($column, $value)
     {
-        $usersTable = $this->getUserTable();
+        $usersTable = Users::getUserTable();
         $usersQuery = $usersTable->find('all')->where(['users.' . $column => $value]);
         $usersEntities = $usersQuery->count();
 
         return $usersEntities;
     }
 
-    public function getUserObject($id)
+    public static function getUserObject($id)
     {
-        $usersTable = $this->getUserTable();
+        $usersTable = Users::getUserTable();
         $usersQuery = $usersTable->find('all')->where(['users.id' => $id])->limit(1);
         $userEntity = $usersQuery->first();
 
