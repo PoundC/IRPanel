@@ -228,13 +228,10 @@ if (Configure::read('debug')) {
 
 Plugin::load('Migrations');
 
-Configure::write('Users.config', ['users']);
-Plugin::load('CakeDC/Users', ['routes' => false, 'bootstrap' => true]);
-
 Plugin::load('Muffin/Slug');
 
 Plugin::load('Crud');
 
 Plugin::load('ADmad/JwtAuth');
 
-Plugin::load('AdminLTE', ['bootstrap' => false, 'routes' => true]);
+Plugin::load('AdminLTE', ['bootstrap' => true, 'routes' => true]);

@@ -20,8 +20,8 @@ use Cake\Core\Configure;
 use Cake\Controller\Component\AuthComponent;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
-use App\Utility\Menu;
-use App\Utility\Sidebar;
+use AdminLTE\Utility\Menu;
+use AdminLTE\Utility\Sidebar;
 use CakeDC\Users\Controller\Traits\CustomUsersTableTrait;
 
 /**
@@ -55,6 +55,7 @@ class AppController extends Controller
 
         $this->Auth->configShallow('loginRedirect', '/dashboard');
         $this->Auth->configShallow('logoutRedirect', '/login');
+        $this->Auth->configShallow('loginAction', '/login');
         /*
          * Enable the following component for recommended CakePHP security settings.
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
@@ -63,7 +64,7 @@ class AppController extends Controller
         $this->loadComponent('Security');
         $this->loadComponent('Csrf');
 
-        $this->Auth->allow(['register', 'requestResetPassword']);
+        $this->Auth->allow(['register', 'requestResetPassword', 'login']);
     }
 
     /**

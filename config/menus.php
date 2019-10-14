@@ -1,6 +1,6 @@
 <?php
 
-use App\Utility\Sidebar;
+use AdminLTE\Utility\Sidebar;
 
 $menus = [
     'visitor' => [
@@ -94,7 +94,7 @@ $menus = [
             'path'  => '/dashboard'
         ]
     ],
-    'admin' => [
+    'superuser' => [
         [
             'type'  => 'header',
             'header' => 'Welcome Admin'

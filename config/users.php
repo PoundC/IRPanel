@@ -2,8 +2,8 @@
 
 return [
     'Users' => [
-        'table' => 'Users',
+        'table' => 'AdminLTE.Users',
         // Controller used to manage users plugin features & actions
-        'controller' => 'Users'
+        'controller' => 'AdminLTE/Users'
         ]
 ];
