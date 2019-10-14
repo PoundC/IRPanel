@@ -31,28 +31,15 @@ class NotificationsController extends AppController
 
             foreach($data as $message_id) {
 
-                $message = $this->Messages->find('all')->where([
-                    'Messages.account_id' => $this->Auth->user('id'),
-                    'Messages.id' => $message_id
+                $message = $this->Notifications->find('all')->where([
+                    'Notifications.user_id' => $this->Auth->user('id'),
+                    'Notifications.id' => $message_id
                 ])->first();
 
                 if (isset($message)) {
 
-                    $message->set('user_deleted', 1);
+                    $message->set('seen', 1);
                     $this->Messages->save($message);
-                }
-                else {
-
-                    $message = $this->Messages->find('all')->where([
-                        'Messages.to_user_id' => $this->Auth->user('id'),
-                        'Messages.id' => $message_id
-                    ])->first();
-
-                    if (isset($message)) {
-
-                        $message->set('recipient_deleted', 1);
-                        $this->Messages->save($message);
-                    }
                 }
             }
         }
@@ -68,7 +55,8 @@ class NotificationsController extends AppController
 
         $notifications = $this->paginate($this->Notifications->find('all', ['contain' => ['Users']])->where([
             'Notifications.user_id' => $this->Auth->user('id'),
-            'Notifications.deleted' => '0'
+            'Notifications.deleted' => '0',
+            'Notifications.seen' => '0'
         ])->orderDesc('Notifications.created'));
 
         foreach($notifications as $notification) {
