@@ -73,7 +73,14 @@ class UsersController extends BaseUsersController
 
         parent::edit($id);
 
-        $this->render('admin_edit_user');
+        if($this->request->getMethod() == 'POST') {
+
+            return $this->redirect('/admin/edit/' . $id);
+        }
+        else {
+
+            $this->render('admin_edit_user');
+        }
     }
 
     public function register() {

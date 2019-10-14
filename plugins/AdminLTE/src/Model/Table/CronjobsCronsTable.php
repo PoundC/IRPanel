@@ -26,7 +26,7 @@ class CronjobsCronsTable extends Table
     {
         parent::initialize($config);
 
-        $this->hasMany('cronjobs_logs', array())->setForeignKey('cronjobs_cron_id')->setProperty('logs');
+        $this->hasMany('CronjobsLogs', array())->setForeignKey('cronjobs_cron_id')->setProperty('logs');
 
         $this->setTable('cronjobs_crons');
         $this->setDisplayField('name');

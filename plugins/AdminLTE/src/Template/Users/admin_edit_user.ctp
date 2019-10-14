@@ -57,7 +57,7 @@ use Cake\Core\Configure;
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <?= $this->Form->create($user2, array('url' => '/users/users/edit/' . $currentUser->id)); ?>
+            <?= $this->Form->create($user2, array('url' => '/admin/edit/' . $user2->id)); ?>
             <div class="box-body">
                 <div class="form-group has-feedback">
                     <?php echo $this->Form->control('username', ['label' => false, 'type' => 'text', 'placeholder' => 'Username', 'class' => 'form-control']); ?>
