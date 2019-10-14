@@ -53,6 +53,22 @@ Router::connect('/senduser/*', ['plugin' => 'AdminLTE', 'controller' => 'Help', 
 Router::connect('/convertfaq/*', ['plugin' => 'AdminLTE', 'controller' => 'Help', 'action' => 'convert']);
 Router::connect('/autoanswer/*', ['plugin' => 'AdminLTE', 'controller' => 'Help', 'action' => 'autoanswer']);
 
+/*
+ *
+ * Notifications Routes
+ *
+ */
+
+
+Router::connect('/notifications', ['plugin' => 'AdminLTE', 'controller' => 'Notifications', 'action' => 'index']);
+
+/*
+ *
+ * Messaging Routes
+ *
+ */
+
+
 Router::connect('/messages', ['plugin' => 'AdminLTE', 'controller' => 'Messaging', 'action' => 'index']);
 Router::connect('/messages/*', ['plugin' => 'AdminLTE', 'controller' => 'Messaging', 'action' => 'view']);
 Router::connect('/message-reply/*', ['plugin' => 'AdminLTE', 'controller' => 'Messaging', 'action' => 'sendReply']);

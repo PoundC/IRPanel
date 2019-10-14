@@ -106,6 +106,45 @@
                         <?php } ?>
                     </ul>
                 </li>
+                <li class="dropdown notifications-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-bell-o"></i>
+                        <?php if($totalNotificationsCount > 0 ) { ?>
+                            <span class="label label-warning"><?= $totalNotificationsCount ?></span>
+                        <?php } ?>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">You have <?= $totalNotificationsCount ?> notifications</li>
+                        <li>
+                            <!-- inner menu: contains the actual data -->
+                            <ul class="menu">
+                                <?php foreach($navNotificationsArray as $notification) { ?>
+                                    <?php switch($notification['type']) {
+                                        case 'users':
+                                            $icon = 'users';
+                                            $color = 'text-aqua';
+                                            break;
+                                        case 'alert':
+                                            $icon = 'warning';
+                                            $color = 'text-yellow';
+                                            break;
+                                        case 'sale':
+                                            $icon = 'shopping-cart';
+                                            $color = 'text-green';
+                                            break;
+                                            ?>
+                                        <?php } ?>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-<?= $icon ?> <?= $color ?>"></i> <?= $notification['message'] ?>
+                                        </a>
+                                    </li>
+                                <?php } ?>
+                            </ul>
+                        </li>
+                        <li class="footer"><a href="/notifications">View all</a></li>
+                    </ul>
+                </li>
                 <?php
                             if (false == true) {
                     ?>

@@ -34,7 +34,7 @@ class FaqAnswersTable extends Table
     {
         parent::initialize($config);
 
-        $this->belongsTo('FaqTopics', array())->setForeignKey('faq_topic_id')->setProperty('topic');
+        $this->belongsTo('AdminLTE.FaqTopics', array())->setForeignKey('faq_topic_id')->setProperty('topic');
         $this->hasMany('FaqQuestions', array())->setForeignKey('faq_answer_id')->setProperty('questions');
         $this->hasMany('FaqAnswerTaga', array())->setForeignKey('faq_answer_id')->setProperty('answer_tags');
 
