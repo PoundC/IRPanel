@@ -16,18 +16,28 @@
         "cakephp/plugin-installer": "~1.0",
         "cebe/markdown": "dev-master",
         "chuyskywalker/rolling-curl": "^3.1",
+        "evenement/evenement": "3.0.1 as 2.0.0",
         "friendsofcake/crud": "^5.4.6",
         "friendsofcake/crud-view": "^0.13.0",
         "friendsofcake/search": "^5.3",
         "google/apiclient": "^2.0",
         "google/recaptcha": "^1.2",
+        "guzzlehttp/guzzle": "6.3.3 as 5.3.1",
+        "josegonzalez/dotenv": "^3.2",
         "league/oauth1-client": "1.7.0",
         "league/oauth2-facebook": "^2.0",
         "league/oauth2-google": "3.0.1",
         "mobiledetect/mobiledetectlib": "2.*",
+        "monolog/monolog": "2.0.0 as 1.25.1",
         "muffin/slug": "^1.4.0",
         "neomerx/json-api": "^1.0",
         "nicolab/php-ftp-client": "^1.4",
+        "phergie/phergie-irc-bot-react": "^2.1",
+        "phergie/phergie-irc-plugin-react-autojoin": "^2.0",
+        "phergie/phergie-irc-plugin-react-command": "^2.0",
+        "phergie/phergie-irc-plugin-react-commandhelp": "^2.1",
+        "phergie/phergie-irc-plugin-react-eventfilter": "^2.2",
+        "phergie/phergie-irc-plugin-react-joinpart": "^2.0",
         "robthree/twofactorauth": "^1.6"
     },
     "require-dev": {
@@ -35,7 +45,6 @@
         "cakephp/cakephp-codesniffer": "^3.0",
         "cakephp/debug_kit": "^3.17.0",
         "dereuromark/cakephp-ide-helper": "^0.13.20",
-        "josegonzalez/dotenv": "3.*",
         "phpunit/phpunit": "^5|^6",
         "psy/psysh": "@stable"
     },
@@ -46,14 +55,16 @@
     "autoload": {
         "psr-4": {
             "App\\": "src",
-            "AdminLTE\\": "./plugins/AdminLTE/src"
+            "AdminLTE\\": "./plugins/AdminLTE/src",
+            "IRPanel\\": "./plugins/IRPanel/src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "App\\Test\\": "tests",
             "Cake\\Test\\": "./vendor/cakephp/cakephp/tests",
-            "AdminLTE\\Test\\": "./plugins/AdminLTE/tests"
+            "AdminLTE\\Test\\": "./plugins/AdminLTE/tests",
+            "IRPanel\\Test\\": "./plugins/IRPanel/tests/"
         }
     },
     "scripts": {
