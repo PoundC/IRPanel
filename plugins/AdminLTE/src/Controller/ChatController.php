@@ -137,6 +137,7 @@ class ChatController extends AppController
 
         $roomId = $chatRoomsResult->name;
 
+        $message_id = 0;
         foreach ($chatsResults as $itemKey => $itemArray) {
 
             $message_id = $itemArray->id;
@@ -146,6 +147,9 @@ class ChatController extends AppController
 
         $searchResults = 0;
         $searchQuery = '';
+
+        $this->loadModel('AdminLTE.FaqQuestions');
+        $this->loadModel('AdminLTE.FaqAnswers');
 
         if($this->request->getMethod() == 'POST' || $this->request->getQuery('search') != '') {
 
@@ -157,8 +161,6 @@ class ChatController extends AppController
 
                 $data = $this->request->getData();
             }
-
-            $this->loadModel('AdminLTE.FaqQuestions');
 
             $questionsQuery = $this->FaqQuestions->find('all', ['contain' => ['FaqAnswers', 'FaqAnswers.FaqTopics']])
                 ->where(['FaqTopics.topic LIKE' => '%' . $data['search'] . '%'])

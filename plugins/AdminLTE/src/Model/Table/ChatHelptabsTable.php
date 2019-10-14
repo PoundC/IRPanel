@@ -26,7 +26,7 @@ class ChatHelptabsTable extends Table
     {
         parent::initialize($config);
 
-        $this->belongsTo('Faq_Answers', array())->setForeignKey('faq_answer_id')->setProperty('answer');
+        $this->belongsTo('AdminLTE.FaqAnswers', array())->setForeignKey('faq_answer_id')->setProperty('answer');
         $this->belongsTo('ChatChatrooms', array())->setForeignKey('chatroom_id')->setProperty('room');
 
         $this->setTable('chat_helptabs');

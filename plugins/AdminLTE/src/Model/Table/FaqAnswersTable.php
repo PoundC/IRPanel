@@ -34,9 +34,9 @@ class FaqAnswersTable extends Table
     {
         parent::initialize($config);
 
-        $this->belongsTo('faq_topics', array())->setForeignKey('faq_topic_id')->setProperty('topic');
-        $this->hasMany('faq_questions', array())->setForeignKey('faq_answer_id')->setProperty('questions');
-        $this->hasMany('faq_answer_tags', array())->setForeignKey('faq_answer_id')->setProperty('answer_tags');
+        $this->belongsTo('FaqTopics', array())->setForeignKey('faq_topic_id')->setProperty('topic');
+        $this->hasMany('FaqQuestions', array())->setForeignKey('faq_answer_id')->setProperty('questions');
+        $this->hasMany('FaqAnswerTaga', array())->setForeignKey('faq_answer_id')->setProperty('answer_tags');
 
         $this->addBehavior('Muffin/Slug.Slug', [
             'displayField'  => 'subject',
