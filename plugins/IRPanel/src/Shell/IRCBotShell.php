@@ -2,8 +2,11 @@
 namespace IRPanel\Shell;
 
 use Cake\Console\Shell;
+use Cake\Core\Configure;
+use Cake\Core\Configure\Engine\PhpConfig;
 use Phergie\Irc\Connection;
 use josegonzalez\Dotenv\Loader as SensitiveDataLoader;
+use IRPanel\Logger\IRLogger;
 
 /**
  * IRCBot shell command.
@@ -40,22 +43,13 @@ class IRCBotShell extends Shell
 
         $this->loadModel('Channels');
 
-        SensitiveDataLoader::load([
-            'filepath' => '.env',
-            'expect' => [
-                'POUNDC_PASSWORD',
-            ],
-            'toEnv' => true,
-            'raiseExceptions' => false,
-        ]);
-
         $config = array(
             'connections' => array(
                 new Connection(array(
                     'serverHostname' => 'irc.poundc.com',
                     'serverPort' => 6697,
-                    'username' => 'tmc',
-                    'realname' => 'IRBot',
+                    'username' => 'irpanel',
+                    'realname' => 'Internet Relay Panel Bot',
                     'nickname' => 'IRBot',
                     'password' => $_ENV['POUNDC_PASSWORD'],
                     'options' => array(
@@ -67,7 +61,9 @@ class IRCBotShell extends Shell
                 new \Phergie\Irc\Plugin\React\AutoJoin\Plugin(['channels' => ['#cashmoney']]),
                 new \Phergie\Irc\Plugin\React\Command\Plugin(['prefix' => '!']),
                 new \Phergie\Irc\Plugin\React\JoinPart\Plugin(),
-            )
+                new \IRPanelQuotes\Plugin()
+            ),
+            'logger' => new IRLogger()
         );
 
         $bot = new \Phergie\Irc\Bot\React\Bot;

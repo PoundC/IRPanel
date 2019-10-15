@@ -56,7 +56,9 @@
         "psr-4": {
             "App\\": "src",
             "AdminLTE\\": "./plugins/AdminLTE/src",
-            "IRPanel\\": "./plugins/IRPanel/src/"
+            "IRPanel\\": "./plugins/IRPanel/src/",
+            "IRPanelQuotes\\": "./plugins/IRPanelQuotes/src/",
+            "IRPanelRants\\": "./plugins/IRPanelRants/src/"
         }
     },
     "autoload-dev": {
@@ -64,7 +66,9 @@
             "App\\Test\\": "tests",
             "Cake\\Test\\": "./vendor/cakephp/cakephp/tests",
             "AdminLTE\\Test\\": "./plugins/AdminLTE/tests",
-            "IRPanel\\Test\\": "./plugins/IRPanel/tests/"
+            "IRPanel\\Test\\": "./plugins/IRPanel/tests/",
+            "IRPanelQuotes\\Test\\": "./plugins/IRPanelQuotes/tests/",
+            "IRPanelRants\\Test\\": "./plugins/IRPanelRants/tests/"
         }
     },
     "scripts": {

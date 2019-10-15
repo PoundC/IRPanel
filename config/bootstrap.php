@@ -13,6 +13,8 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
+ini_set('memory_limit','1600M');
+
 /*
  * Configure paths required to find CakePHP + general filepath constants
  */

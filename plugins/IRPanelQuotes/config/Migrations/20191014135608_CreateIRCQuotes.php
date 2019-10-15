@@ -23,7 +23,6 @@ class CreateIRCQuotes extends AbstractMigration
         ]);
         $table->addColumn('created', 'datetime', [
             'default' => null,
-            'limit' => 2048,
             'null' => false
         ]);
         $table->create();

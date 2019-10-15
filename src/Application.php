@@ -34,10 +34,12 @@ class Application extends BaseApplication
      */
     public function bootstrap()
     {
-        $this->addPlugin('IRPanel');
-
         // Call parent to load bootstrap from files.
         parent::bootstrap();
+
+        $this->addPlugin('IRPanel');
+        $this->addPlugin('IRPanelQuotes');
+        $this->addPlugin('IRPanelRants');
 
         if (PHP_SAPI === 'cli') {
             try {
