@@ -39,7 +39,6 @@ class Application extends BaseApplication
 
         $this->addPlugin('IRPanel');
         $this->addPlugin('IRPanelQuotes');
-        $this->addPlugin('IRPanelRants');
 
         if (PHP_SAPI === 'cli') {
             try {

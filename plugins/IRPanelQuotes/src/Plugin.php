@@ -15,17 +15,12 @@ class Plugin extends AbstractPlugin
 {
     static public $tableName = 'i_r_c_quotes';
 
-    protected $command = 'notify';
     protected $connection = 'default';
     protected $table;
 
     public function __construct(array $config = [])
     {
         parent::__construct($config);
-
-        if (isset($config['command'])) {
-            $this->command = $config['command'];
-        }
 
         if (isset($config['connection'])) {
             $this->connection = $config['connection'];
