@@ -44,6 +44,7 @@ class HelpController extends AppController
             $data = $this->request->getData();
 
             $this->loadModel('AdminLTE.FaqQuestions');
+
             $questionsQuery = $this->FaqQuestions->find('all', ['contain' => ['FaqAnswers', 'FaqAnswers.FaqTopics']])
                                              ->where(['FaqTopics.topic LIKE' => '%' . $data['search'] . '%'])
                                              ->orWhere(['FaqQuestions.question LIKE' => '%' . $data['search'] . '%'])
