@@ -57,7 +57,9 @@
             "App\\": "src",
             "AdminLTE\\": "./plugins/AdminLTE/src",
             "IRPanel\\": "./plugins/IRPanel/src/",
-            "IRPanelQuotes\\": "./plugins/IRPanelQuotes/src/"
+            "IRPanelQuotes\\": "./plugins/IRPanelQuotes/src/",
+            "IRPanelVoting\\": "./plugins/IRPanelVoting/src/",
+            "IRPanelVetting\\": "./plugins/IRPanelVetting/src/"
         }
     },
     "autoload-dev": {
@@ -66,7 +68,9 @@
             "Cake\\Test\\": "./vendor/cakephp/cakephp/tests",
             "AdminLTE\\Test\\": "./plugins/AdminLTE/tests",
             "IRPanel\\Test\\": "./plugins/IRPanel/tests/",
-            "IRPanelQuotes\\Test\\": "./plugins/IRPanelQuotes/tests/"
+            "IRPanelQuotes\\Test\\": "./plugins/IRPanelQuotes/tests/",
+            "IRPanelVoting\\Test\\": "./plugins/IRPanelVoting/tests/",
+            "IRPanelVetting\\Test\\": "./plugins/IRPanelVetting/tests/"
         }
     },
     "scripts": {

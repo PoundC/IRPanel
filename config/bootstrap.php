@@ -13,7 +13,7 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
-ini_set('memory_limit','1600M');
+ini_set('memory_limit','16000M');
 
 /*
  * Configure paths required to find CakePHP + general filepath constants
@@ -238,4 +238,3 @@ Plugin::load('ADmad/JwtAuth');
 
 Plugin::load('AdminLTE', ['bootstrap' => true, 'routes' => true]);
 
-Plugin::load('IRPanel', ['bootstrap' => true, 'routes' => false]);

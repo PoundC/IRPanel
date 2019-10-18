@@ -39,6 +39,8 @@ class Application extends BaseApplication
 
         $this->addPlugin('IRPanel');
         $this->addPlugin('IRPanelQuotes');
+        $this->addPlugin('IRPanelVoting');
+        $this->addPlugin('IRPanelVetting');
 
         if (PHP_SAPI === 'cli') {
             try {

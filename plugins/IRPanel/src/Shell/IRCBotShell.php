@@ -41,33 +41,42 @@ class IRCBotShell extends Shell
 
         require __DIR__ . '/../../../../vendor/autoload.php';
 
+        $this->loadModel('IRCUserIdents');
+
+        $this->IRCUserIdents->updateAll(['ident_ended' => new \DateTime('now')], ['ident_ended' => '']);
+
         $this->loadModel('Channels');
 
-        $config = array(
-            'connections' => array(
-                new Connection(array(
-                    'serverHostname' => 'irc.poundc.com',
-                    'serverPort' => 6697,
-                    'username' => 'irpanel',
-                    'realname' => 'Internet Relay Panel Bot',
-                    'nickname' => 'IRBot',
-                    'password' => $_ENV['POUNDC_PASSWORD'],
-                    'options' => array(
-                        'transport' => 'ssl'
-                    )
-                ))
-            ),
-            'plugins' => array(
-                new \Phergie\Irc\Plugin\React\AutoJoin\Plugin(['channels' => ['#cashmoney']]),
-                new \Phergie\Irc\Plugin\React\Command\Plugin(['prefix' => '!']),
-                new \Phergie\Irc\Plugin\React\JoinPart\Plugin(),
-                new \IRPanelQuotes\Plugin()
-            ),
-            'logger' => new IRLogger()
-        );
+        $networks = Configure::read('networks');
 
-        $bot = new \Phergie\Irc\Bot\React\Bot;
-        $bot->setConfig($config);
-        $bot->run();
+        foreach($networks as $networkKey => $network) {
+
+            $config = array(
+                'connections' => array(
+                    new Connection(array(
+                        'serverHostname' => $network['server'],
+                        'serverPort' => $network['port'],
+                        'username' => $network['username'],
+                        'realname' => $network['realname'],
+                        'nickname' => $network['nickname'],
+                        'password' => $network['server_password'],
+                        'options' => $network['options']
+                    ))
+                ),
+                'plugins' => array(
+                    new \Phergie\Irc\Plugin\React\AutoJoin\Plugin(['channels' => ['#cashmoney']]),//$network['channels']]),
+                    new \Phergie\Irc\Plugin\React\Command\Plugin(['prefix' => '!']),
+                    new \Phergie\Irc\Plugin\React\JoinPart\Plugin(),
+                    new \IRPanel\Plugin(),
+                    new \IRPanelQuotes\Plugin(),
+                    new \IRPanelVoting\Plugin()
+                ),
+                'logger' => new IRLogger()
+            );
+
+            $bot = new \Phergie\Irc\Bot\React\Bot;
+            $bot->setConfig($config);
+            $bot->run();
+        }
     }
 }

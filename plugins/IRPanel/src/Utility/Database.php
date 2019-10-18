@@ -3,6 +3,7 @@
 namespace IRPanel\Utility;
 
 use Cake\ORM\TableRegistry;
+use Phergie\Irc\Plugin\React\Command\CommandEvent;
 
 class Database
 {
@@ -47,7 +48,65 @@ class Database
         return $channel->id;
     }
 
-    public static function getUserId($i_r_c_network_id, $nickname, $username, $hostname) {
+    public static function getRegistrationUserId($network_id, $nickname)
+    {
+        $usersTable = TableRegistry::get('i_r_c_user_registrations');
+
+        $user = $usersTable->find('all')->where([
+            'i_r_c_network_id' => $network_id,
+            'registered_nickname' => $nickname
+        ])->first();
+
+        if(!$user) {
+
+            $user = $usersTable->newEntity([
+               'i_r_c_network_id' => $network_id,
+               'registered_nickname' => $nickname
+            ]);
+
+            $usersTable->save($user);
+        }
+
+        return $user->id;
+    }
+
+    public static function getUserById($user_id) {
+        $usersTable = TableRegistry::get('i_r_c_users');
+
+        $user = $usersTable->find('all')->where([
+            'id' => $user_id
+        ])->first();
+
+        return $user;
+    }
+
+    public static function getRegistrationUserById($registration_user_id) {
+        $usersTable = TableRegistry::get('i_r_c_user_registrations');
+
+        $user = $usersTable->find('all')->where([
+            'id' => $registration_user_id
+        ])->first();
+
+        return $user;
+    }
+
+    public static function getUserIdByEvent(CommandEvent $event) {
+
+        return self::getUserByEvent($event)->get('id');
+    }
+
+    public static function getUserByEvent(CommandEvent $event) {
+
+        $nick = $event->getNick();
+        $username = $event->getUsername();
+        $host = $event->getHost();
+
+        $server = strtolower($event->getConnection()->getServerHostname());
+
+        return self::getUser(self::getNetworkId($server), $nick, $username, $host);
+    }
+
+    public static function getUser($i_r_c_network_id, $nickname, $username, $hostname) {
 
         $usersTable = TableRegistry::get('i_r_c_users');
 
@@ -70,9 +129,14 @@ class Database
 
             $usersTable->save($userEntity);
 
-            return $userEntity->id;
+            return $userEntity;
         }
 
-        return $user->id;
+        return $user;
+    }
+
+    public static function getUserId($i_r_c_network_id, $nickname, $username, $hostname) {
+
+        return self::getUser($i_r_c_network_id, $nickname, $username, $hostname)->get('id');
     }
 }

@@ -3,6 +3,7 @@
 namespace IRPanel\Core;
 
 use Cake\Core\BasePlugin;
+use Cake\ORM\TableRegistry;
 use Phergie\Irc\Bot\React\ClientAwareInterface;
 use Phergie\Irc\Bot\React\EventEmitterAwareInterface;
 use Phergie\Irc\Bot\React\EventQueueFactoryAwareInterface;
@@ -23,6 +24,18 @@ abstract class AbstractPlugin extends BasePlugin implements
     EventQueueFactoryAwareInterface,
     LoopAwareInterface
 {
+    protected $connection = 'default';
+    protected $table;
+
+    public function __construct(array $config = [])
+    {
+        parent::__construct($config);
+
+        if (isset($config['connection'])) {
+            $this->connection = $config['connection'];
+        }
+    }
+
     /**
      * Client for any adjustments the plugin may want to make
      *

@@ -15,22 +15,6 @@ class Plugin extends AbstractPlugin
 {
     static public $tableName = 'i_r_c_quotes';
 
-    protected $connection = 'default';
-    protected $table;
-
-    public function __construct(array $config = [])
-    {
-        parent::__construct($config);
-
-        if (isset($config['connection'])) {
-            $this->connection = $config['connection'];
-        }
-
-        $this->table = TableRegistry::get(self::$tableName);
-
-        $this->table->primaryKey(['id']);
-    }
-
     public function getSubscribedEvents()
     {
         if (!$this->connection) {

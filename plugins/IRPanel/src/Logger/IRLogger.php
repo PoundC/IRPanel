@@ -64,6 +64,8 @@ class IRLogger implements LoggerInterface
 
     public function logit($level, $message, array $context = array())
     {
+        file_put_contents('/tmp/irc', $message . "\n", FILE_APPEND);
+
         if(IRCParser::isIRCMessage($message) == true) {
 
             if(count($context) > 0) {
