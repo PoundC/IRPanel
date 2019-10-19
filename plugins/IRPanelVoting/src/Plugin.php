@@ -150,9 +150,6 @@ class Plugin extends AbstractPlugin
             return $queue->ircNotice($event->getSource(), 'No proposal found.');
         }
 
-        $proposal->set($proposalVote, $proposal->get($proposalVote) + 1);
-        $proposalsTable->save($proposal);
-
         $votesTable = TableRegistry::get('i_r_c_vote_votes');
         $vote = $votesTable->find('all')->where([
             'i_r_c_vote_proposal_id' => $proposal->id,
@@ -160,6 +157,9 @@ class Plugin extends AbstractPlugin
         ])->first();
 
         if(!$vote) {
+
+            $proposal->set($proposalVote, $proposal->get($proposalVote) + 1);
+            $proposalsTable->save($proposal);
 
             $voteEntity = $votesTable->newEntity([
                 'i_r_c_vote_proposal_id' => $proposal->id,
