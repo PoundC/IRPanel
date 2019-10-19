@@ -89,6 +89,11 @@ class Plugin extends AbstractPlugin
 
         $user = $this->client->readDataStorage($networkId . '.Users.' . $nick);
 
+        if($user == null || empty($user)) {
+
+            $user = new User();
+        }
+
         $user->setUsername($event->getParams()[2]);
         $user->setHost($event->getParams()[3]);
         $user->setRealname($event->getParams()[5]);
@@ -228,9 +233,13 @@ class Plugin extends AbstractPlugin
 
         if($user != NULL) {
 
-            $nickname = $user->isIdentifiedAs();
+            if($user->isIdentified()) {
 
-            $user->setRegistrationUserId(Database::getRegistrationUserId($networkId, $nickname));
+                $nickname = $user->isIdentifiedAs();
+
+                $user->setRegistrationUserId(Database::getRegistrationUserId($networkId, $nickname));
+            }
+
             $user->setUserId(Database::getUserId($networkId, $user->getNick(), $user->getUsername(), $user->getHost()));
 
             if ($user->getFlagForDeletion() == true) {

@@ -19,6 +19,7 @@ class Plugin extends AbstractPlugin
             return [];
         }
         return [
+            'command.voteadmin' => 'handleAdmin',
             'command.listprops' => 'handleList',
             'command.delprop' => 'handleDelete',
             'command.vote' => 'handleVote',
@@ -26,6 +27,7 @@ class Plugin extends AbstractPlugin
             'command.complete' => 'handleComplete',
             'command.votestats' => 'handleStats',
             'command.change' => 'handleChange',
+            'command.voteadmin.help' => 'handleAdminHelp',
             'command.change.help' => 'handleChangeHelp',
             'command.votestats.help' => 'handleStatsHelp',
             'command.list.help' => 'handleListHelp',
@@ -34,6 +36,63 @@ class Plugin extends AbstractPlugin
             'command.propose.help' => 'handleProposalHelp',
             'command.complete.help' => 'handleCompleteHelp'
         ];
+    }
+
+    public function handleAdmin(CommandEvent $event, EventQueueInterface $queue) {
+
+        $adminTable = TableRegistry::get('i_r_c_vote_admins');
+
+        $networkId = Database::getNetworkId($event->getConnection()->getServerHostname());
+        $nick = $event->getNick();
+        $user = $this->client->readDataStorage($networkId . '.Users.' . $nick);
+        $source = $event->getSource();
+        $params = $event->getCustomParams();
+
+        if(count($params) > 1 || count($params) == 0) {
+
+            return $queue->ircNotice($source, 'Incorrect amount of parameters, see !voteadmin.help for example.');
+        }
+
+        $target = $params[0];
+        array_shift($params);
+
+        if($user->isIdentified() != 1) {
+
+            return $queue->ircNotice($source, 'I do not recognize you, please login and then !ident');
+        }
+
+        $adminUser = $adminTable->find('all')->where(['i_r_c_user_registration_id' => $user->getRegistrationUserID()])->first();
+
+        if(!$adminUser) {
+
+            return $queue->ircNotice($source, 'Could not find your admin account, please /msg IRBot login ' . $nick . ' <your_password> OR !ident if already logged into UserServ');
+        }
+
+        $nextAdminUser = $this->client->readDataStorage($networkId . '.Users.' . $target);
+
+        if(!$nextAdminUser) {
+
+            return $queue->ircNotice($source, 'Could not find target user, are they in this channel?');
+        }
+
+        if($nextAdminUser->isIdentified() != 1) {
+
+            return $queue->ircNotice($source, 'I do not recognize ' . $target . ', are they registered? Please have them login and then !ident');
+        }
+
+        $adminEntity = $adminTable->find('all')->where(['i_r_c_user_registration_id' => $nextAdminUser->getRegistrationUserID()])->first();
+
+        if($adminEntity) {
+
+            return $queue->ircNotice($source, $target . ' already an admin user.');
+        }
+
+        $adminEntity = $adminTable->newEntity([
+
+        ]);
+        $adminTable->save($adminEntity);
+
+        $queue->ircNotice($source, $target . ' added as VoteAdmin.');
     }
 
     public function handlePropose(CommandEvent $event, EventQueueInterface $queue) {
@@ -92,11 +151,18 @@ class Plugin extends AbstractPlugin
         $proposalsTable = TableRegistry::get('i_r_c_vote_proposals');
         $proposals = $proposalsTable->find('all')->where(['completed' => 0])->all();
 
-        $queue->ircNotice($event->getSource(), 'Current Uncompleted Proposals List');
+        $queue->ircNotice($event->getSource(), 'Current Votes In Progress');
 
         foreach($proposals as $proposal) {
 
-            $queue->ircNotice($event->getSource(), 'Prop (' . $proposal->id . ') ' . $proposal->get('name') . ' = ' . $proposal->get('description'));
+            if($proposal->get('vetting') == 0) {
+
+                $queue->ircNotice($event->getSource(), 'Prop (' . $proposal->id . ') ' . $proposal->get('name') . ' = ' . $proposal->get('description'));
+            }
+            else {
+
+                $queue->ircNotice($event->getSource(), 'Nominee (' . $proposal->id . ') ' . $proposal->get('name') . ' = ' . $proposal->get('description'));
+            }
         }
     }
 
@@ -180,6 +246,7 @@ class Plugin extends AbstractPlugin
     }
 
     public function handleComplete(CommandEvent $event, EventQueueInterface $queue) {
+
         $networkId = Database::getNetworkId($event->getConnection()->getServerHostname());
         $nick = $event->getNick();
         $user = $this->client->readDataStorage($networkId . '.Users.' . $nick);
@@ -369,7 +436,10 @@ class Plugin extends AbstractPlugin
             return $queue->ircNotice($event->getSource(), 'No proposal found.');
         }
 
-        if($proposal->get('i_r_c_user_registration_id') == $user->getRegistrationUserId()) {
+        $adminTable = TableRegistry::get('i_r_c_vote_admins');
+        $admin = $adminTable->find('all')->where(['i_r_c_user_registration_id' => $user->getRegistrationUserId()])->first();
+
+        if($proposal->get('i_r_c_user_registration_id') == $user->getRegistrationUserId() || $admin) {
 
             $proposal->set('completed', 2);
 
@@ -416,5 +486,10 @@ class Plugin extends AbstractPlugin
     public function handleChangeHelp(CommandEvent $event, EventQueueInterface $queue) {
 
         $queue->ircNotice($event->getSource(), '!change (name.of.proposal || numeric_id) (yay || nay || abstain) [Short Reason Why]');
+    }
+
+    public function handleAdminHelp(CommandEvent $event, EventQueueInterface $queue) {
+
+        $queue->ircNotice($event->getSource(), '!voteadmin registered_user_nickname');
     }
 }
