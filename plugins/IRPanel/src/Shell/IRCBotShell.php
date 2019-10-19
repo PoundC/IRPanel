@@ -64,12 +64,13 @@ class IRCBotShell extends Shell
                     ))
                 ),
                 'plugins' => array(
-                    new \Phergie\Irc\Plugin\React\AutoJoin\Plugin(['channels' => ['#cashmoney']]),//$network['channels']]),
+                    new \Phergie\Irc\Plugin\React\AutoJoin\Plugin(['channels' => ['#c', '#cashmoney']]),//$network['channels']]),
                     new \Phergie\Irc\Plugin\React\Command\Plugin(['prefix' => '!']),
                     new \Phergie\Irc\Plugin\React\JoinPart\Plugin(),
                     new \IRPanel\Plugin(),
                     new \IRPanelQuotes\Plugin(),
-                    new \IRPanelVoting\Plugin()
+                    new \IRPanelVoting\Plugin(),
+                    new \IRPanelVetting\Plugin()
                 ),
                 'logger' => new IRLogger()
             );

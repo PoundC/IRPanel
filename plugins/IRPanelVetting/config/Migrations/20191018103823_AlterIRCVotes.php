@@ -12,7 +12,10 @@ class AlterIRCVotes extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('i_r_c_votes');
+        $table = $this->table('i_r_c_vote_proposals');
+        $table->addColumn('vetting', 'integer', [
+            'default' => 0
+        ]);
         $table->update();
     }
 }

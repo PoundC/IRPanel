@@ -13,17 +13,6 @@ use IRPanel\Utility\Database;
  */
 class Plugin extends AbstractPlugin
 {
-    static public $tableName = 'i_r_c_votes';
-
-    public function __construct(array $config = [])
-    {
-        parent::__construct($config);
-
-        $this->table = TableRegistry::get(self::$tableName);
-
-        $this->table->primaryKey(['id']);
-    }
-
     public function getSubscribedEvents()
     {
         if (!$this->connection) {
@@ -281,26 +270,26 @@ class Plugin extends AbstractPlugin
 
     public function handleProposalHelp(CommandEvent $event, EventQueueInterface $queue) {
 
-        return $queue->ircPrivmsg('!propose name.of.proposal = Description of proposal!');
+        return $queue->ircPrivmsg($event->getSource(), '!propose name.of.proposal = Description of proposal!');
     }
 
     public function handleDeleteHelp(CommandEvent $event, EventQueueInterface $queue) {
 
-        $queue->ircPrivmsg('!delprop (name.of.proposal || numeric_id)');
+        $queue->ircPrivmsg($event->getSource(), '!delprop (name.of.proposal || numeric_id)');
     }
 
     public function handleListHelp(CommandEvent $event, EventQueueInterface $queue) {
 
-        $queue->ircPrivmsg('!listprops');
+        $queue->ircPrivmsg($event->getSource(), '!listprops');
     }
 
     public function handleVoteHelp(CommandEvent $event, EventQueueInterface $queue) {
 
-        $queue->ircPrivmsg('!vote (name.of.proposal || numeric_id) (yay || nay || abstain) [Short Reason Why]');
+        $queue->ircPrivmsg($event->getSource(), '!vote (name.of.proposal || numeric_id) (yay || nay || abstain) [Short Reason Why]');
     }
 
     public function handleCompleteHelp(CommandEvent $event, EventQueueInterface $queue) {
 
-        $queue->ircPrivmsg('!complete (name.of.proposal || numeric_id)');
+        $queue->ircPrivmsg($event->getSource(), '!complete (name.of.proposal || numeric_id)');
     }
 }
