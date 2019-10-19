@@ -226,7 +226,7 @@ class Plugin extends AbstractPlugin
 
         $user = $this->client->readDataStorage($networkId . '.Users.' . $nick);
 
-        if($user != NULL && $user->isIdentified() == 1) {
+        if($user != NULL) {
 
             $nickname = $user->isIdentifiedAs();
 
