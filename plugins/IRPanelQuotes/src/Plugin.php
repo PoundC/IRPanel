@@ -88,7 +88,7 @@ class Plugin extends AbstractPlugin
 
     public function showCalc(EventQueueInterface $queue, $source, $calcEntity)
     {
-        $queue->ircPrivmsg($source, $calcEntity->topic . ' = ' . $calcEntity->quote);
+        $queue->ircNotice($source, $calcEntity->topic . ' = ' . $calcEntity->quote);
     }
 
     public function handleRandomCalc(CommandEvent $event, EventQueueInterface $queue) {
@@ -118,7 +118,7 @@ class Plugin extends AbstractPlugin
 
             if(!$calc) {
 
-                $queue->ircPrivmsg($source, 'No calc found.');
+                $queue->ircNotice($source, 'No calc found.');
             }
             else {
 
@@ -169,7 +169,7 @@ class Plugin extends AbstractPlugin
 
             if(!$calcs) {
 
-                $queue->ircPrivmsg($source, 'No calc found.');
+                $queue->ircNotice($source, 'No calc found.');
             }
             else {
 
@@ -182,7 +182,7 @@ class Plugin extends AbstractPlugin
 
                 $results = rtrim($results, ', ');
 
-                $queue->ircPrivmsg($source, 'Results[' . $calcCount . ']: ' . $results);
+                $queue->ircNotice($source, 'Results[' . $calcCount . ']: ' . $results);
             }
         }
         else if(count($params) == 2) {
@@ -196,7 +196,7 @@ class Plugin extends AbstractPlugin
 
             if(!$calcs) {
 
-                $queue->ircPrivmsg($source, 'No calc found.');
+                $queue->ircNotice($source, 'No calc found.');
             }
             else {
 
@@ -209,7 +209,7 @@ class Plugin extends AbstractPlugin
 
                 $results = rtrim($results, ', ');
 
-                $queue->ircPrivmsg($source, 'Results[' . $calcCount . '][' . $params[1] . ']: ' . $results);
+                $queue->ircNotice($source, 'Results[' . $calcCount . '][' . $params[1] . ']: ' . $results);
             }
         }
         else if(count($params) === 0 || count($params) > 2)
@@ -220,17 +220,17 @@ class Plugin extends AbstractPlugin
 
     public function handleSaveCalcHelp(CommandEvent $event, EventQueueInterface $queue) {
 
-        $queue->ircPrivmsg($event->getSource(), "\x02Usage:\x02 calc <topic> = <quote>");
+        $queue->ircNotice($event->getSource(), "\x02Usage:\x02 calc <topic> = <quote>");
     }
 
     public function handleRandomCalcHelp(CommandEvent $event, EventQueueInterface $queue) {
 
-        $queue->ircPrivmsg($event->getSource(), "\x02Usage:\x02 c");
-        $queue->ircPrivmsg($event->getSource(), "\x02Usage:\x02 c <topic>");
+        $queue->ircNotice($event->getSource(), "\x02Usage:\x02 c");
+        $queue->ircNotice($event->getSource(), "\x02Usage:\x02 c <topic>");
     }
 
     public function handleSearchCalcHelp(CommandEvent $event, EventQueueInterface $queue) {
 
-        $queue->ircPrivmsg($event->getSource(), "\x02Usage:\x02 search <topic>");
+        $queue->ircNotice($event->getSource(), "\x02Usage:\x02 search <topic>");
     }
 }

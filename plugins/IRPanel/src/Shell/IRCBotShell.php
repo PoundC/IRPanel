@@ -77,6 +77,13 @@ class IRCBotShell extends Shell
 
             $bot = new \Phergie\Irc\Bot\React\Bot;
             $bot->setConfig($config);
+            $bot->getClient()->on('connect.after.each', function(\Phergie\Irc\ConnectionInterface $connection, \Phergie\Irc\Client\React\WriteStream $write) use ($network) {
+                $write->ircPrivmsg('UserServ', 'LOGIN IRBot ' . $network['userserv_password']);
+            });
+            $bot->getClient()->on('connect.end', function(\Phergie\Irc\ConnectionInterface $connection, \Psr\Log\LoggerInterface $logger) use ($bot) {
+                $logger->debug('Connection to ' . $connection->getServerHostname() . ' lost, attempting to reconnect');
+                $bot->getClient()->addConnection($connection);
+            });
             $bot->run();
         }
     }

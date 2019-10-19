@@ -10,8 +10,8 @@ return [
             'altnick' => 'IRB0T',
             'username' => 'irpanel',
             'realname' => 'Internet Relay Bot',
-            'nicksrv_password' => 'h0dlg4ng',
-            'usersrv_password' => 'h0dlg4ng',
+            'nickserv_password' => 'h0dlg4ng',
+            'userserv_password' => 'TMC69isth3man',
             'oper_password' => 'h0dlg4ng',
             'channels' => [
                 '#c',

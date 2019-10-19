@@ -24,6 +24,10 @@ class Plugin extends AbstractPlugin
             'command.vote' => 'handleVote',
             'command.propose' => 'handlePropose',
             'command.complete' => 'handleComplete',
+            'command.votestats' => 'handleStats',
+            'command.change' => 'handleChange',
+            'command.change.help' => 'handleChangeHelp',
+            'command.votestats.help' => 'handleStatsHelp',
             'command.list.help' => 'handleListHelp',
             'command.delprop.help' => 'handleDeleteHelp',
             'command.vote.help' => 'handleVoteHelp',
@@ -41,7 +45,7 @@ class Plugin extends AbstractPlugin
 
         if($user->isIdentified() == false) {
 
-            return $queue->ircPrivmsg($source, 'I do not recognize you, please login to UserServ and then !ident');
+            return $queue->ircNotice($source, 'I do not recognize you, please login to UserServ and then !ident');
         }
 
         $params = $event->getCustomParams();
@@ -53,7 +57,7 @@ class Plugin extends AbstractPlugin
 
         if(is_numeric($targetFirst)) {
 
-            return $queue->ircPrivmsg($source, 'Proposal names can not start with an integer.');
+            return $queue->ircNotice($source, 'Proposal names can not start with an integer.');
         }
 
         $proposalsTable = TableRegistry::get('i_r_c_vote_proposals');
@@ -63,7 +67,7 @@ class Plugin extends AbstractPlugin
 
             $user2 = Database::getRegistrationUserById($proposal->get('i_r_c_user_registration_id'));
 
-            return $queue->ircPrivmsg($source, 'Proposal already exists with that name, created on ' . $proposal->created->format('Y-m-d') . ' by ' . $user2->get('registered_nickname') . ' please try again.');
+            return $queue->ircNotice($source, 'Proposal already exists with that name, created on ' . $proposal->created->format('Y-m-d') . ' by ' . $user2->get('registered_nickname') . ' please try again.');
         }
 
         $proposal = $proposalsTable->newEntity([
@@ -80,7 +84,7 @@ class Plugin extends AbstractPlugin
 
         $proposalsTable->save($proposal);
 
-        $queue->ircPrivmsg($source, 'Proposal Created[' . $proposal->id . ']: ' . $target);
+        $queue->ircNotice($source, 'Proposal Created[' . $proposal->id . ']: ' . $target);
     }
 
     public function handleList(CommandEvent $event, EventQueueInterface $queue) {
@@ -88,11 +92,11 @@ class Plugin extends AbstractPlugin
         $proposalsTable = TableRegistry::get('i_r_c_vote_proposals');
         $proposals = $proposalsTable->find('all')->where(['completed' => 0])->all();
 
-        $queue->ircPrivmsg($event->getSource(), 'Current Uncompleted Proposals List');
+        $queue->ircNotice($event->getSource(), 'Current Uncompleted Proposals List');
 
         foreach($proposals as $proposal) {
 
-            $queue->ircPrivmsg($event->getSource(), 'Prop (' . $proposal->id . ') ' . $proposal->get('name') . ' = ' . $proposal->get('description'));
+            $queue->ircNotice($event->getSource(), 'Prop (' . $proposal->id . ') ' . $proposal->get('name') . ' = ' . $proposal->get('description'));
         }
     }
 
@@ -104,7 +108,7 @@ class Plugin extends AbstractPlugin
 
         if($user->isIdentified() == false) {
 
-            return $queue->ircPrivmsg($event->getSource(), 'I do not recognize you, please login to UserServ and then !ident');
+            return $queue->ircNotice($event->getSource(), 'I do not recognize you, please login to UserServ and then !ident');
         }
 
         $params = $event->getCustomParams();
@@ -114,7 +118,7 @@ class Plugin extends AbstractPlugin
 
         if(count($params) == 0) {
 
-            return $queue->ircPrivmsg($event->getSource(), 'Please vote using yay, nay, or abstain. Type !vote.help for example.');
+            return $queue->ircNotice($event->getSource(), 'Please vote using yay, nay, or abstain. Type !vote.help for example.');
         }
 
         $proposalVote = $params[0];
@@ -122,7 +126,7 @@ class Plugin extends AbstractPlugin
 
         if($proposalVote != 'yay' && $proposalVote != 'nay' && $proposalVote != 'abstain') {
 
-            return $queue->ircPrivmsg($event->getSource(), 'Please vote using yay, nay, or abstain. Type !vote.help for example.');
+            return $queue->ircNotice($event->getSource(), 'Please vote using yay, nay, or abstain. Type !vote.help for example.');
         }
 
         $message = implode(' ', $params);
@@ -143,8 +147,11 @@ class Plugin extends AbstractPlugin
 
         if(!$proposal) {
 
-            return $queue->ircPrivmsg($event->getSource(), 'No proposal found.');
+            return $queue->ircNotice($event->getSource(), 'No proposal found.');
         }
+
+        $proposal->set($proposalVote, $proposal->get($proposalVote) + 1);
+        $proposalsTable->save($proposal);
 
         $votesTable = TableRegistry::get('i_r_c_vote_votes');
         $vote = $votesTable->find('all')->where([
@@ -164,11 +171,11 @@ class Plugin extends AbstractPlugin
 
             $votesTable->save($voteEntity);
 
-            return $queue->ircPrivmsg($event->getSource(), 'Thank you for voting on ' . $proposal->get('name'));
+            return $queue->ircNotice($event->getSource(), 'Thank you for voting on ' . $proposal->get('name'));
         }
         else {
 
-            return $queue->ircPrivmsg($event->getSource(), 'You have already voted on this proposal.');
+            return $queue->ircNotice($event->getSource(), 'You have already voted on this proposal.');
         }
     }
 
@@ -179,7 +186,7 @@ class Plugin extends AbstractPlugin
 
         if($user->isIdentified() == false) {
 
-            return $queue->ircPrivmsg($event->getSource(), 'I do not recognize you, please login to UserServ and then !ident');
+            return $queue->ircNotice($event->getSource(), 'I do not recognize you, please login to UserServ and then !ident');
         }
 
         $params = $event->getCustomParams();
@@ -203,7 +210,7 @@ class Plugin extends AbstractPlugin
 
         if(!$proposal) {
 
-            return $queue->ircPrivmsg($event->getSource(), 'No proposal found.');
+            return $queue->ircNotice($event->getSource(), 'No proposal found.');
         }
 
         if($proposal->get('i_r_c_user_registration_id') == $user->getRegistrationUserId()) {
@@ -212,12 +219,120 @@ class Plugin extends AbstractPlugin
 
             $proposalsTable->save($proposal);
 
-            $queue->ircPrivmsg($event->getSource(), 'Proposal has been completed.');
+            $queue->ircNotice($event->getSource(), 'Proposal has been completed.');
         }
         else {
 
-            $queue->ircPrivmsg($event->getSource(), 'You do not have permission to delete that proposal.');
+            $queue->ircNotice($event->getSource(), 'You do not have permission to delete that proposal.');
         }
+    }
+
+    public function handleChange(CommandEvent $event, EventQueueInterface $queue)
+    {
+        $networkId = Database::getNetworkId($event->getConnection()->getServerHostname());
+        $nick = $event->getNick();
+        $user = $this->client->readDataStorage($networkId . '.Users.' . $nick);
+
+        if ($user->isIdentified() == false) {
+
+            return $queue->ircNotice($event->getSource(), 'I do not recognize you, please login to UserServ and then !ident');
+        }
+
+        $params = $event->getCustomParams();
+
+        $proposalName = $params[0];
+        array_shift($params);
+
+        if(count($params) == 0) {
+
+            return $queue->ircNotice($event->getSource(), 'Please vote using yay, nay, or abstain. Type !change.help for example.');
+        }
+
+        $proposalVote = $params[0];
+        array_shift($params);
+
+        if($proposalVote != 'yay' && $proposalVote != 'nay' && $proposalVote != 'abstain') {
+
+            return $queue->ircNotice($event->getSource(), 'Please vote using yay, nay, or abstain. Type !change.help for example.');
+        }
+
+        $message = implode(' ', $params);
+
+        $proposalsTable = TableRegistry::get('i_r_c_vote_proposals');
+        if (is_numeric($proposalName)) {
+
+            $proposal = $proposalsTable->find('all')
+                ->Where(['id' => $proposalName])
+                ->first();
+        } else {
+
+            $proposal = $proposalsTable->find('all')
+                ->where(['name' => $proposalName])
+                ->first();
+        }
+
+        if (!$proposal) {
+
+            return $queue->ircNotice($event->getSource(), 'No proposal found.');
+        }
+
+        $votesTable = TableRegistry::get('i_r_c_vote_votes');
+        $vote = $votesTable->find('all')->where([
+            'i_r_c_vote_proposal_id' => $proposal->id,
+            'i_r_c_user_registration_id' => $user->getRegistrationUserId()
+        ])->first();
+
+        if(!$vote) {
+
+            $queue->ircNotice($event->getSource(), 'You haven\'t voted on that proposal yet, no change necessary.');
+        }
+
+        $proposal->set($vote->get('vote'), $proposal->get($vote->get('vote')) - 1);
+        $proposal->set($proposalVote, $proposal->get($proposalVote) + 1);
+        $proposalsTable->save($proposal);
+
+        $vote->set('vote', $proposalVote);
+        $vote->set('message', $message);
+        $votesTable->save($vote);
+
+        $queue->ircNotice($event->getSource(), 'Your vote has been updated.');
+    }
+
+    public function handleStats(CommandEvent $event, EventQueueInterface $queue)
+    {
+        $networkId = Database::getNetworkId($event->getConnection()->getServerHostname());
+        $nick = $event->getNick();
+        $user = $this->client->readDataStorage($networkId . '.Users.' . $nick);
+
+        if ($user->isIdentified() == false) {
+
+            return $queue->ircNotice($event->getSource(), 'I do not recognize you, please login to UserServ and then !ident');
+        }
+
+        $params = $event->getCustomParams();
+
+        $proposalName = $params[0];
+        array_shift($params);
+
+        $proposalsTable = TableRegistry::get('i_r_c_vote_proposals');
+        if (is_numeric($proposalName)) {
+
+            $proposal = $proposalsTable->find('all')
+                ->Where(['id' => $proposalName])
+                ->first();
+        } else {
+
+            $proposal = $proposalsTable->find('all')
+                ->where(['name' => $proposalName])
+                ->first();
+        }
+
+        if (!$proposal) {
+
+            return $queue->ircNotice($event->getSource(), 'No proposal found.');
+        }
+
+        $queue->ircNotice($event->getSource(), $proposal->get('name') . ' stats: yay(' . $proposal->get('yay') . ') nay(' . $proposal->get('nay') . ') abstain(' . $proposal->get('abstain') . ')');
     }
 
     public function handleDelete(CommandEvent $event, EventQueueInterface $queue) {
@@ -227,7 +342,7 @@ class Plugin extends AbstractPlugin
 
         if($user->isIdentified() == false) {
 
-            return $queue->ircPrivmsg($event->getSource(), 'I do not recognize you, please login to UserServ and then !ident');
+            return $queue->ircNotice($event->getSource(), 'I do not recognize you, please login to UserServ and then !ident');
         }
 
         $params = $event->getCustomParams();
@@ -251,7 +366,7 @@ class Plugin extends AbstractPlugin
 
         if(!$proposal) {
 
-            return $queue->ircPrivmsg($event->getSource(), 'No proposal found.');
+            return $queue->ircNotice($event->getSource(), 'No proposal found.');
         }
 
         if($proposal->get('i_r_c_user_registration_id') == $user->getRegistrationUserId()) {
@@ -260,36 +375,46 @@ class Plugin extends AbstractPlugin
 
             $proposalsTable->save($proposal);
 
-            $queue->ircPrivmsg($event->getSource(), 'Proposal has been deleted.');
+            $queue->ircNotice($event->getSource(), 'Proposal has been deleted.');
         }
         else {
 
-            $queue->ircPrivmsg($event->getSource(), 'You do not have permission to delete that proposal.');
+            $queue->ircNotice($event->getSource(), 'You do not have permission to delete that proposal.');
         }
     }
 
     public function handleProposalHelp(CommandEvent $event, EventQueueInterface $queue) {
 
-        return $queue->ircPrivmsg($event->getSource(), '!propose name.of.proposal = Description of proposal!');
+        return $queue->ircNotice($event->getSource(), '!propose name.of.proposal = Description of proposal!');
+    }
+
+    public function handleStatsHelp(CommandEvent $event, EventQueueInterface $queue) {
+
+        return $queue->ircNotice($event->getSource(), '!votestats (name.of.proposal || numeric_id)');
     }
 
     public function handleDeleteHelp(CommandEvent $event, EventQueueInterface $queue) {
 
-        $queue->ircPrivmsg($event->getSource(), '!delprop (name.of.proposal || numeric_id)');
+        $queue->ircNotice($event->getSource(), '!delprop (name.of.proposal || numeric_id)');
     }
 
     public function handleListHelp(CommandEvent $event, EventQueueInterface $queue) {
 
-        $queue->ircPrivmsg($event->getSource(), '!listprops');
+        $queue->ircNotice($event->getSource(), '!listprops');
     }
 
     public function handleVoteHelp(CommandEvent $event, EventQueueInterface $queue) {
 
-        $queue->ircPrivmsg($event->getSource(), '!vote (name.of.proposal || numeric_id) (yay || nay || abstain) [Short Reason Why]');
+        $queue->ircNotice($event->getSource(), '!vote (name.of.proposal || numeric_id) (yay || nay || abstain) [Short Reason Why]');
     }
 
     public function handleCompleteHelp(CommandEvent $event, EventQueueInterface $queue) {
 
-        $queue->ircPrivmsg($event->getSource(), '!complete (name.of.proposal || numeric_id)');
+        $queue->ircNotice($event->getSource(), '!complete (name.of.proposal || numeric_id)');
+    }
+
+    public function handleChangeHelp(CommandEvent $event, EventQueueInterface $queue) {
+
+        $queue->ircNotice($event->getSource(), '!change (name.of.proposal || numeric_id) (yay || nay || abstain) [Short Reason Why]');
     }
 }

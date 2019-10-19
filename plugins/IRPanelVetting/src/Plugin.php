@@ -44,7 +44,7 @@ class Plugin extends AbstractPlugin
 
         if($user->isIdentified() == false) {
 
-            return $queue->ircPrivmsg($source, 'I do not recognize you, please login to UserServ and then !ident');
+            return $queue->ircNotice($source, 'I do not recognize you, please login to UserServ and then !ident');
         }
 
         $params = $event->getCustomParams();
@@ -56,7 +56,7 @@ class Plugin extends AbstractPlugin
 
         if(is_numeric($targetFirst)) {
 
-            return $queue->ircPrivmsg($source, 'Nominee names can not start with an integer.');
+            return $queue->ircNotice($source, 'Nominee names can not start with an integer.');
         }
 
         $proposalsTable = TableRegistry::get('i_r_c_vote_proposals');
@@ -66,7 +66,7 @@ class Plugin extends AbstractPlugin
 
             $user2 = Database::getRegistrationUserById($proposal->get('i_r_c_user_registration_id'));
 
-            return $queue->ircPrivmsg($source, 'Person already nominated with that name, created on ' . $proposal->created->format('Y-m-d') . ' by ' . $user2->get('registered_nickname') . ' please try again.');
+            return $queue->ircNotice($source, 'Person already nominated with that name, created on ' . $proposal->created->format('Y-m-d') . ' by ' . $user2->get('registered_nickname') . ' please try again.');
         }
 
         $proposal = $proposalsTable->newEntity([
@@ -84,12 +84,12 @@ class Plugin extends AbstractPlugin
 
         $proposalsTable->save($proposal);
 
-        $queue->ircPrivmsg($source, $target . ' Nominated[' . $proposal->id . '], Please Vote Now.');
+        $queue->ircNotice($source, $target . ' Nominated[' . $proposal->id . '], Please Vote Now.');
     }
 
     public function handleNominateHelp(CommandEvent $event, EventQueueInterface $queue) {
 
-        return $queue->ircPrivmsg($event->getSource(), '!nominate nickname = Why this person is awesome!');
+        return $queue->ircNotice($event->getSource(), '!nominate nickname = Why this person is awesome!');
     }
 
 }
