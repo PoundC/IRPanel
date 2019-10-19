@@ -59,7 +59,8 @@
             "IRPanel\\": "./plugins/IRPanel/src/",
             "IRPanelQuotes\\": "./plugins/IRPanelQuotes/src/",
             "IRPanelVoting\\": "./plugins/IRPanelVoting/src/",
-            "IRPanelVetting\\": "./plugins/IRPanelVetting/src/"
+            "IRPanelVetting\\": "./plugins/IRPanelVetting/src/",
+            "IRPanelGame\\": "./plugins/IRPanelGame/src/"
         }
     },
     "autoload-dev": {
@@ -70,7 +71,8 @@
             "IRPanel\\Test\\": "./plugins/IRPanel/tests/",
             "IRPanelQuotes\\Test\\": "./plugins/IRPanelQuotes/tests/",
             "IRPanelVoting\\Test\\": "./plugins/IRPanelVoting/tests/",
-            "IRPanelVetting\\Test\\": "./plugins/IRPanelVetting/tests/"
+            "IRPanelVetting\\Test\\": "./plugins/IRPanelVetting/tests/",
+            "IRPanelGame\\Test\\": "./plugins/IRPanelGame/tests/"
         }
     },
     "scripts": {
