@@ -42,6 +42,9 @@ class Application extends BaseApplication
         $this->addPlugin('IRPanelVoting');
         $this->addPlugin('IRPanelVetting');
         $this->addPlugin('IRPanelGame');
+        $this->addPlugin('IRPanelJams');
+        $this->addPlugin('IRPanelLinks');
+        $this->addPlugin('IRPanelMedia');
 
         if (PHP_SAPI === 'cli') {
             try {
