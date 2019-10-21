@@ -60,7 +60,7 @@ class Plugin extends AbstractPlugin
         }
 
         $proposalsTable = TableRegistry::get('i_r_c_vote_proposals');
-        $proposal = $proposalsTable->find('all')->where(['name' => $target])->first();
+        $proposal = $proposalsTable->find('all')->where(['name' => $target, 'completed' => 0])->first();
 
         if($proposal) {
 

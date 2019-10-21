@@ -21,6 +21,7 @@ class Plugin extends AbstractPlugin
         return [
             'command.voteadmin' => 'handleAdmin',
             'command.listprops' => 'handleList',
+            'command.listprop' => 'handleListVotes',
             'command.delprop' => 'handleDelete',
             'command.vote' => 'handleVote',
             'command.propose' => 'handlePropose',
@@ -120,7 +121,7 @@ class Plugin extends AbstractPlugin
         }
 
         $proposalsTable = TableRegistry::get('i_r_c_vote_proposals');
-        $proposal = $proposalsTable->find('all')->where(['name' => $target])->first();
+        $proposal = $proposalsTable->find('all')->where(['name' => $target, 'completed' => 0])->first();
 
         if($proposal) {
 
@@ -143,7 +144,7 @@ class Plugin extends AbstractPlugin
 
         $proposalsTable->save($proposal);
 
-        $queue->ircNotice($source, 'Proposal Created[' . $proposal->id . ']: ' . $target);
+        $queue->ircNotice($source, 'Proposal(' . $proposal->id . ') Created: ' . $target);
     }
 
     public function handleList(CommandEvent $event, EventQueueInterface $queue) {
@@ -165,6 +166,48 @@ class Plugin extends AbstractPlugin
 
                 $queue->ircNotice($event->getSource(), 'Nominee(' . $proposal->id . ') ' . $proposal->get('name') . ' = ' . $proposal->get('description') . ' [' . $user2->get('registered_nickname') . ':' . $proposal->get('yay') . '/' . $proposal->get('nay') . '/' . $proposal->get('abstain') . ']');
             }
+        }
+    }
+
+    public function handleListVotes(CommandEvent $event, EventQueueInterface $queue) {
+
+        $params = $event->getCustomParams();
+
+        if(count($params) == 0)
+        {
+            return $queue->ircNotice($event->getSource(), 'Type !listprop.help for example.');
+        }
+
+        $proposalName = $params[0];
+        array_shift($params);
+
+        $proposalsTable = TableRegistry::get('i_r_c_vote_proposals');
+        if(is_numeric($proposalName)) {
+
+            $proposal = $proposalsTable->find('all')
+                ->Where(['id' => $proposalName, 'completed' => 0])
+                ->first();
+        }
+        else {
+
+            $proposal = $proposalsTable->find('all')
+                ->where(['name' => $proposalName, 'completed' => 0])
+                ->first();
+        }
+
+        if(!$proposal) {
+
+            return $queue->ircNotice($event->getSource(), 'No proposal found.');
+        }
+
+        $votesTable = TableRegistry::get('i_r_c_vote_votes');
+        $votes = $votesTable->find('all')->where(['i_r_c_vote_proposal_id' => $proposal->id])->all();
+
+        $queue->ircNotice($event->getSource(), 'Listing votes for ' . $proposal->get('name') . '(' . $proposal->get('id') . ')');
+        foreach($votes as $vote)
+        {
+            $user = Database::getRegistrationUserById($vote->get('i_r_c_user_registration_id'));
+            $queue->ircNotice($event->getSource(), $user->get('registered_nickname') . ' voted ' . $vote->get('vote') . ' on ' . $vote->get('created')->format('Y-m-d'));
         }
     }
 
@@ -203,13 +246,13 @@ class Plugin extends AbstractPlugin
         if(is_numeric($proposalName)) {
 
             $proposal = $proposalsTable->find('all')
-                ->Where(['id' => $proposalName])
+                ->Where(['id' => $proposalName, 'completed' => 0])
                 ->first();
         }
         else {
 
             $proposal = $proposalsTable->find('all')
-                ->where(['name' => $proposalName])
+                ->where(['name' => $proposalName, 'completed' => 0])
                 ->first();
         }
 
@@ -276,13 +319,13 @@ class Plugin extends AbstractPlugin
         if(is_numeric($proposalName)) {
 
             $proposal = $proposalsTable->find('all')
-                ->Where(['id' => $proposalName])
+                ->Where(['id' => $proposalName, 'completed' => 0])
                 ->first();
         }
         else {
 
             $proposal = $proposalsTable->find('all')
-                ->where(['name' => $proposalName])
+                ->where(['name' => $proposalName, 'completed' => 0])
                 ->first();
         }
 
@@ -340,12 +383,12 @@ class Plugin extends AbstractPlugin
         if (is_numeric($proposalName)) {
 
             $proposal = $proposalsTable->find('all')
-                ->Where(['id' => $proposalName])
+                ->Where(['id' => $proposalName, 'completed' => 0])
                 ->first();
         } else {
 
             $proposal = $proposalsTable->find('all')
-                ->where(['name' => $proposalName])
+                ->where(['name' => $proposalName, 'completed' => 0])
                 ->first();
         }
 
@@ -396,12 +439,12 @@ class Plugin extends AbstractPlugin
         if (is_numeric($proposalName)) {
 
             $proposal = $proposalsTable->find('all')
-                ->Where(['id' => $proposalName])
+                ->Where(['id' => $proposalName, 'completed' => 0])
                 ->first();
         } else {
 
             $proposal = $proposalsTable->find('all')
-                ->where(['name' => $proposalName])
+                ->where(['name' => $proposalName, 'completed' => 0])
                 ->first();
         }
 
@@ -432,13 +475,13 @@ class Plugin extends AbstractPlugin
         if(is_numeric($proposalName)) {
 
             $proposal = $proposalsTable->find('all')
-                ->Where(['id' => $proposalName])
+                ->Where(['id' => $proposalName, 'completed' => 0])
                 ->first();
         }
         else {
 
             $proposal = $proposalsTable->find('all')
-                ->where(['name' => $proposalName])
+                ->where(['name' => $proposalName, 'completed' => 0])
                 ->first();
         }
 
