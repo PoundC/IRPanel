@@ -32,7 +32,7 @@
         "muffin/slug": "^1.4.0",
         "neomerx/json-api": "^1.0",
         "nicolab/php-ftp-client": "^1.4",
-        "phergie/phergie-irc-bot-react": "^2.1",
+        "jeffreyroberts/phergie-irc-bot-react": "dev-master",
         "phergie/phergie-irc-plugin-react-autojoin": "^2.0",
         "phergie/phergie-irc-plugin-react-command": "^2.0",
         "phergie/phergie-irc-plugin-react-commandhelp": "^2.1",

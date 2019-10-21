@@ -33,9 +33,11 @@ class Plugin extends AbstractPlugin
             'command.calc' => 'handleSaveCalc',
             'command.c' => 'handleRandomCalc',
             'command.search' => 'handleSearchCalc',
+            'command.rmcalc' => 'handleRmCalc',
             'command.calc.help' => 'handleSaveCalcHelp',
             'command.c.help' => 'handleRandomCalcHelp',
-            'command.search.help' => 'handleSearchCalcHelp'
+            'command.search.help' => 'handleSearchCalcHelp',
+            'command.rmcalc.help' => 'handleRmCalcHelp',
         ];
     }
 
@@ -59,8 +61,15 @@ class Plugin extends AbstractPlugin
         }
 
         $params = $event->getCustomParams();
+        if(strpos(implode(' ', $params), '=') === false) {
+
+            return $queue->ircNotice($source, $nick . ': Did not find `=`, please see !calc.help for example.');
+        }
+
         list($target, $message) = explode('=', implode(' ', $params));
         $target = trim($target);
+        $message = implode(' ', $params);
+        $message = str_replace($target . ' = ', '', $message);
         $message = trim($message);
 
         $calc = $this->table->find('all')->where(['topic' => $target])->first();
@@ -88,7 +97,44 @@ class Plugin extends AbstractPlugin
 
     public function showCalc(EventQueueInterface $queue, $source, $calcEntity)
     {
-        $queue->ircNotice($source, $calcEntity->topic . ' = ' . $calcEntity->quote);
+        $queue->ircPrivmsg($source, "\x02" . $calcEntity->topic . "\x02 = " . $calcEntity->quote);
+    }
+
+    public function handleRmCalc(CommandEvent $event, EventQueueInterface $queue)
+    {
+        $source = $event->getSource();
+        $nick = $event->getNick();
+        $username = $event->getUsername();
+        $host = $event->getHost();
+
+        $server = strtolower($event->getConnection()->getServerHostname());
+
+        $channel = $event->getParams();
+        if (isset($channel['receivers'])) {
+
+            $channel = $channel['receivers'];
+        } else {
+
+            $channel = null;
+        }
+
+        $params = $event->getCustomParams();
+
+        if (count($params) == 1) {
+
+            $calc = $this->table->find('all')->where(['topic' => $params[0]])->first();
+
+            if($calc) {
+
+                $this->table->delete($calc);
+
+                return $queue->ircNotice($source, $nick . ': Calc Deleted.');
+            }
+            else {
+
+                return $queue->ircNotice($source, 'No calc with that topic found.');
+            }
+        }
     }
 
     public function handleRandomCalc(CommandEvent $event, EventQueueInterface $queue) {
@@ -185,7 +231,7 @@ class Plugin extends AbstractPlugin
                 $queue->ircNotice($source, 'Results[' . $calcCount . ']: ' . $results);
             }
         }
-        else if(count($params) == 2) {
+        else if(count($params) == 2 && is_numeric($params[1])) {
 
             $calcsQuery = $this->table->find('all')
                 ->where(['topic LIKE' => '%' . $params[0] . '%'])
@@ -212,6 +258,9 @@ class Plugin extends AbstractPlugin
                 $queue->ircNotice($source, 'Results[' . $calcCount . '][' . $params[1] . ']: ' . $results);
             }
         }
+        else if(count($params) == 2 && !is_numeric($params[1])) {
+            return $queue->ircNotice($source, $nick . ': Do not recognize that command, !search.help for example.');
+        }
         else if(count($params) === 0 || count($params) > 2)
         {
             return $this->handleRandomCalcHelp($event, $queue);
@@ -231,6 +280,11 @@ class Plugin extends AbstractPlugin
 
     public function handleSearchCalcHelp(CommandEvent $event, EventQueueInterface $queue) {
 
-        $queue->ircNotice($event->getSource(), "\x02Usage:\x02 search <topic>");
+        $queue->ircNotice($event->getSource(), "\x02Usage:\x02 search <one_word> [page_number]");
+    }
+
+    public function handleRmCalcHelp(CommandEvent $event, EventQueueInterface $queue) {
+
+        $queue->ircNotice($event->getSource(), "\x02Usage:\x02 rmcalc <topic>");
     }
 }

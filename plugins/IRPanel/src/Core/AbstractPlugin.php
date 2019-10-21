@@ -15,6 +15,7 @@ use Evenement\EventEmitterInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LoggerAwareInterface;
 use React\EventLoop\LoopInterface;
+use Cake\Datasource\ModelAwareTrait;
 
 abstract class AbstractPlugin extends BasePlugin implements
     PluginInterface,
@@ -24,6 +25,8 @@ abstract class AbstractPlugin extends BasePlugin implements
     EventQueueFactoryAwareInterface,
     LoopAwareInterface
 {
+    use ModelAwareTrait;
+
     protected $connection = 'default';
     protected $table;
 

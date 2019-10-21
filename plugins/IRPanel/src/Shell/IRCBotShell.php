@@ -70,7 +70,8 @@ class IRCBotShell extends Shell
                     new \IRPanel\Plugin(),
                     new \IRPanelQuotes\Plugin(),
                     new \IRPanelVoting\Plugin(),
-                    new \IRPanelVetting\Plugin()
+                    new \IRPanelVetting\Plugin(),
+                    new \IRPanelGame\Plugin(),
                 ),
                 'logger' => new IRLogger()
             );

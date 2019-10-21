@@ -24,6 +24,7 @@ class Plugin extends AbstractPlugin
             return [];
         }
         return [
+            'command.register' => 'handleRegister',
             'command.ident' => 'handleIdent',
             'irc.received.rpl_namreply' => 'handleNames',
             'irc.received.rpl_whoisuser' => 'handle311',
@@ -38,6 +39,11 @@ class Plugin extends AbstractPlugin
             'irc.received.part' => 'handlePart',
             'irc.received.quit' => 'handleQuit',
         ];
+    }
+
+    public function handleRegister(CommandEvent $event, EventQueueInterface $queue)
+    {
+        $this->emitter->emit('irpanel.command.register', [$event, $queue]);
     }
 
     public function handleIdent(CommandEvent $event, EventQueueInterface $queue)
@@ -89,9 +95,10 @@ class Plugin extends AbstractPlugin
 
         $user = $this->client->readDataStorage($networkId . '.Users.' . $nick);
 
-        if($user == null || empty($user)) {
+        if($user == null) {
 
             $user = new User();
+            $user->setNick($nick);
         }
 
         $user->setUsername($event->getParams()[2]);
@@ -231,7 +238,7 @@ class Plugin extends AbstractPlugin
 
         $user = $this->client->readDataStorage($networkId . '.Users.' . $nick);
 
-        if($user != NULL) {
+        if($user != null) {
 
             if($user->isIdentified()) {
 

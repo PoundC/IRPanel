@@ -88,7 +88,7 @@ class Plugin extends AbstractPlugin
         }
 
         $adminEntity = $adminTable->newEntity([
-
+            'i_r_c_user_registration_id' => $nextAdminUser->getRegistrationUserId()
         ]);
         $adminTable->save($adminEntity);
 
@@ -155,13 +155,15 @@ class Plugin extends AbstractPlugin
 
         foreach($proposals as $proposal) {
 
+            $user2 = Database::getRegistrationUserById($proposal->get('i_r_c_user_registration_id'));
+
             if($proposal->get('vetting') == 0) {
 
-                $queue->ircNotice($event->getSource(), 'Prop (' . $proposal->id . ') ' . $proposal->get('name') . ' = ' . $proposal->get('description'));
+                $queue->ircNotice($event->getSource(), 'Prop(' . $proposal->id . ') ' . $proposal->get('name') . ' = ' . $proposal->get('description') . ' [' . $user2->get('registered_nickname') . ':' . $proposal->get('yay') . '/' . $proposal->get('nay') . '/' . $proposal->get('abstain') . ']');
             }
             else {
 
-                $queue->ircNotice($event->getSource(), 'Nominee (' . $proposal->id . ') ' . $proposal->get('name') . ' = ' . $proposal->get('description'));
+                $queue->ircNotice($event->getSource(), 'Nominee(' . $proposal->id . ') ' . $proposal->get('name') . ' = ' . $proposal->get('description') . ' [' . $user2->get('registered_nickname') . ':' . $proposal->get('yay') . '/' . $proposal->get('nay') . '/' . $proposal->get('abstain') . ']');
             }
         }
     }
@@ -241,7 +243,16 @@ class Plugin extends AbstractPlugin
         }
         else {
 
-            return $queue->ircNotice($event->getSource(), 'You have already voted on this proposal.');
+            $oldVote = $vote->get('vote');
+            $proposal->set($vote->get('vote'), $proposal->get($vote->get('vote')) - 1);
+            $proposal->set($proposalVote, $proposal->get($proposalVote) + 1);
+            $proposalsTable->save($proposal);
+
+            $vote->set('vote', $proposalVote);
+            $vote->set('message', $message);
+            $votesTable->save($vote);
+
+            return $queue->ircNotice($event->getSource(), $nick . ': Changing from ' . $oldVote . ' to ' . $proposalVote);
         }
     }
 
@@ -445,7 +456,7 @@ class Plugin extends AbstractPlugin
 
             $proposalsTable->save($proposal);
 
-            $queue->ircNotice($event->getSource(), 'Proposal has been deleted.');
+            $queue->ircNotice($event->getSource(), 'Proposal ' . $proposal->id . ' has been deleted.');
         }
         else {
 
