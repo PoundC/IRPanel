@@ -111,7 +111,7 @@ class Menu
 
                 if($menuHeader1 == $menuHeader2) {
 
-                    $mergedMenu[$menuHeader1] = array_merge($mergedMenu[$menuHeader1], $headerArray2);
+                    $mergedMenu[$menuHeader1] = array_merge_recursive($mergedMenu[$menuHeader1], $headerArray2);
                 }
                 else {
 
@@ -133,11 +133,11 @@ class Menu
 
                     if (array_key_exists($menuSet['group'], $cleanMenus[$menuHeader])) {
 
-                        $mergedMenus = array_merge($menuSet, $cleanMenus[$menuHeader][$menuSet['group']]);
+                        $mergedMenus = array_merge_recursive($menuSet, $cleanMenus[$menuHeader][$menuSet['group']]);
 
                         $cleanMenus[$menuHeader][$menuSet['group']]['set'] = $mergedMenus;
 
-                        $mergedMenus = array_merge($menuSet['menu'], $cleanMenus[$menuHeader][$menuSet['group']]['menu']);
+                        $mergedMenus = array_merge_recursive($menuSet['menu'], $cleanMenus[$menuHeader][$menuSet['group']]['menu']);
 
                         $cleanMenus[$menuHeader][$menuSet['group']]['menu'] = $mergedMenus;
                     } else {
@@ -148,7 +148,7 @@ class Menu
                 }
                 else {
 
-
+                    $a = 'asdfasdf';
                 }
             }
         }

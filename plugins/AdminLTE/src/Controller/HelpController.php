@@ -76,7 +76,12 @@ class HelpController extends AppController
             else {
 
                 $this->loadModel('AdminLTE.FaqAnswers');
-                $faqAnswerQuery = $this->FaqAnswers->find('slugged', ['slug' => $id, 'contain' => ['FaqQuestions', 'FaqTopics', 'FaqAnswerTags', 'FaqAnswerTags.FaqTags']])->limit(1);
+                $faqAnswerQuery = $this->FaqAnswers->find('slugged', ['slug' => $id, 'contain' => [
+                    'FaqQuestions',
+                    'FaqTopics',
+                    'FaqAnswerTags',
+                    'FaqAnswerTags.FaqTags'
+                ]])->limit(1);
                 $answerResult = $faqAnswerQuery->first();
 
                 $this->set('title', $answerResult->subject);
