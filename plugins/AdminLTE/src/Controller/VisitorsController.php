@@ -44,37 +44,37 @@ class VisitorsController extends AppController
 
     public function frontpage() {
 
-        $this->set('title', 'CakeAdminLTE');
+        $this->set('title', 'PoundC');
         $this->render('frontpage', 'AdminLTE.lander');
     }
 
     public function products() {
 
-        $this->set('title', 'View CakeAdminLTE Products');
+        $this->set('title', 'View PoundC Products');
         $this->render('products', 'lander');
     }
 
     public function pricing() {
 
-        $this->set('title', 'View CakeAdminLTE Pricing');
+        $this->set('title', 'View PoundC Pricing');
         $this->render('pricing', 'lander');
     }
 
     public function about() {
 
-        $this->set('title', 'About CakeAdminLTE');
+        $this->set('title', 'About PoundC');
         $this->render('about', 'lander');
     }
 
     public function company() {
 
-        $this->set('title', 'CakeAdminLTE Company Overview');
+        $this->set('title', 'PoundC Company Overview');
         $this->render('company', 'lander');
     }
 
     public function investors() {
 
-        $this->set('title', 'Invest in CakeAdminLTE');
+        $this->set('title', 'Invest in PoundC');
         $this->render('investors', 'lander');
     }
 }

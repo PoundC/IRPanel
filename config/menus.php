@@ -6,7 +6,7 @@ $menus = [
     'visitor' => [
         [
             'type'  => 'header',
-            'header' => 'Welcome to CakeAdminLTE'
+            'header' => 'Welcome to PoundC'
         ],
         [
             'type'  => 'link',
@@ -74,13 +74,13 @@ $menus = [
             'link'  => 'Upgrade to Member',
             'icon'  => 'fa-rocket',
             'path'  => '/profile'
-        ],*/
+        ],
         [
             'type'  => 'link',
             'link'  => 'Dashboard',
             'icon'  => 'fa-dashboard',
             'path'  => '/dashboard'
-        ]
+        ]*/
     ],
     'member' => [
         [
@@ -135,7 +135,7 @@ $menus = [
         ],
         [
             'type'  => 'group',
-            'group' => 'Support Menu',
+            'group' => 'Support',
             'icon'  => 'fa-support',
             'css'   => 'active non-active',
             'menu' => [

@@ -84,11 +84,12 @@ class Plugin extends AbstractPlugin
 
             $this->table->save($calcEntity);
 
-            $this->showCalc($queue, $source, $calcEntity);
+            $queue->ircNotice($source, $nick . ': Calc saved.');
+            $queue->ircNotice($source, "\x02" . $calcEntity->topic . "\x02 = " . $calcEntity->quote);
         }
         else {
 
-            $calc->set('message', $message);
+            $calc->set('quote', $message);
             $this->table->save($calc);
 
             $this->showCalc($queue, $source, $calc);
@@ -213,7 +214,7 @@ class Plugin extends AbstractPlugin
             $calcCount = $calcsQuery->count();
             $calcs = $calcsQuery->limit(7)->all();
 
-            if(!$calcs) {
+            if($calcCount == 0) {
 
                 $queue->ircNotice($source, 'No calc found.');
             }

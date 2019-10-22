@@ -1,3 +1,3 @@
 <div class="login-logo">
-    <a href="/"><b>CakeAdmin</b>LTE</a>
+    <a href="/">Pound<b>C</b></a>
 </div>

@@ -134,9 +134,9 @@ class AppController extends Controller
 
                     $supportMenu = array(
                         'type'  => 'group',
-                        'group' => 'Support Menu',
+                        'group' => 'Support',
                         'icon'  => 'fa-support',
-                        'css'   => 'active non-active',
+                        'css'   => 'non-active',
                         'menu' => [
                             'View Tickets'     => [
                                 'path' => '/tickets',
