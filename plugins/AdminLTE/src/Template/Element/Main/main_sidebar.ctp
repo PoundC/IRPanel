@@ -19,17 +19,17 @@
         <!-- /.search form -->
         */
         ?>
-        <!-- Sidebar Menu -->
-        <div id="sidebar-links">
-            <?php
 
-                    if(isset($menus)) {
+        <?php
 
-                       echo $menus;
+            if(isset($menus)) {
 
-                    }
-                ?>
-        </div>
+                echo $menus;
+
+            }
+
+        ?>
+
         <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

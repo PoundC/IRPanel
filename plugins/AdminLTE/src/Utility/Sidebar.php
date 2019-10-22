@@ -14,7 +14,17 @@ class Sidebar
 
     public static function setMenu($menuArray)
     {
-        Sidebar::$Menu = $menuArray;
+        if(count(self::$Menu) == 0) {
+
+            self::$Menu = $menuArray;
+        }
+        else {
+
+            self::$Menu = array_merge_recursive(self::$Menu, $menuArray);
+            //self::$Menu = Menu::mergeMenus(self::$Menu, $menuArray);
+
+            //print_r(self::$Menu);
+        }
     }
 
     public static function addMenuGroup($menu, $role)
@@ -49,21 +59,35 @@ class Sidebar
 
     public static function buildMenu($currentPath, $role = 'visitor')
     {
-        $menuHtml = '<ul id="nav-menu" class="sidebar-menu" data-api="tree" data-accordion=1 data-widget="tree">';
+        $menuHtml = '<ul id="nav-menu" class="sidebar-menu" data-widget="tree">' . "\n";
 
-        foreach(Sidebar::$Menu[$role] as $menuItem)
+        foreach(Sidebar::$Menu[$role] as $menuKey => $menuItem)
         {
-            switch($menuItem['type'])
-            {
-                case 'header':
-                    $menuHtml .= Sidebar::buildHeader($menuItem);
-                    break;
-                case 'link':
-                    $menuHtml .= Sidebar::buildLink($currentPath, $menuItem);
-                    break;
-                case 'group':
-                    $menuHtml .= Sidebar::buildGroup($currentPath, $menuItem);
-                    break;
+            if(is_array($menuItem['type'])) {
+                switch ($menuItem['type'][0]) {
+                    case 'header':
+                        $menuHtml .= Sidebar::buildHeader($menuItem);
+                        break;
+                    case 'link':
+                        $menuHtml .= Sidebar::buildLink($currentPath, $menuItem);
+                        break;
+                    case 'group':
+                        $menuHtml .= Sidebar::buildGroupArray($currentPath, $menuItem);
+                        break;
+                }
+            }
+            else {
+                switch ($menuItem['type']) {
+                    case 'header':
+                        $menuHtml .= Sidebar::buildHeader($menuItem);
+                        break;
+                    case 'link':
+                        $menuHtml .= Sidebar::buildLink($currentPath, $menuItem);
+                        break;
+                    case 'group':
+                        $menuHtml .= Sidebar::buildGroup($currentPath, $menuItem);
+                        break;
+                }
             }
         }
 
@@ -74,7 +98,7 @@ class Sidebar
 
     private static function buildHeader($menuItem)
     {
-        $header = '<li class="header">' . strtoupper($menuItem['header']) . '</li>';
+        $header = '<li class="header">' . strtoupper($menuItem['header']) . '</li>' . "\n";
 
         return $header;
     }
@@ -88,7 +112,7 @@ class Sidebar
             $isActive = 'class="active"';
         }
 
-        $link = '<li ' . $isActive . '><a href="' . $menuItem['path'] . '"><i class="fa-left-icon fa ' . $menuItem['icon'] . '"></i><span>' . $menuItem['link'] . '</span></a></li>';
+        $link = '<li ' . $isActive . '><a href="' . $menuItem['path'] . '"><i class="fa-left-icon fa ' . $menuItem['icon'] . '"></i><span>' . $menuItem['link'] . '</span></a></li>' . "\n";
 
         return $link;
     }
@@ -110,17 +134,19 @@ class Sidebar
             $isActive .= ' treeview';
         }
 
+        $isActive .= ' treeview';
+
         $group = '';
         if (isset($menuItem['path'])) {
 
-            $group .= '<li class="' . $isActive . '"><a href="' . $menuItem['path'] . '"><i class="fa-left-icon fa ' . $menuItem['icon'] . ' ' . $second_class . '"></i><span class="' . $second_class . '">' . $menuItem['group'] . '</span>';
+            $group .= '<li class="' . $isActive . '"><a href="' . $menuItem['path'] . '"><i class="fa-left-icon fa ' . $menuItem['icon'] . ' ' . $second_class . '"></i><span class="' . $second_class . '">' . $menuItem['group'] . '</span>' . "\n";
         }
         else {
 
-            $group .= '<li class="' . $isActive . '"><a href="#"><i class="fa-left-icon fa ' . $menuItem['icon'] . ' ' . $second_class . '"></i><span class="' . $second_class . '">' . $menuItem['group'] . '</span>';
+            $group .= '<li class="' . $isActive . '"><a href="#"><i class="fa-left-icon fa ' . $menuItem['icon'] . ' ' . $second_class . '"></i><span class="' . $second_class . '">' . $menuItem['group'] . '</span>' . "\n";
         }
-        $group .= '<span class="pull-right-container"></span></a>';
-        $group .= '<ul class="treeview-menu">';
+        $group .= '<span class="pull-right-container"></span></a>' . "\n";
+        $group .= '<ul class="treeview-menu">' . "\n";
 
         foreach ($menuItem['menu'] as $item => $items) {
 
@@ -135,7 +161,7 @@ class Sidebar
                 $isActive = 'active';
             }
 
-            $group .= '<li class="' . $isActive . '"><a href="' . $menuPath . '"><i class="fa-left-icon fa ' . $menuIcon . '"></i><span>' . $menuTitle . '</span></a>';
+            $group .= '<li class="' . $isActive . '"><a href="' . $menuPath . '"><i class="fa-left-icon fa ' . $menuIcon . '"></i><span>' . $menuTitle . '</span></a>' . "\n";
 
 
             if(isset($items['menu'])) {
@@ -143,10 +169,70 @@ class Sidebar
                 $group .= Sidebar::buildSubMenus($currentPath, $items);
             }
 
-            $group .= '</li>';
+            $group .= '</li>' . "\n";
         }
 
-        $group .= '</ul></li>';
+        $group .= '</ul></li>' . "\n";
+
+        return $group;
+    }
+
+    private static function buildGroupArray($currentPath, $menuItem)
+    {
+        if (Sidebar::isMenuActive($currentPath, $menuItem['menu'])) {
+
+            $second_class = 'active';
+            $isActive = 'active';
+        } else {
+
+            $second_class = 'non-active';
+            $isActive = $menuItem['css'][0];
+        }
+
+        if (Sidebar::doesMenuContainSubMenus($menuItem['menu'])) {
+
+            $isActive .= ' treeview';
+        }
+
+        $isActive .= ' treeview';
+
+        $group = '';
+        if (isset($menuItem['path'])) {
+
+            $group .= '<li class="' . $isActive . '"><a href="' . $menuItem['path'] . '"><i class="fa-left-icon fa ' . $menuItem['icon'] . ' ' . $second_class . '"></i><span class="' . $second_class . '">' . $menuItem['group'] . '</span>' . "\n";
+        }
+        else {
+
+            $group .= '<li class="' . $isActive . '"><a href="#"><i class="fa-left-icon fa ' . $menuItem['icon'][0] . ' ' . $second_class . '"></i><span class="' . $second_class . '">' . $menuItem['group'][0] . '</span>' . "\n";
+        }
+        $group .= '<span class="pull-right-container"></span></a>' . "\n";
+        $group .= '<ul class="treeview-menu">' . "\n";
+
+        foreach ($menuItem['menu'] as $item => $items) {
+
+            $menuTitle = $item;
+            $menuPath = $items['path'];
+            $menuIcon = $items['icon'];
+
+            $isActive = '';
+
+            if ($currentPath == $items['path']) {
+
+                $isActive = 'active';
+            }
+
+            $group .= '<li class="' . $isActive . '"><a href="' . $menuPath . '"><i class="fa-left-icon fa ' . $menuIcon . '"></i><span>' . $menuTitle . '</span></a>' . "\n";
+
+
+            if(isset($items['menu'])) {
+
+                $group .= Sidebar::buildSubMenus($currentPath, $items);
+            }
+
+            $group .= '</li>' . "\n";
+        }
+
+        $group .= '</ul></li>' . "\n";
 
         return $group;
     }
@@ -155,7 +241,7 @@ class Sidebar
     {
         $isActive = '';
 
-        $subMenu = '<ul class="treeview-menu">';
+        $subMenu = '<ul class="treeview-menu">' . "\n";
 
         foreach($menuItems['menu'] as $itemKey => $itemValue) {
 
@@ -168,17 +254,17 @@ class Sidebar
             $menuPath = $itemValue['path'];
             $menuIcon = $itemValue['icon'];
 
-            $subMenu .= '<li class="' . $isActive . '"><a href="' . $menuPath . '"><i class="fa-left-icon fa ' . $menuIcon . '"></i><span>' . $menuTitle . '</span></a>';
+            $subMenu .= '<li class="' . $isActive . '"><a href="' . $menuPath . '"><i class="fa-left-icon fa ' . $menuIcon . '"></i><span>' . $menuTitle . '</span></a>' . "\n";
 
             if(isset($itemValue['menu']) && $currentPath == $itemValue['path']) {
 
                 $subMenu .= Sidebar::buildSubMenus($currentPath, $itemValue);
             }
 
-            $subMenu .= '</li>';
+            $subMenu .= '</li>' . "\n";
         }
 
-        $subMenu .= '</ul>';
+        $subMenu .= '</ul>' . "\n";
 
         return $subMenu;
     }
