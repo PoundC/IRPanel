@@ -32,7 +32,7 @@ else {
 
     </head>
 
-    <body class="fixed hold-transition skin-<?= $skin ?> sidebar-mini">
+    <body class="skin-<?= $skin ?> sidebar-mini">
 
         <div class="wrapper">
 
