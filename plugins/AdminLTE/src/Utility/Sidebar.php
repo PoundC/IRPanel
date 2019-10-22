@@ -222,7 +222,7 @@ class Sidebar
             }
 
             if(is_array($menuPath)) {
-                $group .= '<li class="' . $isActive . '"><a href="' . $menuPath[0] . '"><i class="fa-left-icon fa ' . $menuIcon[0] . '"></i><span>' . $menuTitle[0] . '</span></a>' . "\n";
+                $group .= '<li class="' . $isActive . '"><a href="' . $menuPath[0] . '"><i class="fa-left-icon fa ' . $menuIcon[0] . '"></i><span>' . $menuTitle . '</span></a>' . "\n";
             }
             else {
                 $group .= '<li class="' . $isActive . '"><a href="' . $menuPath . '"><i class="fa-left-icon fa ' . $menuIcon . '"></i><span>' . $menuTitle . '</span></a>' . "\n";
