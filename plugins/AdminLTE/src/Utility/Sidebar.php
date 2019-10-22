@@ -156,13 +156,29 @@ class Sidebar
 
             $isActive = '';
 
-            if ($currentPath == $items['path']) {
+            if(isset($items['menu'])) {
 
-                $isActive = 'active';
+                $isActive .= 'treeview';
             }
 
-            $group .= '<li class="' . $isActive . '"><a href="' . $menuPath . '"><i class="fa-left-icon fa ' . $menuIcon . '"></i><span>' . $menuTitle . '</span></a>' . "\n";
+            if ($currentPath == $items['path']) {
 
+                $isActive = ' active';
+            }
+
+            if(is_array($menuPath)) {
+                $group .= '<li class="' . $isActive . '"><a href="' . $menuPath[0] . '"><i class="fa-left-icon fa ' . $menuIcon[0] . '"></i><span>' . $menuTitle . '</span></a>' . "\n";
+            }
+            else {
+                if(isset($items['menu']))
+                {
+                    $group .= '<li class="' . $isActive . '"><a href="' . $menuPath . '"><i class="fa-left-icon fa ' . $menuIcon . '"></i><span>' . $menuTitle . '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>' . "\n";
+                }
+                else {
+
+                    $group .= '<li class="' . $isActive . '"><a href="' . $menuPath . '"><i class="fa-left-icon fa ' . $menuIcon . '"></i><span>' . $menuTitle . '</span></a>' . "\n";
+                }
+            }
 
             if(isset($items['menu'])) {
 
@@ -216,16 +232,28 @@ class Sidebar
 
             $isActive = '';
 
+            if(isset($items['menu'])) {
+
+                $isActive .= 'treeview';
+            }
+
             if ($currentPath == $items['path']) {
 
-                $isActive = 'active';
+                $isActive = ' active';
             }
 
             if(is_array($menuPath)) {
                 $group .= '<li class="' . $isActive . '"><a href="' . $menuPath[0] . '"><i class="fa-left-icon fa ' . $menuIcon[0] . '"></i><span>' . $menuTitle . '</span></a>' . "\n";
             }
             else {
-                $group .= '<li class="' . $isActive . '"><a href="' . $menuPath . '"><i class="fa-left-icon fa ' . $menuIcon . '"></i><span>' . $menuTitle . '</span></a>' . "\n";
+                if(isset($items['menu']))
+                {
+                    $group .= '<li class="' . $isActive . '"><a href="' . $menuPath . '"><i class="fa-left-icon fa ' . $menuIcon . '"></i><span>' . $menuTitle . '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>' . "\n";
+                }
+                else {
+
+                    $group .= '<li class="' . $isActive . '"><a href="' . $menuPath . '"><i class="fa-left-icon fa ' . $menuIcon . '"></i><span>' . $menuTitle . '</span></a>' . "\n";
+                }
             }
 
             if(isset($items['menu'])) {
@@ -251,7 +279,7 @@ class Sidebar
 
             if($currentPath == $itemValue['path']) {
 
-                $isActive = 'active';
+                $isActive .= ' active';
             }
 
             $menuTitle = $itemKey;
