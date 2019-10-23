@@ -115,6 +115,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li class="header">You have <?= $totalNotificationsCount ?> notifications</li>
+                        <?php if($totalNotificationsCount > 0) { ?>
                         <li>
                             <!-- inner menu: contains the actual data -->
                             <ul class="menu">
@@ -141,8 +142,8 @@
                                     </li>
                                 <?php } ?>
                             </ul>
-                        </li>
-                        <li class="footer"><a href="/notifications">View all</a></li>
+                        </li><li class="footer"><a href="/notifications">View all</a></li>
+                        <?php } ?>
                     </ul>
                 </li>
                 <?php
