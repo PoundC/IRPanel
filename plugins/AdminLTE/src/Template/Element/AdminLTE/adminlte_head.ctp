@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/skins/_all-skins.min.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 
-<?= $this->Html->css('/css/PoundC') ?>
+<?= $this->Html->css('/css/cakeadminlte') ?>
 <?= $this->Html->css('/css/AdminLTE_important') ?>
 
 <?php if($skin != 'blue') { ?>
