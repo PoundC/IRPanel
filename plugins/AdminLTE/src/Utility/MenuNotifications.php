@@ -92,9 +92,7 @@ class MenuNotifications {
             'user_id' => $user_id,
             'role_id' => ''
         ]);
-        die(print_r(debug($menuNotificationsEntity), true));
         $menuNotificationsTable->save($menuNotificationsEntity);
-
     }
 
     public static function markMenuNotificationsSeen($user_id, $role, $menuGroup, $menuTitle = '')
