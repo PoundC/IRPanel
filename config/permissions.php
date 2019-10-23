@@ -213,6 +213,7 @@ $morePermissions = \Cake\Core\Configure::read('MyPermissions');
 if(is_array($morePermissions)) {
 
     $allPerms = array_merge($permissions, $morePermissions);
+
     return ['CakeDC/Auth.permissions' => $allPerms];
 }
 else {
