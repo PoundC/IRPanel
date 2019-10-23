@@ -81,7 +81,6 @@ $menus = [
             'icon'  => 'fa-dashboard',
             'path'  => '/dashboard'
         ]*/
-        ],
         [
             'type'  => 'link',
             'link'  => 'Notifications',
