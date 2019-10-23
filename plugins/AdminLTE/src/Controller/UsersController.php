@@ -4,6 +4,7 @@ namespace AdminLTE\Controller;
 
 use AdminLTE\Controller\Traits\ProfileTrait;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Inflector;
 use CakeDC\Users\Controller\UsersController as BaseUsersController;
 use Cake\Core\Configure;
 use Firebase\JWT\JWT;
@@ -61,26 +62,32 @@ class UsersController extends BaseUsersController
 
     public function edit($id = null)
     {
-        //$id = basename($this->request->here);
+        if($this->Auth->user('id') != $id && $this->Auth->user('role') == 'user')
+        {
+            $this->Flash->error('You do not have permission to visit that page');
 
-        $usersTable = TableRegistry::get(Configure::read('Users.table'));
-        $query = $usersTable->find('all')->where(['id' => $id])->limit(1);
-        $user2 = $query->first();
-
-        $this->set(compact('user2'));
-
-        $this->set('title', 'Change User Password');
-
-        parent::edit($id);
-
-        if($this->request->getMethod() == 'POST') {
-
-            return $this->redirect('/admin/edit/' . $id);
+            return $this->redirect('/profile');
         }
-        else {
 
-            $this->render('admin_edit_user');
+        $table = $this->loadModel();
+        $tableAlias = $table->getAlias();
+        $entity = $table->get($id, [
+            'contain' => []
+        ]);
+        $this->set($tableAlias, $entity);
+        $this->set('tableAlias', $tableAlias);
+        $this->set('_serialize', [$tableAlias, 'tableAlias']);
+        if (!$this->request->is(['patch', 'post', 'put'])) {
+            return;
         }
+        $entity = $table->patchEntity($entity, $this->request->getData());
+        $singular = Inflector::singularize(Inflector::humanize($tableAlias));
+        if ($table->save($entity)) {
+            $this->Flash->success(__d('CakeDC/Users', 'The {0} has been saved', $singular));
+
+            return $this->redirect('/profile');
+        }
+        $this->Flash->error(__d('CakeDC/Users', 'The {0} could not be saved', $singular));
     }
 
     public function register() {

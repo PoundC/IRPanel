@@ -87,8 +87,8 @@ $permissions = [
             'allowed' => true,
         ],
         [
-            // 'role' => ['member'],
-            'role' => '*',
+            'role' => ['member'],
+            'plugin' => 'AdminLTE',
             'controller' => ['Billing'],
             'action' => ['cancel'],
             'allowed' => true,
@@ -154,16 +154,18 @@ $permissions = [
             'allowed' => true,
         ],
         [
-            'role' => '*',
-            'plugin' => 'CakeDC/Users',
-            'controller' => '*',
-            'action' => '*',
-        ],
-        [
             'role' => 'user',
             'plugin' => 'CakeDC/Users',
             'controller' => 'Users',
             'action' => ['register', 'edit', 'view'],
+            'allowed' => true,
+        ],
+        [
+            'role' => 'user',
+            'plugin' => 'AdminLTE',
+            'controller' => 'Users',
+            'action' => ['edit'],
+            'allowed' => true,
         ],
         [
             'role' => '*',

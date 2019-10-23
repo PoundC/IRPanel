@@ -101,10 +101,12 @@ class MessagingController extends AppController
         }
 
         if($this->request->getQuery('inbox') == '' || $this->request->getQuery('inbox') == 'user') {
-            $messages = $this->paginate($this->Messaging->find('all', ['contain' => ['Users', 'Recipients']])->where([
-                'Messaging.user_id' => $this->Auth->user('id'),
-                'Messaging.user_deleted' => 0
-            ])->orWhere([
+            $messages = $this->paginate($this->Messaging->find('all', ['contain' => ['Users', 'Recipients']])
+//                ->where([
+//                'Messaging.user_id' => $this->Auth->user('id'),
+//                'Messaging.user_deleted' => 0
+//            ])
+                ->where([
                 'Messaging.to_user_id' => $this->Auth->user('id'),
                 'Messaging.recipient_deleted' => 0
             ])->orderDesc('Messaging.created'));
