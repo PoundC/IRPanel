@@ -157,7 +157,7 @@ $permissions = [
             'role' => 'user',
             'plugin' => 'CakeDC/Users',
             'controller' => 'Users',
-            'action' => ['register', 'edit', 'view'],
+            'action' => ['register', 'edit', 'view', 'logout'],
             'allowed' => true,
         ],
         [

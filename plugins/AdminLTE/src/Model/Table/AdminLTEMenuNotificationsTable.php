@@ -9,7 +9,8 @@ use Cake\Validation\Validator;
 /**
  * AdminLTEMenuNotifications Model
  *
- * @property \AdminLTE\Model\Table\DestinationsTable|\Cake\ORM\Association\BelongsTo $Destinations
+ * @property |\Cake\ORM\Association\BelongsTo $Users
+ * @property |\Cake\ORM\Association\BelongsTo $Roles
  * @property \AdminLTE\Model\Table\AdminLTEMenuNotificationLogsTable|\Cake\ORM\Association\HasMany $AdminLTEMenuNotificationLogs
  *
  * @method \AdminLTE\Model\Entity\AdminLTEMenuNotification get($primaryKey, $options = [])
@@ -37,6 +38,11 @@ class AdminLTEMenuNotificationsTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
+            'joinType' => 'INNER',
+            'className' => 'AdminLTE.Users'
+        ]);
         $this->hasMany('AdminLTEMenuNotificationLogs', [
             'foreignKey' => 'admin_l_t_e_menu_notification_id',
             'className' => 'AdminLTE.AdminLTEMenuNotificationLogs'
@@ -89,6 +95,8 @@ class AdminLTEMenuNotificationsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->existsIn(['user_id'], 'Users'));
+
         return $rules;
     }
 }

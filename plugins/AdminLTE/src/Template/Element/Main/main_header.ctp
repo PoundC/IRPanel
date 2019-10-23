@@ -89,7 +89,7 @@
                                                     <?php if($navMessage['avatar'] != '') { ?>
                                                         <?php echo $this->Html->image($navMessage['avatar'] . '.thumb.jpg', array('class' => 'img-circle', 'alt' => 'User Image')); ?>
                                                     <?php } else { ?>
-                                                        <img src="/img/avatar.jpg" class="user-image" alt="User Image" />
+                                                        <img src="/cake_d_c/users/img/avatar_placeholder.png" class="user-image" alt="User Image" />
                                                     <?php } ?>
                                                 </div>
                                                 <h4>

@@ -24,7 +24,6 @@ class AdminLTEMenuNotificationsTableTest extends TestCase
      */
     public $fixtures = [
         'plugin.AdminLTE.AdminLTEMenuNotifications',
-        'plugin.AdminLTE.Destinations',
         'plugin.AdminLTE.AdminLTEMenuNotificationLogs'
     ];
 

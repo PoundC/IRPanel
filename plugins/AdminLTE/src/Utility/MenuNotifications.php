@@ -82,6 +82,7 @@ class MenuNotifications {
 
     public static function addUserItemMenuNotification($user_id, $menuGroup, $menuTitle, $count = 1)
     {
+        // die($user_id);
         $menuNotificationsTable = TableRegistry::get('AdminLTE.AdminLTEMenuNotifications');
         $menuNotificationsEntity = $menuNotificationsTable->newEntity([
             'menu_group' => $menuGroup,

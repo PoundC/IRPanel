@@ -20,7 +20,8 @@ class AdminLTEMenuNotificationsFixture extends TestFixture
         'menu_title' => ['type' => 'string', 'length' => 32, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'notification_count' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'destination' => ['type' => 'string', 'length' => null, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'destination_id' => ['type' => 'string', 'length' => 16, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'user_id' => ['type' => 'string', 'length' => 64, 'null' => false, 'default' => '', 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'role_id' => ['type' => 'string', 'length' => 16, 'null' => false, 'default' => '', 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
@@ -44,7 +45,8 @@ class AdminLTEMenuNotificationsFixture extends TestFixture
                 'menu_title' => 'Lorem ipsum dolor sit amet',
                 'notification_count' => 1,
                 'destination' => 'Lorem ipsum dolor sit amet',
-                'destination_id' => 'Lorem ipsum do'
+                'user_id' => 'Lorem ipsum dolor sit amet',
+                'role_id' => 'Lorem ipsum do'
             ],
         ];
         parent::init();
