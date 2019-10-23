@@ -61,11 +61,13 @@ class Messaging
 
         $messagesTable = TableRegistry::get('AdminLTE.Messaging');
 
-        $userCount = $messagesTable->find('all')->where([
-            'messaging.read' => 0,
-            'messaging.user_id' => $user_id,
-            'messaging.user_deleted' => 0
-        ])->orWhere([
+        $userCount = $messagesTable->find('all')
+//            ->where([
+//            'messaging.read' => 0,
+//            'messaging.user_id' => $user_id,
+//            'messaging.user_deleted' => 0
+//        ])
+            ->where([
             'messaging.recipient_read' => 0,
             'messaging.recipient_deleted' => 0,
             'messaging.to_user_id' => $user_id
