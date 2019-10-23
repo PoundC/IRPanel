@@ -10,9 +10,10 @@ use Cake\ORM\Entity;
  * @property string $menu_group
  * @property string $menu_title
  * @property int $notification_count
- * @property string $destination_id
+ * @property string $destination
+ * @property string $user_id
+ * @property string $role_id
  *
- * @property \AdminLTE\Model\Entity\Destination $destination
  * @property \AdminLTE\Model\Entity\AdminLTEMenuNotificationLog[] $admin_l_t_e_menu_notification_logs
  */
 class AdminLTEMenuNotification extends Entity
@@ -31,7 +32,8 @@ class AdminLTEMenuNotification extends Entity
         'menu_title' => true,
         'notification_count' => true,
         'destination' => true,
-        'destination_id' => true,
+        'user_id' => true,
+        'role_id' => true,
         'admin_l_t_e_menu_notification_logs' => true
     ];
 }

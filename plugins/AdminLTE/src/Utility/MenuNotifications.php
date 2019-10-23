@@ -82,6 +82,7 @@ class MenuNotifications {
 
     public static function addUserItemMenuNotification($user_id, $menuGroup, $menuTitle, $count = 1)
     {
+        // die($user_id);
         $menuNotificationsTable = TableRegistry::get('AdminLTE.AdminLTEMenuNotifications');
         $menuNotificationsEntity = $menuNotificationsTable->newEntity([
             'menu_group' => $menuGroup,
@@ -91,7 +92,9 @@ class MenuNotifications {
             'user_id' => $user_id,
             'role_id' => ''
         ]);
+        die(print_r(debug($menuNotificationsEntity), true));
         $menuNotificationsTable->save($menuNotificationsEntity);
+
     }
 
     public static function markMenuNotificationsSeen($user_id, $role, $menuGroup, $menuTitle = '')

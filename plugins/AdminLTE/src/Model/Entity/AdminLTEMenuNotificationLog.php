@@ -8,7 +8,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int $admin_l_t_e_menu_notification_id
- * @property int $user_id
+ * @property string $user_id
  * @property \Cake\I18n\FrozenTime $created
  *
  * @property \AdminLTE\Model\Entity\AdminLTEMenuNotification $admin_l_t_e_menu_notification
