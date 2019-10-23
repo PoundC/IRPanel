@@ -7,7 +7,7 @@ $menus = [
         'dashboards' => [
             'menu' => [
                 'Voting' => [
-                    'path' => '/i_r_c_votes/dashboard',
+                    'path' => '/voting/votes/dashboard',
                     'icon' => 'fa-check-square-o'
                 ]
             ]
@@ -19,15 +19,15 @@ $menus = [
             'css'   => 'non-active',
             'menu' => [
                 'Proposals' => [
-                    'path' => '/i_r_c_votes/',
+                    'path' => '/voting/votes/proposals',
                     'icon' => 'fa-user-secret'
                 ],
                 'Search' => [
-                    'path' => '/i_r_c_votes/search',
+                    'path' => '/voting/votes/search',
                     'icon' => 'fa-search'
                 ],
                 'Create' => [
-                    'path' => '/i_r_c_votes/create',
+                    'path' => '/voting/votes/create',
                     'icon' => 'fa-plus-square-o'
                 ]
             ]

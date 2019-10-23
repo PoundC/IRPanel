@@ -8,14 +8,14 @@ $menus = [
             'menu' => [
                 'Quotes' => [
                     'path' => '/i_r_c_quotes/dashboard',
-                    'icon' => 'fa-comments-o'
+                    'icon' => 'fa-quote-right'
                 ]
             ]
         ],
         'quotes' => [
             'type' => 'group',
             'group' => 'Quotes',
-            'icon' => 'fa-comments-o',
+            'icon' => 'fa-quote-right',
             'css'   => 'non-active',
             'menu' => [
                 'Search' => [

@@ -5,7 +5,7 @@ use Cake\Routing\Route\DashedRoute;
 
 Router::plugin(
     'IRPanelVoting',
-    ['path' => '/i-r-panel-voting'],
+    ['path' => '/voting'],
     function (RouteBuilder $routes) {
         $routes->fallbacks(DashedRoute::class);
     }

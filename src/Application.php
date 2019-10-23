@@ -39,8 +39,8 @@ class Application extends BaseApplication
 
         $this->addPlugin('IRPanel');
         $this->addPlugin('IRPanelQuotes');
-        $this->addPlugin('IRPanelVoting');
         $this->addPlugin('IRPanelVetting');
+        $this->addPlugin('IRPanelVoting');
         $this->addPlugin('IRPanelGame');
         $this->addPlugin('IRPanelJams');
         $this->addPlugin('IRPanelLinks');

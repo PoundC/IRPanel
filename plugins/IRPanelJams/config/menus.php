@@ -18,17 +18,21 @@ $menus = [
             'icon' => 'fa-music',
             'css'   => 'non-active',
             'menu' => [
-                'Dashboard' => [
-                    'path' => '/quotes/dashboard',
-                    'icon' => 'fa-dashboard'
+                'Player' => [
+                    'path' => '/i_r_c_jams/player',
+                    'icon' => 'fa-play-circle-o'
+                ],
+                'History' => [
+                    'path' => '/i_r_c_jams/history',
+                    'icon' => 'fa-history'
                 ],
                 'Search' => [
-                    'path' => '/quotes/search',
+                    'path' => '/i_r_c_jams/search',
                     'icon' => 'fa-search'
                 ],
                 'Add' => [
-                    'path' => '/quotes/add',
-                    'icon' => 'fa-search'
+                    'path' => '/i_r_c_jams/add',
+                    'icon' => 'fa-plus-circle'
                 ]
             ]
         ]

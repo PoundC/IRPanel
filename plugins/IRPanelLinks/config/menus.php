@@ -18,17 +18,21 @@ $menus = [
             'icon' => 'fa-link',
             'css'   => 'non-active',
             'menu' => [
-                'Dashboard' => [
-                    'path' => '/quotes/dashboard',
+                'History' => [
+                    'path' => '/i_r_c_links/history',
                     'icon' => 'fa-dashboard'
                 ],
+                'Browse' => [
+                    'path' => '/i_r_c_links/browse',
+                    'icon' => 'fa-crosshairs'
+                ],
                 'Search' => [
-                    'path' => '/quotes/search',
+                    'path' => '/i_r_c_links/search',
                     'icon' => 'fa-search'
                 ],
                 'Add' => [
-                    'path' => '/quotes/add',
-                    'icon' => 'fa-search'
+                    'path' => '/i_r_c_media/add',
+                    'icon' => 'fa-plus-circle'
                 ]
             ]
         ]

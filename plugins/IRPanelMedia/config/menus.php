@@ -18,17 +18,21 @@ $menus = [
             'icon' => 'fa-video-camera',
             'css'   => 'non-active',
             'menu' => [
-                'Dashboard' => [
-                    'path' => '/quotes/dashboard',
+                'History' => [
+                    'path' => '/i_r_c_media/history',
                     'icon' => 'fa-dashboard'
                 ],
+                'Browse' => [
+                    'path' => '/i_r_c_media/browse',
+                    'icon' => 'fa-crosshairs'
+                ],
                 'Search' => [
-                    'path' => '/quotes/search',
+                    'path' => '/i_r_c_media/search',
                     'icon' => 'fa-search'
                 ],
                 'Add' => [
-                    'path' => '/quotes/add',
-                    'icon' => 'fa-search'
+                    'path' => '/i_r_c_media/add',
+                    'icon' => 'fa-plus-circle'
                 ]
             ]
         ]

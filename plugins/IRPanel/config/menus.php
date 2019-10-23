@@ -14,9 +14,9 @@ $menus = [
                     'path' => '/dashboard',
                     'icon' => 'fa-briefcase'
                 ],
-                'IRC Logs' => [
+                'Relay Chat' => [
                     'path' => '/i_r_c_logs/dashboard',
-                    'icon' => 'fa-book',
+                    'icon' => 'fa-comments',
                     /*'menu' => [
                         'Reports' => [
                             'path' => '/whoa',

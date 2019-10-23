@@ -199,10 +199,9 @@ $morePermissions = \Cake\Core\Configure::read('MyPermissions');
 if(is_array($morePermissions)) {
 
     $allPerms = array_merge($permissions, $morePermissions);
-
-    return ['Users.SimpleRbac.permissions' => $allPerms];
+    return ['CakeDC/Auth.permissions' => $allPerms];
 }
 else {
 
-    return ['Users.SimpleRbac.permissions' => $permissions];;
+    return ['CakeDC/Auth.permissions' => $permissions];;
 }
