@@ -5,10 +5,6 @@ use AdminLTE\Utility\Sidebar;
 $menus = [
     'user' => [
         'dashboards' => [
-            'type' => 'group',
-            'group' => 'Dashboards',
-            'icon' => 'fa-dashboard',
-            'css'   => 'active non-active',
             'menu' => [
                 'The Game' => [
                     'path' => '/i_r_c_game/dashboard',
