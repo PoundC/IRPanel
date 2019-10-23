@@ -43,11 +43,6 @@ class AdminLTEMenuNotificationsTable extends Table
             'joinType' => 'INNER',
             'className' => 'AdminLTE.Users'
         ]);
-        $this->belongsTo('Roles', [
-            'foreignKey' => 'role_id',
-            'joinType' => 'INNER',
-            'className' => 'AdminLTE.Roles'
-        ]);
         $this->hasMany('AdminLTEMenuNotificationLogs', [
             'foreignKey' => 'admin_l_t_e_menu_notification_id',
             'className' => 'AdminLTE.AdminLTEMenuNotificationLogs'
@@ -101,7 +96,6 @@ class AdminLTEMenuNotificationsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
-        $rules->add($rules->existsIn(['role_id'], 'Roles'));
 
         return $rules;
     }

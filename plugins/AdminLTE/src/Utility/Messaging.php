@@ -38,7 +38,7 @@ class Messaging
 
         foreach($messages as $message)
         {
-            $user = Users::getOtherUserByID($message->get('to_user_id'));
+            $user = Users::getOtherUserByID($message->get('user_id'));
 
             $messageArray['username'] = $user->get('first_name') . ' ' . $user->get('last_name');
             $messageArray['avatar'] = $user->get('avatar');
