@@ -3,6 +3,7 @@ namespace AdminLTE\Controller;
 
 use AdminLTE\Controller\AppController;
 use AdminLTE\Utility\Janitor;
+use AdminLTE\Utility\MenuNotifications;
 use AdminLTE\Utility\Messaging;
 
 /**
@@ -146,6 +147,8 @@ class MessagingController extends AppController
         }
         $userCount = Messaging::getUserCount($this->Auth->user('id'));
 
+        MenuNotifications::markMenuNotificationsSeen($this->Auth->user('id'), $this->Auth->user('role'), 'Messages', 'Messages');
+
         $this->set('role', $this->Auth->user('role'));
         $this->set('user_id', $this->Auth->user('id'));
         $this->set(compact('messages', 'userActive', 'sentActive', 'userCount'));
@@ -231,6 +234,8 @@ class MessagingController extends AppController
 
             $this->Messaging->save($message);
 
+            MenuNotifications::addUserItemMenuNotification($to_user_id, 'Messages', 'Messages');
+
             $this->Flash->success('Your Message Was Sent Successfully');
 
             return $this->redirect('/messages?inbox=sent');
@@ -313,6 +318,8 @@ class MessagingController extends AppController
                 'to_user_id' => $to_user_id,
                 'messaging.read' => 1
             ]);
+
+            MenuNotifications::addUserItemMenuNotification($to_user_id, 'Messages', 'Messages');
 
             $this->Messaging->save($reply);
 
