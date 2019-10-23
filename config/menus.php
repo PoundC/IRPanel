@@ -81,6 +81,19 @@ $menus = [
             'icon'  => 'fa-dashboard',
             'path'  => '/dashboard'
         ]*/
+        ],
+        [
+            'type'  => 'link',
+            'link'  => 'Notifications',
+            'icon'  => 'fa-bullhorn',
+            'path'  => '/notifications'
+        ],
+        [
+            'type'  => 'link',
+            'link'  => 'Messages',
+            'icon'  => 'fa-envelope-o',
+            'path'  => '/messages'
+        ]
     ],
     'member' => [
         [
@@ -92,12 +105,36 @@ $menus = [
             'link'  => 'Dashboard',
             'icon'  => 'fa-dashboard',
             'path'  => '/dashboard'
+        ],
+        [
+            'type'  => 'link',
+            'link'  => 'Notifications',
+            'icon'  => 'fa-bullhorn',
+            'path'  => '/notifications'
+        ],
+        [
+            'type'  => 'link',
+            'link'  => 'Messages',
+            'icon'  => 'fa-envelope-o',
+            'path'  => '/messages'
         ]
     ],
     'superuser' => [
         [
             'type'  => 'header',
             'header' => 'Welcome Admin'
+        ],
+        [
+            'type'  => 'link',
+            'link'  => 'Notifications',
+            'icon'  => 'fa-bullhorn',
+            'path'  => '/notifications'
+        ],
+        [
+            'type'  => 'link',
+            'link'  => 'Messages',
+            'icon'  => 'fa-envelope-o',
+            'path'  => '/messages'
         ],
         [
             'type'  => 'group',

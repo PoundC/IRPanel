@@ -8,6 +8,8 @@
 
 namespace AdminLTE\Utility;
 
+use Cake\ORM\TableRegistry;
+
 class Sidebar
 {
     public static $Menu = array();
@@ -57,37 +59,22 @@ class Sidebar
         }
     }
 
-    public static function buildMenu($currentPath, $role = 'visitor')
+    public static function buildMenu($currentPath, $role = 'visitor', $user_id = 0)
     {
         $menuHtml = '<ul id="nav-menu" class="sidebar-menu" data-widget="tree">' . "\n";
 
         foreach(Sidebar::$Menu[$role] as $menuKey => $menuItem)
         {
-            if(is_array($menuItem['type'])) {
-                switch ($menuItem['type'][0]) {
-                    case 'header':
-                        $menuHtml .= Sidebar::buildHeader($menuItem);
-                        break;
-                    case 'link':
-                        $menuHtml .= Sidebar::buildLink($currentPath, $menuItem);
-                        break;
-                    case 'group':
-                        $menuHtml .= Sidebar::buildGroupArray($currentPath, $menuItem);
-                        break;
-                }
-            }
-            else {
-                switch ($menuItem['type']) {
-                    case 'header':
-                        $menuHtml .= Sidebar::buildHeader($menuItem);
-                        break;
-                    case 'link':
-                        $menuHtml .= Sidebar::buildLink($currentPath, $menuItem);
-                        break;
-                    case 'group':
-                        $menuHtml .= Sidebar::buildGroup($currentPath, $menuItem);
-                        break;
-                }
+            switch ($menuItem['type']) {
+                case 'header':
+                    $menuHtml .= Sidebar::buildHeader($menuItem);
+                    break;
+                case 'link':
+                    $menuHtml .= Sidebar::buildLink($currentPath, $menuItem, $role, $user_id);
+                    break;
+                case 'group':
+                    $menuHtml .= Sidebar::buildGroup($currentPath, $menuItem, $role, $user_id);
+                    break;
             }
         }
 
@@ -103,8 +90,27 @@ class Sidebar
         return $header;
     }
 
-    private static function buildLink($currentPath, $menuItem)
+    private static function buildLink($currentPath, $menuItem, $role, $user_id)
     {
+        $menuNotifications = TableRegistry::get('AdminLTE.AdminLTEMenuNotifications');
+        $linkNotifications = $menuNotifications->find('all', ['contain' => 'AdminLTEMenuNotificationLogs']);
+        $linkNotifications->select(['total' => $linkNotifications->func()->sum('notification_count')])
+            ->where([
+                'OR' => [
+                    ['destination' => 'User', 'AdminLTEMenuNotifications.user_id' => $user_id],
+                    ['destination' => 'Global'],
+                    ['destination' => 'Role', 'role_id' => $role],
+                ],
+                // Common conditions
+                'menu_title' => $menuItem['link'],
+                'menu_group' => $menuItem['link']
+            ]);
+        $linkNotifications->notMatching('AdminLTEMenuNotificationLogs', function (\Cake\ORM\Query $query) use($user_id) {
+            return $query->where(['AdminLTEMenuNotificationLogs.user_id' => $user_id]);
+        });
+        $linkNotificationsResult = $linkNotifications->first();
+        $linkNotificationsResultTotal = $linkNotificationsResult->total;
+
         $isActive = '';
 
         if ($currentPath == $menuItem['path']) {
@@ -112,13 +118,31 @@ class Sidebar
             $isActive = 'class="active"';
         }
 
-        $link = '<li ' . $isActive . '><a href="' . $menuItem['path'] . '"><i class="fa-left-icon fa ' . $menuItem['icon'] . '"></i><span>' . $menuItem['link'] . '</span></a></li>' . "\n";
+        $link = '<li ' . $isActive . '><a href="' . $menuItem['path'] . '"><i class="fa-left-icon fa ' . $menuItem['icon'] . '"></i><span>' . $menuItem['link'] . '</span><span class="pull-right-container"><small class="label pull-right bg-green">' . $linkNotificationsResultTotal . '</small></span></a></li>' . "\n";
 
         return $link;
     }
 
-    private static function buildGroup($currentPath, $menuItem)
+    private static function buildGroup($currentPath, $menuItem, $role, $user_id)
     {
+        $menuNotifications = TableRegistry::get('AdminLTE.AdminLTEMenuNotifications');
+        $groupNotifications = $menuNotifications->find('all', ['contain' => 'AdminLTEMenuNotificationLogs']);
+        $groupNotifications->select(['total' => $groupNotifications->func()->sum('notification_count')])
+            ->where([
+                'OR' => [
+                    ['destination' => 'User', 'AdminLTEMenuNotifications.user_id' => $user_id],
+                    ['destination' => 'Global'],
+                    ['destination' => 'Role', 'role_id' => $role],
+                ],
+                // Common conditions
+                'menu_group' => $menuItem['group']
+            ]);
+        $groupNotifications->notMatching('AdminLTEMenuNotificationLogs', function (\Cake\ORM\Query $query) use($user_id) {
+            return $query->where(['AdminLTEMenuNotificationLogs.user_id' => $user_id]);
+        });
+        $groupNotificationsResult = $groupNotifications->first();
+        $groupNotificationsResultTotal = $groupNotificationsResult->total;
+
         if (Sidebar::isMenuActive($currentPath, $menuItem['menu'])) {
 
             $second_class = 'active';
@@ -145,10 +169,28 @@ class Sidebar
 
             $group .= '<li class="' . $isActive . '"><a href="#"><i class="fa-left-icon fa ' . $menuItem['icon'] . ' ' . $second_class . '"></i><span class="' . $second_class . '">' . $menuItem['group'] . '</span>' . "\n";
         }
-        $group .= '<span class="pull-right-container"></span></a>' . "\n";
+        $group .= '<span class="pull-right-container"><small class="label pull-right bg-green">' . $groupNotificationsResultTotal . '</small></span></a>' . "\n";
         $group .= '<ul class="treeview-menu">' . "\n";
 
         foreach ($menuItem['menu'] as $item => $items) {
+
+            $itemNotifications = $menuNotifications->find('all', ['contain' => 'AdminLTEMenuNotificationLogs']);
+            $itemNotifications->select(['total' => $itemNotifications->func()->sum('notification_count')])
+                ->where([
+                    'OR' => [
+                        ['destination' => 'User', 'AdminLTEMenuNotifications.user_id' => $user_id],
+                        ['destination' => 'Global'],
+                        ['destination' => 'Role', 'role_id' => $role],
+                    ],
+                    // Common conditions
+                    'menu_title' => $item,
+                    'menu_group' => $menuItem['group']
+                ]);
+            $itemNotifications->notMatching('AdminLTEMenuNotificationLogs', function (\Cake\ORM\Query $query) use($user_id) {
+                return $query->where(['AdminLTEMenuNotificationLogs.user_id' => $user_id]);
+            });
+            $itemNotificationsResult = $itemNotifications->first();
+            $itemNotificationsResultTotal = $itemNotificationsResult->total;
 
             $menuTitle = $item;
             $menuPath = $items['path'];
@@ -166,94 +208,13 @@ class Sidebar
                 $isActive = ' active';
             }
 
-            if(is_array($menuPath)) {
-                $group .= '<li class="' . $isActive . '"><a href="' . $menuPath[0] . '"><i class="fa-left-icon fa ' . $menuIcon[0] . '"></i><span>' . $menuTitle . '</span></a>' . "\n";
+            if(isset($items['menu']))
+            {
+                $group .= '<li class="' . $isActive . '"><a href="' . $menuPath . '"><i class="fa-left-icon fa ' . $menuIcon . '"></i><span>' . $menuTitle . '</span><span class="pull-right-container"><small class="label pull-right bg-green">' . $itemNotificationsResultTotal . '</small></span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>' . "\n";
             }
             else {
-                if(isset($items['menu']))
-                {
-                    $group .= '<li class="' . $isActive . '"><a href="' . $menuPath . '"><i class="fa-left-icon fa ' . $menuIcon . '"></i><span>' . $menuTitle . '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>' . "\n";
-                }
-                else {
 
-                    $group .= '<li class="' . $isActive . '"><a href="' . $menuPath . '"><i class="fa-left-icon fa ' . $menuIcon . '"></i><span>' . $menuTitle . '</span></a>' . "\n";
-                }
-            }
-
-            if(isset($items['menu'])) {
-
-                $group .= Sidebar::buildSubMenus($currentPath, $items);
-            }
-
-            $group .= '</li>' . "\n";
-        }
-
-        $group .= '</ul></li>' . "\n";
-
-        return $group;
-    }
-
-    private static function buildGroupArray($currentPath, $menuItem)
-    {
-        if (Sidebar::isMenuActive($currentPath, $menuItem['menu'])) {
-
-            $second_class = 'active';
-            $isActive = 'active';
-        } else {
-
-            $second_class = 'non-active';
-            $isActive = $menuItem['css'][0];
-        }
-
-        if (Sidebar::doesMenuContainSubMenus($menuItem['menu'])) {
-
-            $isActive .= ' treeview';
-        }
-
-        $isActive .= ' treeview';
-
-        $group = '';
-        if (isset($menuItem['path'])) {
-
-            $group .= '<li class="' . $isActive . '"><a href="' . $menuItem['path'] . '"><i class="fa-left-icon fa ' . $menuItem['icon'] . ' ' . $second_class . '"></i><span class="' . $second_class . '">' . $menuItem['group'] . '</span>' . "\n";
-        }
-        else {
-
-            $group .= '<li class="' . $isActive . '"><a href="#"><i class="fa-left-icon fa ' . $menuItem['icon'][0] . ' ' . $second_class . '"></i><span class="' . $second_class . '">' . $menuItem['group'][0] . '</span>' . "\n";
-        }
-        $group .= '<span class="pull-right-container"></span></a>' . "\n";
-        $group .= '<ul class="treeview-menu">' . "\n";
-
-        foreach ($menuItem['menu'] as $item => $items) {
-
-            $menuTitle = $item;
-            $menuPath = $items['path'];
-            $menuIcon = $items['icon'];
-
-            $isActive = '';
-
-            if(isset($items['menu'])) {
-
-                $isActive .= 'treeview';
-            }
-
-            if ($currentPath == $items['path']) {
-
-                $isActive = ' active';
-            }
-
-            if(is_array($menuPath)) {
-                $group .= '<li class="' . $isActive . '"><a href="' . $menuPath[0] . '"><i class="fa-left-icon fa ' . $menuIcon[0] . '"></i><span>' . $menuTitle . '</span></a>' . "\n";
-            }
-            else {
-                if(isset($items['menu']))
-                {
-                    $group .= '<li class="' . $isActive . '"><a href="' . $menuPath . '"><i class="fa-left-icon fa ' . $menuIcon . '"></i><span>' . $menuTitle . '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>' . "\n";
-                }
-                else {
-
-                    $group .= '<li class="' . $isActive . '"><a href="' . $menuPath . '"><i class="fa-left-icon fa ' . $menuIcon . '"></i><span>' . $menuTitle . '</span></a>' . "\n";
-                }
+                $group .= '<li class="' . $isActive . '"><a href="' . $menuPath . '"><i class="fa-left-icon fa ' . $menuIcon . '"></i><span>' . $menuTitle . '</span><span class="pull-right-container"><small class="label pull-right bg-green">' . $itemNotificationsResultTotal . '</small></span></a>' . "\n";
             }
 
             if(isset($items['menu'])) {

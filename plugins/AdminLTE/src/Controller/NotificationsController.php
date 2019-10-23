@@ -2,6 +2,7 @@
 namespace AdminLTE\Controller;
 
 use AdminLTE\Controller\AppController;
+use AdminLTE\Utility\MenuNotifications;
 
 /**
  * Notifications Controller
@@ -65,6 +66,8 @@ class NotificationsController extends AppController
 
             $this->Notifications->save($notification);
         }
+
+        MenuNotifications::markMenuNotificationsSeen($this->Auth->user('id'), $this->Auth->user('role'), 'Notifications', 'Notifications');
 
         $this->set(compact('notifications', 'checkAll'));
     }

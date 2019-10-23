@@ -168,7 +168,7 @@ class AppController extends Controller
                     Sidebar::addMenuGroup($supportMenu, $currentUser->role);
                 }
 
-                $menus = Sidebar::buildMenu($this->request->here, $currentUser->role);
+                $menus = Sidebar::buildMenu($this->request->here, $currentUser->role, $currentUser->id);
 
                 if ($currentId == $this->Auth->user('id')) {
 
