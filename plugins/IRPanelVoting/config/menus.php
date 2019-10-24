@@ -34,44 +34,7 @@ $menus = [
         ]
     ],
     'superuser' => [
-        [
-            'type'  => 'header',
-            'header' => 'Welcome Admin'
-        ],
-        [
-            'type'  => 'group',
-            'group' => 'Admin Menu',
-            'icon'  => 'fa-user',
-            'css'   => 'active non-active',
-            'menu' => [
-                'Dashboard' => [
-                    'path' => '/dashboard',
-                    'icon' => 'fa-dashboard',
-                    /*
-                    'menu' => [
-                        'Reporting' => [
-                            'path' => '/dashboard/reporting',
-                            'icon' => 'fa-dashboard',
-                            'menu' => [
-                                'Reporting 2' => [
-                                    'path' => '/dashboard/reporting/2',
-                                    'icon' => 'fa-dashboard'
-                                ]
-                            ]
-                        ]
-                    ]
-                    */
-                ],
-                'Search Users' => [
-                    'path'  => '/search/users',
-                    'icon'  => 'fa-search'
-                ],
-                'View Users' => [
-                    'path'  => '/admin/users',
-                    'icon'  => 'fa-users'
-                ]
-            ]
-        ],
+        /*
         [
             'type'  => 'group',
             'group' => 'Support Menu',
@@ -92,6 +55,7 @@ $menus = [
                 ]
             ]
         ]
+        */
     ]
 ];
 
