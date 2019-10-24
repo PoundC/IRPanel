@@ -3,6 +3,7 @@ namespace AdminLTE\Controller;
 
 use AdminLTE\Controller\AppController;
 use AdminLTE\Utility\MenuNotifications;
+use AdminLTE\Utility\Notifications;
 
 /**
  * Notifications Controller
@@ -56,8 +57,6 @@ class NotificationsController extends AppController
 
         $notifications = $this->paginate($this->Notifications->find('all', ['contain' => ['Users']])->where([
             'Notifications.user_id' => $this->Auth->user('id'),
-            'Notifications.deleted' => '0',
-            'Notifications.seen' => '0'
         ])->orderDesc('Notifications.created'));
 
         foreach($notifications as $notification) {
@@ -68,6 +67,7 @@ class NotificationsController extends AppController
         }
 
         MenuNotifications::markMenuNotificationsSeen($this->Auth->user('id'), $this->Auth->user('role'), 'Notifications', 'Notifications');
+        Notifications::markNotificationsCountSeen($this->Auth->user('id'), $this->Auth->user('role'));
 
         $this->set(compact('notifications', 'checkAll'));
     }

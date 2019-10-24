@@ -69,6 +69,50 @@
                 <?php
                              }
                     ?>
+                <li class="dropdown notifications-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-bell-o"></i>
+                        <?php if($totalNotificationsCount > 0 ) { ?>
+                            <span class="label label-warning"><?= $totalNotificationsCount ?></span>
+                        <?php } ?>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">You have <?= $totalNotificationsCount ?> notifications</li>
+                        <?php if($totalNotificationsCount > 0) { ?>
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu">
+                                    <?php foreach($navNotificationsArray as $notification) { ?>
+                                        <?php switch($notification['type']) {
+                                            case 'users':
+                                                $icon = 'users';
+                                                $color = 'text-aqua';
+                                                break;
+                                            case 'alert':
+                                                $icon = 'warning';
+                                                $color = 'text-yellow';
+                                                break;
+                                            case 'sale':
+                                                $icon = 'shopping-cart';
+                                                $color = 'text-green';
+                                                break;
+                                            case 'message':
+                                                $icon = 'envelope';
+                                                $color = 'text-green';
+                                                break;
+                                                ?>
+                                            <?php } ?>
+                                        <li>
+                                            <a href="<?= $notification['link'] ?>">
+                                                <i class="fa fa-<?= $icon ?> <?= $color ?>"></i>&nbsp;&nbsp;<?= $notification['message'] ?>
+                                            </a>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
+                            </li><li class="footer"><a href="/notifications">View all</a></li>
+                        <?php } ?>
+                    </ul>
+                </li>
                 <li class="dropdown messages-menu">
                     <a href="/messages" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope-o"></i>
@@ -106,44 +150,42 @@
                         <?php } ?>
                     </ul>
                 </li>
-                <li class="dropdown notifications-menu">
+                <!-- Tasks Menu -->
+                <li class="dropdown tasks-menu">
+                    <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-bell-o"></i>
-                        <?php if($totalNotificationsCount > 0 ) { ?>
-                            <span class="label label-warning"><?= $totalNotificationsCount ?></span>
-                        <?php } ?>
+                        <i class="fa fa-flag-checkered"></i>
+                        <span class="label label-danger">9</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">You have <?= $totalNotificationsCount ?> notifications</li>
-                        <?php if($totalNotificationsCount > 0) { ?>
+                        <li class="header">You have 9 tasks</li>
                         <li>
-                            <!-- inner menu: contains the actual data -->
+                            <!-- Inner menu: contains the tasks -->
                             <ul class="menu">
-                                <?php foreach($navNotificationsArray as $notification) { ?>
-                                    <?php switch($notification['type']) {
-                                        case 'users':
-                                            $icon = 'users';
-                                            $color = 'text-aqua';
-                                            break;
-                                        case 'alert':
-                                            $icon = 'warning';
-                                            $color = 'text-yellow';
-                                            break;
-                                        case 'sale':
-                                            $icon = 'shopping-cart';
-                                            $color = 'text-green';
-                                            break;
-                                            ?>
-                                        <?php } ?>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-<?= $icon ?> <?= $color ?>"></i> <?= $notification['message'] ?>
-                                        </a>
-                                    </li>
-                                <?php } ?>
+                                <li><!-- Task item -->
+                                    <a href="#">
+                                        <!-- Task title and progress text -->
+                                        <h3>
+                                            Design some buttons
+                                            <small class="pull-right">20%</small>
+                                        </h3>
+                                        <!-- The progress bar -->
+                                        <div class="progress xs">
+                                            <!-- Change the css width attribute to simulate progress -->
+                                            <div class="progress-bar progress-bar-aqua" style="width: 20%"
+                                                 role="progressbar"
+                                                 aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                <span class="sr-only">20% Complete</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <!-- end task item -->
                             </ul>
-                        </li><li class="footer"><a href="/notifications">View all</a></li>
-                        <?php } ?>
+                        </li>
+                        <li class="footer">
+                            <a href="#">View all tasks</a>
+                        </li>
                     </ul>
                 </li>
                 <?php

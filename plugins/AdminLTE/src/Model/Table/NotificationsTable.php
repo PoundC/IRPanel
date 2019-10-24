@@ -9,20 +9,23 @@ use Cake\Validation\Validator;
 /**
  * Notifications Model
  *
- * @property \App\Model\Table\AccountsTable|\Cake\ORM\Association\BelongsTo $Accounts
+ * @property \AdminLTE\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
+ * @property \AdminLTE\Model\Table\RolesTable|\Cake\ORM\Association\BelongsTo $Roles
+ * @property \AdminLTE\Model\Table\AdminLTENotificationLogsTable|\Cake\ORM\Association\HasMany $AdminLTENotificationLogs
  *
- * @method \App\Model\Entity\Notification get($primaryKey, $options = [])
- * @method \App\Model\Entity\Notification newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Notification[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Notification|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Notification|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Notification patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Notification[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Notification findOrCreate($search, callable $callback = null, $options = [])
+ * @method \AdminLTE\Model\Entity\Notification get($primaryKey, $options = [])
+ * @method \AdminLTE\Model\Entity\Notification newEntity($data = null, array $options = [])
+ * @method \AdminLTE\Model\Entity\Notification[] newEntities(array $data, array $options = [])
+ * @method \AdminLTE\Model\Entity\Notification|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \AdminLTE\Model\Entity\Notification saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \AdminLTE\Model\Entity\Notification patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \AdminLTE\Model\Entity\Notification[] patchEntities($entities, array $data, array $options = [])
+ * @method \AdminLTE\Model\Entity\Notification findOrCreate($search, callable $callback = null, $options = [])
+ *
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class NotificationsTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -37,9 +40,16 @@ class NotificationsTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
+        $this->addBehavior('Timestamp');
+
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
+            'className' => 'AdminLTE.Users'
+        ]);
+        $this->hasMany('AdminLTENotificationLogs', [
+            'foreignKey' => 'notification_id',
+            'className' => 'AdminLTE.AdminLTENotificationLogs'
         ]);
     }
 
@@ -53,29 +63,31 @@ class NotificationsTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', 'create');
 
         $validator
             ->scalar('type')
             ->maxLength('type', 32)
-            ->requirePresence('type', 'create')
-            ->notEmpty('type');
+            ->allowEmptyString('type', false);
 
         $validator
             ->scalar('message')
             ->maxLength('message', 1024)
-            ->requirePresence('message', 'create')
-            ->notEmpty('message');
+            ->allowEmptyString('message', false);
 
         $validator
-            ->integer('seen')
-            ->requirePresence('seen', 'create')
-            ->notEmpty('seen');
+            ->scalar('destination')
+            ->requirePresence('destination', 'create')
+            ->allowEmptyString('destination', false);
 
         $validator
-            ->integer('deleted')
-            ->requirePresence('deleted', 'create')
-            ->notEmpty('deleted');
+            ->integer('total_count')
+            ->allowEmptyString('total_count', false);
+
+        $validator
+            ->scalar('link')
+            ->maxLength('link', 1024)
+            ->allowEmptyString('link', false);
 
         return $validator;
     }
@@ -89,8 +101,6 @@ class NotificationsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['user_id'], 'Users'));
-
         return $rules;
     }
 }
