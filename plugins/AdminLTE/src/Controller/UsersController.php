@@ -3,6 +3,7 @@
 namespace AdminLTE\Controller;
 
 use AdminLTE\Controller\Traits\ProfileTrait;
+use AdminLTE\Utility\Notifications;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 use CakeDC\Users\Controller\UsersController as BaseUsersController;
@@ -116,6 +117,11 @@ class UsersController extends BaseUsersController
         $this->viewBuilder()->setLayout('AdminLTE.stars');
 
         parent::login();
+
+        if($this->Auth->user()) {
+
+            Notifications::getPushNotifications($this->Auth->user('id'), $this->Auth->user('role'));
+        }
     }
 
     public function requestResetPassword() {

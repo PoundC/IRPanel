@@ -239,7 +239,7 @@ class MessagingController extends AppController
 
             MenuNotifications::addUserItemMenuNotification($to_user_id, 'Messages', 'Messages');
 
-            Notifications::addUserNotificationsEntry($to_user_id, 'message', $this->Auth->user('first_name') . ' sent you a message', '/messages/' . $message->id);
+            Notifications::addUserNotificationsEntry($to_user_id, Notifications::Message, $this->Auth->user('first_name') . ' sent you a message', 'Success','/messages/' . $message->id);
 
             $this->Flash->success('Your Message Was Sent Successfully');
 

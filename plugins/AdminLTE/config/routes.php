@@ -10,8 +10,10 @@ Router::plugin(
     ['path' => '/admin-l-t-e'],
     function (RouteBuilder $routes) {
         $routes->fallbacks(DashedRoute::class);
+        $routes->extensions(['json']);
     }
 );
+
 
 /*
  *

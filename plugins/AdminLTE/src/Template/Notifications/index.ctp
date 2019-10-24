@@ -32,29 +32,7 @@ use AdminLTE\Utility\Dates;
                             <tbody>
                             <?php foreach ($notifications as $notification): ?>
                             <tr>
-                                <?php switch($notification['type']) {
-                                            case 'newuser':
-                                                $icon = 'user';
-                                                $color = 'text-green';
-                                                break;
-                                            case 'users':
-                                                $icon = 'users';
-                                                $color = 'text-aqua';
-                                                break;
-                                            case 'alert':
-                                                $icon = 'warning';
-                                                $color = 'text-yellow';
-                                                break;
-                                            case 'sale':
-                                                $icon = 'shopping-cart';
-                                                $color = 'text-green';
-                                                break;
-                                            case 'message':
-                                                $icon = 'envelope';
-                                                $color = 'text-green';
-                                                break;
-                                            } ?>
-                                <td nowrap="true" class="mailbox-name"><center><i class="fa fa-<?php echo $icon; ?> <?= $color ?>"></i></center></td>
+                                <td nowrap="true" class="mailbox-name label-<?= $notification['color'] ?>"><center><i class="<?php echo $notification['type']; ?>"></i></center></td>
                                 <td class="mailbox-subject" style="width:70%"><a href="<?= $notification['link'] ?>"><?= $notification['message'] ?></a></td>
                                 <td class="mailbox-date" style="white-space: nowrap;"><?= Dates::getLapsedTime($notification['created']) ?> ago</td>
                             </tr>

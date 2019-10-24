@@ -14,6 +14,10 @@ class Notifications
     const Role = 'Role';
     const User = 'User';
 
+    const Message = 'fa fa-envelope';
+    const NewUser = 'fa fa-user';
+    const Alert = 'fa fa-warning';
+
     public static $userCount;
 
     public static function getNotificationsTable() {
@@ -26,22 +30,27 @@ class Notifications
         return TableRegistry::get('AdminLTE.AdminLTENotificationLogs');
     }
 
-    public static function addGlobalNotificationsEntry($type, $message, $link = '') {
+    public static function getPushNotificationsTable() {
 
-        self::addNotificationsEntry(self::Globe, '', '', $type, $message, $link);
+        return TableRegistry::get('AdminLTE.AdminLTEPushNotifications');
     }
 
-    public static function addRoleNotificationsEntry($role_id, $type, $message, $link = '') {
+    public static function addGlobalNotificationsEntry($type, $message, $color = 'Success', $link = '') {
 
-        self::addNotificationsEntry(self::Role, '', $role_id, $type, $message, $link);
+        self::addNotificationsEntry(self::Globe, '', '', $type, $message, $color, $link);
     }
 
-    public static function addUserNotificationsEntry($user_id, $type, $message, $link = '') {
+    public static function addRoleNotificationsEntry($role_id, $type, $message, $color = 'Success', $link = '') {
 
-        self::addNotificationsEntry(self::User, $user_id, '', $type, $message, $link);
+        self::addNotificationsEntry(self::Role, '', $role_id, $type, $message, $color, $link);
     }
 
-    public static function addNotificationsEntry($destination, $user_id, $role_id, $type, $message, $link = '') {
+    public static function addUserNotificationsEntry($user_id, $type, $message, $color = 'Success', $link = '') {
+
+        self::addNotificationsEntry(self::User, $user_id, '', $type, $message, $color, $link);
+    }
+
+    public static function addNotificationsEntry($destination, $user_id, $role_id, $type, $message, $color = 'Success', $link = '') {
 
         $table = self::getNotificationsTable();
 
@@ -51,13 +60,14 @@ class Notifications
             'role_id' => $role_id,
             'type' => $type,
             'message' => $message,
+            'color' => $color,
             'link' => $link,
             'created' => new \DateTime('now')
         ]);
 
         $table->save($entity);
 
-        if($type != 'message') {
+        if($type != 'fa fa-envelope') {
 
             MenuNotifications::addUserItemMenuNotification($user_id, 'Notifications', 'Notifications');
         }
@@ -82,6 +92,40 @@ class Notifications
             ]);
             $notificationLogsTable->save($notificationLogEntity);
         }
+    }
+
+    public static function getPushNotifications($user_id, $role_id)
+    {
+        $pushNotificationsTable = self::getPushNotificationsTable();
+        $notificationsTable = self::getNotificationsTable();
+
+        $userCountQuery = $notificationsTable->find('all', ['contain' => 'AdminLTEPushNotifications']);
+        $userCountQuery->where([
+            'OR' => [
+                ['destination' => 'User', 'Notifications.user_id' => $user_id],
+                ['destination' => 'Role', 'Notifications.role_id' => $role_id],
+                ['destination' => 'Global']
+            ]
+        ])
+        ->notMatching('AdminLTEPushNotifications', function (\Cake\ORM\Query $query) use ($user_id) {
+            return $query->where(['AdminLTEPushNotifications.user_id' => $user_id]);
+        });
+
+        $pushNotifications = $userCountQuery->all();
+
+        foreach($pushNotifications as $pushNotification)
+        {
+            $notificationId = $pushNotification->id;
+
+            $notificationLogEntity = $pushNotificationsTable->newEntity([
+                'notification_id' => $notificationId,
+                'user_id' => $user_id,
+                'created' => new \DateTime('now')
+            ]);
+            $pushNotificationsTable->save($notificationLogEntity);
+        }
+
+        return $pushNotifications;
     }
 
     public static function getNotificationsQuery($user_id, $role_id)

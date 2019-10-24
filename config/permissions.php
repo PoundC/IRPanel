@@ -205,7 +205,7 @@ $permissions = [
             'role' => ['user'],
             'plugin' => 'AdminLTE',
             'controller' => ['Notifications'],
-            'action' => ['index', 'view'],
+            'action' => ['index', 'view', 'growl'],
             'allowed' => true,
         ]
     ];
