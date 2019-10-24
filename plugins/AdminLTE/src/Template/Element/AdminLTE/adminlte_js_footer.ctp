@@ -26,9 +26,6 @@
                     type: data.color.toLowerCase()
                 });
             });
-        },
-        error: function () {
-            alert("No");
         }
     });
     var id = setInterval(function() {
@@ -47,9 +44,6 @@
                         type: data.color.toLowerCase()
                     });
                 });
-            },
-            error: function () {
-                alert("No");
             }
         });
     }, 15000);
