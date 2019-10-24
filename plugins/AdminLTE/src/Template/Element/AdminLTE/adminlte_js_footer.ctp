@@ -11,6 +11,26 @@
 
 <?php if($notLoggedIn == false) { ?>
 <script>
+    $.ajax({
+        url: "/admin-l-t-e/notifications/growl",
+        type: 'GET',
+        cache: false,
+        success: function (result) {
+            result.forEach(function(data, index) {
+                $.notify({
+                    icon: data.type,
+                    message: data.message,
+                    url: data.link
+                },{
+                    delay: 0,
+                    type: data.color.toLowerCase()
+                });
+            });
+        },
+        error: function () {
+            alert("No");
+        }
+    });
     var id = setInterval(function() {
         $.ajax({
             url: "/admin-l-t-e/notifications/growl",
