@@ -34,7 +34,7 @@ class NotificationsController extends AppController
         MenuNotifications::markMenuNotificationsSeen($this->Auth->user('id'), $this->Auth->user('role'), 'Notifications', 'Notifications');
         Notifications::markNotificationsCountSeen($this->Auth->user('id'), $this->Auth->user('role'));
 
-        $this->set(compact('notifications', 'checkAll'));
+        $this->set(compact('notifications'));
     }
 
     /**
