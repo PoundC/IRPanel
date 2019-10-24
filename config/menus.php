@@ -84,7 +84,7 @@ $menus = [
         [
             'type'  => 'link',
             'link'  => 'Notifications',
-            'icon'  => 'fa-bullhorn',
+            'icon'  => 'fa-bell-o',
             'path'  => '/notifications'
         ],
         [
@@ -92,6 +92,12 @@ $menus = [
             'link'  => 'Messages',
             'icon'  => 'fa-envelope-o',
             'path'  => '/messages'
+        ],
+        [
+            'type'  => 'link',
+            'link'  => 'Pending Tasks',
+            'icon'  => 'fa-flag-checkered',
+            'path'  => '/tasks'
         ]
     ],
     'member' => [
@@ -108,7 +114,7 @@ $menus = [
         [
             'type'  => 'link',
             'link'  => 'Notifications',
-            'icon'  => 'fa-bullhorn',
+            'icon'  => 'fa-bell-o',
             'path'  => '/notifications'
         ],
         [
@@ -116,6 +122,12 @@ $menus = [
             'link'  => 'Messages',
             'icon'  => 'fa-envelope-o',
             'path'  => '/messages'
+        ],
+        [
+            'type'  => 'link',
+            'link'  => 'Pending Tasks',
+            'icon'  => 'fa-flag-checkered',
+            'path'  => '/tasks'
         ]
     ],
     'superuser' => [
@@ -126,7 +138,7 @@ $menus = [
         [
             'type'  => 'link',
             'link'  => 'Notifications',
-            'icon'  => 'fa-bullhorn',
+            'icon'  => 'fa-bell-o',
             'path'  => '/notifications'
         ],
         [
@@ -136,10 +148,16 @@ $menus = [
             'path'  => '/messages'
         ],
         [
+            'type'  => 'link',
+            'link'  => 'Pending Tasks',
+            'icon'  => 'fa-flag-checkered',
+            'path'  => '/tasks'
+        ],
+        [
             'type'  => 'group',
             'group' => 'Admin Menu',
             'icon'  => 'fa-user',
-            'css'   => 'active non-active',
+            'css'   => 'non-active',
             'menu' => [
                 'Dashboard' => [
                     'path' => '/dashboard',
@@ -173,7 +191,7 @@ $menus = [
             'type'  => 'group',
             'group' => 'Support',
             'icon'  => 'fa-support',
-            'css'   => 'active non-active',
+            'css'   => 'non-active',
             'menu' => [
                 'Help & FAQ' => [
                     'path' => '/help',

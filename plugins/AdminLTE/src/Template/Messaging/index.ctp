@@ -65,7 +65,11 @@ use AdminLTE\Utility\Dates;
             <?= $this->Form->create(null, ['url' => $url]); ?>
               <?php if($deletedActive == '') { ?>
                 <div class="mailbox-controls">
-                  <?= $this->Form->button('<i class="fa fa-square-o"></i>', ['escape' => false, 'class' => 'btn btn-default btn-sm checkbox-toggle', 'name' => 'submit', 'value' => 'checkAll']) ?>
+                    <?php if($checkAll == true) { ?>
+                        <?= $this->Form->button('<i class="fa fa-check-square-o"></i>', ['escape' => false, 'class' => 'btn btn-default btn-sm checkbox-toggle', 'name' => 'submit', 'value' => 'checkNone']) ?>
+                    <?php } else { ?>
+                        <?= $this->Form->button('<i class="fa fa-square-o"></i>', ['escape' => false, 'class' => 'btn btn-default btn-sm checkbox-toggle', 'name' => 'submit', 'value' => 'checkAll']) ?>
+                    <?php } ?>
                   <div class="btn-group">
                     <?= $this->Form->button('<i class="fa fa-trash-o"></i>', ['escape' => false, 'class' => 'btn btn-default btn-sm', 'name' => 'submit', 'value' => 'deleteChecked']) ?>
                   </div>

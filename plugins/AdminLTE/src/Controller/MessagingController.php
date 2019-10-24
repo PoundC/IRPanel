@@ -5,6 +5,7 @@ use AdminLTE\Controller\AppController;
 use AdminLTE\Utility\Janitor;
 use AdminLTE\Utility\MenuNotifications;
 use AdminLTE\Utility\Messaging;
+use AdminLTE\Utility\Notifications;
 
 /**
  * Messaging Controller
@@ -237,6 +238,8 @@ class MessagingController extends AppController
             $this->Messaging->save($message);
 
             MenuNotifications::addUserItemMenuNotification($to_user_id, 'Messages', 'Messages');
+
+            Notifications::addUserNotificationsEntry($to_user_id, 'message', $this->Auth->user('first_name') . ' sent you a message', '/messages/' . $message->id);
 
             $this->Flash->success('Your Message Was Sent Successfully');
 

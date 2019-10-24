@@ -102,8 +102,8 @@ class AppController extends Controller
 
                 $this->set('totalMessageCount', Messaging::getTotalCount($this->Auth->user('id')));
                 $this->set('navMessagesArray', Messaging::getNavMessages($this->Auth->user('id')));
-                $this->set('totalNotificationsCount', Notifications::getTotalCount($this->Auth->user('id')));
-                $this->set('navNotificationsArray', Notifications::getNavNotifications($this->Auth->user('id')));
+                $this->set('totalNotificationsCount', Notifications::getTotalCount($this->Auth->user('id'), $this->Auth->user('role')));
+                $this->set('navNotificationsArray', Notifications::getNavNotifications($this->Auth->user('id'), $this->Auth->user('role')));
 
                 $currentId = $this->Auth->user('id');
 

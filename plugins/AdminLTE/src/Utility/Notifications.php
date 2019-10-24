@@ -10,34 +10,122 @@ use Cake\ORM\TableRegistry;
 
 class Notifications
 {
+    const Globe = 'Global';
+    const Role = 'Role';
+    const User = 'User';
+
     public static $userCount;
 
     public static function getNotificationsTable() {
 
-        $timelineTable = TableRegistry::get('AdminLTE.Notifications');
-
-        return $timelineTable;
+        return TableRegistry::get('AdminLTE.Notifications');
     }
 
-    public static function addNotificationsEntry($account_id, $type, $message) {
+    public static function getNotificationLogsTable() {
+
+        return TableRegistry::get('AdminLTE.AdminLTENotificationLogs');
+    }
+
+    public static function addGlobalNotificationsEntry($type, $message, $link = '') {
+
+        self::addNotificationsEntry(self::Globe, '', '', $type, $message, $link);
+    }
+
+    public static function addRoleNotificationsEntry($role_id, $type, $message, $link = '') {
+
+        self::addNotificationsEntry(self::Role, '', $role_id, $type, $message, $link);
+    }
+
+    public static function addUserNotificationsEntry($user_id, $type, $message, $link = '') {
+
+        self::addNotificationsEntry(self::User, $user_id, '', $type, $message, $link);
+    }
+
+    public static function addNotificationsEntry($destination, $user_id, $role_id, $type, $message, $link = '') {
 
         $table = self::getNotificationsTable();
 
         $entity = $table->newEntity([
-            'user_id' => $account_id,
+            'destination' => $destination,
+            'user_id' => $user_id,
+            'role_id' => $role_id,
             'type' => $type,
             'message' => $message,
+            'link' => $link,
             'created' => new \DateTime('now')
         ]);
 
         $table->save($entity);
+
+        if($type != 'message') {
+
+            MenuNotifications::addUserItemMenuNotification($user_id, 'Notifications', 'Notifications');
+        }
     }
 
-    public static function getTotalCount($user_id)
+    public static function markNotificationsCountSeen($user_id, $role_id)
+    {
+        $notificationLogsTable = self::getNotificationLogsTable();
+
+        $userCountQuery = self::getNotificationsQuery($user_id, $role_id);
+
+        $userNotifications = $userCountQuery->all();
+
+        foreach($userNotifications as $userNotification)
+        {
+            $notificationId = $userNotification->id;
+
+            $notificationLogEntity = $notificationLogsTable->newEntity([
+                'notification_id' => $notificationId,
+                'user_id' => $user_id,
+                'created' => new \DateTime('now')
+            ]);
+            $notificationLogsTable->save($notificationLogEntity);
+        }
+    }
+
+    public static function getNotificationsQuery($user_id, $role_id)
+    {
+        $notificationsTable = self::getNotificationsTable();
+        $userCountQuery = $notificationsTable->find('all', ['contain' => 'AdminLTENotificationLogs']);
+        $userCountQuery->where([
+                'OR' => [
+                    ['destination' => 'User', 'Notifications.user_id' => $user_id],
+                    ['destination' => 'Role', 'Notifications.role_id' => $role_id],
+                    ['destination' => 'Global']
+                ]
+            ])
+            ->notMatching('AdminLTENotificationLogs', function (\Cake\ORM\Query $query) use ($user_id) {
+                return $query->where(['AdminLTENotificationLogs.user_id' => $user_id]);
+            });
+
+        return $userCountQuery;
+    }
+
+    public static function getNotificationsCountQuery($user_id, $role_id)
+    {
+        $notificationsTable = self::getNotificationsTable();
+        $userCountQuery = $notificationsTable->find('all', ['contain' => 'AdminLTENotificationLogs']);
+        $userCountQuery->select(['total' => $userCountQuery->func()->sum('total_count')])
+            ->where([
+                'OR' => [
+                    ['destination' => 'User', 'Notifications.user_id' => $user_id],
+                    ['destination' => 'Role', 'Notifications.role_id' => $role_id],
+                    ['destination' => 'Global']
+                ]
+            ])
+            ->notMatching('AdminLTENotificationLogs', function (\Cake\ORM\Query $query) use ($user_id) {
+                return $query->where(['AdminLTENotificationLogs.user_id' => $user_id]);
+            });
+
+        return $userCountQuery;
+    }
+
+    public static function getTotalCount($user_id, $role_id)
     {
         if(!isset(self::$userCount)) {
 
-            $userCount = self::getUserCount($user_id);
+            $userCount = self::getUserCount($user_id, $role_id);
         }
         else {
 
@@ -47,15 +135,17 @@ class Notifications
         return $userCount;
     }
 
-    public static function getNavNotifications($user_id)
+    public static function getNavNotifications($user_id, $role_id)
     {
         $notificationsArray = array();
         $notificationsTable = self::getNotificationsTable();
 
         $notifications = $notificationsTable->find('all', ['contain' => ['Users']])->where([
-            'seen' => 0,
-            'deleted' => 0,
-            'user_id' => $user_id
+            'OR' => [
+                ['user_id' => $user_id],
+                ['role_id' => $role_id],
+                ['destination' => self::Globe]
+            ]
         ])->orderDesc('notifications.created')->limit(8);
 
         foreach($notifications as $message)
@@ -63,6 +153,7 @@ class Notifications
             $messageArray['type'] = $message->get('type');
             $messageArray['message'] = $message->get('message');
             $messageArray['id'] = $message->get('id');
+            $messageArray['link'] = $message->get('link');
 
             $notificationsArray[] = $messageArray;
         }
@@ -70,23 +161,17 @@ class Notifications
         return $notificationsArray;
     }
 
-    public static function getUserCount($user_id)
+    public static function getUserCount($user_id, $role_id)
     {
         if(isset(self::$userCount)) {
 
             return self::$userCount;
         }
 
-        $notificationsTable = self::getNotificationsTable();
+        $userCountQuery = self::getNotificationsCountQuery($user_id, $role_id)->first();
 
-        $userCount = $notificationsTable->find('all')->where([
-            'seen' => 0,
-            'user_id' => $user_id,
-            'deleted' => 0
-        ])->count();
+        self::$userCount = $userCountQuery->total;
 
-        self::$userCount = $userCount;
-
-        return $userCount;
+        return self::$userCount;
     }
 }
