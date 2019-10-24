@@ -27,44 +27,9 @@ class NotificationsController extends AppController
      */
     public function index()
     {
-        if($this->request->getMethod() == 'POST' && $this->request->getData('submit') == 'deleteChecked') {
-
-            $data = $this->request->getData('checkie');
-
-            foreach($data as $message_id) {
-
-                $message = $this->Notifications->find('all')->where([
-                    'Notifications.user_id' => $this->Auth->user('id'),
-                    'Notifications.id' => $message_id
-                ])->first();
-
-                if (isset($message)) {
-
-                    $message->set('seen', 1);
-                    $this->Messages->save($message);
-                }
-            }
-        }
-
-        if($this->request->getMethod() == 'POST' && $this->request->getData('submit') == 'checkAll') {
-
-            $checkAll = true;
-        }
-        else {
-
-            $checkAll = false;
-        }
-
         $notifications = $this->paginate($this->Notifications->find('all', ['contain' => ['Users']])->where([
             'Notifications.user_id' => $this->Auth->user('id'),
         ])->orderDesc('Notifications.created'));
-
-        foreach($notifications as $notification) {
-
-            $notification->set('seen', 1);
-
-            $this->Notifications->save($notification);
-        }
 
         MenuNotifications::markMenuNotificationsSeen($this->Auth->user('id'), $this->Auth->user('role'), 'Notifications', 'Notifications');
         Notifications::markNotificationsCountSeen($this->Auth->user('id'), $this->Auth->user('role'));
