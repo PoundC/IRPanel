@@ -16,6 +16,7 @@ webroot/assets
 webroot/php_errors.log
 .DS_Store
 config/Migrations/schema-dump-default.lock
+plugins/AdminLTE/config/Migrations/schema-dump-default.lock
 
 /config/.env
 /logs/*
