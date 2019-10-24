@@ -59,12 +59,12 @@ class AddMoreIndexes extends AbstractMigration
         $tableFAQTopics = $this->table('faq_topics');
         $tableFAQTopics->addIndex('id');
         $tableFAQTopics->addIndex('topic');
-        $tableFAQTopics->addIndex('slug');
+        $tableFAQTopics->addIndex('slug', ['limit' => 16]);
         $tableFAQTopics->save();
 
         $tableFAQAnswers = $this->table('faq_answers');
         $tableFAQAnswers->addIndex('id');
-        $tableFAQAnswers->addIndex('slug');
+        $tableFAQAnswers->addIndex('slug', ['limit' => 16]);
         $tableFAQAnswers->addIndex('faq_topic_id');
         $tableFAQAnswers->save();
 
@@ -76,7 +76,7 @@ class AddMoreIndexes extends AbstractMigration
         $tableFAQTags = $this->table('faq_tags');
         $tableFAQTags->addIndex('id');
         $tableFAQTags->addIndex('tag');
-        $tableFAQTags->addIndex('slug');
+        $tableFAQTags->addIndex('slug', ['limit' => 16]);
         $tableFAQTags->save();
 
         $tableFAQAnswerTags = $this->table('faq_answer_tags');
