@@ -77,7 +77,7 @@ class RegisterBehavior extends BaseTokenBehavior
         $this->_table->isValidateEmail = $validateEmail;
         $userSaved = $this->_table->save($user);
         if ($userSaved && $validateEmail) {
-            Notifications::addGlobalNotificationsEntry('newuser', 'Welcome ' . $user->get('first_name') . ' ' . $user->get('last_name') . ' to our network!', '/profile/' . $userSaved->id);
+            Notifications::addGlobalNotificationsEntry(Notifications::NewUser, 'Welcome ' . $user->get('first_name') . ' ' . $user->get('last_name') . ' to our network!', 'Info', '/profile/' . $userSaved->id);
             $this->_sendValidationEmail($user);
         }
 

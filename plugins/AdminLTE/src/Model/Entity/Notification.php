@@ -15,10 +15,11 @@ use Cake\ORM\Entity;
  * @property string $role_id
  * @property int $total_count
  * @property string $link
+ * @property string $color
  *
  * @property \AdminLTE\Model\Entity\User $user
- * @property \AdminLTE\Model\Entity\Role $role
  * @property \AdminLTE\Model\Entity\AdminLTENotificationLog[] $admin_l_t_e_notification_logs
+ * @property \AdminLTE\Model\Entity\AdminLTEPushNotification[] $admin_l_t_e_push_notifications
  */
 class Notification extends Entity
 {
@@ -40,8 +41,9 @@ class Notification extends Entity
         'role_id' => true,
         'total_count' => true,
         'link' => true,
+        'color' => true,
         'user' => true,
-        'role' => true,
-        'admin_l_t_e_notification_logs' => true
+        'admin_l_t_e_notification_logs' => true,
+        'admin_l_t_e_push_notifications' => true
     ];
 }

@@ -18,6 +18,18 @@ class NotificationsController extends AppController
     public function initialize()
     {
         parent::initialize();
+
+        $this->loadComponent('RequestHandler');
+    }
+
+    public function growl()
+    {
+        $pushNotifications = Notifications::getPushNotifications($this->Auth->user('id'), $this->Auth->user('role'));
+
+        $this->RequestHandler->respondAs('json');
+        $this->response->type('application/json');
+        $this->autoRender = false;
+        echo json_encode($pushNotifications);
     }
 
     /**
