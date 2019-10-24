@@ -35,3 +35,19 @@
 .jlr-flash span {
     font-size: 20px;
 }
+
+.success {
+    color: #00a65a;
+}
+
+.info {
+    color: #00c0ef;
+}
+
+.warning {
+    color: #f39c12;
+}
+
+.danger {
+    color: #f56954;
+}

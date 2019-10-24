@@ -32,7 +32,7 @@ use AdminLTE\Utility\Dates;
                             <tbody>
                             <?php foreach ($notifications as $notification): ?>
                             <tr>
-                                <td nowrap="true" class="mailbox-name label-<?= $notification['color'] ?>"><center><i class="<?php echo $notification['type']; ?>"></i></center></td>
+                                <td nowrap="true" class="mailbox-name"><center><i class="<?php echo $notification['type']; ?> <?= strtolower($notification['color']) ?>"></i></center></td>
                                 <td class="mailbox-subject" style="width:70%"><a href="<?= $notification['link'] ?>"><?= $notification['message'] ?></a></td>
                                 <td class="mailbox-date" style="white-space: nowrap;"><?= Dates::getLapsedTime($notification['created']) ?> ago</td>
                             </tr>
