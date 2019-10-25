@@ -37,7 +37,7 @@ class CreateAdminLTETasks extends AbstractMigration
         $table->addColumn('seen', 'integer', [
             'default' => 0
         ]);
-        $table->addColumn('completed', 'integer',[
+        $table->addColumn('completed', 'integer', [
             'default' => 0
         ]);
         $table->addColumn('created', 'datetime');
