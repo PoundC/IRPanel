@@ -6,6 +6,7 @@ use AdminLTE\Utility\Janitor;
 use AdminLTE\Utility\MenuNotifications;
 use AdminLTE\Utility\Messaging;
 use AdminLTE\Utility\Notifications;
+use AdminLTE\Utility\Tasks;
 
 /**
  * Messaging Controller
@@ -240,6 +241,8 @@ class MessagingController extends AppController
             MenuNotifications::addUserItemMenuNotification($to_user_id, 'Messages', 'Messages');
 
             Notifications::addUserNotificationsEntry($to_user_id, Notifications::Message, $this->Auth->user('first_name') . ' sent you a message', 'Success','/messages/' . $message->id);
+
+            Tasks::addPendingTask($to_user_id, 'You Received a Message', 'Please respond to this message.', '/messasge/' . $message->id, 'fa fa-envelope', Tasks::Info, 'Send Reply');
 
             $this->Flash->success('Your Message Was Sent Successfully');
 

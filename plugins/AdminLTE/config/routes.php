@@ -61,6 +61,15 @@ Router::connect('/autoanswer/*', ['plugin' => 'AdminLTE', 'controller' => 'Help'
  *
  */
 
+Router::connect('/tasks', ['plugin' => 'AdminLTE', 'controller' => 'Tasks', 'action' => 'index']);
+
+
+/*
+ *
+ * Notifications Routes
+ *
+ */
+
 
 Router::connect('/notifications', ['plugin' => 'AdminLTE', 'controller' => 'Notifications', 'action' => 'index']);
 
