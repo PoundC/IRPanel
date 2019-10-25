@@ -1,4 +1,5 @@
 
+<?php if(count($adminLTETasks) > 0) { ?>
 <div class="row jlr-dashbox">
     <div class="col-sm-10 col-sm-offset-1">
         <?php $counter = 0; ?>
@@ -58,3 +59,10 @@
         });
     }
 </script>
+<?php } else { ?>
+<div class="row jlr-dashbox">
+    <div class="col-sm-10 col-sm-offset-1">
+        <center><h2>You have no Pending Tasks</h2></center>
+    </div>
+</div>
+<?php } ?>
