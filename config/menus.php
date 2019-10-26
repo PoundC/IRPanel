@@ -210,10 +210,6 @@ $menus = [
     ],
     'site' => [
         [
-            'type'  => 'header',
-            'header' => 'Sitewide Links'
-        ],
-        [
             'type'  => 'link',
             'link' => 'Help & FAQ',
             'path' => '/help',

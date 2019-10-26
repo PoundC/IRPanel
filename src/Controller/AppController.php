@@ -187,7 +187,6 @@ class AppController extends Controller
                 $currentUser = $usersTable->newEntity();
 
                 $menus = Sidebar::buildMenu($this->request->here, 'visitor');
-
             }
 
             $this->set('menus', $menus);
