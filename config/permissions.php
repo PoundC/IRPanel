@@ -193,27 +193,6 @@ $permissions = [
             'controller' => ['User'],
             'action' => ['search'],
             'allowed' => true,
-        ],
-        [
-            'role' => ['user'],
-            'plugin' => 'AdminLTE',
-            'controller' => ['Messaging'],
-            'action' => ['messageDelete', 'index', 'view', 'compose', 'toAutocomplete', 'sendReply'],
-            'allowed' => true,
-        ],
-        [
-            'role' => ['user'],
-            'plugin' => 'AdminLTE',
-            'controller' => ['Notifications'],
-            'action' => ['index', 'view', 'growl'],
-            'allowed' => true,
-        ],
-        [
-            'role' => ['user'],
-            'plugin' => 'AdminLTE',
-            'controller' => ['Tasks'],
-            'action' => ['index', 'delete'],
-            'allowed' => true
         ]
     ];
 
