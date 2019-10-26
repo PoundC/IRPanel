@@ -24,6 +24,7 @@ use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use AdminLTE\Utility\Menu;
 use AdminLTE\Utility\Sidebar;
+use AdminLTE\Utility\Tasks;
 use CakeDC\Users\Controller\Traits\CustomUsersTableTrait;
 
 /**
@@ -104,6 +105,9 @@ class AppController extends Controller
                 $this->set('navMessagesArray', Messaging::getNavMessages($this->Auth->user('id')));
                 $this->set('totalNotificationsCount', Notifications::getTotalCount($this->Auth->user('id'), $this->Auth->user('role')));
                 $this->set('navNotificationsArray', Notifications::getNavNotifications($this->Auth->user('id'), $this->Auth->user('role')));
+                // $this->set('navPendingTasksUnseenCount', Tasks::getPendingTasksUnseenCount($this->Auth->user('id')));
+                $this->set('navPendingTasksUncompletedCount', Tasks::getPendingTasksUncompletedCount($this->Auth->user('id')));
+                $this->set('navPendingTasks', Tasks::getNavPendingTasks($this->Auth->user('id')));
 
                 $currentId = $this->Auth->user('id');
 

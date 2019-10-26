@@ -16,6 +16,34 @@ class Tasks
         return TableRegistry::get('AdminLTE.admin_l_t_e_tasks');
     }
 
+    public static function getPendingTasksUnseenCount($user_id)
+    {
+        $tasksTable = self::getTasksTable();
+        $tasksCountQuery = $tasksTable->find('all')->where(['user_id' => $user_id, 'seen' => 0]);
+
+        return $tasksCountQuery->count();
+    }
+
+    public static function getPendingTasksUncompletedCount($user_id)
+    {
+        $tasksTable = self::getTasksTable();
+        $tasksCountQuery = $tasksTable->find('all')->where(['user_id' => $user_id, 'completed' => 0]);
+
+        return $tasksCountQuery->count();
+    }
+
+    public static function getNavPendingTasks($user_id)
+    {
+        $tasksTable = self::getTasksTable();
+
+        $tasks = $tasksTable->find('all')->where([
+            'user_id' => $user_id,
+            'completed' => 0
+        ])->limit(5)->orderDesc('id')->all();
+
+        return $tasks;
+    }
+
     // Add Pending Task
     public static function addPendingTask($user_id, $title, $message, $link, $icon, $color, $button_text)
     {
@@ -34,6 +62,11 @@ class Tasks
             'modified' => new \DateTime('now')
         ]);
         $tasksTable->save($taskEntity);
+
+        if($icon != 'fa fa-envelope') {
+
+            MenuNotifications::addUserItemMenuNotification($user_id, 'Pending Tasks', 'Pending Tasks');
+        }
     }
 
     // Mark Pending Task Seen

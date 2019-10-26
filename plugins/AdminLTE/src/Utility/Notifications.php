@@ -198,6 +198,7 @@ class Notifications
             $messageArray['message'] = $message->get('message');
             $messageArray['id'] = $message->get('id');
             $messageArray['link'] = $message->get('link');
+            $messageArray['color'] = $message->get('color');
 
             $notificationsArray[] = $messageArray;
         }

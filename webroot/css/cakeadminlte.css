@@ -36,18 +36,22 @@
     font-size: 20px;
 }
 
-.success {
+.success,
+.Success {
     color: #00a65a;
 }
 
-.info {
+.info,
+.Info {
     color: #00c0ef;
 }
 
-.warning {
+.warning,
+.Warning {
     color: #f39c12;
 }
 
-.danger {
+.danger,
+.Danger {
     color: #f56954;
 }
