@@ -83,25 +83,6 @@
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
                                     <?php foreach($navNotificationsArray as $notification) { ?>
-                                        <?php switch($notification['type']) {
-                                            case 'users':
-                                                $icon = 'users';
-                                                $color = 'text-aqua';
-                                                break;
-                                            case 'alert':
-                                                $icon = 'warning';
-                                                $color = 'text-yellow';
-                                                break;
-                                            case 'sale':
-                                                $icon = 'shopping-cart';
-                                                $color = 'text-green';
-                                                break;
-                                            case 'message':
-                                                $icon = 'envelope';
-                                                $color = 'text-green';
-                                                break;
-                                                ?>
-                                            <?php } ?>
                                         <li>
                                             <a href="<?= $notification['link'] ?>">
                                                 <i class="<?= $notification['type'] ?> <?= $notification['color'] ?>"></i>&nbsp;&nbsp;<?= $notification['message'] ?>
@@ -189,6 +170,7 @@
                         <?php } ?>
                     </ul>
                 </li>
+
                 <?php
                             if (false == true) {
                     ?>

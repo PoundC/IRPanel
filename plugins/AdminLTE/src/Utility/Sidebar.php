@@ -59,9 +59,15 @@ class Sidebar
         }
     }
 
-    public static function buildMenu($currentPath, $role = 'visitor', $user_id = 0)
+    public static function buildMenu($currentPath, $role = 'visitor', $user_id = 0, $addUl = true, $addSite = true)
     {
-        $menuHtml = '<ul id="nav-menu" class="sidebar-menu" data-widget="tree">' . "\n";
+        if($addUl == true) {
+
+            $menuHtml = '<ul id="nav-menu" class="sidebar-menu" data-widget="tree">' . "\n";
+        } else {
+
+            $menuHtml = '';
+        }
 
         foreach(Sidebar::$Menu[$role] as $menuKey => $menuItem)
         {
@@ -78,7 +84,15 @@ class Sidebar
             }
         }
 
-        $menuHtml .= '</ul>';
+        if($addSite == true) {
+
+            $menuHtml .= Sidebar::buildMenu($currentPath, 'site', $user_id, false, false);
+        }
+
+        if($addUl == true) {
+
+            $menuHtml .= '</ul>';
+        }
 
         return $menuHtml;
     }
@@ -163,11 +177,11 @@ class Sidebar
         $group = '';
         if (isset($menuItem['path'])) {
 
-            $group .= '<li class="' . $isActive . '"><a href="' . $menuItem['path'] . '"><i class="fa-left-icon fa ' . $menuItem['icon'] . ' ' . $second_class . '"></i><span class="' . $second_class . '">' . $menuItem['group'] . '</span>' . "\n";
+            $group .= '<li class="' . $isActive . '"><a href="' . $menuItem['path'] . '"><i class="fa-left-icon fa ' . $menuItem['icon'] . ' ' . $second_class . '"></i><span class="' . $second_class . '">' . $menuItem['group'] . '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>' . "\n";
         }
         else {
 
-            $group .= '<li class="' . $isActive . '"><a href="#"><i class="fa-left-icon fa ' . $menuItem['icon'] . ' ' . $second_class . '"></i><span class="' . $second_class . '">' . $menuItem['group'] . '</span>' . "\n";
+            $group .= '<li class="' . $isActive . '"><a href="#"><i class="fa-left-icon fa ' . $menuItem['icon'] . ' ' . $second_class . '"></i><span class="' . $second_class . '">' . $menuItem['group'] . '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>' . "\n";
         }
         $group .= '<span class="pull-right-container"><small class="label pull-right bg-green">' . $groupNotificationsResultTotal . '</small></span></a>' . "\n";
         $group .= '<ul class="treeview-menu">' . "\n";

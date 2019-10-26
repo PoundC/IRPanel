@@ -79,16 +79,18 @@ class MessagingController extends AppController
                     $message->set('user_deleted', 1);
                     $this->Messaging->save($message);
                 }
+                else {
 
-                $message = $this->Messaging->find('all')->where([
-                    'Messaging.to_user_id' => $this->Auth->user('id'),
-                    'Messaging.id' => $messaging_id
-                ])->first();
+                    $message = $this->Messaging->find('all')->where([
+                        'Messaging.to_user_id' => $this->Auth->user('id'),
+                        'Messaging.id' => $messaging_id
+                    ])->first();
 
-                if (isset($message)) {
+                    if (isset($message)) {
 
-                    $message->set('recipient_deleted', 1);
-                    $this->Messaging->save($message);
+                        $message->set('recipient_deleted', 1);
+                        $this->Messaging->save($message);
+                    }
                 }
             }
         }
