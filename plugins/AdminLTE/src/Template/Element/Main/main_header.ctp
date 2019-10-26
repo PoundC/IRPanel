@@ -104,7 +104,7 @@
                                             <?php } ?>
                                         <li>
                                             <a href="<?= $notification['link'] ?>">
-                                                <i class="fa fa-<?= $icon ?> <?= $color ?>"></i>&nbsp;&nbsp;<?= $notification['message'] ?>
+                                                <i class="<?= $notification['type'] ?> <?= $notification['color'] ?>"></i>&nbsp;&nbsp;<?= $notification['message'] ?>
                                             </a>
                                         </li>
                                     <?php } ?>
@@ -155,37 +155,38 @@
                     <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-flag-checkered"></i>
-                        <span class="label label-danger">9</span>
+                        <?php if($navPendingTasksUncompletedCount > 0) { ?>
+                            <span class="label label-danger"><?= $navPendingTasksUncompletedCount ?></span>
+                        <?php } ?>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">You have 9 tasks</li>
+                        <li class="header">You have <?= $navPendingTasksUncompletedCount ?> tasks</li>
+                        <?php if($navPendingTasksUncompletedCount > 0) { ?>
                         <li>
                             <!-- Inner menu: contains the tasks -->
                             <ul class="menu">
+                                <?php foreach($navPendingTasks as $pendingTask): ?>
                                 <li><!-- Task item -->
-                                    <a href="#">
+                                    <a href="<?= $pendingTask->link ?>">
                                         <!-- Task title and progress text -->
                                         <h3>
-                                            Design some buttons
-                                            <small class="pull-right">20%</small>
+                                            <?= $pendingTask->title ?>
+                                            <small class="pull-right"><i class="<?= $pendingTask->icon ?> <?= $pendingTask->color ?>"></i></small>
                                         </h3>
                                         <!-- The progress bar -->
-                                        <div class="progress xs">
-                                            <!-- Change the css width attribute to simulate progress -->
-                                            <div class="progress-bar progress-bar-aqua" style="width: 20%"
-                                                 role="progressbar"
-                                                 aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                <span class="sr-only">20% Complete</span>
-                                            </div>
-                                        </div>
+
+                                            <p style="white-space: pre-wrap !important;"><?= $pendingTask->message ?></p>
+
                                     </a>
                                 </li>
+                                <?php endforeach; ?>
                                 <!-- end task item -->
                             </ul>
                         </li>
                         <li class="footer">
-                            <a href="#">View all tasks</a>
+                            <a href="/tasks">View all tasks</a>
                         </li>
+                        <?php } ?>
                     </ul>
                 </li>
                 <?php
