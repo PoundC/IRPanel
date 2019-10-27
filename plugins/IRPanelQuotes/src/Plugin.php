@@ -84,7 +84,6 @@ class Plugin extends AbstractPlugin
 
             $this->table->save($calcEntity);
 
-            $queue->ircNotice($source, $nick . ': Calc saved.');
             $queue->ircNotice($source, "\x02" . $calcEntity->topic . "\x02 = " . $calcEntity->quote);
         }
         else {

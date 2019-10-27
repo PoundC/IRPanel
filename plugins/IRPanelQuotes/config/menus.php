@@ -7,7 +7,7 @@ $menus = [
         'dashboards' => [
             'menu' => [
                 'Quotes' => [
-                    'path' => '/i_r_c_quotes/dashboard',
+                    'path' => '/quotes/dashboard',
                     'icon' => 'fa-quote-right'
                 ]
             ]
@@ -19,21 +19,29 @@ $menus = [
             'css'   => 'non-active',
             'menu' => [
                 'Search' => [
-                    'path' => '/i_r_c_quotes/search',
+                    'path' => '/quotes/search',
                     'icon' => 'fa-search'
                 ],
                 'Browse' => [
-                    'path' => '/i_r_c_quotes',
+                    'path' => '/quotes/browse',
                     'icon' => 'fa-crosshairs'
                 ],
-                'Add' => [
-                    'path' => '/i_r_c_quotes/add',
+                /*'Add' => [
+                    'path' => '/quotes/add',
                     'icon' => 'fa-plus-square'
-                ]
+                ]*/
             ]
         ]
     ],
     'superuser' => [
+        'dashboards' => [
+            'menu' => [
+                'Quotes' => [
+                    'path' => '/quotes/admin_dashboard',
+                    'icon' => 'fa-quote-right'
+                ]
+            ]
+        ]
         /*
         [
             'type'  => 'group',
