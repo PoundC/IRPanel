@@ -19,17 +19,17 @@ $menus = [
             'css'   => 'non-active',
             'menu' => [
                 'Proposals' => [
-                    'path' => '/voting/votes/proposals',
+                    'path' => '/voting/proposals',
                     'icon' => 'fa-user-secret'
                 ],
                 'Search' => [
-                    'path' => '/voting/votes/search',
+                    'path' => '/voting/search',
                     'icon' => 'fa-search'
-                ],
+                ],/*
                 'Create' => [
-                    'path' => '/voting/votes/create',
+                    'path' => '/voting/create',
                     'icon' => 'fa-plus-square-o'
-                ]
+                ]*/
             ]
         ]
     ],

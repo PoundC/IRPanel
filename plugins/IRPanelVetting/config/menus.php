@@ -7,7 +7,7 @@ $menus = [
         'voting' => [
             'menu' => [
                 'Nominations' => [
-                    'path' => '/i_r_c_votes/',
+                    'path' => '/voting/nominations',
                     'icon' => 'fa-user-plus'
                 ]
             ]

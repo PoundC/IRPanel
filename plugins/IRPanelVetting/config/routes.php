@@ -10,3 +10,5 @@ Router::plugin(
         $routes->fallbacks(DashedRoute::class);
     }
 );
+
+Router::connect('/voting/nominations', ['plugin' => 'IRPanelVetting', 'controller' => 'Vets', 'action' => 'nominations']);

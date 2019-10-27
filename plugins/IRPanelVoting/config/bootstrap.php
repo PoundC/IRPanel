@@ -10,7 +10,7 @@ $someMorePermissions = [
         'role' => 'user',
         'plugin' => 'IRPanelVoting',
         'controller' => ['Votes'],
-        'action' => ['proposals'],
+        'action' => ['proposals', 'search', 'create', 'view', 'vote'],
     ]
 ];
 $permissions = array_merge((array)$permissions, $someMorePermissions);
