@@ -1,21 +1,21 @@
 <?php
 namespace AdminLTE\Test\TestCase\Model\Table;
 
-use AdminLTE\Model\Table\NotificationLogsTable;
+use AdminLTE\Model\Table\RecipientsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * AdminLTE\Model\Table\AdminLTENotificationLogsTable Test Case
+ * AdminLTE\Model\Table\AdminLTERecipientsTable Test Case
  */
-class AdminLTENotificationLogsTableTest extends TestCase
+class AdminLTERecipientsTableTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \AdminLTE\Model\Table\NotificationLogsTable
+     * @var \AdminLTE\Model\Table\RecipientsTable
      */
-    public $AdminLTENotificationLogs;
+    public $AdminLTERecipients;
 
     /**
      * Fixtures
@@ -23,8 +23,8 @@ class AdminLTENotificationLogsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.AdminLTE.AdminLTENotificationLogs',
-        'plugin.AdminLTE.Notifications',
+        'plugin.AdminLTE.AdminLTERecipients',
+        'plugin.AdminLTE.Messages',
         'plugin.AdminLTE.Users'
     ];
 
@@ -36,8 +36,8 @@ class AdminLTENotificationLogsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('AdminLTENotificationLogs') ? [] : ['className' => NotificationLogsTable::class];
-        $this->AdminLTENotificationLogs = TableRegistry::getTableLocator()->get('AdminLTENotificationLogs', $config);
+        $config = TableRegistry::getTableLocator()->exists('AdminLTERecipients') ? [] : ['className' => RecipientsTable::class];
+        $this->AdminLTERecipients = TableRegistry::getTableLocator()->get('AdminLTERecipients', $config);
     }
 
     /**
@@ -47,7 +47,7 @@ class AdminLTENotificationLogsTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->AdminLTENotificationLogs);
+        unset($this->AdminLTERecipients);
 
         parent::tearDown();
     }

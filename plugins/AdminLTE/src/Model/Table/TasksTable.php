@@ -22,7 +22,7 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class AdminLTETasksTable extends Table
+class TasksTable extends Table
 {
     /**
      * Initialize method
@@ -37,6 +37,7 @@ class AdminLTETasksTable extends Table
         $this->setTable('admin_l_t_e_tasks');
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
+        $this->setEntityClass('AdminLTE\Model\Entity\Task');
 
         $this->addBehavior('Timestamp');
 

@@ -26,10 +26,10 @@ class ChatOpenchatsTable extends Table
     {
         parent::initialize($config);
 
-        $this->belongsTo('Users', array())->setForeignKey('user_id')->setProperty('user');
-        $this->belongsTo('ChatChatrooms', array())->setForeignKey('chatroom_id')->setProperty('room');
+        $this->belongsTo('Users', ['className' => 'AdminLTE\Model\Table\UsersTable'])->setForeignKey('user_id')->setProperty('user');
+        $this->belongsTo('ChatChatrooms', ['className' => 'AdminLTE\Model\Table\ChatChatroomsTable'])->setForeignKey('chatroom_id')->setProperty('room');
 
-        $this->setTable('chat_openchats');
+        $this->setTable('admin_l_t_e_chat_openchats');
         $this->setDisplayField('active');
         $this->setPrimaryKey('id');
     }

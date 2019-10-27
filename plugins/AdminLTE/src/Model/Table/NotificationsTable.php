@@ -11,8 +11,8 @@ use Cake\Validation\Validator;
  *
  * @property \AdminLTE\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
  * @property |\Cake\ORM\Association\BelongsTo $Roles
- * @property \AdminLTE\Model\Table\AdminLTENotificationLogsTable|\Cake\ORM\Association\HasMany $AdminLTENotificationLogs
- * @property \AdminLTE\Model\Table\AdminLTEPushNotificationsTable|\Cake\ORM\Association\HasMany $AdminLTEPushNotifications
+ * @property \AdminLTE\Model\Table\NotificationLogsTable|\Cake\ORM\Association\HasMany $AdminLTENotificationLogs
+ * @property \AdminLTE\Model\Table\PushNotificationsTable|\Cake\ORM\Association\HasMany $AdminLTEPushNotifications
  *
  * @method \AdminLTE\Model\Entity\Notification get($primaryKey, $options = [])
  * @method \AdminLTE\Model\Entity\Notification newEntity($data = null, array $options = [])
@@ -37,7 +37,7 @@ class NotificationsTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('notifications');
+        $this->setTable('admin_l_t_e_notifications');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
@@ -50,11 +50,11 @@ class NotificationsTable extends Table
         ]);
         $this->hasMany('AdminLTENotificationLogs', [
             'foreignKey' => 'notification_id',
-            'className' => 'AdminLTE.AdminLTENotificationLogs'
+            'className' => 'AdminLTE.NotificationLogs'
         ]);
         $this->hasMany('AdminLTEPushNotifications', [
             'foreignKey' => 'notification_id',
-            'className' => 'AdminLTE.AdminLTEPushNotifications'
+            'className' => 'AdminLTE.PushNotifications'
         ]);
     }
 

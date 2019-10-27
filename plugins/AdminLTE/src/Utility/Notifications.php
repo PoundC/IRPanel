@@ -22,17 +22,17 @@ class Notifications
 
     public static function getNotificationsTable() {
 
-        return TableRegistry::get('AdminLTE.Notifications');
+        return TableRegistry::get('Notifications', ['className' => 'AdminLTE\Model\Table\NotificationsTable']);
     }
 
     public static function getNotificationLogsTable() {
 
-        return TableRegistry::get('AdminLTE.AdminLTENotificationLogs');
+        return TableRegistry::get('AdminLTENotificationLogs', ['className' => 'AdminLTE\Model\Table\NotificationLogsTable']);
     }
 
     public static function getPushNotificationsTable() {
 
-        return TableRegistry::get('AdminLTE.AdminLTEPushNotifications');
+        return TableRegistry::get('AdminLTEPushNotifications', ['className' => 'AdminLTE\Model\Table\PushNotificationsTable']);
     }
 
     public static function addGlobalNotificationsEntry($type, $message, $color = 'Success', $link = '') {

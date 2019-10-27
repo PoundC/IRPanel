@@ -34,17 +34,17 @@ class FaqtagsTable extends Table
     {
         parent::initialize($config);
 
-        $this->hasMany('faq_answer_tags', array())->setForeignKey('faq_tag_id')->setProperty('tags');
+        $this->hasMany('FaqAnswerTags', ['className' => 'AdminLTE\Model\Table\FaqAnswerTagsTable'])->setForeignKey('faq_tag_id')->setProperty('tags');
+
+        $this->setTable('admin_l_t_e_faq_tags');
+        $this->setDisplayField('tag');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Muffin/Slug.Slug', [
             'displayField'  => 'tag',
             'onUpdate'      => true,
             'maxLength'     => 2048,
         ]);
-
-        $this->setTable('faq_tags');
-        $this->setDisplayField('tag');
-        $this->setPrimaryKey('id');
     }
 
     public function validationSend(Validator $validator)

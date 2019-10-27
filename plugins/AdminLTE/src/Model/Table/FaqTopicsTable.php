@@ -34,16 +34,16 @@ class FaqTopicsTable extends Table
     {
         parent::initialize($config);
 
-        $this->hasMany('FaqAnswers', array())->setForeignKey('faq_topic_id')->setProperty('answers')->setDependent(true);
+        $this->hasMany('FaqAnswers', ['className' => 'AdminLTE\Model\Table\FaqAnswersTable'])->setForeignKey('faq_topic_id')->setProperty('answers')->setDependent(true);
+
+        $this->setTable('admin_l_t_e_faq_topics');
+        $this->setDisplayField('topic');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Muffin/Slug.Slug', [
             'displayField'  => 'topic',
             'onUpdate'      => true
         ]);
-
-        $this->setTable('faq_topics');
-        $this->setDisplayField('topic');
-        $this->setPrimaryKey('id');
     }
 
     public function TopicsTableTest() {

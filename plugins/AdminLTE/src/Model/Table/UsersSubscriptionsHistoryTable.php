@@ -25,7 +25,7 @@ class UsersSubscriptionsHistoryTable extends Table
 
         $this->belongsTo('users_subscriptions', ['className' => 'UsersSubscriptions'])->setForeignKey('subscription_id')->setProperty('subscription');
 
-        $this->setTable('users_subscriptions_history');
+        $this->setTable('admin_l_t_e_users_subscriptions_history');
         $this->setDisplayField('messages');
         $this->setPrimaryKey('id');
     }

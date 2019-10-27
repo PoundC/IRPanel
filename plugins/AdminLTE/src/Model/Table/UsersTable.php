@@ -15,6 +15,9 @@ class UsersTable extends BaseUsersTable
 
         $this->hasMany('users_subscriptions', ['className' => 'UsersSubscriptions'])->setForeignKey('user_id')->setProperty('user');
 
+        $this->setTable('admin_l_t_e_users');
+        $this->setEntityClass('AdminLTE\Model\Entity\User');
+
         $this->removeBehavior('Register');
         $this->addBehavior('AdminLTE.Register');
     }

@@ -4,17 +4,19 @@ namespace AdminLTE\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * AdminLTENotificationLog Entity
+ * AdminLTERecipient Entity
  *
  * @property int $id
- * @property int $notification_id
+ * @property int $message_id
  * @property string $user_id
- * @property \Cake\I18n\FrozenTime $created
+ * @property int $to
+ * @property int $cc
+ * @property int $bcc
  *
- * @property \AdminLTE\Model\Entity\Notification $notification
+ * @property \AdminLTE\Model\Entity\Message $message
  * @property \AdminLTE\Model\Entity\User $user
  */
-class AdminLTENotificationLog extends Entity
+class Recipient extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -26,10 +28,12 @@ class AdminLTENotificationLog extends Entity
      * @var array
      */
     protected $_accessible = [
-        'notification_id' => true,
+        'message_id' => true,
         'user_id' => true,
-        'created' => true,
-        'notification' => true,
+        'to' => true,
+        'cc' => true,
+        'bcc' => true,
+        'message' => true,
         'user' => true
     ];
 }

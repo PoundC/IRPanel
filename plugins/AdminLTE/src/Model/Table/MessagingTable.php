@@ -38,13 +38,15 @@ class MessagingTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('messaging');
+        $this->setTable('admin_l_t_e_messaging');
         $this->setDisplayField('subject');
         $this->setPrimaryKey('id');
+        $this->setEntityClass('AdminLTE\Model\Entity\Messaging');
 
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('Users', [
+            'className' => 'AdminLTE\Model\Table\UsersTable',
             'foreignKey' => 'user_id',
             'joinType' => 'INNER'
         ]);
@@ -55,7 +57,7 @@ class MessagingTable extends Table
 
         ]);
         $this->belongsTo('Recipients', [
-            'className' => 'Users',
+            'className' => 'AdminLTE\Model\Table\UsersTable',
             'foreignKey' => 'to_user_id',
             'joinType' => 'INNER',
             'propertyName' => 'recipients'

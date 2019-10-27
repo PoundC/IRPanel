@@ -4,22 +4,17 @@ namespace AdminLTE\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * AdminLTETask Entity
+ * AdminLTEMenuNotificationLog Entity
  *
  * @property int $id
+ * @property int $admin_l_t_e_menu_notification_id
  * @property string $user_id
- * @property string $title
- * @property string $message
- * @property string $link
- * @property string $icon
- * @property int $seen
- * @property int $completed
  * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime $modified
  *
+ * @property \AdminLTE\Model\Entity\MenuNotification $admin_l_t_e_menu_notification
  * @property \AdminLTE\Model\Entity\User $user
  */
-class AdminLTETask extends Entity
+class MenuNotificationLog extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -31,15 +26,10 @@ class AdminLTETask extends Entity
      * @var array
      */
     protected $_accessible = [
+        'admin_l_t_e_menu_notification_id' => true,
         'user_id' => true,
-        'title' => true,
-        'message' => true,
-        'link' => true,
-        'icon' => true,
-        'seen' => true,
-        'completed' => true,
         'created' => true,
-        'modified' => true,
+        'admin_l_t_e_menu_notification' => true,
         'user' => true
     ];
 }

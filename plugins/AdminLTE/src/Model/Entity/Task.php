@@ -4,24 +4,22 @@ namespace AdminLTE\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Notification Entity
+ * AdminLTETask Entity
  *
  * @property int $id
  * @property string $user_id
- * @property string $type
+ * @property string $title
  * @property string $message
- * @property \Cake\I18n\FrozenTime $created
- * @property string $destination
- * @property string $role_id
- * @property int $total_count
  * @property string $link
- * @property string $color
+ * @property string $icon
+ * @property int $seen
+ * @property int $completed
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \AdminLTE\Model\Entity\User $user
- * @property \AdminLTE\Model\Entity\NotificationLog[] $admin_l_t_e_notification_logs
- * @property \AdminLTE\Model\Entity\AdminLTEPushNotification[] $admin_l_t_e_push_notifications
  */
-class Notification extends Entity
+class Task extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -34,16 +32,14 @@ class Notification extends Entity
      */
     protected $_accessible = [
         'user_id' => true,
-        'type' => true,
+        'title' => true,
         'message' => true,
-        'created' => true,
-        'destination' => true,
-        'role_id' => true,
-        'total_count' => true,
         'link' => true,
-        'color' => true,
-        'user' => true,
-        'admin_l_t_e_notification_logs' => true,
-        'admin_l_t_e_push_notifications' => true
+        'icon' => true,
+        'seen' => true,
+        'completed' => true,
+        'created' => true,
+        'modified' => true,
+        'user' => true
     ];
 }

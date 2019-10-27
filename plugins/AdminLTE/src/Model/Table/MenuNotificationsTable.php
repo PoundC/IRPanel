@@ -11,18 +11,18 @@ use Cake\Validation\Validator;
  *
  * @property |\Cake\ORM\Association\BelongsTo $Users
  * @property |\Cake\ORM\Association\BelongsTo $Roles
- * @property \AdminLTE\Model\Table\AdminLTEMenuNotificationLogsTable|\Cake\ORM\Association\HasMany $AdminLTEMenuNotificationLogs
+ * @property \AdminLTE\Model\Table\MenuNotificationLogsTable|\Cake\ORM\Association\HasMany $AdminLTEMenuNotificationLogs
  *
- * @method \AdminLTE\Model\Entity\AdminLTEMenuNotification get($primaryKey, $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTEMenuNotification newEntity($data = null, array $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTEMenuNotification[] newEntities(array $data, array $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTEMenuNotification|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTEMenuNotification saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTEMenuNotification patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTEMenuNotification[] patchEntities($entities, array $data, array $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTEMenuNotification findOrCreate($search, callable $callback = null, $options = [])
+ * @method \AdminLTE\Model\Entity\MenuNotification get($primaryKey, $options = [])
+ * @method \AdminLTE\Model\Entity\MenuNotification newEntity($data = null, array $options = [])
+ * @method \AdminLTE\Model\Entity\MenuNotification[] newEntities(array $data, array $options = [])
+ * @method \AdminLTE\Model\Entity\MenuNotification|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \AdminLTE\Model\Entity\MenuNotification saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \AdminLTE\Model\Entity\MenuNotification patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \AdminLTE\Model\Entity\MenuNotification[] patchEntities($entities, array $data, array $options = [])
+ * @method \AdminLTE\Model\Entity\MenuNotification findOrCreate($search, callable $callback = null, $options = [])
  */
-class AdminLTEMenuNotificationsTable extends Table
+class MenuNotificationsTable extends Table
 {
     /**
      * Initialize method
@@ -37,6 +37,7 @@ class AdminLTEMenuNotificationsTable extends Table
         $this->setTable('admin_l_t_e_menu_notifications');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+        $this->setEntityClass('AdminLTE\Model\Entity\MenuNotification');
 
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
@@ -45,7 +46,7 @@ class AdminLTEMenuNotificationsTable extends Table
         ]);
         $this->hasMany('AdminLTEMenuNotificationLogs', [
             'foreignKey' => 'admin_l_t_e_menu_notification_id',
-            'className' => 'AdminLTE.AdminLTEMenuNotificationLogs'
+            'className' => 'AdminLTE.MenuNotificationLogs'
         ]);
     }
 

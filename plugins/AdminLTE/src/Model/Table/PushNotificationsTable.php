@@ -7,23 +7,23 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * AdminLTEMenuNotificationLogs Model
+ * AdminLTEPushNotifications Model
  *
- * @property \AdminLTE\Model\Table\AdminLTEMenuNotificationsTable|\Cake\ORM\Association\BelongsTo $AdminLTEMenuNotifications
+ * @property \AdminLTE\Model\Table\NotificationsTable|\Cake\ORM\Association\BelongsTo $Notifications
  * @property \AdminLTE\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
  *
- * @method \AdminLTE\Model\Entity\AdminLTEMenuNotificationLog get($primaryKey, $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTEMenuNotificationLog newEntity($data = null, array $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTEMenuNotificationLog[] newEntities(array $data, array $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTEMenuNotificationLog|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTEMenuNotificationLog saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTEMenuNotificationLog patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTEMenuNotificationLog[] patchEntities($entities, array $data, array $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTEMenuNotificationLog findOrCreate($search, callable $callback = null, $options = [])
+ * @method \AdminLTE\Model\Entity\AdminLTEPushNotification get($primaryKey, $options = [])
+ * @method \AdminLTE\Model\Entity\AdminLTEPushNotification newEntity($data = null, array $options = [])
+ * @method \AdminLTE\Model\Entity\AdminLTEPushNotification[] newEntities(array $data, array $options = [])
+ * @method \AdminLTE\Model\Entity\AdminLTEPushNotification|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \AdminLTE\Model\Entity\AdminLTEPushNotification saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \AdminLTE\Model\Entity\AdminLTEPushNotification patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \AdminLTE\Model\Entity\AdminLTEPushNotification[] patchEntities($entities, array $data, array $options = [])
+ * @method \AdminLTE\Model\Entity\AdminLTEPushNotification findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class AdminLTEMenuNotificationLogsTable extends Table
+class PushNotificationsTable extends Table
 {
     /**
      * Initialize method
@@ -35,16 +35,17 @@ class AdminLTEMenuNotificationLogsTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('admin_l_t_e_menu_notification_logs');
+        $this->setTable('admin_l_t_e_push_notifications');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+        $this->setEntityClass('AdminLTE\Model\Entity\PushNotification');
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('AdminLTEMenuNotifications', [
-            'foreignKey' => 'admin_l_t_e_menu_notification_id',
+        $this->belongsTo('Notifications', [
+            'foreignKey' => 'notification_id',
             'joinType' => 'INNER',
-            'className' => 'AdminLTE.AdminLTEMenuNotifications'
+            'className' => 'AdminLTE.Notifications'
         ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
@@ -77,7 +78,7 @@ class AdminLTEMenuNotificationLogsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['admin_l_t_e_menu_notification_id'], 'AdminLTEMenuNotifications'));
+        $rules->add($rules->existsIn(['notification_id'], 'Notifications'));
         $rules->add($rules->existsIn(['user_id'], 'Users'));
 
         return $rules;

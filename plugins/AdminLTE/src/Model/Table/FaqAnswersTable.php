@@ -34,18 +34,19 @@ class FaqAnswersTable extends Table
     {
         parent::initialize($config);
 
-        $this->belongsTo('AdminLTE.FaqTopics', array())->setForeignKey('faq_topic_id')->setProperty('topic');
-        $this->hasMany('FaqQuestions', array())->setForeignKey('faq_answer_id')->setProperty('questions');
-        $this->hasMany('FaqAnswerTaga', array())->setForeignKey('faq_answer_id')->setProperty('answer_tags');
+        $this->belongsTo('AdminLTE.FaqTopics', ['className' => 'AdminLTE\Model\Table\FaqTopicsTable'])->setForeignKey('faq_topic_id')->setProperty('topic');
+        $this->hasMany('FaqQuestions', ['className' => 'AdminLTE\Model\Table\FaqQuestionsTable'])->setForeignKey('faq_answer_id')->setProperty('questions');
+        $this->hasMany('FaqAnswerTags', ['className' => 'AdminLTE\Model\Table\FaqAnswerTagsTable'])->setForeignKey('faq_answer_id')->setProperty('answer_tags');
+
+        $this->setTable('admin_l_t_e_faq_answers');
+        $this->setDisplayField('admin_l_t_e_faq_topics.topic');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Muffin/Slug.Slug', [
+            'table' => 'admin_l_t_e_faq_answers',
             'displayField'  => 'subject',
             'onUpdate'      => true
         ]);
-
-        $this->setTable('faq_answers');
-        $this->setDisplayField('faq_topics.topic');
-        $this->setPrimaryKey('id');
     }
 
     public function validationSend(Validator $validator)
