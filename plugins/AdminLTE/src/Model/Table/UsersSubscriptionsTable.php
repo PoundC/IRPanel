@@ -23,11 +23,12 @@ class UsersSubscriptionsTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('users_subscriptions');
+        $this->setTable('admin_l_t_e_users_subscriptions');
         $this->setDisplayField('messages');
         $this->setPrimaryKey('id');
 
         $this->belongsTo('Users', [
+            'className' => 'AdminLTE\Model\Table\UsersTable',
             'foreignKey' => 'user_id',
             'joinType' => 'INNER'
         ]);

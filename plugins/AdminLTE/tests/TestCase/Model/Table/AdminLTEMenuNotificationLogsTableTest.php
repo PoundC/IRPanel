@@ -1,7 +1,7 @@
 <?php
 namespace AdminLTE\Test\TestCase\Model\Table;
 
-use AdminLTE\Model\Table\AdminLTEMenuNotificationLogsTable;
+use AdminLTE\Model\Table\MenuNotificationLogsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -13,7 +13,7 @@ class AdminLTEMenuNotificationLogsTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \AdminLTE\Model\Table\AdminLTEMenuNotificationLogsTable
+     * @var \AdminLTE\Model\Table\MenuNotificationLogsTable
      */
     public $AdminLTEMenuNotificationLogs;
 
@@ -36,7 +36,7 @@ class AdminLTEMenuNotificationLogsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('AdminLTEMenuNotificationLogs') ? [] : ['className' => AdminLTEMenuNotificationLogsTable::class];
+        $config = TableRegistry::getTableLocator()->exists('AdminLTEMenuNotificationLogs') ? [] : ['className' => MenuNotificationLogsTable::class];
         $this->AdminLTEMenuNotificationLogs = TableRegistry::getTableLocator()->get('AdminLTEMenuNotificationLogs', $config);
     }
 

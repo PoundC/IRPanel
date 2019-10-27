@@ -39,7 +39,7 @@ class ChatChatroomsTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('chat_chatrooms');
+        $this->setTable('admin_l_t_e_chat_chatrooms');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
     }

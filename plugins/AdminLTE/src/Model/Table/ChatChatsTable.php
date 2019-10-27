@@ -34,10 +34,10 @@ class ChatChatsTable extends Table
     {
         parent::initialize($config);
 
-        $this->belongsTo('Users', array())->setForeignKey('user_id')->setProperty('user');
-        $this->belongsTo('ChatChatrooms', array())->setForeignKey('chatroom_id')->setProperty('room');
+        $this->belongsTo('Users', ['className' => 'AdminLTE\Model\Table\UsersTable'])->setForeignKey('user_id')->setProperty('user');
+        $this->belongsTo('ChatChatrooms', ['className' => 'AdminLTE\Model\Table\ChatChatroomsTable'])->setForeignKey('chatroom_id')->setProperty('room');
 
-        $this->setTable('chat_chats');
+        $this->setTable('admin_l_t_e_chat_chats');
         $this->setDisplayField('message');
         $this->setPrimaryKey('id');
     }
@@ -64,8 +64,6 @@ class ChatChatsTable extends Table
 
     public function validationReceive(Validator $validator)
     {
-
-
         return $validator;
     }
 }

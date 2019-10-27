@@ -1,7 +1,7 @@
 <?php
 namespace AdminLTE\Test\TestCase\Model\Table;
 
-use AdminLTE\Model\Table\AdminLTEPushNotificationsTable;
+use AdminLTE\Model\Table\PushNotificationsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -13,7 +13,7 @@ class AdminLTEPushNotificationsTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \AdminLTE\Model\Table\AdminLTEPushNotificationsTable
+     * @var \AdminLTE\Model\Table\PushNotificationsTable
      */
     public $AdminLTEPushNotifications;
 
@@ -36,7 +36,7 @@ class AdminLTEPushNotificationsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('AdminLTEPushNotifications') ? [] : ['className' => AdminLTEPushNotificationsTable::class];
+        $config = TableRegistry::getTableLocator()->exists('AdminLTEPushNotifications') ? [] : ['className' => PushNotificationsTable::class];
         $this->AdminLTEPushNotifications = TableRegistry::getTableLocator()->get('AdminLTEPushNotifications', $config);
     }
 

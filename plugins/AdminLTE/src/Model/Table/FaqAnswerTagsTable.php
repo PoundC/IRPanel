@@ -26,11 +26,11 @@ class FaqAnswerTagsTable extends Table
     {
         parent::initialize($config);
 
-        $this->belongsTo('faq_answers', array())->setForeignKey('faq_answer_id')->setProperty('answer');
-        $this->belongsTo('faq_tags', array())->setForeignKey('faq_tag_id')->setProperty('tags');
+        $this->belongsTo('FaqAnswers', ['className' => 'AdminLTE\Model\Table\FaqAnswersTable'])->setForeignKey('faq_answer_id')->setProperty('answer');
+        $this->belongsTo('FaqTags', ['className' => 'AdminLTE\Model\Table\FaqTagsTable'])->setForeignKey('faq_tag_id')->setProperty('tags');
 
-        $this->setTable('faq_answer_tags');
-        $this->setDisplayField('faq_tags.tag');
+        $this->setTable('admin_l_t_e_faq_answer_tags');
+        $this->setDisplayField('admin_l_t_e_faq_tags.tag');
         $this->setPrimaryKey('id');
     }
 

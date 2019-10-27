@@ -14,7 +14,7 @@ use Cake\ORM\Entity;
  * @property \AdminLTE\Model\Entity\Notification $notification
  * @property \AdminLTE\Model\Entity\User $user
  */
-class AdminLTEPushNotification extends Entity
+class PushNotification extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().

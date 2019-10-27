@@ -34,9 +34,10 @@ class StatsValuesTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('stats_values');
+        $this->setTable('admin_l_t_e_stats_values');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+        $this->setEntityClass('AdminLTE\Model\Entity\StatsValue');
 
         $this->addBehavior('Timestamp');
 

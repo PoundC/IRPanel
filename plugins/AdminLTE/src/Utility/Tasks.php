@@ -13,7 +13,7 @@ class Tasks
 
     public static function getTasksTable()
     {
-        return TableRegistry::get('AdminLTE.admin_l_t_e_tasks');
+        return TableRegistry::get('AdminLTE.admin_l_t_e_tasks', ['className' => 'AdminLTE\Model\Table\TasksTable']);
     }
 
     public static function getPendingTasksUnseenCount($user_id)

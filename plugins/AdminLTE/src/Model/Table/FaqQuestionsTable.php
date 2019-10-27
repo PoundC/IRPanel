@@ -26,9 +26,9 @@ class FaqQuestionsTable extends Table
     {
         parent::initialize($config);
 
-        $this->belongsTo('AdminLTE.FaqAnswers', array())->setForeignKey('faq_answer_id')->setProperty('answer');
+        $this->belongsTo('AdminLTE.FaqAnswers', ['className' => 'AdminLTE\Model\Table\FaqAnswersTable'])->setForeignKey('faq_answer_id')->setProperty('answer');
 
-        $this->setTable('faq_questions');
+        $this->setTable('admin_l_t_e_faq_questions');
         $this->setDisplayField('question');
         $this->setPrimaryKey('id');
     }

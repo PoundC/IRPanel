@@ -230,11 +230,11 @@ class SupportController extends AppController
 
         if($user->role == 'admin') {
 
-            $messagesQuery = $table->find('all', ['contain' => ['faq_topics']])->where(['messages.message_id' => 0, 'messages.closed' => 0]);
+            $messagesQuery = $table->find('all', ['contain' => ['FaqTopics']])->where(['messages.message_id' => 0, 'messages.closed' => 0]);
         }
         else {
 
-            $messagesQuery = $table->find('all', ['contain' => ['faq_topics']])->where(['messages.message_id' => 0, 'messages.closed' => 0, 'messages.user_id' => $user->id]);
+            $messagesQuery = $table->find('all', ['contain' => ['FaqTopics']])->where(['messages.message_id' => 0, 'messages.closed' => 0, 'messages.user_id' => $user->id]);
         }
 
         $tableAlias = $table->getAlias();
@@ -299,7 +299,7 @@ class SupportController extends AppController
             $this->redirect('/tickets');
         }
 
-        $topicsTable = TableRegistry::get('AdminLTE.faq_topics');
+        $topicsTable = TableRegistry::get('AdminLTE.FaqTopics');
         $topicsQuery = $topicsTable->find('all');
         $topics = $topicsQuery->find('list');
 
@@ -376,7 +376,7 @@ class SupportController extends AppController
 
                 $message_id = $result->id;
 
-                $support_username = 'admin'; // Configure::read('Users.support_username');
+                $support_username = 'superadmin'; // Configure::read('Users.support_username');
 
                 $query = $usersTable->find('all')->where(['users.username' => $support_username])->limit(1);
                 $admin = $query->first();

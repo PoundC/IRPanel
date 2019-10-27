@@ -106,12 +106,12 @@ class Sidebar
 
     private static function buildLink($currentPath, $menuItem, $role, $user_id)
     {
-        $menuNotifications = TableRegistry::get('AdminLTE.AdminLTEMenuNotifications');
+        $menuNotifications = MenuNotifications::getMenuNotificationsTable();
         $linkNotifications = $menuNotifications->find('all', ['contain' => 'AdminLTEMenuNotificationLogs']);
         $linkNotifications->select(['total' => $linkNotifications->func()->sum('notification_count')])
             ->where([
                 'OR' => [
-                    ['destination' => 'User', 'AdminLTEMenuNotifications.user_id' => $user_id],
+                    ['destination' => 'User', 'MenuNotifications.user_id' => $user_id],
                     ['destination' => 'Global'],
                     ['destination' => 'Role', 'role_id' => $role],
                 ],
@@ -139,12 +139,12 @@ class Sidebar
 
     private static function buildGroup($currentPath, $menuItem, $role, $user_id)
     {
-        $menuNotifications = TableRegistry::get('AdminLTE.AdminLTEMenuNotifications');
+        $menuNotifications = MenuNotifications::getMenuNotificationsTable();
         $groupNotifications = $menuNotifications->find('all', ['contain' => 'AdminLTEMenuNotificationLogs']);
         $groupNotifications->select(['total' => $groupNotifications->func()->sum('notification_count')])
             ->where([
                 'OR' => [
-                    ['destination' => 'User', 'AdminLTEMenuNotifications.user_id' => $user_id],
+                    ['destination' => 'User', 'MenuNotifications.user_id' => $user_id],
                     ['destination' => 'Global'],
                     ['destination' => 'Role', 'role_id' => $role],
                 ],
@@ -192,7 +192,7 @@ class Sidebar
             $itemNotifications->select(['total' => $itemNotifications->func()->sum('notification_count')])
                 ->where([
                     'OR' => [
-                        ['destination' => 'User', 'AdminLTEMenuNotifications.user_id' => $user_id],
+                        ['destination' => 'User', 'MenuNotifications.user_id' => $user_id],
                         ['destination' => 'Global'],
                         ['destination' => 'Role', 'role_id' => $role],
                     ],

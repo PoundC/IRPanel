@@ -26,10 +26,10 @@ class ChatHelptabsTable extends Table
     {
         parent::initialize($config);
 
-        $this->belongsTo('AdminLTE.FaqAnswers', array())->setForeignKey('faq_answer_id')->setProperty('answer');
-        $this->belongsTo('ChatChatrooms', array())->setForeignKey('chatroom_id')->setProperty('room');
+        $this->belongsTo('AdminLTE.FaqAnswers', ['className' => 'AdminLTE\Model\Table\FaqAnswersTable'])->setForeignKey('faq_answer_id')->setProperty('answer');
+        $this->belongsTo('AdminLTE.ChatChatrooms', ['className' => 'AdminLTE\Model\Table\ChatChatroomsTable'])->setForeignKey('chatroom_id')->setProperty('room');
 
-        $this->setTable('chat_helptabs');
+        $this->setTable('admin_l_t_e_chat_helptabs');
         $this->setDisplayField('Faq_Answers.topic');
         $this->setPrimaryKey('id');
     }

@@ -10,9 +10,19 @@ class MenuNotifications {
     const Role = 'Role';
     const User = 'User';
 
+    public static function getMenuNotificationsTable()
+    {
+        return TableRegistry::get('MenuNotifications', ['className' => 'AdminLTE\Model\Table\MenuNotificationsTable']);
+    }
+
+    public static function getMenuNotificationLogsTable()
+    {
+        return TableRegistry::get('AdminLTEMenuNotificationLogs', ['className' => 'AdminLTE\Model\Table\MenuNotificationLogsTable']);
+    }
+
     public static function addGlobalGroupMenuNotification($menuGroup, $count = 1)
     {
-        $menuNotificationsTable = TableRegistry::get('AdminLTE.AdminLTEMenuNotifications');
+        $menuNotificationsTable = self::getMenuNotificationsTable();
         $menuNotificationsEntity = $menuNotificationsTable->newEntity([
             'menu_group' => $menuGroup,
             'menu_title' => '',
@@ -26,7 +36,7 @@ class MenuNotifications {
 
     public static function addGlobalItemMenuNotification($menuGroup, $menuTitle, $count = 1)
     {
-        $menuNotificationsTable = TableRegistry::get('AdminLTE.AdminLTEMenuNotifications');
+        $menuNotificationsTable = self::getMenuNotificationsTable();
         $menuNotificationsEntity = $menuNotificationsTable->newEntity([
             'menu_group' => $menuGroup,
             'menu_title' => $menuTitle,
@@ -40,7 +50,7 @@ class MenuNotifications {
 
     public static function addRoleGroupMenuNotification($role_id, $menuGroup, $count = 1)
     {
-        $menuNotificationsTable = TableRegistry::get('AdminLTE.AdminLTEMenuNotifications');
+        $menuNotificationsTable = self::getMenuNotificationsTable();
         $menuNotificationsEntity = $menuNotificationsTable->newEntity([
             'menu_group' => $menuGroup,
             'menu_title' => '',
@@ -54,7 +64,7 @@ class MenuNotifications {
 
     public static function addRoleItemMenuNotification($role_id, $menuGroup, $menuTitle, $count = 1)
     {
-        $menuNotificationsTable = TableRegistry::get('AdminLTE.AdminLTEMenuNotifications');
+        $menuNotificationsTable = self::getMenuNotificationsTable();
         $menuNotificationsEntity = $menuNotificationsTable->newEntity([
             'menu_group' => $menuGroup,
             'menu_title' => $menuTitle,
@@ -68,7 +78,7 @@ class MenuNotifications {
 
     public static function addUserGroupMenuNotification($user_id, $menuGroup, $count = 1)
     {
-        $menuNotificationsTable = TableRegistry::get('AdminLTE.AdminLTEMenuNotifications');
+        $menuNotificationsTable = self::getMenuNotificationsTable();
         $menuNotificationsEntity = $menuNotificationsTable->newEntity([
             'menu_group' => $menuGroup,
             'menu_title' => '',
@@ -83,7 +93,7 @@ class MenuNotifications {
     public static function addUserItemMenuNotification($user_id, $menuGroup, $menuTitle, $count = 1)
     {
         // die($user_id);
-        $menuNotificationsTable = TableRegistry::get('AdminLTE.AdminLTEMenuNotifications');
+        $menuNotificationsTable = self::getMenuNotificationsTable();
         $menuNotificationsEntity = $menuNotificationsTable->newEntity([
             'menu_group' => $menuGroup,
             'menu_title' => $menuTitle,
@@ -97,15 +107,15 @@ class MenuNotifications {
 
     public static function markMenuNotificationsSeen($user_id, $role, $menuGroup, $menuTitle = '')
     {
-        $menuNotifications = TableRegistry::get('AdminLTE.AdminLTEMenuNotifications');
-        $menuNotificationLogs = TableRegistry::get('AdminLTE.AdminLTEMenuNotificationLogs');
+        $menuNotifications = self::getMenuNotificationsTable();
+        $menuNotificationLogs = self::getMenuNotificationLogsTable();
 
         if($menuTitle == '') {
 
             $linkNotifications = $menuNotifications->find('all', ['contain' => 'AdminLTEMenuNotificationLogs'])
                 ->where([
                     'OR' => [
-                        ['destination' => 'User', 'AdminLTEMenuNotifications.user_id' => $user_id],
+                        ['destination' => 'User', 'MenuNotifications.user_id' => $user_id],
                         ['destination' => 'Global'],
                         ['destination' => 'Role', 'role_id' => $role],
                     ],
@@ -118,7 +128,7 @@ class MenuNotifications {
             $linkNotifications = $menuNotifications->find('all', ['contain' => 'AdminLTEMenuNotificationLogs'])
                 ->where([
                     'OR' => [
-                        ['destination' => 'User', 'AdminLTEMenuNotifications.user_id' => $user_id],
+                        ['destination' => 'User', 'MenuNotifications.user_id' => $user_id],
                         ['destination' => 'Global'],
                         ['destination' => 'Role', 'role_id' => $role],
                     ],

@@ -12,18 +12,18 @@ use Cake\Validation\Validator;
  * @property \AdminLTE\Model\Table\NotificationsTable|\Cake\ORM\Association\BelongsTo $Notifications
  * @property \AdminLTE\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
  *
- * @method \AdminLTE\Model\Entity\AdminLTENotificationLog get($primaryKey, $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTENotificationLog newEntity($data = null, array $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTENotificationLog[] newEntities(array $data, array $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTENotificationLog|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTENotificationLog saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTENotificationLog patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTENotificationLog[] patchEntities($entities, array $data, array $options = [])
- * @method \AdminLTE\Model\Entity\AdminLTENotificationLog findOrCreate($search, callable $callback = null, $options = [])
+ * @method \AdminLTE\Model\Entity\NotificationLog get($primaryKey, $options = [])
+ * @method \AdminLTE\Model\Entity\NotificationLog newEntity($data = null, array $options = [])
+ * @method \AdminLTE\Model\Entity\NotificationLog[] newEntities(array $data, array $options = [])
+ * @method \AdminLTE\Model\Entity\NotificationLog|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \AdminLTE\Model\Entity\NotificationLog saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \AdminLTE\Model\Entity\NotificationLog patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \AdminLTE\Model\Entity\NotificationLog[] patchEntities($entities, array $data, array $options = [])
+ * @method \AdminLTE\Model\Entity\NotificationLog findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class AdminLTENotificationLogsTable extends Table
+class NotificationLogsTable extends Table
 {
     /**
      * Initialize method
@@ -38,6 +38,7 @@ class AdminLTENotificationLogsTable extends Table
         $this->setTable('admin_l_t_e_notification_logs');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+        $this->setEntityClass('AdminLTE\Model\Entity\NotificationLog');
 
         $this->addBehavior('Timestamp');
 

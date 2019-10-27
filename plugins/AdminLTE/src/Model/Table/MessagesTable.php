@@ -53,10 +53,10 @@ class MessagesTable extends Table
 
         //ini_get('error_log');die();
         $this->belongsTo('ParentMessages', ['className' => 'Messages'])->setForeignKey('message_id')->setProperty('messages');
-        $this->belongsTo('Users', array())->setForeignKey('user_id')->setProperty('user');
-        $this->belongsTo('faq_topics', array())->setForeignKey('topic')->setProperty('topics');
+        $this->belongsTo('Users', ['className' => 'AdminLTE\Model\Table\UsersTable'])->setForeignKey('user_id')->setProperty('user');
+        $this->belongsTo('FaqTopics', ['className' => 'AdminLTE\Model\Table\FaqTopicsTable'])->setForeignKey('topic')->setProperty('topics');
 
-        $this->setTable('messages');
+        $this->setTable('admin_l_t_e_messages');
         $this->setDisplayField('subject');
         $this->setPrimaryKey('id');
     }
