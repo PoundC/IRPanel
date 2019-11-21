@@ -32,7 +32,7 @@ class LinksController extends AppController
     {
         $this->loadModel('IRPanelLinks.IRCLinks');
 
-        $links = $this->paginate($this->IRCLinks->find('all'));
+        $links = $this->paginate($this->IRCLinks->find('all', ['contain' => ['IRCUsers']]));
 
         $this->set(compact('links'));
     }
