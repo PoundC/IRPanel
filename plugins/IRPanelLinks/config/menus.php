@@ -19,21 +19,17 @@ $menus = [
             'css'   => 'non-active',
             'menu' => [
                 'History' => [
-                    'path' => '/i_r_c_links/history',
+                    'path' => '/i_r_c_links/links/browse',
                     'icon' => 'fa-dashboard'
                 ],
-                'Browse' => [
-                    'path' => '/i_r_c_links/browse',
-                    'icon' => 'fa-crosshairs'
-                ],
                 'Search' => [
-                    'path' => '/i_r_c_links/search',
+                    'path' => '/i_r_c_links/links/search',
                     'icon' => 'fa-search'
-                ],
+                ],/*
                 'Add' => [
                     'path' => '/i_r_c_media/add',
                     'icon' => 'fa-plus-circle'
-                ]
+                ]*/
             ]
         ]
     ],

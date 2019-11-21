@@ -9,7 +9,7 @@
 
             <div class="box-body">
 
-                <?= $this->Form->create(null, ['url' => ['plugin' => 'IRPanelQuotes', 'controller' => 'Quotes', 'action' => 'search']]); ?>
+                <?= $this->Form->create(null, ['url' => ['plugin' => 'IRPanelLinks', 'controller' => 'Links', 'action' => 'search']]); ?>
 
                 <div class="row">
 
@@ -18,7 +18,7 @@
                         <div class="form-group">
                             <label>Your search query</label>
                             <?= $this->Form->control('search', ['label' => false, 'type' => 'text', 'placeholder' =>
-                                'Enter someone\'s username or word in quote topic here.', 'class' => 'form-control']); ?>
+                                'Enter someone\'s username or word in title or description or content here.', 'class' => 'form-control']); ?>
                         </div>
 
                     </div>
@@ -70,6 +70,7 @@
                             <p style="font-size: 18px;"><?= h($result->quote) ?></p>
                         </div>
                     </div>
+                    <hr/>
                 </div>
             </div>
 

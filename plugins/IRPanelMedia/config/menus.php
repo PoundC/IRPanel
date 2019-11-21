@@ -7,7 +7,7 @@ $menus = [
         'dashboards' => [
             'menu' => [
                 'Media' => [
-                    'path' => '/i_r_c_media/dashboard',
+                    'path' => '/i_r_c_media/media/dashboard',
                     'icon' => 'fa-video-camera'
                 ]
             ]
@@ -18,21 +18,13 @@ $menus = [
             'icon' => 'fa-video-camera',
             'css'   => 'non-active',
             'menu' => [
-                'History' => [
-                    'path' => '/i_r_c_media/history',
-                    'icon' => 'fa-dashboard'
-                ],
                 'Browse' => [
-                    'path' => '/i_r_c_media/browse',
+                    'path' => '/i_r_c_media/media/browse',
                     'icon' => 'fa-crosshairs'
                 ],
                 'Search' => [
-                    'path' => '/i_r_c_media/search',
+                    'path' => '/i_r_c_media/media/search',
                     'icon' => 'fa-search'
-                ],
-                'Add' => [
-                    'path' => '/i_r_c_media/add',
-                    'icon' => 'fa-plus-circle'
                 ]
             ]
         ]

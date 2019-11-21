@@ -5,7 +5,7 @@ use Cake\Routing\Route\DashedRoute;
 
 Router::plugin(
     'IRPanelMedia',
-    ['path' => '/i-r-panel-media'],
+    ['path' => '/i_r_c_media'],
     function (RouteBuilder $routes) {
         $routes->fallbacks(DashedRoute::class);
     }

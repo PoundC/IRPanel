@@ -64,7 +64,7 @@ class IRCBotShell extends Shell
                     ))
                 ),
                 'plugins' => array(
-                    new \Phergie\Irc\Plugin\React\AutoJoin\Plugin(['channels' => ['#c', '#cashmoney']]),//$network['channels']]),
+                    new \Phergie\Irc\Plugin\React\AutoJoin\Plugin(['channels' => ['#cashmoney']]),//$network['channels']]),
                     new \Phergie\Irc\Plugin\React\Command\Plugin(['prefix' => '!']),
                     new \Phergie\Irc\Plugin\React\JoinPart\Plugin(),
                     new \IRPanel\Plugin(),
@@ -72,6 +72,8 @@ class IRCBotShell extends Shell
                     new \IRPanelVoting\Plugin(),
                     new \IRPanelVetting\Plugin(),
                     new \IRPanelGame\Plugin(),
+                    new \IRPanelLinks\Plugin(),
+                    new \IRPanelMedia\Plugin()
                 ),
                 'logger' => new IRLogger()
             );
@@ -83,6 +85,7 @@ class IRCBotShell extends Shell
             });
             $bot->getClient()->on('connect.end', function(\Phergie\Irc\ConnectionInterface $connection, \Psr\Log\LoggerInterface $logger) use ($bot) {
                 $logger->debug('Connection to ' . $connection->getServerHostname() . ' lost, attempting to reconnect');
+                sleep(5);
                 $bot->getClient()->addConnection($connection);
             });
             $bot->run();

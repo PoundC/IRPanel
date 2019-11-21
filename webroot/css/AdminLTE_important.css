@@ -123,3 +123,8 @@
     background-color: #d33724 !important;
     color: white;
 }
+
+.main-header .logo {
+    height: 53px !important;
+    line-height: 52px !important;
+}

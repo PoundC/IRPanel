@@ -76,7 +76,7 @@ class Plugin extends AbstractPlugin
         if(!$calc) {
 
             $calcEntity = $this->table->newEntity([
-                'i_r_c_user_id' => Database::getChannelId(Database::getNetworkId($server), $nick, $username, $host),
+                'i_r_c_user_id' => Database::getUserId(Database::getNetworkId($server), $nick, $username, $host),
                 'topic' => $target,
                 'quote' => $message,
                 'created' => new \DateTime('now')

@@ -4,23 +4,27 @@
 
         <div class="box">
             <div class="box-header">
-                <center><h3>IRC Quotes</h3></center>
+                <center><h3>Links</h3></center>
             </div>
 
             <div class="box-body">
 
-                <?php foreach($quotes as $result): ?>
+                <?php foreach($links as $result): ?>
 
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <a href="/quotes/view/<?= $result->id ?>"><h3><?= h($result->topic) ?></h3></a>
+                                    <?php if($result->title == '') { ?>
+                                        <a href="<?= $result->link ?>" target="_blank"><h3><?= h($result->link) ?></h3></a>
+                                    <?php } else { ?>
+                                        <a href="<?= $result->link ?>" target="_blank"><h3><?= h($result->title) ?></h3></a>
+                                    <?php } ?>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <p style="font-size: 18px;"><?= h($result->quote) ?></p>
+                                    <p style="font-size: 18px;"><?= h($result->description) ?></p>
                                 </div>
                             </div>
                             <hr/>
