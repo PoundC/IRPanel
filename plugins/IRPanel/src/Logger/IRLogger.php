@@ -93,7 +93,8 @@ class IRLogger implements LoggerInterface
                     $i_r_c_network_id,
                     $parsed['nickname'],
                     $parsed['username'],
-                    $parsed['hostname']
+                    $parsed['hostname'],
+                    Database::getServerId($parsed['serverHostname'])
                 ),
                 'msg_type' => $parsed['msg_type'],
                 'message' => $parsed['message'],

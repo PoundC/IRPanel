@@ -7,6 +7,15 @@ use Phergie\Irc\Plugin\React\Command\CommandEvent;
 
 class Database
 {
+    public static function getServerId($serverHostname) {
+
+        $serversTable = TableRegistry::get('i_r_c_servers');
+
+        $server = $serversTable->find('all')->where(['hostname' => $serverHostname])->first();
+
+        return $server->id;
+    }
+
     public static function getNetworkId($serverHostname) {
 
         $serversTable = TableRegistry::get('i_r_c_servers');
@@ -106,7 +115,7 @@ class Database
         return self::getUser(self::getNetworkId($server), $nick, $username, $host);
     }
 
-    public static function getUser($i_r_c_network_id, $nickname, $username, $hostname) {
+    public static function getUser($i_r_c_network_id, $nickname, $username, $hostname, $i_r_c_server_id = 1) {
 
         $usersTable = TableRegistry::get('i_r_c_users');
 
@@ -121,6 +130,7 @@ class Database
 
             $userEntity = $usersTable->newEntity([
                 'i_r_c_network_id' => $i_r_c_network_id,
+                'i_r_c_server_id' => $i_r_c_server_id,
                 'username' => $username,
                 'hostname' => $hostname,
                 'nickname' => $nickname,
@@ -135,8 +145,8 @@ class Database
         return $user;
     }
 
-    public static function getUserId($i_r_c_network_id, $nickname, $username, $hostname) {
+    public static function getUserId($i_r_c_network_id, $nickname, $username, $hostname, $i_r_c_server_id = 1) {
 
-        return self::getUser($i_r_c_network_id, $nickname, $username, $hostname)->get('id');
+        return self::getUser($i_r_c_network_id, $nickname, $username, $hostname, $i_r_c_server_id)->get('id');
     }
 }

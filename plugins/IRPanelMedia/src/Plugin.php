@@ -97,7 +97,7 @@ class Plugin extends AbstractPlugin
                     }
                 }
 
-                if ($bKeep == true && $bKeep2 == true) {
+                if ($bKeep == true || $bKeep2 == true) {
                     $searchable = ' ';
                     $description = ' ';
                     $title = ' ';

@@ -7,7 +7,7 @@ $menus = [
         'dashboards' => [
             'menu' => [
                 'Jams' => [
-                    'path' => '/i_r_c_jams/dashboard',
+                    'path' => '/i_r_c_jams/jams/dashboard',
                     'icon' => 'fa-music'
                 ]
             ]
@@ -19,20 +19,16 @@ $menus = [
             'css'   => 'non-active',
             'menu' => [
                 'Player' => [
-                    'path' => '/i_r_c_jams/player',
+                    'path' => '/i_r_c_jams/jams/player',
                     'icon' => 'fa-play-circle-o'
                 ],
                 'History' => [
-                    'path' => '/i_r_c_jams/history',
+                    'path' => '/i_r_c_jams/jams/history',
                     'icon' => 'fa-history'
                 ],
                 'Search' => [
-                    'path' => '/i_r_c_jams/search',
+                    'path' => '/i_r_c_jams/jams/search',
                     'icon' => 'fa-search'
-                ],
-                'Add' => [
-                    'path' => '/i_r_c_jams/add',
-                    'icon' => 'fa-plus-circle'
                 ]
             ]
         ]

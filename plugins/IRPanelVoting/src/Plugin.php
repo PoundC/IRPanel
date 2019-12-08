@@ -185,7 +185,7 @@ class Plugin extends AbstractPlugin
         if(is_numeric($proposalName)) {
 
             $proposal = $proposalsTable->find('all')
-                ->Where(['id' => $proposalName, 'completed' => 0])
+                ->where(['id' => $proposalName, 'completed' => 0])
                 ->first();
         }
         else {
@@ -246,7 +246,7 @@ class Plugin extends AbstractPlugin
         if(is_numeric($proposalName)) {
 
             $proposal = $proposalsTable->find('all')
-                ->Where(['id' => $proposalName, 'completed' => 0])
+                ->where(['id' => $proposalName, 'completed' => 0])
                 ->first();
         }
         else {
@@ -318,11 +318,25 @@ class Plugin extends AbstractPlugin
         $proposalsTable = TableRegistry::get('i_r_c_vote_proposals');
         if(is_numeric($proposalName)) {
 
+            if($proposalName == 1) {
+
+                $queue->ircNotice($event->getSource(), 'Can not delete U2 from iPhone.');
+
+                return null;
+            }
+
             $proposal = $proposalsTable->find('all')
-                ->Where(['id' => $proposalName, 'completed' => 0])
+                ->where(['id' => $proposalName, 'completed' => 0])
                 ->first();
         }
         else {
+
+            if($proposalName == 'should.we.votebot') {
+
+                $queue->ircNotice($event->getSource(), 'Can not delete U2 from iPhone.');
+
+                return null;
+            }
 
             $proposal = $proposalsTable->find('all')
                 ->where(['name' => $proposalName, 'completed' => 0])
@@ -383,7 +397,7 @@ class Plugin extends AbstractPlugin
         if (is_numeric($proposalName)) {
 
             $proposal = $proposalsTable->find('all')
-                ->Where(['id' => $proposalName, 'completed' => 0])
+                ->where(['id' => $proposalName, 'completed' => 0])
                 ->first();
         } else {
 
@@ -439,7 +453,7 @@ class Plugin extends AbstractPlugin
         if (is_numeric($proposalName)) {
 
             $proposal = $proposalsTable->find('all')
-                ->Where(['id' => $proposalName, 'completed' => 0])
+                ->where(['id' => $proposalName, 'completed' => 0])
                 ->first();
         } else {
 
@@ -474,11 +488,25 @@ class Plugin extends AbstractPlugin
         $proposalsTable = TableRegistry::get('i_r_c_vote_proposals');
         if(is_numeric($proposalName)) {
 
+            if($proposalName == 1) {
+
+                $queue->ircNotice($event->getSource(), 'Can not delete U2 from iPhone.');
+
+                return null;
+            }
+
             $proposal = $proposalsTable->find('all')
-                ->Where(['id' => $proposalName, 'completed' => 0])
+                ->where(['id' => $proposalName, 'completed' => 0])
                 ->first();
         }
         else {
+
+            if($proposalName == 'should.we.votebot') {
+
+                $queue->ircNotice($event->getSource(), 'Can not delete U2 from iPhone.');
+
+                return null;
+            }
 
             $proposal = $proposalsTable->find('all')
                 ->where(['name' => $proposalName, 'completed' => 0])

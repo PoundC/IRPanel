@@ -18,12 +18,12 @@
 
         <div class="box">
             <div class="box-header">
-                <center><h3>Media</h3></center>
+                <center><h3>Jams</h3></center>
             </div>
             <div class="box-body scroll-snappers">
                 <div class="row">
                     <div class="col-lg-12">
-                <?php foreach($media as $result): ?>
+                <?php foreach($jams as $result): ?>
 
                         <center>
                         <div class="col-sm-12 snapit">
@@ -51,37 +51,14 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <?php if($result->media_type == 'youtube') { ?>
-                                        <?php if(strpos($result->link, '=') !== FALSE) { ?>
-                                            <?php $hash = substr($result->link, strpos($result->link, '=')+1); ?>
-                                        <?php } else { ?>
-                                            <?php $hash = substr($result->link, strpos($result->link, 'be/')+3); ?>
-                                        <?php } ?>
-                                        <div class="ytcontainer">
-                                            <iframe class="ytvideo" src="https://www.youtube.com/embed/<?= $hash ?>" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                        </div>
-                                    <?php } else if ($result->media_type == 'video') { ?>
-                                        <video loop controls class="col-xs-10 col-sm-10" style="float: unset !important;">
-                                            <source type="video/mp4" src="<?= $result->link ?>">
-                                        </video>
-                                    <?php } else if ($result->media_type == 'image') { ?>
-                                        <img src="<?= $result->link ?>" class="col-xs-10 col-sm-10" style="float: unset !important;" />
-                                    <?php } else if ($result->media_type == 'gallery') { ?>
-                                        <?php foreach($result->i_r_c_media_galleries as $gallery_item) { ?>
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <?php if ($gallery_item->media_type == 'video') { ?>
-                                                    <video loop controls class="col-xs-10 col-sm-10" style="float: unset !important;">
-                                                        <source type="video/mp4" src="<?= $gallery_item->media_url ?>">
-                                                    </video>
-                                                    <?php } else if ($gallery_item->media_type == 'image') { ?>
-                                                    <img src="<?= $gallery_item->media_url ?>" class="col-xs-10 col-sm-10" style="float: unset !important;" />
-                                                    <?php } ?>
-                                                </div>
-                                            </div>
-                                            <br/>
-                                        <?php } ?>
+                                    <?php if(strpos($result->link, '=') !== FALSE) { ?>
+                                        <?php $hash = substr($result->link, strpos($result->link, '=')+1); ?>
+                                    <?php } else { ?>
+                                        <?php $hash = substr($result->link, strpos($result->link, 'be/')+3); ?>
                                     <?php } ?>
+                                    <div class="ytcontainer">
+                                        <iframe class="ytvideo" src="https://www.youtube.com/embed/<?= $hash ?>" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    </div>
                                 </div>
                             </div>
                             <hr/>

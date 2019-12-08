@@ -1,5 +1,5 @@
 {
-    "name": "cakephpkitchen/PoundC",
+    "name": "poundc/irpanel",
     "description": "CakeAdminPHP skeleton application and dashboard",
     "homepage": "http://cakeadmin.me",
     "type": "project",
@@ -33,6 +33,7 @@
         "neomerx/json-api": "^1.0",
         "nicolab/php-ftp-client": "^1.4",
         "jeffreyroberts/phergie-irc-bot-react": "dev-master",
+        "jeffreyroberts/phergie-irc-plugin-react-autorejoin": "dev-master",
         "phergie/phergie-irc-plugin-react-autojoin": "^2.0",
         "phergie/phergie-irc-plugin-react-command": "^2.0",
         "phergie/phergie-irc-plugin-react-commandhelp": "^2.1",
@@ -96,6 +97,7 @@
         "generate": "bin/cake code_completion generate && bin/cake phpstorm generate",
         "annotations": "bin/cake annotations all && bin/cake annotations all -p AdminLTE"
     },
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
         "sort-packages": true

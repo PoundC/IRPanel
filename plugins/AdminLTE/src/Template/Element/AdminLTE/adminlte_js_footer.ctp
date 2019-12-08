@@ -9,6 +9,7 @@
 <script src="/admin_l_t_e/js/bootstrap-notify.min.js"></script>
 <script src="/dist/js/adminlte.js"></script>
 
+
 <?php if($notLoggedIn == false) { ?>
 <script>
     $.ajax({
