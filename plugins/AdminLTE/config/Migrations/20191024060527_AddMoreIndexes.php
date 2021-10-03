@@ -129,8 +129,8 @@ class AddMoreIndexes extends AbstractMigration
 
         $tableUsers = $this->table('users');
         $tableUsers->addIndex('id');
-        $tableUsers->addIndex('first_name', ['type' => 'fulltext']);
-        $tableUsers->addIndex('last_name', ['type' => 'fulltext']);
+        $tableUsers->addIndex('first_name');
+        $tableUsers->addIndex('last_name');
         $tableUsers->save();
 
         $tableMenuNotifications = $this->table('admin_l_t_e_menu_notifications');
