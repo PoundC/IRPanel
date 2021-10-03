@@ -31,5 +31,4 @@ $permissions = array_merge((array)$permissions, $someMorePermissions);
 Configure::write('MyPermissions', $permissions);
 
 Configure::write('Users.config', ['users']);
-Configure::write('Users.table', 'users');
 Plugin::load('CakeDC/Users', ['routes' => false, 'bootstrap' => true]);
