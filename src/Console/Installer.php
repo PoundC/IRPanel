@@ -135,7 +135,7 @@ class Installer
                     ]);
                 }
             }
-            
+
             $shell->dispatchShell([
                         'command' => 'migrations.migrations migrate --plugin DBFixes',
                         'extra' => []
@@ -152,7 +152,7 @@ class Installer
         if (in_array($addSuperUser, ['Y', 'y'])) {
 
             $shell->dispatchShell([
-                'command' => 'users addSuperuser',
+                'command' => 'i_r_users addSuperuser',
                 'extra' => []
             ]);
         }

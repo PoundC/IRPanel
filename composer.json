@@ -64,7 +64,8 @@
             "IRPanelGame\\": "./plugins/IRPanelGame/src/",
             "IRPanelLinks\\": "./plugins/IRPanelLinks/src/",
             "IRPanelJams\\": "./plugins/IRPanelJams/src/",
-            "IRPanelMedia\\": "./plugins/IRPanelMedia/src/"
+            "IRPanelMedia\\": "./plugins/IRPanelMedia/src/",
+            "DBFixes\\": "./plugins/DBFixes/src/"
         }
     },
     "autoload-dev": {
@@ -80,7 +81,8 @@
             "IRPanelImages\\Test\\": "./plugins/IRPanelImages/tests/",
             "IRPanelLinks\\Test\\": "./plugins/IRPanelLinks/tests/",
             "IRPanelJams\\Test\\": "./plugins/IRPanelJams/tests/",
-            "IRPanelMedia\\Test\\": "./plugins/IRPanelMedia/tests/"
+            "IRPanelMedia\\Test\\": "./plugins/IRPanelMedia/tests/",
+            "DBFixes\\Test\\": "./plugins/DBFixes/tests/"
         }
     },
     "scripts": {

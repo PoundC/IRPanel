@@ -238,3 +238,5 @@ Plugin::load('ADmad/JwtAuth');
 
 Plugin::load('AdminLTE', ['bootstrap' => true, 'routes' => true]);
 
+Plugin::load('DBFixes');
+
