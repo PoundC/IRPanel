@@ -127,7 +127,7 @@ class Installer
 
             foreach(Plugin::loaded() as $plugin) {
 
-                if($plugin != 'DebugKit') {
+                if($plugin != 'DebugKit' && $plugin != 'DBFixes') {
 
                     $shell->dispatchShell([
                         'command' => 'migrations.migrations migrate --plugin ' . $plugin,
@@ -135,6 +135,11 @@ class Installer
                     ]);
                 }
             }
+            
+            $shell->dispatchShell([
+                        'command' => 'migrations.migrations migrate --plugin DBFixes',
+                        'extra' => []
+                    ]);
         }
 
         $addSuperUser = $io->askAndValidate(
