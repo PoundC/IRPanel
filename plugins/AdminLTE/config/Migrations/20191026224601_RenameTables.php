@@ -92,9 +92,9 @@ class RenameTables extends AbstractMigration
         $tableRecipients->rename('admin_l_t_e_recipients');
         $tableRecipients->update();
 
-        $tableSocialAccounts = $this->table('social_accounts');
-        $tableSocialAccounts->rename('admin_l_t_e_social_accounts');
-        $tableSocialAccounts->update();
+        //$tableSocialAccounts = $this->table('social_accounts');
+        //$tableSocialAccounts->rename('admin_l_t_e_social_accounts');
+        //$tableSocialAccounts->update();
 
     }
 }
