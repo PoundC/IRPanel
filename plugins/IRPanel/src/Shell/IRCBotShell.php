@@ -49,8 +49,24 @@ class IRCBotShell extends Shell
         $this->loadModel('Channels');
 
         $networks = Configure::read('networks');
+        $ircNetworks = array();
+
+        foreach($networks as $networkKey => $network) {
+
+            $ircNetworks[] =
+                new Connection(array(
+                    'serverHostname' => $network['server'],
+                    'serverPort' => $network['port'],
+                    'username' => $network['username'],
+                    'realname' => $network['realname'],
+                    'nickname' => $network['nickname'],
+                    'password' => $network['server_password'],
+                    'options' => $network['options']
+                ));
+        }
+
         $config = array(
-            'connections' => array(),
+            'connections' => $ircNetworks,
             'plugins' => array(
                 new \Phergie\Irc\Plugin\React\AutoJoin\Plugin(['channels' => ['#havok', '#cashmoney']]), // $network['channels']]),
                 new \EnebeNb\Phergie\Plugin\AutoRejoin\Plugin(['channels' => ['#havok', '#cashmoney']]), // $network['channels']]),
@@ -68,19 +84,7 @@ class IRCBotShell extends Shell
             'logger' => new IRLogger()
         );
 
-        foreach($networks as $networkKey => $network) {
 
-            $config['conections'][] =
-                    new Connection(array(
-                        'serverHostname' => $network['server'],
-                        'serverPort' => $network['port'],
-                        'username' => $network['username'],
-                        'realname' => $network['realname'],
-                        'nickname' => $network['nickname'],
-                        'password' => $network['server_password'],
-                        'options' => $network['options']
-                    ));
-        }
 
         $bot = new \Phergie\Irc\Bot\React\Bot;
         $bot->setConfig($config);
