@@ -39,6 +39,7 @@ class IRCBotShell extends Shell
             __DIR__ . '/../../../../',  // for vendor/bin when installed via Composer
         )));
 
+        require __DIR__ . '/../../config/bootstrap.php';
         require __DIR__ . '/../../../../vendor/autoload.php';
 
         $this->loadModel('IRCUserIdents');
@@ -64,8 +65,8 @@ class IRCBotShell extends Shell
                     ))
                 ),
                 'plugins' => array(
-                    new \Phergie\Irc\Plugin\React\AutoJoin\Plugin(['channels' => ['#c', '#cashmoney']]), // $network['channels']]),
-                    new \EnebeNb\Phergie\Plugin\AutoRejoin\Plugin(['channels' => ['#c', '#cashmoney']]), // $network['channels']]),
+                    new \Phergie\Irc\Plugin\React\AutoJoin\Plugin(['channels' => ['#havok', '#cashmoney']]), // $network['channels']]),
+                    new \EnebeNb\Phergie\Plugin\AutoRejoin\Plugin(['channels' => ['#havok', '#cashmoney']]), // $network['channels']]),
                     new \Phergie\Irc\Plugin\React\Command\Plugin(['prefix' => '!']),
                     new \Phergie\Irc\Plugin\React\JoinPart\Plugin(),
                     new \IRPanel\Plugin(),
