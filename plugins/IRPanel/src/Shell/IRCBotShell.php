@@ -49,11 +49,28 @@ class IRCBotShell extends Shell
         $this->loadModel('Channels');
 
         $networks = Configure::read('networks');
+        $config = array(
+            'connections' => array(),
+            'plugins' => array(
+                new \Phergie\Irc\Plugin\React\AutoJoin\Plugin(['channels' => ['#havok', '#cashmoney']]), // $network['channels']]),
+                new \EnebeNb\Phergie\Plugin\AutoRejoin\Plugin(['channels' => ['#havok', '#cashmoney']]), // $network['channels']]),
+                new \Phergie\Irc\Plugin\React\Command\Plugin(['prefix' => '!']),
+                new \Phergie\Irc\Plugin\React\JoinPart\Plugin(),
+                new \IRPanel\Plugin(),
+                new \IRPanelQuotes\Plugin(),
+                new \IRPanelVoting\Plugin(),
+                new \IRPanelVetting\Plugin(),
+                new \IRPanelGame\Plugin(),
+                new \IRPanelLinks\Plugin(),
+                new \IRPanelMedia\Plugin(),
+                new \IRPanelJams\Plugin()
+            ),
+            'logger' => new IRLogger()
+        );
 
         foreach($networks as $networkKey => $network) {
 
-            $config = array(
-                'connections' => array(
+            $config['conections'][] =
                     new Connection(array(
                         'serverHostname' => $network['server'],
                         'serverPort' => $network['port'],
@@ -62,41 +79,24 @@ class IRCBotShell extends Shell
                         'nickname' => $network['nickname'],
                         'password' => $network['server_password'],
                         'options' => $network['options']
-                    ))
-                ),
-                'plugins' => array(
-                    new \Phergie\Irc\Plugin\React\AutoJoin\Plugin(['channels' => ['#havok', '#cashmoney']]), // $network['channels']]),
-                    new \EnebeNb\Phergie\Plugin\AutoRejoin\Plugin(['channels' => ['#havok', '#cashmoney']]), // $network['channels']]),
-                    new \Phergie\Irc\Plugin\React\Command\Plugin(['prefix' => '!']),
-                    new \Phergie\Irc\Plugin\React\JoinPart\Plugin(),
-                    new \IRPanel\Plugin(),
-                    new \IRPanelQuotes\Plugin(),
-                    new \IRPanelVoting\Plugin(),
-                    new \IRPanelVetting\Plugin(),
-                    new \IRPanelGame\Plugin(),
-                    new \IRPanelLinks\Plugin(),
-                    new \IRPanelMedia\Plugin(),
-                    new \IRPanelJams\Plugin()
-                ),
-                'logger' => new IRLogger()
-            );
-
-            $bot = new \Phergie\Irc\Bot\React\Bot;
-            $bot->setConfig($config);
-            $bot->getClient()->on('connect.after.each', function(\Phergie\Irc\ConnectionInterface $connection, \Phergie\Irc\Client\React\WriteStream $write) use ($network) {
-                $write->ircPrivmsg('UserServ', 'LOGIN IRBot ' . $network['userserv_password']);
-            });
-            $bot->getClient()->on('connect.end', function(\Phergie\Irc\ConnectionInterface $connection, \Psr\Log\LoggerInterface $logger) use ($bot) {
-                $logger->debug('Connection to ' . $connection->getServerHostname() . ' lost, attempting to reconnect');
-                sleep(5);
-                $bot->getClient()->addConnection($connection);
-            });
-            $bot->getClient()->on('connect.error', function(\Phergie\Irc\ConnectionInterface $connection, \Psr\Log\LoggerInterface $logger) use ($bot) {
-                $logger->debug('Connection to ' . $connection->getServerHostname() . ' lost, attempting to reconnect');
-                sleep(30);
-                $bot->getClient()->addConnection($connection);
-            });
-            $bot->run();
+                    ));
         }
+
+        $bot = new \Phergie\Irc\Bot\React\Bot;
+        $bot->setConfig($config);
+        $bot->getClient()->on('connect.after.each', function(\Phergie\Irc\ConnectionInterface $connection, \Phergie\Irc\Client\React\WriteStream $write) use ($network) {
+            $write->ircPrivmsg('UserServ', 'LOGIN IRBot ' . $network['userserv_password']);
+        });
+        $bot->getClient()->on('connect.end', function(\Phergie\Irc\ConnectionInterface $connection, \Psr\Log\LoggerInterface $logger) use ($bot) {
+            $logger->debug('Connection to ' . $connection->getServerHostname() . ' lost, attempting to reconnect');
+            sleep(5);
+            $bot->getClient()->addConnection($connection);
+        });
+        $bot->getClient()->on('connect.error', function(\Phergie\Irc\ConnectionInterface $connection, \Psr\Log\LoggerInterface $logger) use ($bot) {
+            $logger->debug('Connection to ' . $connection->getServerHostname() . ' lost, attempting to reconnect');
+            sleep(30);
+            $bot->getClient()->addConnection($connection);
+        });
+        $bot->run();
     }
 }
