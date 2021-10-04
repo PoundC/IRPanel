@@ -26,4 +26,4 @@ class IRCJamsQueue extends AbstractMigration
         $table->create();
     }
 }
-'PLUh4W61bt_K5jmi1qbVACvLAPkudEmLKO'
+

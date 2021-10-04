@@ -14,11 +14,7 @@ class IRCMedia extends AbstractMigration
     {
         $table = $this->table('i_r_c_media');
         $table->addColumn('i_r_c_users_id', 'integer');
-        $table->addColumn('link', 'string', [
-            'default' => '',
-            'limit' => 3000,
-            'null' => false
-        ]);
+        $table->addColumn('link', 'text');
         $table->addColumn('searchable', 'text');
         $table->addColumn('description', 'text');
         $table->addColumn('title', 'text');
@@ -31,7 +27,6 @@ class IRCMedia extends AbstractMigration
         $table->addIndex('searchable', ['type' => 'fulltext']);
         $table->addIndex('description', ['type' => 'fulltext']);
         $table->addIndex('title', ['type' => 'fulltext']);
-        $table->addIndex('link');
         $table->addIndex('media_type');
         $table->save();
     }

@@ -37,15 +37,6 @@ class Application extends BaseApplication
         // Call parent to load bootstrap from files.
         parent::bootstrap();
 
-        $this->addPlugin('IRPanel');
-        $this->addPlugin('IRPanelQuotes');
-        $this->addPlugin('IRPanelVetting');
-        $this->addPlugin('IRPanelVoting');
-        $this->addPlugin('IRPanelGame');
-        $this->addPlugin('IRPanelJams');
-        $this->addPlugin('IRPanelLinks');
-        $this->addPlugin('IRPanelMedia');
-
         if (PHP_SAPI === 'cli') {
             try {
                 $this->addPlugin('Bake');

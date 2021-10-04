@@ -14,17 +14,12 @@ class IRCLinks extends AbstractMigration
     {
         $table = $this->table('i_r_c_links');
         $table->addColumn('i_r_c_users_id', 'integer');
-        $table->addColumn('link', 'string', [
-            'default' => '',
-            'limit' => 3000,
-            'null' => false
-        ]);
+        $table->addColumn('link', 'text');
         $table->addColumn('searchable', 'text');
         $table->addColumn('created', 'datetime');
         $table->create();
 
         $table->addIndex('searchable', ['type' => 'fulltext']);
-        $table->addIndex('link');
         $table->save();
     }
 }

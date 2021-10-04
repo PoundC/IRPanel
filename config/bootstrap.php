@@ -238,5 +238,15 @@ Plugin::load('ADmad/JwtAuth');
 
 Plugin::load('AdminLTE', ['bootstrap' => true, 'routes' => true]);
 
+Plugin::load('IRPanel');
+Plugin::load('IRPanelQuotes');
+Plugin::load('IRPanelVoting');
+Plugin::load('IRPanelGame');
+Plugin::load('IRPanelJams');
+Plugin::load('IRPanelLinks');
+Plugin::load('IRPanelMedia');
+
+Plugin::load('IRPanelVetting');
+
 Plugin::load('DBFixes');
 

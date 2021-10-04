@@ -125,9 +125,16 @@ class Installer
                 'extra' => []
             ]);
 
-            foreach(Plugin::loaded() as $plugin) {
+            $shell->dispatchShell([
+                'command' => 'migrations.migrations migrate --plugin AdminLTE',
+                'extra' => []
+            ]);
 
-                if($plugin != 'DebugKit' && $plugin != 'DBFixes') {
+            $loadedPluings = array_reverse(Plugin::loaded());
+
+            foreach($loadedPluings as $plugin) {
+
+                if($plugin != 'DebugKit' && $plugin != 'DBFixes' && $plugin != 'AdminLTE') {
 
                     $shell->dispatchShell([
                         'command' => 'migrations.migrations migrate --plugin ' . $plugin,
