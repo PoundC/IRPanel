@@ -4,7 +4,7 @@ use \Cake\Core\Configure;
 
 \Cake\Core\Configure::write(
     'networks', [
-        'poundc' => [
+        /*'poundc' => [
             'server' => 'irc.poundc.com',
             'port' => 6697,
             'server_password' => 'hodlgang',
@@ -25,7 +25,7 @@ use \Cake\Core\Configure;
             'options' => [
                 'transport' => 'ssl'
             ]
-        ],
+        ],*/
         'efnet' => [
             'server' => 'irc.efnet.org',
             'port' => 6667,
@@ -39,7 +39,7 @@ use \Cake\Core\Configure;
             'oper_password' => '',
             'channels' => [
                 '#cashmoney',
-                '#havok'
+                //'#havok'
             ]
         ]
     ]

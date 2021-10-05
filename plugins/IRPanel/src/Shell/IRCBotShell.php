@@ -68,8 +68,8 @@ class IRCBotShell extends Shell
         $config = array(
             'connections' => $ircNetworks,
             'plugins' => array(
-                new \Phergie\Irc\Plugin\React\AutoJoin\Plugin(['channels' => ['#havok', '#cashmoney']]), // $network['channels']]),
-                new \EnebeNb\Phergie\Plugin\AutoRejoin\Plugin(['channels' => ['#havok', '#cashmoney']]), // $network['channels']]),
+                new \Phergie\Irc\Plugin\React\AutoJoin\Plugin(['channels' => ['#cashmoney']]), // $network['channels']]),
+                new \EnebeNb\Phergie\Plugin\AutoRejoin\Plugin(['channels' => ['#cashmoney']]), // $network['channels']]),
                 new \Phergie\Irc\Plugin\React\Command\Plugin(['prefix' => '!']),
                 new \Phergie\Irc\Plugin\React\JoinPart\Plugin(),
                 new \IRPanel\Plugin(),
