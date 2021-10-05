@@ -15,7 +15,7 @@ class IRCLinksLongText extends AbstractMigration
         $table = $this->table('i_r_c_media');
         $table->changeColumn('searchable', 'text',[
             'limit' => 'TEXT_MEDIUM'
-        ]); 
+        ]);
         $table->save();
     }
 }
