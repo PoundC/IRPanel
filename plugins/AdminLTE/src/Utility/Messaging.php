@@ -34,7 +34,7 @@ class Messaging
             'recipient_read' => 0,
             'to_user_id' => $user_id,
             'recipient_deleted' => 0
-        ])->orderDesc('messaging.modified')->limit(3);
+        ])->orderDesc('modified')->limit(3);
 
         foreach($messages as $message)
         {
@@ -68,9 +68,9 @@ class Messaging
 //            'messaging.user_deleted' => 0
 //        ])
             ->where([
-            'messaging.recipient_read' => 0,
-            'messaging.recipient_deleted' => 0,
-            'messaging.to_user_id' => $user_id
+            'recipient_read' => 0,
+            'recipient_deleted' => 0,
+            'to_user_id' => $user_id
                 ])->count();
 
         self::$userCount = $userCount;
