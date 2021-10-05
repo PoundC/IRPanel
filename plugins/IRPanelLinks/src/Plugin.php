@@ -77,40 +77,52 @@ class Plugin extends AbstractPlugin
                     if(!$link2) {
 
                         $html = file_get_contents($link);
-                        preg_match("/<title>(.+)<\/title>/siU", $html, $matches);
-                        if(isset($matches[1])) {
+                        if($html) {
 
-                            $title = $matches[1];
+                            $bIsTextHTML = false;
+                            foreach($http_response_header as $key => $value)
+                            {
+                                if(strpos(strtolower($value), 'text/html'))
+                                {
+                                    $bIsTextHTML = true;
+                                }
+                            }
+
+                            if($bIsTextHTML) {
+                                preg_match("/<title>(.+)<\/title>/siU", $html, $matches);
+                                if (isset($matches[1])) {
+
+                                    $title = $matches[1];
+                                } else {
+
+                                    $title = '';
+                                }
+
+                                $searchable = strip_tags($html);
+
+                                $tags = get_meta_tags($link);
+                                if (isset($tags['description'])) {
+                                    $descr = $tags['description'];
+                                } else {
+                                    $descr = '';
+                                }
+
+                                $linkEntity = $this->IRCLinks->newEntity([
+                                    'i_r_c_users_id' => Database::getUserId(
+                                        Database::getNetworkId($server),
+                                        $nick,
+                                        $username,
+                                        $host
+                                    ),
+                                    'link' => $link,
+                                    'searchable' => $searchable,
+                                    'description' => $descr,
+                                    'title' => $title,
+                                    'created' => new \DateTime('now')
+                                ]);
+                                $this->IRCLinks->save($linkEntity);
+                            }
                         }
-                        else {
-
-                            $title = '';
-                        }
-
-                        $searchable = strip_tags($html);
-
-                        $tags = get_meta_tags($link);
-                        if(isset($tags['description'])) {
-                            $descr = $tags['description'];
-                        }
-                        else {
-                            $descr = '';
-                        }
-
-                        $linkEntity = $this->IRCLinks->newEntity([
-                            'i_r_c_users_id' => Database::getUserId(
-                                Database::getNetworkId($server),
-                                $nick,
-                                $username,
-                                $host
-                            ),
-                            'link' => $link,
-                            'searchable' => $searchable,
-                            'description' => $descr,
-                            'title' => $title,
-                            'created' => new \DateTime('now')
-                        ]);
-                        $this->IRCLinks->save($linkEntity);
                     }
                 }
             }
