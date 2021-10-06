@@ -4,14 +4,14 @@ use AdminLTE\Utility\Sidebar;
 
 $menus = [
     'user' => [
-        'dashboards' => [
+        /*'dashboards' => [
             'menu' => [
                 'Quotes' => [
                     'path' => '/quotes/dashboard',
                     'icon' => 'fa-quote-right'
                 ]
             ]
-        ],
+        ],*/
         'quotes' => [
             'type' => 'group',
             'group' => 'Quotes',

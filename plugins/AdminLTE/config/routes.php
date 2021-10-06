@@ -158,6 +158,7 @@ if (Configure::read('Users.GoogleAuthenticator.login')) {
 
 Router::connect('/admin/change/*', ['plugin' => 'AdminLTE', 'controller' => 'Users', 'action' => 'changePassword']);
 Router::connect('/admin/edit/*', ['plugin' => 'AdminLTE', 'controller' => 'Users', 'action' => 'edit']);
+Router::connect('/admin/avatar/*', ['plugin' => 'AdminLTE', 'controller' => 'Users', 'action' => 'avatar']);
 Router::connect('/admin/users', ['plugin' => 'AdminLTE', 'controller' => 'Users', 'action' => 'index']);
 Router::connect('/oauth2callback', ['plugin' => 'AdminLTE', 'controller' => 'Users', 'action' => 'oauth2callback']);
 Router::connect('/profile/*', ['plugin' => 'AdminLTE', 'controller' => 'Users', 'action' => 'profile']);

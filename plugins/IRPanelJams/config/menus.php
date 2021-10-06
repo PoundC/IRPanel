@@ -4,14 +4,14 @@ use AdminLTE\Utility\Sidebar;
 
 $menus = [
     'user' => [
-        'dashboards' => [
+        /*'dashboards' => [
             'menu' => [
                 'Jams' => [
                     'path' => '/i_r_c_jams/jams/dashboard',
                     'icon' => 'fa-music'
                 ]
             ]
-        ],
+        ],*/
         [
             'type' => 'group',
             'group' => 'Jams',

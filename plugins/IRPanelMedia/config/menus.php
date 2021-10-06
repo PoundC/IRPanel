@@ -4,14 +4,14 @@ use AdminLTE\Utility\Sidebar;
 
 $menus = [
     'user' => [
-        'dashboards' => [
+       /* 'dashboards' => [
             'menu' => [
                 'Media' => [
                     'path' => '/i_r_c_media/media/dashboard',
                     'icon' => 'fa-video-camera'
                 ]
             ]
-        ],
+        ],*/
         [
             'type' => 'group',
             'group' => 'Media',

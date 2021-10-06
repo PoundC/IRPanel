@@ -10,7 +10,7 @@
 <script src="/dist/js/adminlte.js"></script>
 
 
-<?php if($notLoggedIn == false) { ?>
+<?php if($notLoggedIn == false && $debug != 'true') { ?>
 <script>
     $.ajax({
         url: "/admin-l-t-e/notifications/growl",
@@ -47,6 +47,6 @@
                 });
             }
         });
-    }, 15000);
+    }, 1500000);
 </script>
 <?php } ?>

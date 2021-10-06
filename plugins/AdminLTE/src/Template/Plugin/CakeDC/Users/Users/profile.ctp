@@ -112,7 +112,7 @@
 
                 <li class="active"><a href="#timeline" data-toggle="tab" aria-expanded="false">Placeholder</a></li>
 
-                <?php if(true == false) { ?>
+                <?php if(true == true) { ?>
                     <li class=""><a href="#activity" data-toggle="tab" aria-expanded="true">Activity</a></li>
                 <?php } //endif ?>
 
@@ -129,7 +129,7 @@
 
                 <div class="tab-pane active" id="timeline">
                     <!-- The timeline -->
-                    <?php /* ?>
+
                     <ul class="timeline timeline-inverse">
                         <!-- timeline time label -->
                         <li class="time-label">
@@ -221,12 +221,12 @@
                             <i class="fa fa-clock-o bg-gray"></i>
                         </li>
                     </ul>
-                    <?php */ ?>
+
                 </div>
 
                 <!-- /.tab-pane -->
 
-                <?php if(true == false) { ?>
+                <?php if(true == true) { ?>
 
                     <div class="tab-pane" id="activity">
                     <!-- Post -->

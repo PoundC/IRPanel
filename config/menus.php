@@ -74,13 +74,13 @@ $menus = [
             'link'  => 'Upgrade to Member',
             'icon'  => 'fa-rocket',
             'path'  => '/profile'
-        ],
+        ],*/
         [
             'type'  => 'link',
             'link'  => 'Dashboard',
             'icon'  => 'fa-dashboard',
             'path'  => '/dashboard'
-        ]*/
+        ],
         [
             'type'  => 'link',
             'link'  => 'Notifications',

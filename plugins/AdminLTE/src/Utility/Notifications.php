@@ -190,7 +190,7 @@ class Notifications
                 ['role_id' => $role_id],
                 ['destination' => self::Globe]
             ]
-        ])->orderDesc('created')->limit(8);
+        ])->orderDesc('Users.created')->limit(8);
 
         foreach($notifications as $message)
         {

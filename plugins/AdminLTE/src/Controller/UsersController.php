@@ -91,6 +91,68 @@ class UsersController extends BaseUsersController
         $this->Flash->error(__d('CakeDC/Users', 'The {0} could not be saved', $singular));
     }
 
+    public function avatar($id = null)
+    {
+        if($this->Auth->user('id') != $id && $this->Auth->user('role') == 'user')
+        {
+            $this->Flash->error('You do not have permission to visit that page');
+
+            return $this->redirect('/profile');
+        }
+
+        $table = $this->loadModel();
+        $tableAlias = $table->getAlias();
+
+        $entity = $this->Users->find('all', [
+            'where' => ['id' => $id]
+        ])->first();
+
+        $this->set($tableAlias, $entity);
+        $this->set('tableAlias', $tableAlias);
+        $this->set('_serialize', [$tableAlias, 'tableAlias']);
+        if (!$this->request->is(['patch', 'post', 'put'])) {
+            return;
+        }
+        if(!empty($this->request->getData()['avatar']['name'])) {
+            $file = $this->request->getData()['avatar']; //put the data into a var for easy use
+
+            $ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
+            $arr_ext = array('jpg', 'jpeg', 'gif', 'bmp', 'png'); //set allowed extensions
+
+            //only process if the extension is valid
+            if (in_array($ext, $arr_ext) && $file['name'] != null) {
+                //name image to saved in database
+
+                $dir = WWW_ROOT . 'img' . DS . 'profiles' . DS; //<!-- app/webroot/img/
+
+                $filename = uniqid($id . '_') . '.' . $ext;
+
+                //do the actual uploading of the file. First arg is the tmp name, second arg is
+                //where we are putting it
+                if (!move_uploaded_file($file['tmp_name'], $dir . $filename)) {
+
+                    $this->Flash->error(__('Image could not be saved. Please, try again.'));
+
+                    return $this->redirect(['action' => 'index']);
+                }
+
+                $query = $table->query();
+                $query->update()->set(['additional_data' => $filename])->where(['id' => $id])->execute();
+            }
+            else {
+                $this->Flash->error(__('Image could not be saved. Please, try again.'));
+            }
+        }
+        else {
+            $this->Flash->error(__('Image could not be saved. Please, try again.'));
+        }
+
+        $this->Flash->error(__d('CakeDC/Users', 'The {0} could not be saved'));
+
+        return $this->redirect('/profile');
+
+    }
+
     public function register() {
 
         $this->eventManager()->on(UsersAuthComponent::EVENT_AFTER_REGISTER, function ($event) {

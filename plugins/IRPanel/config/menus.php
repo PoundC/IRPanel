@@ -4,7 +4,7 @@ use AdminLTE\Utility\Sidebar;
 
 $menus = [
     'user' => [
-        'dashboards' => [
+        /*'dashboards' => [
             'type' => 'group',
             'group' => 'Dashboards',
             'icon' => 'fa-dashboard',
@@ -17,15 +17,15 @@ $menus = [
                 'Relay Chat' => [
                     'path' => '/i_r_c_logs/dashboard',
                     'icon' => 'fa-comments',
-                    /*'menu' => [
+                    'menu' => [
                         'Reports' => [
                             'path' => '/whoa',
                             'icon' => 'fa-search'
                         ]
-                    ]*/
+                    ]
                 ]
             ]
-        ]
+        ]*/
     ],
     'superuser' => [
         /*

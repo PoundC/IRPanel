@@ -150,7 +150,7 @@ $permissions = [
         [
             'role' => ['admin'],
             'controller' => 'Users',
-            'action' => ['index', 'view', 'edit', 'changePassword'],
+            'action' => ['index', 'view', 'edit', 'changePassword', 'avatar'],
             'allowed' => true,
         ],
         [
@@ -164,7 +164,7 @@ $permissions = [
             'role' => 'user',
             'plugin' => 'AdminLTE',
             'controller' => 'Users',
-            'action' => ['edit'],
+            'action' => ['edit', 'avatar'],
             'allowed' => true,
         ],
         [

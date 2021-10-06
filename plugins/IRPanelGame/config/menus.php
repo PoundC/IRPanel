@@ -4,7 +4,7 @@ use AdminLTE\Utility\Sidebar;
 
 $menus = [
     'user' => [
-        'dashboards' => [
+        /*'dashboards' => [
             'menu' => [
                 'The Game' => [
                     'path' => '/i_r_c_game/dashboard',
@@ -29,7 +29,7 @@ $menus = [
                 'Jobs' => [
                     'path' => '/i_r_c_game/jobs',
                     'icon' => 'fa-hourglass-2',
-                    /*
+
                      'path' => '#',
                      'menu' => [
                         'Create' => [
@@ -44,7 +44,7 @@ $menus = [
                             'path' => '/i_r_c_game/jobs/search',
                             'icon' => 'fa-search'
                         ],
-                    ]*/
+                    ]
                 ],
                 'Items' => [
                     'path' => '/i_r_c_game/items',
@@ -67,7 +67,7 @@ $menus = [
                     'icon' => 'fa-automobile'
                 ]
             ]
-        ]
+        ]*/
     ],
     'superuser' => [
         /*

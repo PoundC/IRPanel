@@ -4,14 +4,14 @@ use AdminLTE\Utility\Sidebar;
 
 $menus = [
     'user' => [
-        'dashboards' => [
+        /*'dashboards' => [
             'menu' => [
                 'Links' => [
                     'path' => '/i_r_c_links/dashboard',
                     'icon' => 'fa-link'
                 ]
             ]
-        ],
+        ],*/
         [
             'type' => 'group',
             'group' => 'Links',

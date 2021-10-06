@@ -34,7 +34,7 @@ class Messaging
             'recipient_read' => 0,
             'to_user_id' => $user_id,
             'recipient_deleted' => 0
-        ])->orderDesc('modified')->limit(3);
+        ])->orderDesc('Users.modified')->limit(3);
 
         foreach($messages as $message)
         {

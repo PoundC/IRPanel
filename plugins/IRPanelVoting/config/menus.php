@@ -4,14 +4,14 @@ use AdminLTE\Utility\Sidebar;
 
 $menus = [
     'user' => [
-        'dashboards' => [
+        /*'dashboards' => [
             'menu' => [
                 'Voting' => [
                     'path' => '/voting/votes/dashboard',
                     'icon' => 'fa-check-square-o'
                 ]
             ]
-        ],
+        ],*/
         'voting' => [
             'type' => 'group',
             'group' => 'Voting',

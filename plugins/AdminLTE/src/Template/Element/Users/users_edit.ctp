@@ -8,6 +8,23 @@ $Users = ${$tableAlias};
     <div class="col-lg-10 col-lg-offset-1">
         <div class="box box-primary">
             <div class="box-header with-border">
+                <h3 class="box-title">Select User Avatar</h3>
+            </div>
+            <?= $this->Form->create($Users, array('type' => 'file', 'url' => '/admin/avatar/' . $currentUser->id)); ?>
+            <div class="box-body">
+                <div class="form-group has-feedback">
+
+                    <?= $this -> Form -> input('avatar', ['type' => 'file', 'label' => __('Select Avatar')]) ?>
+
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+            </div>
+            <div class="box-footer">
+                <?= $this->Form->button(__d('CakeDC/Users', 'Save Avatar'), ['class' => 'btn btn-primary btn-block btn-flat']) ?>
+            </div>
+            <?= $this->Form->end() ?>
+            <?php /* ?>
+            <div class="box-header with-border">
                 <h3 class="box-title">Edit User</h3>
             </div>
             <!-- /.box-header -->
@@ -90,6 +107,7 @@ $Users = ${$tableAlias};
                 ?>
             </fieldset>
             <?php endif; ?>
+ <?php */ ?>
         </div>
     </div>
 </div>
