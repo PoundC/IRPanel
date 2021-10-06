@@ -238,15 +238,15 @@ Plugin::load('ADmad/JwtAuth');
 
 Plugin::load('AdminLTE', ['bootstrap' => true, 'routes' => true]);
 
-Plugin::load('IRPanel');
-Plugin::load('IRPanelQuotes');
-Plugin::load('IRPanelVoting');
-Plugin::load('IRPanelGame');
-Plugin::load('IRPanelJams');
-Plugin::load('IRPanelLinks');
-Plugin::load('IRPanelMedia');
+Plugin::load('IRPanel', ['bootstrap' => true, 'routes' => true]);
+Plugin::load('IRPanelQuotes', ['bootstrap' => true, 'routes' => true]);
+Plugin::load('IRPanelVoting', ['bootstrap' => true, 'routes' => true]);
+Plugin::load('IRPanelGame', ['bootstrap' => true, 'routes' => true]);
+Plugin::load('IRPanelJams', ['bootstrap' => true, 'routes' => true]);
+Plugin::load('IRPanelLinks', ['bootstrap' => true, 'routes' => true]);
+Plugin::load('IRPanelMedia', ['bootstrap' => true, 'routes' => true]);
 
-Plugin::load('IRPanelVetting');
+Plugin::load('IRPanelVetting', ['bootstrap' => true, 'routes' => true]);
 
 Plugin::load('DBFixes');
 

@@ -76,11 +76,10 @@ trait ProfileTrait
         $table = $this->loadModel();
         $tableAlias = $table->alias();
 
-        $entity = $table->get($id,
-            [
-                'contain' => []
-            ]
-        );
+        $entity = $table->find('all', [
+            'where' => ['id' => $this->Auth->user('id')]
+        ]);
+        $entity = $entity->first();
 
         $this->set('avatarPlaceholder', Configure::read('Users.Avatar.placeholder'));
         $this->set('validatePassword', $validatePassword);

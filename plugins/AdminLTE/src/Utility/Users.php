@@ -39,7 +39,7 @@ class Users
     public static function getUserByEmail($email)
     {
         $usersTable = Users::getUserTable();
-        $usersQuery = $usersTable->find('all')->where(['users.email' => $email])->limit(1);
+        $usersQuery = $usersTable->find('all')->where(['Users.email' => $email])->limit(1);
         $userEntity = $usersQuery->first();
 
         return $userEntity;
@@ -48,7 +48,7 @@ class Users
     public static function getUserByUsername($username)
     {
         $usersTable = Users::getUserTable();
-        $usersQuery = $usersTable->find('all')->where(['users.username' => $username])->limit(1);
+        $usersQuery = $usersTable->find('all')->where(['Users.username' => $username])->limit(1);
         $userEntity = $usersQuery->first();
 
         return $userEntity;
@@ -66,7 +66,7 @@ class Users
     public static function getUserRoleById($id)
     {
         $usersTable = Users::getUserTable();
-        $usersQuery = $usersTable->find('all')->where(['users.id' => $id])->limit(1);
+        $usersQuery = $usersTable->find('all')->where(['Users.id' => $id])->limit(1);
         $userEntity = $usersQuery->first();
 
         return $userEntity->get('role');
@@ -109,7 +109,7 @@ class Users
     public static function findAllUsersBy($column, $value)
     {
         $usersTable = Users::getUserTable();
-        $usersQuery = $usersTable->find('all')->where(['users.' . $column => $value]);
+        $usersQuery = $usersTable->find('all')->where(['Users.' . $column => $value]);
         $usersEntities = $usersQuery->all();
 
         return $usersEntities;
@@ -118,7 +118,7 @@ class Users
     public static function countAllUsersBy($column, $value)
     {
         $usersTable = Users::getUserTable();
-        $usersQuery = $usersTable->find('all')->where(['users.' . $column => $value]);
+        $usersQuery = $usersTable->find('all')->where(['Users.' . $column => $value]);
         $usersEntities = $usersQuery->count();
 
         return $usersEntities;
@@ -127,7 +127,7 @@ class Users
     public static function getUserObject($id)
     {
         $usersTable = Users::getUserTable();
-        $usersQuery = $usersTable->find('all')->where(['users.id' => $id])->limit(1);
+        $usersQuery = $usersTable->find('all')->where(['Users.id' => $id])->limit(1);
         $userEntity = $usersQuery->first();
 
         return $userEntity;
