@@ -1,7 +1,7 @@
 <?php
 use Migrations\AbstractMigration;
 
-class IRCLinksLongText extends AbstractMigration
+class IRCLinksLongText2 extends AbstractMigration
 {
     /**
      * Change Method.
