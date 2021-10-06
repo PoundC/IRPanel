@@ -1,7 +1,7 @@
 <?php
 use Migrations\AbstractMigration;
 
-class FixSearchable2 extends AbstractMigration
+class FixSearchable2c extends AbstractMigration
 {
     /**
      * Change Method.
