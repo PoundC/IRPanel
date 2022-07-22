@@ -57,3 +57,6 @@ nbproject/*
 # Sass preprocessor
 .sass-cache/
 
+superuser.txt
+
+plugins/*/config/Migrations/schema-dump-default.lock
