@@ -11,6 +11,7 @@
 
 namespace AdminLTE\Controller\Traits;
 
+use AdminLTE\Controller\Traits\CustomUsersTableTrait;
 use CakeDC\Users\Auth\TwoFactorAuthenticationCheckerFactory;
 use CakeDC\Users\Auth\U2fAuthenticationCheckerFactory;
 use CakeDC\Users\Controller\Component\UsersAuthComponent;
@@ -379,7 +380,7 @@ trait LoginTrait
             return $this->redirect($url);
         } else {
             if (!$socialLogin) {
-                $message = __d('CakeDC/Users', 'Username or password is incorrect');
+                $message = __d('CakeDC/Users', 'Username or assword is incorrect');
                 $this->Flash->error($message, 'default', [], 'auth');
             }
 

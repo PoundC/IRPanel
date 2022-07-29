@@ -42,6 +42,7 @@ class Plugin extends AbstractPlugin
         $nick = $event->getNick();
         $username = $event->getUsername();
         $host = $event->getHost();
+        $channel = $event->getMessage();
 
         $server = strtolower($event->getConnection()->getServerHostname());
 
@@ -57,141 +58,144 @@ class Plugin extends AbstractPlugin
         if (strpos($source, '#') === 0) {
 
             $params = $event->getParams();
-            if(isset($params['text'])) {
+            if (isset($params['text'])) {
 
                 $text = $params['text'];
 
                 if (strpos($text, 'http') !== false) {
+
                     $link = substr($text, strpos($text, 'http'));
 
                     if (strpos($link, ' ') !== false) {
 
                         $link = explode(' ', $link)[0];
                     }
-                }
 
-                $domains = ['youtu', 'imgur'];
-                $extensions = ['jpg', 'png', 'gif', 'jpeg', 'bmp', 'tiff', 'mp4'];
-                $bKeep = FALSE;
-                $bKeep2 = FALSE;
-                $dmn = '';
-                $ext = '';
 
-                foreach ($domains as $domain) {
+                    $domains = ['youtu', 'imgur'];
+                    $extensions = ['jpg', 'png', 'gif', 'jpeg', 'bmp', 'tiff', 'mp4'];
+                    $bKeep = FALSE;
+                    $bKeep2 = FALSE;
+                    $dmn = '';
+                    $ext = '';
 
-                    if (strpos($link, $domain) !== FALSE) {
+                    foreach ($domains as $domain) {
 
-                        $dmn = $domain;
-                        $bKeep = true;
-                        break;
-                    }
-                }
+                        if (strpos($link, $domain) !== FALSE) {
 
-                foreach ($extensions as $extension) {
-
-                    if (strpos($link, $extension) !== FALSE) {
-
-                        $ext = $extension;
-                        $bKeep2 = true;
-                        break;
-                    }
-                }
-
-                if ($bKeep == true || $bKeep2 == true) {
-                    $searchable = ' ';
-                    $description = ' ';
-                    $title = ' ';
-                    $mediaType = '';
-
-                    if ($dmn == 'youtu') {
-
-                        $mediaType = 'youtube';
-                    } else if ($dmn == 'imgur' && strpos($link, 'gallery') !== FALSE) {
-                        $mediaType = 'gallery';
-                    }
-
-                    if ($mediaType == '') {
-                        if ($ext == 'mp4') {
-                            $mediaType = 'video';
-                        } else if ($ext != 'mp4' && $dmn != 'youtu') {
-                            $mediaType = 'image';
+                            $dmn = $domain;
+                            $bKeep = true;
+                            break;
                         }
                     }
 
-                    if ($mediaType == 'gallery' || $mediaType == 'youtube') {
-                        $searchable = file_get_contents($link);
-                        preg_match("/<title>(.+)<\/title>/siU", $searchable, $matches);
-                        if (isset($matches[1])) {
+                    foreach ($extensions as $extension) {
 
-                            $title = $matches[1];
-                        }
-                        $searchable = strip_tags($searchable);
+                        if (strpos($link, $extension) !== FALSE) {
 
-                        $tags = get_meta_tags($link);
-                        if (isset($tags['description'])) {
-                            $description = $tags['description'];
+                            $ext = $extension;
+                            $bKeep2 = true;
+                            break;
                         }
                     }
 
-                    $this->loadModel('IRPanelMedia.IRCMedia');
+                    if ($bKeep == true || $bKeep2 == true) {
+                        $searchable = ' ';
+                        $description = ' ';
+                        $title = ' ';
+                        $mediaType = '';
 
-                    $media = $this->IRCMedia->find('all')->where(['link' => $link])->first();
+                        if ($dmn == 'youtu') {
 
-                    if (!$media) {
-                        $mediaEntity = $this->IRCMedia->newEntity([
-                            'i_r_c_users_id' => Database::getUserId(
-                                Database::getNetworkId($server),
-                                $nick,
-                                $username,
-                                $host
-                            ),
-                            'link' => $link,
-                            'searchable' => $searchable,
-                            'description' => $description,
-                            'title' => $title,
-                            'media_type' => $mediaType,
-                            'created' => new \DateTime('now')
-                        ]);
+                            $mediaType = 'youtube';
+                        } else if ($dmn == 'imgur' && strpos($link, 'gallery') !== FALSE) {
+                            $mediaType = 'gallery';
+                        }
 
-                        $this->IRCMedia->save($mediaEntity);
+                        if ($mediaType == '') {
+                            if ($ext == 'mp4') {
+                                $mediaType = 'video';
+                            } else if ($ext != 'mp4' && $dmn != 'youtu') {
+                                $mediaType = 'image';
+                            }
+                        }
 
-                        if ($mediaType == 'gallery') {
-                            $html = file_get_contents($link);
+                        if ($mediaType == 'gallery' || $mediaType == 'youtube') {
+                            $searchable = file_get_contents($link);
+                            preg_match("/<title>(.+)<\/title>/siU", $searchable, $matches);
+                            if (isset($matches[1])) {
 
-                            if (strpos($html, ': {"id"') !== FALSE) {
-                                $images = substr($html, strpos($html, ': {"id"'));
-                                $images = substr($images, 0, strpos($images, 'adConfig":{"safe'));
-                                $images = substr($images, strpos($images, '"images":[{"'));
+                                $title = $matches[1];
+                            }
+                            $searchable = strip_tags($searchable);
 
-                                $images = explode("hash", $images);
+                            $tags = get_meta_tags($link);
+                            if (isset($tags['description'])) {
+                                $description = $tags['description'];
+                            }
+                        }
 
-                                array_shift($images);
+                        $this->loadModel('IRPanelMedia.IRCMedia');
 
-                                $this->loadModel('IRPanelMedia.IRCMediaGalleries');
-                                foreach ($images as $image) {
+                        $media = $this->IRCMedia->find('all')->where(['link' => $link])->first();
 
-                                    $hash = substr($image, 3, 7);
-                                    $ext2 = substr($image, strpos($image, '"ext":"') + 7, 4);
+                        if (!$media) {
+                            $mediaEntity = $this->IRCMedia->newEntity([
+                                'i_r_c_users_id' => Database::getUserId(
+                                    Database::getNetworkId($server),
+                                    $nick,
+                                    $username,
+                                    $host
+                                ),
+                                'i_r_c_channel_id' => Database::getChannelId(Database::getNetworkId($server), $channel),
+                                'link' => $link,
+                                'searchable' => $searchable,
+                                'description' => $description,
+                                'title' => $title,
+                                'media_type' => $mediaType,
+                                'created' => new \DateTime('now')
+                            ]);
 
-                                    $mediaType2 = '';
-                                    switch ($ext2) {
-                                        case '.jpg':
-                                        case '.gif':
-                                        case '.bmp':
-                                        case '.png':
-                                            $mediaType2 = 'image';
-                                            break;
-                                        case '.mp4':
-                                            $mediaType2 = 'video';
-                                            break;
+                            $this->IRCMedia->save($mediaEntity);
+
+                            if ($mediaType == 'gallery') {
+                                $html = file_get_contents($link);
+
+                                if (strpos($html, ': {"id"') !== FALSE) {
+                                    $images = substr($html, strpos($html, ': {"id"'));
+                                    $images = substr($images, 0, strpos($images, 'adConfig":{"safe'));
+                                    $images = substr($images, strpos($images, '"images":[{"'));
+
+                                    $images = explode("hash", $images);
+
+                                    array_shift($images);
+
+                                    $this->loadModel('IRPanelMedia.IRCMediaGalleries');
+                                    foreach ($images as $image) {
+
+                                        $hash = substr($image, 3, 7);
+                                        $ext2 = substr($image, strpos($image, '"ext":"') + 7, 4);
+
+                                        $mediaType2 = '';
+                                        switch ($ext2) {
+                                            case '.jpg':
+                                            case '.gif':
+                                            case '.bmp':
+                                            case '.png':
+                                                $mediaType2 = 'image';
+                                                break;
+                                            case '.mp4':
+                                                $mediaType2 = 'video';
+                                                break;
+                                        }
+
+                                        $mediaEntity2 = $this->IRCMediaGalleries->newEntity([
+                                            'i_r_c_media_id' => $mediaEntity->id,
+                                            'media_url' => 'https://i.imgur.com/' . $hash . $ext2,
+                                            'media_type' => $mediaType2
+                                        ]);
+                                        $this->IRCMediaGalleries->save($mediaEntity2);
                                     }
-
-                                    $mediaEntity2 = $this->IRCMediaGalleries->newEntity([
-                                        'i_r_c_media_id' => $mediaEntity->id,
-                                        'media_url' => 'https://i.imgur.com/' . $hash . $ext2,
-                                        'media_type' => $mediaType2
-                                    ]);
-                                    $this->IRCMediaGalleries->save($mediaEntity2);
                                 }
                             }
                         }

@@ -2,15 +2,18 @@
 
     <div class="col-lg-11 col-lg-offset-0">
 
-        <div class="box">
-            <div class="box-header">
-                <center><h3>Links</h3></center>
-            </div>
-
+        <div class="box" style="padding-top: 30px">
             <div class="box-body">
 
                 <?php foreach($links as $result): ?>
 
+                <div class="row" style="padding-bottom: 20px;">
+                <div class="col-sm-4 col-sm-offset-1">
+                    <?php $fname = md5($result->link); $fletter = substr($fname, 0, 1); ?>
+                    <img src="/ss/<?= $fletter ?>/<?= $fname ?>.400.png" />
+                    <br/>
+                </div>
+                <div class="col-sm-6">
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1">
                             <div class="row">
@@ -18,24 +21,28 @@
                                     <?php if($result->title == '') { ?>
                                         <a href="<?= $result->link ?>" target="_blank"><h3><?= h($result->link) ?></h3></a>
                                     <?php } else { ?>
-                                        <a href="<?= $result->link ?>" target="_blank"><h3><?= h($result->title) ?></h3></a>
+                                        <a href="<?= $result->link ?>" target="_blank"><h3><?= h(str_replace("&amp;", "&", $result->title)) ?></h3></a>
                                     <?php } ?>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    Posted by <b>[</b> <?= $result->i_r_c_user->nickname ?> <b>]</b> on <b><?= $result->created ?></b>
+                                    Posted by <b>[</b> <?= $result->i_r_c_user->nickname ?> in <?= $result->i_r_c_channel->pound_name ?><b>]</b> on <b><?= $result->created ?></b>
                                 </div>
                             </div>
                             <br/>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <p style="font-size: 18px;"><?= h($result->description) ?></p>
+                                    <p style="font-size: 18px;"><?= $result->description ?></p>
                                 </div>
                             </div>
-                            <hr/>
+
                         </div>
                     </div>
+                </div>
+            </div>
+                <hr/>
+                <br/>
 
                 <?php endforeach; ?>
 

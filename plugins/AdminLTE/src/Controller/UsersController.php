@@ -2,10 +2,13 @@
 
 namespace AdminLTE\Controller;
 
+use AdminLTE\Controller\Traits\LoginTrait;
 use AdminLTE\Controller\Traits\ProfileTrait;
 use AdminLTE\Utility\Notifications;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
+use CakeDC\Users\Controller\Traits\CustomUsersTableTrait;
+use CakeDC\Users\Controller\Traits\RegisterTrait;
 use CakeDC\Users\Controller\UsersController as BaseUsersController;
 use Cake\Core\Configure;
 use Firebase\JWT\JWT;
@@ -17,7 +20,12 @@ use AdminLTE\Utility\Users;
 
 class UsersController extends BaseUsersController
 {
+    use CustomUsersTableTrait, \AdminLTE\Controller\Traits\CustomUsersTableTrait {
+        \AdminLTE\Controller\Traits\CustomUsersTableTrait::setUsersTable insteadof CustomUsersTableTrait;
+        \AdminLTE\Controller\Traits\CustomUsersTableTrait::getUsersTable insteadof CustomUsersTableTrait;
+    }
     use ProfileTrait;
+    use RegisterTrait;
 
     public function initialize() {
 

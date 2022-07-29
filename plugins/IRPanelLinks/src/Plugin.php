@@ -114,6 +114,7 @@ class Plugin extends AbstractPlugin
                                         $username,
                                         $host
                                     ),
+                                    'i_r_c_channel_id' => Database::getChannelId(Database::getNetworkId($server), $channel),
                                     'link' => $link,
                                     'searchable' => $searchable,
                                     'description' => $descr,
@@ -121,6 +122,13 @@ class Plugin extends AbstractPlugin
                                     'created' => new \DateTime('now')
                                 ]);
                                 $this->IRCLinks->save($linkEntity);
+                                $fname = md5($link);
+                                $fletter = substr($fname, 0, 1);
+
+                                if(file_exists("/var/www/irpanel/webroot/ss/" . $fletter . "/" . $fname) == false) {
+                                    echo "Taking screenshot: /usr/bin/python3 /var/www/irpanel/chrome/ss.py " . $fletter . " " . $fname . " " . $link . "\n" ;
+                                    passthru("/var/www/irpanel/chrome/.venv/bin/python3 /var/www/irpanel/chrome/ss.py " . $fletter . " " . $fname . " " . $link);
+                                }
                             }
                         }
                     }

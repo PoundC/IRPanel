@@ -32,7 +32,9 @@ class LinksController extends AppController
     {
         $this->loadModel('IRPanelLinks.IRCLinks');
 
-        $links = $this->paginate($this->IRCLinks->find('all', ['contain' => ['IRCUsers']]));
+        $broswe = $this->IRCLinks->find('all', ['contain' => ['IRCUsers', 'IRCChannels', 'ParentComments' => ['ChildComments']]]);
+
+        $links = $this->paginate($broswe);
 
         $this->set(compact('links'));
     }
@@ -45,7 +47,7 @@ class LinksController extends AppController
 
             $search = $this->request->getData('search');
 
-            $searchResults = $this->paginate($this->IRCLinks->find('all', ['contain' => ['IRCUsers']])->where([
+            $searchResults = $this->paginate($this->IRCLinks->find('all', ['contain' => ['IRCUsers', 'IRCChannels']])->where([
                 'OR' => [
                     ['title LIKE' => '%' . $search . '%'],
                     ['searchable LIKE' => '%' . $search . '%'],
@@ -67,7 +69,7 @@ class LinksController extends AppController
 
         $this->loadModel('IRPanelLinks.IRCLinks');
 
-        $link = $this->IRCLinks->find('all', ['contain' => ['IRCUsers']])->where(['IRCLinks.id' => $id])->first();
+        $link = $this->IRCLinks->find('all', ['contain' => ['IRCUsers', 'IRCChannels']])->where(['IRCLinks.id' => $id])->first();
 
         $this->set('link', $link);
     }

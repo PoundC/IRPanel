@@ -40,10 +40,19 @@ class IRCLinksTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->hasMany('ParentComments', [
+            'className' => 'IRPanel.Comments'
+        ])->setConditions(['ParentComments.table_name' => 'i_r_c_links', 'ParentComments.comment_id' => '0'])->setForeignKey('table_row_id')->setBindingKey('id');
+
         $this->belongsTo('IRCUsers', [
             'foreignKey' => 'i_r_c_users_id',
             'joinType' => 'INNER',
             'className' => 'IRPanelLinks.IRCUsers'
+        ]);
+        $this->belongsTo('IRCChannels', [
+            'foreignKey' => 'i_r_c_channel_id',
+            'joinType' => 'INNER',
+            'className' => 'IRPanelLinks.IRCChannels'
         ]);
     }
 

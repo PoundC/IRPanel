@@ -5,7 +5,7 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        "php": ">=5.6",
+        "php": ">=7.0",
         "admad/cakephp-jwt-auth": "^2.3.2",
         "almasaeed2010/adminlte": "2.4.18",
         "authorizenet/authorizenet": "~1.9",
@@ -23,6 +23,9 @@
         "google/apiclient": "^2.0",
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "6.3.3 as 5.3.1",
+        "jeffreyroberts/phergie-irc-bot-react": "dev-master",
+        "jeffreyroberts/phergie-irc-plugin-react-autorejoin": "dev-master",
+        "jeffreyroberts/phergie-irc-plugin-react-pong": "dev-master",
         "josegonzalez/dotenv": "^3.2",
         "league/oauth1-client": "1.7.0",
         "league/oauth2-facebook": "^2.0",
@@ -32,8 +35,6 @@
         "muffin/slug": "^1.4.0",
         "neomerx/json-api": "^1.0",
         "nicolab/php-ftp-client": "^1.4",
-        "jeffreyroberts/phergie-irc-bot-react": "dev-master",
-        "jeffreyroberts/phergie-irc-plugin-react-autorejoin": "dev-master",
         "phergie/phergie-irc-plugin-react-autojoin": "^2.0",
         "phergie/phergie-irc-plugin-react-command": "^2.0",
         "phergie/phergie-irc-plugin-react-commandhelp": "^2.1",
@@ -65,7 +66,8 @@
             "IRPanelLinks\\": "./plugins/IRPanelLinks/src/",
             "IRPanelJams\\": "./plugins/IRPanelJams/src/",
             "IRPanelMedia\\": "./plugins/IRPanelMedia/src/",
-            "DBFixes\\": "./plugins/DBFixes/src/"
+            "DBFixes\\": "./plugins/DBFixes/src/",
+            "IRPanelTest\\": "./plugins/IRPanelTest/src/"
         }
     },
     "autoload-dev": {
@@ -82,12 +84,13 @@
             "IRPanelLinks\\Test\\": "./plugins/IRPanelLinks/tests/",
             "IRPanelJams\\Test\\": "./plugins/IRPanelJams/tests/",
             "IRPanelMedia\\Test\\": "./plugins/IRPanelMedia/tests/",
-            "DBFixes\\Test\\": "./plugins/DBFixes/tests/"
+            "DBFixes\\Test\\": "./plugins/DBFixes/tests/",
+            "IRPanelTest\\Test\\": "./plugins/IRPanelTest/tests/"
         }
     },
     "scripts": {
         "post-install-cmd": "App\\Console\\Installer::postInstall",
-        "post-create-project-cmd": "App\\Console\\Installer::postInstall", 
+        "post-create-project-cmd": "App\\Console\\Installer::postInstall",
         "check": [
             "@test",
             "@cs-check"

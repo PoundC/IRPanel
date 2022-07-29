@@ -32,7 +32,7 @@ class MediaController extends AppController
     {
         $this->loadModel('IRPanelMedia.IRCMedia');
 
-        $media = $this->paginate($this->IRCMedia->find('all', ['contain' => ['IRCUsers', 'IRCMediaGalleries']]));
+        $media = $this->paginate($this->IRCMedia->find('all', ['contain' => ['IRCUsers', 'IRCMediaGalleries', 'IRCChannels']]));
 
         $this->set(compact('media'));
     }
@@ -45,7 +45,7 @@ class MediaController extends AppController
 
             $search = $this->request->getData('search');
 
-            $searchResults = $this->paginate($this->IRCMedia->find('all', ['contain' => ['IRCUsers', 'IRCMediaGalleries']])->where([
+            $searchResults = $this->paginate($this->IRCMedia->find('all', ['contain' => ['IRCUsers', 'IRCMediaGalleries', 'IRCChannels']])->where([
                 'OR' => [
                     ['title LIKE' => '%' . $search . '%'],
                     ['searchable LIKE' => '%' . $search . '%'],

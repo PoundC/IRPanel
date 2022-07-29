@@ -12,7 +12,7 @@ class AddAvatarsToUsers extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('users');
+        $table = $this->table('admin_l_t_e_users');
         $table->addColumn('avatar', 'string', [
             'limit' => '512'
         ]);

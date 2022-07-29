@@ -33,7 +33,7 @@ trait CustomUsersTableTrait
         if ($this->_usersTable instanceof Table) {
             return $this->_usersTable;
         }
-        $this->_usersTable = TableRegistry::getTableLocator()->get('users');
+        $this->_usersTable = TableRegistry::getTableLocator()->get('AdminLTE.Users');
 
         return $this->_usersTable;
     }

@@ -46,6 +46,11 @@ class IRCMediaTable extends Table
             'joinType' => 'INNER',
             'className' => 'IRPanelMedia.IRCUsers'
         ]);
+        $this->belongsTo('IRCChannels', [
+            'foreignKey' => 'i_r_c_channel_id',
+            'joinType' => 'INNER',
+            'className' => 'IRPanelMedia.IRCChannels'
+        ]);
         $this->hasMany('IRCMediaGalleries', [
             'foreignKey' => 'i_r_c_media_id',
             'className' => 'IRPanelMedia.IRCMediaGalleries'

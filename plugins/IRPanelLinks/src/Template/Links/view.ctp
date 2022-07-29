@@ -14,7 +14,7 @@
             <div class="box-body">
                 <blockquote>
                     <p><?= h($link->description) ?></p>
-                    <small>Created by <cite title="Source Title"><?= h($link->i_r_c_user->nickname) ?></cite> on <strong><?= $link->created ?></strong></small>
+                    <small>Created by <cite title="Source Title"><?= h($link->i_r_c_user->nickname) ?> in <?= $link->i_r_c_channel->pound_name ?></cite> on <strong><?= $link->created ?></strong></small>
                 </blockquote>
             </div>
             <!-- /.box-body -->

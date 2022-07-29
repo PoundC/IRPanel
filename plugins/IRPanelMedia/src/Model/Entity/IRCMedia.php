@@ -31,6 +31,7 @@ class IRCMedia extends Entity
      */
     protected $_accessible = [
         'i_r_c_users_id' => true,
+        'i_r_c_channel_id' => true,
         'link' => true,
         'searchable' => true,
         'description' => true,

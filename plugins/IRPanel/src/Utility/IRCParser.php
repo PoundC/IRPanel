@@ -8,13 +8,14 @@ class IRCParser
 
         $split = explode(' ', $messageLine);
 
-        if(strpos($split[1], '!') > -1 && strpos($split[3], '#') > -1) {
+        if(count($split) > 1) {
+            if (strpos($split[1], '!') > -1 && strpos($split[3], '#') > -1) {
 
-            return true;
-        }
-        else {
+                return true;
+            } else {
 
-            return false;
+                return false;
+            }
         }
     }
 

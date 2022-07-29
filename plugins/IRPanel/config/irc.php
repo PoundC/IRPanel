@@ -4,9 +4,10 @@ use \Cake\Core\Configure;
 
 \Cake\Core\Configure::write(
     'networks', [
-        /*'poundc' => [
+        'PoundC' => [
             'server' => 'irc.poundc.com',
             'port' => 6697,
+            'ssl' => 1,
             'server_password' => 'hodlgang',
             'nickname' => 'IRBot',
             'altnick' => 'IRB0T',
@@ -25,8 +26,8 @@ use \Cake\Core\Configure;
             'options' => [
                 'transport' => 'ssl'
             ]
-        ],*/
-        'efnet' => [
+        ]
+        /*'efnet' => [
             'server' => 'irc.efnet.org',
             'port' => 6667,
             'server_password' => '',
@@ -41,6 +42,6 @@ use \Cake\Core\Configure;
                 '#cashmoney',
                 //'#havok'
             ]
-        ]
+        ]*/
     ]
 );

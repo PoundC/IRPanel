@@ -61,7 +61,7 @@ class Sidebar
 
     public static function buildMenu($currentPath, $role = 'visitor', $user_id = 0, $addUl = true, $addSite = true)
     {
-        if($addUl == true) {
+        if($addUl) {
 
             $menuHtml = '<ul id="nav-menu" class="sidebar-menu" data-widget="tree">' . "\n";
         } else {
@@ -71,16 +71,18 @@ class Sidebar
 
         foreach(Sidebar::$Menu[$role] as $menuKey => $menuItem)
         {
-            switch ($menuItem['type']) {
-                case 'header':
-                    $menuHtml .= Sidebar::buildHeader($menuItem);
-                    break;
-                case 'link':
-                    $menuHtml .= Sidebar::buildLink($currentPath, $menuItem, $role, $user_id);
-                    break;
-                case 'group':
-                    $menuHtml .= Sidebar::buildGroup($currentPath, $menuItem, $role, $user_id);
-                    break;
+            if(isset($menuItem['type'])) {
+                switch ($menuItem['type']) {
+                    case 'header':
+                        $menuHtml .= Sidebar::buildHeader($menuItem);
+                        break;
+                    case 'link':
+                        $menuHtml .= Sidebar::buildLink($currentPath, $menuItem, $role, $user_id);
+                        break;
+                    case 'group':
+                        $menuHtml .= Sidebar::buildGroup($currentPath, $menuItem, $role, $user_id);
+                        break;
+                }
             }
         }
 

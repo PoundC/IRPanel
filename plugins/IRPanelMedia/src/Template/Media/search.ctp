@@ -87,7 +87,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                Posted by <b>[</b> <?= $result->i_r_c_user->nickname ?> <b>]</b> on <b><?= $result->created ?></b>
+                                                Posted by <b>[</b> <?= $result->i_r_c_user->nickname ?>  in <?= $result->i_r_c_channel->pound_name ?><b>]</b> on <b><?= $result->created ?></b>
                                             </div>
                                         </div>
                                         <br/>

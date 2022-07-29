@@ -13,6 +13,20 @@ class Database
 
         $server = $serversTable->find('all')->where(['hostname' => $serverHostname])->first();
 
+        if($server == null)
+        {
+            return 0;
+        }
+
+        return $server->id;
+    }
+
+    public static function getNetwork($networkName) {
+
+        $serversTable = TableRegistry::get('i_r_c_networks');
+
+        $server = $serversTable->find('all')->where(['network_name' => $networkName])->first();
+
         return $server->id;
     }
 
@@ -22,7 +36,91 @@ class Database
 
         $server = $serversTable->find('all')->where(['hostname' => $serverHostname])->first();
 
-        return $server->i_r_c_network_id;
+        if($server) {
+            return $server->i_r_c_network_id;
+        }
+
+        return 0;
+    }
+
+    /*
+        +-------------------+-------------+------+-----+---------+----------------+
+        | Field             | Type        | Null | Key | Default | Extra          |
+        +-------------------+-------------+------+-----+---------+----------------+
+        | id                | int(11)     | NO   | PRI | NULL    | auto_increment |
+        | network_name      | varchar(64) | NO   |     | NULL    |                |
+        | username          | varchar(64) | NO   |     | NULL    |                |
+        | realname          | varchar(64) | NO   |     | NULL    |                |
+        | nickname          | varchar(64) | NO   |     | NULL    |                |
+        | altnick           | varchar(64) | NO   |     | NULL    |                |
+        | nickserv_password | varchar(64) | NO   |     | NULL    |                |
+        +-------------------+-------------+------+-----+---------+----------------+
+     */
+    public static function insertNetwork($network_name)
+    {
+        $networksTable = TableRegistry::get('i_r_c_networks');
+
+        $newNetwork = $networksTable->newEntity();
+        $newNetwork->set('network_name', $network_name);
+        $networksTable->save($newNetwork);
+
+        return $newNetwork->get('id');
+    }
+
+    /*
+        +------------------+-------------+------+-----+---------+----------------+
+        | Field            | Type        | Null | Key | Default | Extra          |
+        +------------------+-------------+------+-----+---------+----------------+
+        | id               | int(11)     | NO   | PRI | NULL    | auto_increment |
+        | i_r_c_network_id | int(11)     | NO   |     | NULL    |                |
+        | hostname         | varchar(64) | NO   |     | NULL    |                |
+        | port             | int(11)     | NO   |     | NULL    |                |
+        | server_password  | varchar(64) | NO   |     | NULL    |                |
+        | oper_password    | varchar(64) | NO   |     | NULL    |                |
+        | ssl              | int(11)     | NO   |     | NULL    |                |
+        +------------------+-------------+------+-----+---------+----------------+
+     */
+
+    public static function insertServer($networkId, $hostname, $port, $server_password, $oper_password, $ssl)
+    {
+        $serverTable = TableRegistry::get('i_r_c_servers');
+
+        $serverEntity = $serverTable->newEntity();
+        $serverEntity->set('i_r_c_network_id', $networkId);
+        $serverEntity->set('hostname', $hostname);
+        $serverEntity->set('port', $port);
+        $serverEntity->set('server_password', $server_password);
+        $serverEntity->set('oper_password', $oper_password);
+        $serverEntity->set('ssl', $ssl);
+        $serverTable->save($serverEntity);
+
+        return $serverEntity->get('id');
+    }
+
+    /*
+         MariaDB [irpanel]> show columns from i_r_c_channels;
+        +------------------+---------------+------+-----+---------+----------------+
+        | Field            | Type          | Null | Key | Default | Extra          |
+        +------------------+---------------+------+-----+---------+----------------+
+        | id               | int(11)       | NO   | PRI | NULL    | auto_increment |
+        | i_r_c_network_id | int(11)       | NO   |     | NULL    |                |
+        | pound_name       | varchar(64)   | NO   |     | NULL    |                |
+        | keys             | varchar(64)   | NO   |     | NULL    |                |
+        | knock_nick       | varchar(32)   | NO   |     | NULL    |                |
+        | topic            | varchar(1024) | NO   |     | NULL    |                |
+        +------------------+---------------+------+-----+---------+----------------+
+     */
+
+    public static function insertChannel($networkId, $poundName)
+    {
+        $channelTable = TableRegistry::get('i_r_c_channels');
+
+        $channelEntity = $channelTable->newEntity();
+        $channelEntity->set('i_r_c_network_id', $networkId);
+        $channelEntity->set('pound_name', $poundName);
+        $channelTable->save($channelEntity);
+
+        return $channelEntity->get('id');
     }
 
     public static function getChannelId($i_r_c_network_id, $pound_name) {

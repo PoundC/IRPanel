@@ -4,6 +4,8 @@ namespace IRPanel\Shell;
 use Cake\Console\Shell;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
+use IRPanel\Utility\Database;
+use Phergie\Irc\Client\React\WriteStream;
 use Phergie\Irc\Connection;
 use josegonzalez\Dotenv\Loader as SensitiveDataLoader;
 use IRPanel\Logger\IRLogger;
@@ -49,6 +51,35 @@ class IRCBotShell extends Shell
         $this->loadModel('Channels');
 
         $networks = Configure::read('networks');
+
+        foreach($networks as $networkKey => $network)
+        {
+            $networkId = Database::getNetwork($networkKey);
+
+            if($networkId == null)
+            {
+                $networkId = Database::insertNetwork($networkKey);
+            }
+
+            $serverId = Database::getServerId($network['server']);
+
+            if($serverId == 0)
+            {
+                $serverId = Database::insertServer($networkId, $network['server'],
+                    $network['port'], $network['server_password'], $network['oper_password'], $network['ssl']);
+            }
+
+            foreach($network['channels'] as $channel)
+            {
+                $channelId = Database::getChannelId($networkId, $channel);
+
+                if($channelId == null)
+                {
+                    $channelId = Database::insertChannel($networkId, $channel);
+                }
+            }
+        }
+
         $ircNetworks = array();
 
         foreach($networks as $networkKey => $network) {
@@ -68,10 +99,11 @@ class IRCBotShell extends Shell
         $config = array(
             'connections' => $ircNetworks,
             'plugins' => array(
-                new \Phergie\Irc\Plugin\React\AutoJoin\Plugin(['channels' => ['#cashmoney']]), // $network['channels']]),
-                new \EnebeNb\Phergie\Plugin\AutoRejoin\Plugin(['channels' => ['#cashmoney']]), // $network['channels']]),
+                new \Phergie\Irc\Plugin\React\AutoJoin\Plugin(['channels' => $network['channels']]),
+                new \EnebeNb\Phergie\Plugin\AutoRejoin\Plugin(['channels' => $network['channels']]),
                 new \Phergie\Irc\Plugin\React\Command\Plugin(['prefix' => '!']),
                 new \Phergie\Irc\Plugin\React\JoinPart\Plugin(),
+                new \Phergie\Irc\Plugin\React\Pong\Plugin(),
                 new \IRPanel\Plugin(),
                 new \IRPanelQuotes\Plugin(),
                 new \IRPanelVoting\Plugin(),
@@ -84,23 +116,40 @@ class IRCBotShell extends Shell
             'logger' => new IRLogger()
         );
 
-
-
         $bot = new \Phergie\Irc\Bot\React\Bot;
+        echo "Setting Config.\n";
         $bot->setConfig($config);
-        $bot->getClient()->on('connect.after.each', function(\Phergie\Irc\ConnectionInterface $connection, \Phergie\Irc\Client\React\WriteStream $write) use ($network) {
+        $bot->getClient()->on('connect.after.each', function(\Phergie\Irc\ConnectionInterface $connection, \Phergie\Irc\Client\React\WriteStream $write) use ($network,$bot) {
+            echo "Connect Start";
             $write->ircPrivmsg('UserServ', 'LOGIN IRBot ' . $network['userserv_password']);
+
+            $timer = $bot->getClient()->addPeriodicTimer(45, function($timer) use ($bot, $connection, $write) {
+                echo "Timer fired..\n";
+
+                $nick = $connection->getNickname();
+
+                echo "Foreach fired..$nick\n";
+
+                $write->ircPrivmsg($nick, 'CTCP VERSION');
+            });
         });
         $bot->getClient()->on('connect.end', function(\Phergie\Irc\ConnectionInterface $connection, \Psr\Log\LoggerInterface $logger) use ($bot) {
             $logger->debug('Connection to ' . $connection->getServerHostname() . ' lost, attempting to reconnect');
             sleep(5);
             $bot->getClient()->addConnection($connection);
+
+            echo "Connect End";
         });
         $bot->getClient()->on('connect.error', function(\Phergie\Irc\ConnectionInterface $connection, \Psr\Log\LoggerInterface $logger) use ($bot) {
             $logger->debug('Connection to ' . $connection->getServerHostname() . ' lost, attempting to reconnect');
             sleep(30);
             $bot->getClient()->addConnection($connection);
+
+            echo "Connect Error";
         });
+
+        echo "Running..\n";
+
         $bot->run();
     }
 }
