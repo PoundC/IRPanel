@@ -12,10 +12,12 @@
                     <?php $fname = md5($result->link); $fletter = substr($fname, 0, 1); ?>
                     <img src="/ss/<?= $fletter ?>/<?= $fname ?>.400.png" />
                     <br/>
+                    <br/>
+                    <center><h4><a href="/i_r_c_links/links/view/<?= $result->id ?>">View Link Record and Comments</a></h4></center>
                 </div>
                 <div class="col-sm-6">
                     <div class="row">
-                        <div class="col-sm-10 col-sm-offset-1">
+                        <div class="col-sm-9 col-sm-offset-2">
                             <div class="row">
                                 <div class="col-sm-12">
                                     <?php if($result->title == '') { ?>
@@ -36,7 +38,17 @@
                                     <p style="font-size: 18px;"><?= $result->description ?></p>
                                 </div>
                             </div>
-
+                            <br/>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4>Comments</h4>
+                                    <?php foreach($result->parent_comments as $comment) { ?>
+                                    <div class="row">
+                                        <div class="col-sm-8 col-sm-offset-1">[ <?= $comment->i_r_c_user->nickname ?> ] <span></span><?= $comment->comment ?></span></div>
+                                    </div>
+                                    <?php } ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -32,7 +32,7 @@ class LinksController extends AppController
     {
         $this->loadModel('IRPanelLinks.IRCLinks');
 
-        $broswe = $this->IRCLinks->find('all', ['contain' => ['IRCUsers', 'IRCChannels', 'ParentComments' => ['ChildComments']]]);
+        $broswe = $this->IRCLinks->find('all', ['contain' => ['IRCUsers', 'IRCChannels', 'ParentComments' => ['IRCUsers', 'ChildComments' => ['IRCUsers']]]]);
 
         $links = $this->paginate($broswe);
 

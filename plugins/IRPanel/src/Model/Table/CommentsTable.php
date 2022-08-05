@@ -44,6 +44,7 @@ class CommentsTable extends Table
             'joinType' => 'INNER',
             'className' => 'IRPanel.IRCUsers'
         ]);
+
         $this->belongsTo('ParentComments', [
             'foreignKey' => 'comment_id',
             'joinType' => 'INNER',

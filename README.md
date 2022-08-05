@@ -4,6 +4,10 @@ A IRC Bot and Web Panel
 
 # To do
 
+* Implement Comments per Dynamic Table
+* Links Module
+  * Filter by Channel
+  * View Link and Comments
 * Add Channel Log Module
 * Check Notifications, Messages, Pending Tasks, Support for Bugs
 * Rough Draft Design Dashboard
@@ -16,5 +20,4 @@ A IRC Bot and Web Panel
 * Silence Quotes Module, Good for Searching/Browsing online only for now
 * Forum Module
   * Start Forum Thread off Channel Log
-* Site wide comments per module
 * Site wide avatar placements (additional_data)
